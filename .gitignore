@@ -1,3 +1,6 @@
+# Qt Creator CMake Project File
+CMakeLists.txt.user
+
 # Compiled Object files
 *.slo
 *.lo
