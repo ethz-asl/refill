@@ -8,11 +8,11 @@ namespace refill {
 class GaussianDistribution {
  public:
   GaussianDistribution();
-  GaussianDistribution(Eigen::VectorXd mean, Eigen::MatrixXd covmat);
+  GaussianDistribution(Eigen::VectorXd dist_mean, Eigen::MatrixXd dist_cov);
 
-  Eigen::MatrixXd GetCovariance() const;
-  int GetDimension() const;
-  Eigen::VectorXd GetMean() const;
+  Eigen::MatrixXd cov() const { return covmat_; }
+  int dim() const { return mean_.size(); }
+  Eigen::VectorXd mean() const { return mean_; }
 
   GaussianDistribution operator*(const Eigen::MatrixXd& mat);
   GaussianDistribution operator+(const GaussianDistribution& right_side);

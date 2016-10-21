@@ -2,7 +2,8 @@ project(Refill)
 cmake_minimum_required(VERSION 2.8)
 
 # SETUP EIGEN
-# Change module path in order to resolve https://github.com/Homebrew/legacy-homebrew/issues/44937
+# Change module path in order to resolve:
+# https://github.com/Homebrew/legacy-homebrew/issues/44937
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /usr/local/share/cmake/Modules)
 find_package(Eigen3 REQUIRED)
 
