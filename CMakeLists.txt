@@ -12,9 +12,17 @@ find_package(Eigen3 REQUIRED)
 enable_testing()
 find_package(GTest REQUIRED)
 
+# Setup glog
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+find_package(Glog)
+if (NOT GLOG_FOUND)
+   message(FATAL_ERROR "Can't find Glog")
+endif (NOT GLOG_FOUND)
+
 include_directories(SYSTEM
     include
     ${GTEST_INCLUDE_DIRS}
+    ${GLOG_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIR}
 )
 
@@ -26,7 +34,7 @@ add_library(${PROJECT_NAME} ${SRC_LIST})
 # TESTS
 FILE(GLOB MyTestSources src/*_test.cc)
 add_executable(filtertests ${MyTestSources})
-target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} Refill)
+target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
 add_test(AllTests filtertests)
 
 # Qt Creator Compatibility ensuring include dir is shown

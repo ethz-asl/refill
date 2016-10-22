@@ -1,5 +1,7 @@
 #include "refill/gaussian_distribution.h"
 
+#include <glog/logging.h>
+
 namespace refill {
 
 GaussianDistribution::GaussianDistribution()
@@ -17,6 +19,7 @@ GaussianDistribution GaussianDistribution::operator*(
 
 GaussianDistribution GaussianDistribution::operator+(
     const GaussianDistribution& right_side) {
+  CHECK(right_side.dim() == dim()) << "Distribution dimensions do not match.";
   GaussianDistribution result(mean_ + right_side.mean(),
                               covmat_ + right_side.cov());
   return result;
