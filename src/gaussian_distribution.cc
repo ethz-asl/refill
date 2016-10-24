@@ -9,12 +9,20 @@ GaussianDistribution::GaussianDistribution()
       covmat_(Eigen::MatrixXd::Identity(1, 1)) {}
 
 GaussianDistribution::GaussianDistribution(Eigen::VectorXd dist_mean,
-                                           Eigen::MatrixXd dist_cov)
-    : mean_(dist_mean), covmat_(dist_cov) {}
+                                           Eigen::MatrixXd dist_cov) {
+  SetDistParam(dist_mean, dist_cov);
+}
 
-GaussianDistribution GaussianDistribution::operator*(
-    const Eigen::MatrixXd& mat) {
-  return GaussianDistribution(mat * mean_, mat * covmat_ * mat.transpose());
+void GaussianDistribution::SetDistParam(Eigen::VectorXd dist_mean,
+                                        Eigen::MatrixXd dist_cov) {
+  CHECK_EQ(dist_mean.size(), dist_cov.rows());
+  CHECK_EQ(dist_cov.rows(), dist_mean.cols());
+
+  Eigen::LLT<Eigen::MatrixXd> chol_of_cov(dist_cov);
+  CHECK(chol_of_cov.info() != Eigen::NumericalIssue) << "Matrix not s.p.d.";
+
+  mean_ = dist_mean;
+  covmat_ = dist_cov;
 }
 
 GaussianDistribution GaussianDistribution::operator+(
@@ -23,6 +31,15 @@ GaussianDistribution GaussianDistribution::operator+(
   GaussianDistribution result(mean_ + right_side.mean(),
                               covmat_ + right_side.cov());
   return result;
+}
+
+// Non-member overloaded operator for linear transforms of Gaussian random
+// vectors.
+GaussianDistribution operator*(const Eigen::MatrixXd& mat,
+                               const GaussianDistribution gaussian) {
+  CHECK_EQ(mat.cols(), gaussian.dim());
+  return GaussianDistribution(mat * gaussian.mean(),
+                              mat * gaussian.cov() * mat.transpose());
 }
 
 }  // namespace refill

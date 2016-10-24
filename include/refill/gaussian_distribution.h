@@ -1,5 +1,5 @@
-#ifndef GAUSSIAN_DISTRIBUTION_H_
-#define GAUSSIAN_DISTRIBUTION_H_
+#ifndef INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_
+#define INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_
 
 #include <eigen3/Eigen/Dense>
 
@@ -10,11 +10,12 @@ class GaussianDistribution {
   GaussianDistribution();
   GaussianDistribution(Eigen::VectorXd dist_mean, Eigen::MatrixXd dist_cov);
 
+  void SetDistParam(Eigen::VectorXd dist_mean, Eigen::MatrixXd dist_cov);
+
   Eigen::MatrixXd cov() const { return covmat_; }
   int dim() const { return mean_.size(); }
   Eigen::VectorXd mean() const { return mean_; }
 
-  GaussianDistribution operator*(const Eigen::MatrixXd& mat);
   GaussianDistribution operator+(const GaussianDistribution& right_side);
 
  private:
@@ -22,6 +23,10 @@ class GaussianDistribution {
   Eigen::VectorXd mean_;
 };
 
+// Non-member operator overloading.
+GaussianDistribution operator*(const Eigen::MatrixXd& mat,
+                               const GaussianDistribution gaussian);
+
 }  // namespace refill
 
-#endif  // GAUSSIAN_DISTRIBUTION_H_
+#endif  // INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_

@@ -1,16 +1,22 @@
-#ifndef KALMANFILTER_H_
-#define KALMANFILTER_H_
+#ifndef INCLUDE_REFILL_KALMAN_FILTER_H_
+#define INCLUDE_REFILL_KALMAN_FILTER_H_
 
-#include "gaussian_distribution.h"
+#include "refill/gaussian_distribution.h"
 
 namespace refill {
 
 class KalmanFilter {
  public:
+  KalmanFilter();
   KalmanFilter(GaussianDistribution initial_state,
                GaussianDistribution system_noise,
                GaussianDistribution measurement_noise,
                Eigen::MatrixXd sys_model, Eigen::MatrixXd obs_model);
+
+  void Predict() { state_ = sys_model_ * state_ + system_noise_; }
+  void Update(Eigen::VectorXd measurement);
+
+  GaussianDistribution state() const { return state_; }
 
  private:
   GaussianDistribution state_;
@@ -22,4 +28,4 @@ class KalmanFilter {
 
 }  // namespace refill
 
-#endif  // KALMANFILTER_H_
+#endif  // INCLUDE_REFILL_KALMAN_FILTER_H_
