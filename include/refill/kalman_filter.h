@@ -1,11 +1,12 @@
 #ifndef INCLUDE_REFILL_KALMAN_FILTER_H_
 #define INCLUDE_REFILL_KALMAN_FILTER_H_
 
+#include "refill/filter_base.h"
 #include "refill/gaussian_distribution.h"
 
 namespace refill {
 
-class KalmanFilter {
+class KalmanFilter : public FilterBase {
  public:
   KalmanFilter();
   KalmanFilter(GaussianDistribution initial_state,
