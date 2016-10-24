@@ -1,7 +1,7 @@
 #ifndef INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_
 #define INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_
 
-#include <eigen3/Eigen/Dense>
+#include <Eigen/Dense>
 
 namespace refill {
 
