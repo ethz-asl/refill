@@ -36,10 +36,9 @@ add_library(${PROJECT_NAME} ${SRC_LIST})
 
 # TESTS
 FILE(GLOB MyTestSources src/*_test.cc)
-#add_executable(filtertests ${MyTestSources})
-#target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
-#add_test(AllTests filtertests)
-
+add_executable(filtertests ${MyTestSources})
+target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
+add_test(AllTests filtertests)
 
 # Qt Creator Compatibility ensuring include dir is shown
 # See http://stackoverflow.com/questions/28384935/qtcreator-cmake-project-how-to-show-all-project-files
