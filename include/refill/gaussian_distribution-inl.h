@@ -1,4 +1,5 @@
-#include "refill/gaussian_distribution.h"
+#ifndef INCLUDE_REFILL_GAUSSIAN_DISTRIBUTIONINL_INL_H_
+#define INCLUDE_REFILL_GAUSSIAN_DISTRIBUTIONINL_INL_H_
 
 #include <glog/logging.h>
 
@@ -47,3 +48,6 @@ GaussianDistribution<> operator*(const Eigen::MatrixXd& mat,
 }
 
 }  // namespace refill
+
+#endif // INCLUDE_REFILL_GAUSSIAN_DISTRIBUTIONINL_INL_H_
+

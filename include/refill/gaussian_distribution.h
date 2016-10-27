@@ -30,4 +30,6 @@ GaussianDistribution<> operator*(const Eigen::MatrixXd& mat,
 
 }  // namespace refill
 
+#include "./gaussian_distribution-inl.h"
+
 #endif  // INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_
