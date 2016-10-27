@@ -12,9 +12,9 @@ KalmanFilter::KalmanFilter() {
   measurement_model_ = Eigen::MatrixXd::Identity(1, 1);
 }
 
-KalmanFilter::KalmanFilter(GaussianDistribution state,
-                           GaussianDistribution system_noise,
-                           GaussianDistribution measurement_noise,
+KalmanFilter::KalmanFilter(GaussianDistribution<> state,
+                           GaussianDistribution<> system_noise,
+                           GaussianDistribution<> measurement_noise,
                            Eigen::MatrixXd sys_model, Eigen::MatrixXd obs_model)
     : state_(state),
       system_noise_(system_noise),

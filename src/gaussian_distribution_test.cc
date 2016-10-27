@@ -6,9 +6,9 @@
 namespace refill {
 
 TEST(GaussianDistributionTest, Basics) {
-  GaussianDistribution a;
-  GaussianDistribution b;
-  GaussianDistribution c;
+  GaussianDistribution<> a;
+  GaussianDistribution<> b;
+  GaussianDistribution<> c;
 
   c = a + b;
 
