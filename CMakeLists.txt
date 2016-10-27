@@ -30,8 +30,9 @@ include_directories(SYSTEM
 )
 
 # LIBRARY
-aux_source_directory(. SRC_LIST)
-aux_source_directory(src SRC_LIST)
+file(GLOB_RECURSE SRC_LIST src/*.cc)
+file(GLOB_RECURSE REMOVE_SOURCES "*_test.cc")
+list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
 add_library(${PROJECT_NAME} ${SRC_LIST})
 
 # TESTS
