@@ -9,7 +9,8 @@ template <int DIM = Eigen::Dynamic>
 class GaussianDistribution {
  public:
   GaussianDistribution();
-  GaussianDistribution(Eigen::VectorXd dist_mean, Eigen::MatrixXd dist_cov);
+  GaussianDistribution(Eigen::Matrix<double, DIM, 1> dist_mean,
+                       Eigen::Matrix<double, DIM, DIM> dist_cov);
 
   void SetDistParam(Eigen::Matrix<double, DIM, 1> dist_mean,
                     Eigen::Matrix<double, DIM, DIM> dist_cov);
@@ -18,7 +19,7 @@ class GaussianDistribution {
   int dim() const { return mean_.size(); }
   Eigen::Matrix<double, DIM, 1> mean() const { return mean_; }
 
-  GaussianDistribution operator+(const GaussianDistribution& right_side);
+  GaussianDistribution operator+(const GaussianDistribution<DIM>& right_side);
 
  private:
   Eigen::Matrix<double, DIM, DIM> covmat_;
