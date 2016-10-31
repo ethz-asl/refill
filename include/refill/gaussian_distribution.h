@@ -26,6 +26,10 @@ class GaussianDistribution {
   Eigen::Matrix<double, DIM, 1> mean_;
 };
 
+// Alias for a dynamic size version of the Gaussian distribution. Notation
+// compatible to Eigen.
+using GaussianDistributionXd = GaussianDistribution<Eigen::Dynamic>;
+
 // Non-member operator overloading.
 GaussianDistribution<> operator*(const Eigen::MatrixXd& mat,
                                  const GaussianDistribution<> gaussian);

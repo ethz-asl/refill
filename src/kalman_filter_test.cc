@@ -7,7 +7,7 @@
 namespace refill {
 
 TEST(KalmanFilterTest, FullRun) {
-  KalmanFilter kf;
+  KalmanFilterXd kf;
   kf.Predict();
   kf.Predict();
 

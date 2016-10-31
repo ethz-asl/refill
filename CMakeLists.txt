@@ -30,15 +30,17 @@ include_directories(SYSTEM
 )
 
 # LIBRARY
-file(GLOB_RECURSE SRC_LIST src/*.cc)
-file(GLOB_RECURSE REMOVE_SOURCES "*_test.cc")
-list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
-add_library(${PROJECT_NAME} ${SRC_LIST})
+# Disabled compilation for now as currently everything is templated, which will change later.
+#file(GLOB_RECURSE SRC_LIST src/*.cc)
+#file(GLOB_RECURSE REMOVE_SOURCES "*_test.cc")
+#list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
+#add_library(${PROJECT_NAME} ${SRC_LIST})
 
 # TESTS
 FILE(GLOB MyTestSources src/*_test.cc)
 add_executable(filtertests ${MyTestSources})
-target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
+#target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
+target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES})
 add_test(AllTests filtertests)
 
 # Qt Creator Compatibility ensuring include dir is shown
