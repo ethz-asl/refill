@@ -5,28 +5,37 @@
 
 namespace refill {
 
+template <int DIM = Eigen::Dynamic>
 class GaussianDistribution {
  public:
   GaussianDistribution();
-  GaussianDistribution(Eigen::VectorXd dist_mean, Eigen::MatrixXd dist_cov);
+  GaussianDistribution(Eigen::Matrix<double, DIM, 1> dist_mean,
+                       Eigen::Matrix<double, DIM, DIM> dist_cov);
 
-  void SetDistParam(Eigen::VectorXd dist_mean, Eigen::MatrixXd dist_cov);
+  void SetDistParam(Eigen::Matrix<double, DIM, 1> dist_mean,
+                    Eigen::Matrix<double, DIM, DIM> dist_cov);
 
-  Eigen::MatrixXd cov() const { return covmat_; }
+  Eigen::Matrix<double, DIM, DIM> cov() const { return covmat_; }
   int dim() const { return mean_.size(); }
-  Eigen::VectorXd mean() const { return mean_; }
+  Eigen::Matrix<double, DIM, 1> mean() const { return mean_; }
 
-  GaussianDistribution operator+(const GaussianDistribution& right_side);
+  GaussianDistribution operator+(const GaussianDistribution<DIM>& right_side);
 
  private:
-  Eigen::MatrixXd covmat_;
-  Eigen::VectorXd mean_;
+  Eigen::Matrix<double, DIM, DIM> covmat_;
+  Eigen::Matrix<double, DIM, 1> mean_;
 };
 
+// Alias for a dynamic size version of the Gaussian distribution. Notation
+// compatible to Eigen.
+using GaussianDistributionXd = GaussianDistribution<Eigen::Dynamic>;
+
 // Non-member operator overloading.
-GaussianDistribution operator*(const Eigen::MatrixXd& mat,
-                               const GaussianDistribution gaussian);
+GaussianDistribution<> operator*(const Eigen::MatrixXd& mat,
+                                 const GaussianDistribution<> gaussian);
 
 }  // namespace refill
+
+#include "./gaussian_distribution-inl.h"
 
 #endif  // INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_

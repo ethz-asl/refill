@@ -1,5 +1,15 @@
-# Qt Creator CMake Project File
+# Mac Directory files
+.DS_Store
+
+# Qt Creator Specific
 CMakeLists.txt.user
+*.autosave
+
+# vim temporary files
+*.swp
+
+# Compiled Python files
+*.pyc
 
 # Compiled Object files
 *.slo

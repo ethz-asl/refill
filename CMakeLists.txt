@@ -1,6 +1,9 @@
 project(Refill)
 cmake_minimum_required(VERSION 2.8)
 
+# Use C++14
+set(CMAKE_CXX_STANDARD 14)
+
 # SETUP EIGEN
 # Change module path in order to resolve:
 # https://github.com/Homebrew/legacy-homebrew/issues/44937
@@ -27,14 +30,17 @@ include_directories(SYSTEM
 )
 
 # LIBRARY
-aux_source_directory(. SRC_LIST)
-aux_source_directory(src SRC_LIST)
-add_library(${PROJECT_NAME} ${SRC_LIST})
+# Disabled compilation for now as currently everything is templated, which will change later.
+#file(GLOB_RECURSE SRC_LIST src/*.cc)
+#file(GLOB_RECURSE REMOVE_SOURCES "*_test.cc")
+#list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
+#add_library(${PROJECT_NAME} ${SRC_LIST})
 
 # TESTS
 FILE(GLOB MyTestSources src/*_test.cc)
 add_executable(filtertests ${MyTestSources})
-target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
+#target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
+target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES})
 add_test(AllTests filtertests)
 
 # Qt Creator Compatibility ensuring include dir is shown
