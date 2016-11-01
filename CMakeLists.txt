@@ -40,7 +40,7 @@ include_directories(SYSTEM
 FILE(GLOB MyTestSources src/*_test.cc)
 add_executable(filtertests ${MyTestSources})
 #target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
-target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES})
+target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} -lpthread -lm)
 add_test(AllTests filtertests)
 
 # Qt Creator Compatibility ensuring include dir is shown
