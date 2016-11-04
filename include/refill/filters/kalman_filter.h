@@ -1,13 +1,13 @@
-#ifndef INCLUDE_REFILL_KALMAN_FILTER_H_
-#define INCLUDE_REFILL_KALMAN_FILTER_H_
+#ifndef INCLUDE_REFILL_FILTERS_KALMAN_FILTER_H_
+#define INCLUDE_REFILL_FILTERS_KALMAN_FILTER_H_
 
-#include "refill/filter_base.h"
-#include "refill/gaussian_distribution.h"
+#include "refill/filters/filter_base.h"
+#include "refill/distributions/gaussian_distribution.h"
 
 namespace refill {
 
 template <int STATEDIM = Eigen::Dynamic, int MEASDIM = Eigen::Dynamic>
-class KalmanFilter : public FilterBase {
+class KalmanFilter : public FilterBase<STATEDIM, MEASDIM> {
  public:
   KalmanFilter();
   KalmanFilter(GaussianDistribution<STATEDIM> initial_state,
@@ -37,4 +37,4 @@ using KalmanFilterXd = KalmanFilter<Eigen::Dynamic, Eigen::Dynamic>;
 
 #include "./kalman_filter-inl.h"
 
-#endif  // INCLUDE_REFILL_KALMAN_FILTER_H_
+#endif  // INCLUDE_REFILL_FILTERS_KALMAN_FILTER_H_

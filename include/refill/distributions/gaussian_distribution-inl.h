@@ -1,5 +1,5 @@
-#ifndef INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_INL_H_
-#define INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_INL_H_
+#ifndef INCLUDE_REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_INL_H_
+#define INCLUDE_REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_INL_H_
 
 #include <glog/logging.h>
 
@@ -54,13 +54,14 @@ GaussianDistribution<DIM> GaussianDistribution<DIM>::operator+(
 
 // Non-member overloaded operator for linear transforms of Gaussian random
 // vectors.
-inline GaussianDistribution<> operator*(const Eigen::MatrixXd& mat,
-                                        const GaussianDistribution<> gaussian) {
+template <int DIM = Eigen::Dynamic>
+inline GaussianDistribution<DIM> operator*(const Eigen::MatrixXd& mat,
+                                    const GaussianDistribution<DIM> gaussian) {
   CHECK_EQ(mat.cols(), gaussian.dim());
-  return GaussianDistribution<>(mat * gaussian.mean(),
+  return GaussianDistribution<DIM>(mat * gaussian.mean(),
                                 mat * gaussian.cov() * mat.transpose());
 }
 
 }  // namespace refill
 
-#endif  // INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_INL_H_
+#endif  // INCLUDE_REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_INL_H_
