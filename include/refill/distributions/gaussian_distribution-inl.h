@@ -5,8 +5,7 @@
 
 namespace refill {
 
-template <int DIM>
-GaussianDistribution<DIM>::GaussianDistribution() {
+template <int DIM> GaussianDistribution<DIM>::GaussianDistribution() {
   // In case of dynamic size matrices, we use a univariate standard normal
   // distribution as default.
   if (DIM == Eigen::Dynamic) {
@@ -42,8 +41,8 @@ void GaussianDistribution<DIM>::SetDistParam(
 }
 
 template <int DIM>
-GaussianDistribution<DIM> GaussianDistribution<DIM>::operator+(
-    const GaussianDistribution<DIM>& right_side) {
+GaussianDistribution<DIM> GaussianDistribution<DIM>::
+operator+(const GaussianDistribution<DIM> &right_side) {
   if (DIM == Eigen::Dynamic) {
     CHECK(right_side.dim() == dim()) << "Distribution dimensions do not match.";
   }
@@ -55,13 +54,14 @@ GaussianDistribution<DIM> GaussianDistribution<DIM>::operator+(
 // Non-member overloaded operator for linear transforms of Gaussian random
 // vectors.
 template <int DIM = Eigen::Dynamic>
-inline GaussianDistribution<DIM> operator*(const Eigen::MatrixXd& mat,
-                                    const GaussianDistribution<DIM> gaussian) {
+inline GaussianDistribution<DIM>
+operator*(const Eigen::MatrixXd &mat,
+          const GaussianDistribution<DIM> gaussian) {
   CHECK_EQ(mat.cols(), gaussian.dim());
   return GaussianDistribution<DIM>(mat * gaussian.mean(),
-                                mat * gaussian.cov() * mat.transpose());
+                                   mat * gaussian.cov() * mat.transpose());
 }
 
-}  // namespace refill
+} // namespace refill
 
-#endif  // INCLUDE_REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_INL_H_
+#endif // INCLUDE_REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_INL_H_
