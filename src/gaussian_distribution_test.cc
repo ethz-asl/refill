@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
 
-#include "refill/gaussian_distribution.h"
+#include "refill/distributions/gaussian_distribution.h"
 
 namespace refill {
 

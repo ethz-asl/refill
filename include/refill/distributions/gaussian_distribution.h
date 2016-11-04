@@ -1,5 +1,5 @@
-#ifndef INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_
-#define INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_
+#ifndef INCLUDE_REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
+#define INCLUDE_REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 
 #include <Eigen/Dense>
 
@@ -31,11 +31,12 @@ class GaussianDistribution {
 using GaussianDistributionXd = GaussianDistribution<Eigen::Dynamic>;
 
 // Non-member operator overloading.
-GaussianDistribution<> operator*(const Eigen::MatrixXd& mat,
-                                 const GaussianDistribution<> gaussian);
+template<int DIM = Eigen::Dynamic>
+GaussianDistribution<DIM> operator*(const Eigen::MatrixXd& mat,
+                                 const GaussianDistribution<DIM> gaussian);
 
 }  // namespace refill
 
 #include "./gaussian_distribution-inl.h"
 
-#endif  // INCLUDE_REFILL_GAUSSIAN_DISTRIBUTION_H_
+#endif  // INCLUDE_REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_

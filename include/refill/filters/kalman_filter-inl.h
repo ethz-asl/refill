@@ -1,5 +1,5 @@
-#ifndef INCLUDE_REFILL_KALMAN_FILTER_INL_H_
-#define INCLUDE_REFILL_KALMAN_FILTER_INL_H_
+#ifndef INCLUDE_REFILL_FILTERS_KALMAN_FILTER_INL_H_
+#define INCLUDE_REFILL_FILTERS_KALMAN_FILTER_INL_H_
 
 #include <glog/logging.h>
 
@@ -31,7 +31,7 @@ KalmanFilter<SYSDIM, MEASDIM>::KalmanFilter(
     GaussianDistribution<MEASDIM> measurement_noise,
     Eigen::Matrix<double, SYSDIM, SYSDIM> sys_model,
     Eigen::Matrix<double, MEASDIM, SYSDIM> obs_model)
-    : state_(state),
+    : state_(initial_state),
       system_noise_(system_noise),
       measurement_noise_(measurement_noise),
       sys_model_(sys_model),
@@ -75,4 +75,4 @@ void KalmanFilter<SYSDIM, MEASDIM>::Update(
 
 }  // namespace refill
 
-#endif  // INCLUDE_REFILL_KALMAN_FILTER_INL_H_
+#endif  // INCLUDE_REFILL_FILTERS_KALMAN_FILTER_INL_H_
