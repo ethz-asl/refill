@@ -13,9 +13,18 @@ def check_cpp_lint(repo_root, staged_files):
     """Runs Google's cpplint on all C++ files staged for commit,"""
     cpplint = imp.load_source('cpplint', repo_root + "/devtools/cpplint.py")
     for changed_file in staged_files:
-        if re.search(r'\.(cc|h)$', changed_file):
+        if re.search(r'\.cc$', changed_file):
             changed_file = repo_root + "/" + changed_file
             cpplint.ProcessFile(changed_file, 0)
+        elif re.search(r'\.h$', changed_file):
+            # Change global _root variable for desired behaviour of
+            # cpplint's header guard. Without this change the header include
+            # guard would have to look like: INCLUDE_REFILL_SUBPATH_HEADER_H_.
+            # We want it to look like: REFILL_SUBPATH_HEADER_H_
+            cpplint._root = "include" #pylint: disable=W0212
+            changed_file = repo_root + "/" + changed_file
+            cpplint.ProcessFile(changed_file, 0)
+            cpplint._root = None #pylint: disable=W0212
 
     if cpplint._cpplint_state.error_count:  #pylint: disable=W0212
         print 'Aborting commit: cpplint is unhappy.'

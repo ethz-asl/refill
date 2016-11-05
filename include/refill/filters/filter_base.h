@@ -1,5 +1,5 @@
-#ifndef INCLUDE_REFILL_FILTERS_FILTER_BASE_H_
-#define INCLUDE_REFILL_FILTERS_FILTER_BASE_H_
+#ifndef REFILL_FILTERS_FILTER_BASE_H_
+#define REFILL_FILTERS_FILTER_BASE_H_
 
 #include <Eigen/Dense>
 
@@ -14,4 +14,4 @@ class FilterBase {
 
 }  // namespace refill
 
-#endif  // INCLUDE_REFILL_FILTERS_FILTER_BASE_H_
+#endif  // REFILL_FILTERS_FILTER_BASE_H_
