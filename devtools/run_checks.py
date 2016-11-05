@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# Disable pylint filename and missing module member complaints.
-# pylint: disable=C0103,E1101
 """ Simple git pre-commit script for executing some linters. """
 
 import commands
@@ -59,9 +57,9 @@ def check_python_lint(repo_root, staged_files):
         def __init__(self):
             self.content = []
 
-        def write(self, st):
+        def write(self, input_str):
             "dummy write"
-            self.content.append(st)
+            self.content.append(input_str)
 
         def read(self):
             "dummy read"
@@ -76,17 +74,17 @@ def check_python_lint(repo_root, staged_files):
             print "Running pylint on " + repo_root + "/" + changed_file
             pylint_output = WritableObject()
             pylint_args = ["--rcfile=" + repo_root + "/devtools/pylint.rc",
-                           "-rn", "--errors-only",
+                           "-rn",
                            repo_root + "/" + changed_file]
             from pylint.reporters.text import TextReporter
             pylint.lint.Run(pylint_args,
                             reporter=TextReporter(pylint_output),
                             exit=False)
 
-            for l in pylint_output.read():
-                if re.search(r'^E:', l):
-                    print changed_file + ": " + l
-                    pylint_errors.append(l)
+            for output_line in pylint_output.read():
+                if re.search(r'^(E|C|W):', output_line):
+                    print changed_file + ": " + output_line
+                    pylint_errors.append(output_line)
 
     if len(pylint_errors) > 0:
         print  "Pylint found errors. Terminating."

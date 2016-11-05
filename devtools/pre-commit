@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+# Disable pylint invalid module name complaint.
+# pylint: disable=C0103
+""" Pre Commit script for invoking linters."""
+import imp
+import commands
+
+
+def main():
+    """ Main pre-commit function for calling code checking script. """
+    _, repo_root = commands.getstatusoutput('git rev-parse --show-toplevel')
+    checks = imp.load_source('run_checks',
+                             repo_root + "/devtools/run_checks.py")
+    exit(checks.main())
+
+
+if __name__ == "__main__":
+    main()
