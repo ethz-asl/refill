@@ -1,8 +1,8 @@
-#ifndef INCLUDE_REFILL_FILTERS_KALMAN_FILTER_H_
-#define INCLUDE_REFILL_FILTERS_KALMAN_FILTER_H_
+#ifndef REFILL_FILTERS_KALMAN_FILTER_H_
+#define REFILL_FILTERS_KALMAN_FILTER_H_
 
-#include "refill/filters/filter_base.h"
 #include "refill/distributions/gaussian_distribution.h"
+#include "refill/filters/filter_base.h"
 
 namespace refill {
 
@@ -37,4 +37,4 @@ using KalmanFilterXd = KalmanFilter<Eigen::Dynamic, Eigen::Dynamic>;
 
 #include "./kalman_filter-inl.h"
 
-#endif  // INCLUDE_REFILL_FILTERS_KALMAN_FILTER_H_
+#endif  // REFILL_FILTERS_KALMAN_FILTER_H_
