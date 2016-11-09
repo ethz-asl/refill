@@ -20,8 +20,8 @@ TEST(LinearSystemModelTest, Fullrun) {
                             Eigen::MatrixXd::Identity(state_dim, state_dim));
 
   LinearSystemModel<state_dim, input_dim> lsm(system_mat,
-                                              input_mat,
-                                              system_noise);
+                                              system_noise,
+                                              input_mat);
 
   ASSERT_EQ(lsm.GetSystemNoise()->mean(), Eigen::VectorXd::Ones(state_dim));
 

@@ -8,15 +8,15 @@
 
 namespace refill {
 
-template <int STATEDIM = Eigen::Dynamic, int INPUTDIM = Eigen::Dynamic>
+template<int STATEDIM = Eigen::Dynamic, int INPUTDIM = 0>
 class LinearSystemModel : public SystemModelBase<STATEDIM, INPUTDIM> {
  public:
   LinearSystemModel();
   LinearSystemModel(const Eigen::Matrix<double, STATEDIM, STATEDIM>& system_mat,
-                    const Eigen::Matrix<double, STATEDIM, INPUTDIM>& input_mat =
-                        Eigen::MatrixXd::Zero(STATEDIM, INPUTDIM),
                     const DistributionBase<STATEDIM>& system_noise =
-                        new GaussianDistribution<STATEDIM>());
+                        GaussianDistribution<STATEDIM>(),
+                    const Eigen::Matrix<double, STATEDIM, INPUTDIM>& input_mat =
+                        Eigen::MatrixXd::Zero(STATEDIM, INPUTDIM));
 
   int dim() const { return system_mat_.cols(); }
   void Propagate(Eigen::Matrix<double, STATEDIM, 1>* state,

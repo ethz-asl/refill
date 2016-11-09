@@ -5,32 +5,42 @@
 
 namespace refill {
 
-template <int STATEDIM, int INPUTDIM>
+template<int STATEDIM, int INPUTDIM>
 LinearSystemModel<STATEDIM, INPUTDIM>::LinearSystemModel() {
-  // In case of dynamic state and input size, we use a univariate system
-  // with no input and univariate standard normal gaussian distribution.
-  if (STATEDIM == Eigen::Dynamic && INPUTDIM == Eigen::Dynamic) {
-    system_mat_ = Eigen::MatrixXd::Identity(1, 1);
-    input_mat_  = Eigen::MatrixXd::Zero(1);
-    system_noise_ = new GaussianDistribution<1>();
-  }
+  constexpr int cur_sysdim = (STATEDIM == Eigen::Dynamic) ? 1 : STATEDIM;
+  constexpr int cur_indim = (INPUTDIM == Eigen::Dynamic) ? 1 : INPUTDIM;
+
+  system_mat_ = Eigen::Matrix<double, cur_sysdim, cur_sysdim>::Identity(
+      cur_sysdim, cur_sysdim);
+  input_mat_ = Eigen::Matrix<double, cur_sysdim, cur_indim>::Identity(
+      cur_sysdim, cur_indim);
+
+  // In case of no declaration of system noise, we use standard normal gaussian.
+  system_noise_.reset(new GaussianDistribution<cur_sysdim>());
 }
 
-template <int STATEDIM, int INPUTDIM>
+template<int STATEDIM, int INPUTDIM>
 LinearSystemModel<STATEDIM, INPUTDIM>::LinearSystemModel(
     const Eigen::Matrix<double, STATEDIM, STATEDIM>& system_mat,
-    const Eigen::Matrix<double, STATEDIM, INPUTDIM>& input_mat,
-    const DistributionBase<STATEDIM>& system_noise)
+    const DistributionBase<STATEDIM>& system_noise,
+    const Eigen::Matrix<double, STATEDIM, INPUTDIM>& input_mat)
     : system_mat_(system_mat),
       input_mat_(input_mat),
       system_noise_(system_noise.Clone()) {
 }
 
-template <int STATEDIM, int INPUTDIM>
+template<int STATEDIM, int INPUTDIM>
 void LinearSystemModel<STATEDIM, INPUTDIM>::Propagate(
     Eigen::Matrix<double, STATEDIM, 1>* state,
     const Eigen::Matrix<double, INPUTDIM, 1> &input) {
-  *state = system_mat_ * (*state) + input_mat_ * input + system_noise_->mean();
+
+  // If there is no input, we don't need to compute the matrix multiplication.
+  if (INPUTDIM == 0) {
+    *state = system_mat_ * (*state) + system_noise_->mean();
+  } else {
+    *state = system_mat_ * (*state) + input_mat_ * input
+        + system_noise_->mean();
+  }
 }
 
 }  // namespace refill

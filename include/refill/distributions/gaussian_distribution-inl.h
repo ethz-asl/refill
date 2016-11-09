@@ -49,11 +49,6 @@ void GaussianDistribution<DIM>::SetDistParam(
 }
 
 template <int DIM>
-GaussianDistribution* GaussianDistribution<DIM>::Clone() {
-  return new GaussianDistribution(*this);
-}
-
-template <int DIM>
 GaussianDistribution<DIM> GaussianDistribution<DIM>::operator+(
     const GaussianDistribution<DIM> &right_side) {
   if (DIM == Eigen::Dynamic) {
