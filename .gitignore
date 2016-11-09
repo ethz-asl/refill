@@ -5,6 +5,11 @@
 CMakeLists.txt.user
 *.autosave
 
+# Eclipse Specific
+*.cproject
+*.project
+.settings/
+
 # vim temporary files
 *.swp
 
