@@ -5,11 +5,11 @@
 
 namespace refill {
 
-template <int STATEDIM, int INPUTDIM>
-class SystemModelBase {
+template<int STATEDIM, int MEASDIM>
+class MeasurementModelBase {
  public:
-  virtual void Propagate(Eigen::Matrix<double, STATEDIM, 1>* state,
-                         const Eigen::Matrix<double, INPUTDIM, 1>& input) = 0;
+  virtual Eigen::Matrix<double, MEASDIM, 1> Observe(
+      const Eigen::Matrix<double, STATEDIM, 1>& state) = 0;
   virtual int dim() const = 0;
 };
 

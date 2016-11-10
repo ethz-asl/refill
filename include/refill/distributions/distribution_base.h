@@ -5,7 +5,8 @@
 
 namespace refill {
 
-template <int DIM>
+// Interface class for distributions
+template<int DIM>
 class DistributionInterface {
  public:
   virtual Eigen::Matrix<double, DIM, 1> mean() const = 0;
@@ -13,11 +14,17 @@ class DistributionInterface {
   virtual DistributionInterface* Clone() const = 0;
 };
 
-template <int DIM, typename Derived>
+/*
+ *  Class that implements the CRTP so the clone function doesn't
+ *  have to be implemented in every derived distribution.
+ *  For new distributions inherit from this class like this:
+ *  class NewDistribution : public DistributionBase<DIM, NewDistribution>
+ */
+template<int DIM, typename Derived>
 class DistributionBase : public DistributionInterface<DIM> {
   virtual DistributionBase* Clone() const {
-      return new Derived(static_cast<Derived const&>(*this));
-    }
+    return new Derived(static_cast<Derived const&>(*this));
+  }
 };
 
 }  // namespace refill
