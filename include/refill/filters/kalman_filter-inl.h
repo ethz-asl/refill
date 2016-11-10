@@ -5,9 +5,9 @@
 
 namespace refill {
 
-template <int SYSDIM, int MEASDIM>
-KalmanFilter<SYSDIM, MEASDIM>::KalmanFilter() {
-  constexpr int cur_sysdim = (SYSDIM == Eigen::Dynamic) ? 1 : SYSDIM;
+template <int STATEDIM, int MEASDIM>
+KalmanFilter<STATEDIM, MEASDIM>::KalmanFilter() {
+  constexpr int cur_sysdim = (STATEDIM == Eigen::Dynamic) ? 1 : STATEDIM;
 
   sys_model_ = Eigen::Matrix<double, cur_sysdim, cur_sysdim>::Identity(
       cur_sysdim, cur_sysdim);
@@ -24,13 +24,13 @@ KalmanFilter<SYSDIM, MEASDIM>::KalmanFilter() {
   }
 }
 
-template <int SYSDIM, int MEASDIM>
-KalmanFilter<SYSDIM, MEASDIM>::KalmanFilter(
-    GaussianDistribution<SYSDIM> initial_state,
-    GaussianDistribution<SYSDIM> system_noise,
+template <int STATEDIM, int MEASDIM>
+KalmanFilter<STATEDIM, MEASDIM>::KalmanFilter(
+    GaussianDistribution<STATEDIM> initial_state,
+    GaussianDistribution<STATEDIM> system_noise,
     GaussianDistribution<MEASDIM> measurement_noise,
-    Eigen::Matrix<double, SYSDIM, SYSDIM> sys_model,
-    Eigen::Matrix<double, MEASDIM, SYSDIM> obs_model)
+    Eigen::Matrix<double, STATEDIM, STATEDIM> sys_model,
+    Eigen::Matrix<double, MEASDIM, STATEDIM> obs_model)
     : state_(initial_state),
       system_noise_(system_noise),
       measurement_noise_(measurement_noise),
@@ -39,7 +39,7 @@ KalmanFilter<SYSDIM, MEASDIM>::KalmanFilter(
   const int state_dim = state_.dim();
   const int measurement_dim = measurement_noise.dim();
 
-  if (SYSDIM == Eigen::Dynamic) {
+  if (STATEDIM == Eigen::Dynamic) {
     CHECK_EQ(state_dim, system_noise.dim());
     CHECK_EQ(state_dim, sys_model.cols());
     CHECK_EQ(state_dim, sys_model.rows());
@@ -52,14 +52,14 @@ KalmanFilter<SYSDIM, MEASDIM>::KalmanFilter(
   }
 }
 
-template <int SYSDIM, int MEASDIM>
-void KalmanFilter<SYSDIM, MEASDIM>::Update(
+template <int STATEDIM, int MEASDIM>
+void KalmanFilter<STATEDIM, MEASDIM>::Update(
     Eigen::Matrix<double, MEASDIM, 1> measurement) {
   CHECK_EQ(measurement.size(), measurement_model_.rows());
 
   Eigen::Matrix<double, MEASDIM, 1> innovation;
   Eigen::Matrix<double, MEASDIM, MEASDIM> residual_cov;
-  Eigen::Matrix<double, SYSDIM, MEASDIM> kalman_gain;
+  Eigen::Matrix<double, STATEDIM, MEASDIM> kalman_gain;
 
   innovation = measurement - measurement_model_ * state_.mean();
   residual_cov =

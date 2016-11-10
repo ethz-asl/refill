@@ -20,6 +20,13 @@ GaussianDistribution<DIM>::GaussianDistribution() {
 
 template <int DIM>
 GaussianDistribution<DIM>::GaussianDistribution(
+    const GaussianDistribution &dist) {
+  covmat_ = dist.covmat_;
+  mean_ = dist.mean_;
+}
+
+template <int DIM>
+GaussianDistribution<DIM>::GaussianDistribution(
     Eigen::Matrix<double, DIM, 1> dist_mean,
     Eigen::Matrix<double, DIM, DIM> dist_cov) {
   SetDistParam(dist_mean, dist_cov);
