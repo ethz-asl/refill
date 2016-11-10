@@ -1,5 +1,5 @@
-#ifndef REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
-#define REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
+#ifndef REFILL_MEASUREMENT_MODELS_LINEAR_MEASUREMENT_MODEL_H_
+#define REFILL_MEASUREMENT_MODELS_LINEAR_MEASUREMENT_MODEL_H_
 
 #include <memory>
 
@@ -39,4 +39,4 @@ typedef LinearSystemModel<Eigen::Dynamic, Eigen::Dynamic> LinearSystemModelXd;
 
 #include "./linear_system_model-inl.h"
 
-#endif  // REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
+#endif  // REFILL_MEASUREMENT_MODELS_LINEAR_MEASUREMENT_MODEL_H_

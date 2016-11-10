@@ -6,7 +6,8 @@
 namespace refill {
 
 template<int DIM = Eigen::Dynamic>
-class GaussianDistribution : public DistributionBase<DIM> {
+class GaussianDistribution : public DistributionBase<DIM,
+    GaussianDistribution<DIM>> {
  public:
   GaussianDistribution();
   GaussianDistribution(const GaussianDistribution& dist);
@@ -19,10 +20,6 @@ class GaussianDistribution : public DistributionBase<DIM> {
   int dim() const { return mean_.size(); }
   Eigen::Matrix<double, DIM, 1> mean() const { return mean_; }
   Eigen::Matrix<double, DIM, DIM> cov() const { return covmat_; }
-
-  GaussianDistribution* Clone() const {
-    return new GaussianDistribution(*this);
-  }
 
   GaussianDistribution operator+(const GaussianDistribution<DIM>& right_side);
 
