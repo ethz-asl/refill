@@ -9,7 +9,7 @@ template<int STATEDIM, int MEASDIM>
 class MeasurementModelBase {
  public:
   virtual Eigen::Matrix<double, MEASDIM, 1> Observe(
-      const Eigen::Matrix<double, STATEDIM, 1>& state) = 0;
+      const Eigen::Matrix<double, STATEDIM, 1>& state) const = 0;
   virtual int dim() const = 0;
 };
 

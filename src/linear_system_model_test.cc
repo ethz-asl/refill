@@ -31,7 +31,7 @@ TEST(LinearSystemModelTest, Fullrun) {
   state_vec = Eigen::VectorXd::Ones(state_dim);
   input_vec = Eigen::VectorXd::Zero(input_dim);
 
-  lsm.Propagate(&state_vec, input_vec);
+  state_vec = lsm.Propagate(state_vec, input_vec);
 
   ASSERT_EQ(state_vec, 2*Eigen::VectorXd::Ones(state_dim));
 }

@@ -20,6 +20,8 @@ class GaussianDistribution : public DistributionBase<DIM,
   int dim() const { return mean_.size(); }
   Eigen::Matrix<double, DIM, 1> mean() const { return mean_; }
   Eigen::Matrix<double, DIM, DIM> cov() const { return covmat_; }
+  void SetMean(const Eigen::Matrix<double, DIM, 1>& mean) { mean_ = mean; }
+  void SetCov(const Eigen::Matrix<double, DIM, DIM>& cov) { covmat_ = cov; }
 
   GaussianDistribution operator+(const GaussianDistribution<DIM>& right_side);
 

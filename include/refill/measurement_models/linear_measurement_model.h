@@ -21,10 +21,14 @@ class LinearMeasurementModel : public MeasurementModelBase<STATEDIM, MEASDIM> {
     return measurement_mat_.rows();
   }
   Eigen::Matrix<double, MEASDIM, 1> Observe(
-      const Eigen::Matrix<double, STATEDIM, 1>& state);
+      const Eigen::Matrix<double, STATEDIM, 1>& state) const;
 
-  DistributionInterface<MEASDIM>* GetMeasurementNoise() {
+  DistributionInterface<MEASDIM>* GetMeasurementNoise() const {
     return measurement_noise_.get();
+  }
+
+  Eigen::Matrix<double, MEASDIM, STATEDIM> GetMeasurementMatrix() const {
+    return measurement_mat_;
   }
 
  private:

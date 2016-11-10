@@ -27,19 +27,26 @@ LinearSystemModel<STATEDIM, INPUTDIM>::LinearSystemModel(
     : system_mat_(system_mat),
       input_mat_(input_mat),
       system_noise_(system_noise.Clone()) {
+  const int state_dim = system_mat.rows();
+
+  if (STATEDIM == Eigen::Dynamic) {
+    CHECK_EQ(state_dim, system_mat.cols());
+    CHECK_EQ(state_dim, input_mat.rows());
+    CHECK_EQ(state_dim, system_noise.mean().rows());
+  }
 }
 
 template<int STATEDIM, int INPUTDIM>
-void LinearSystemModel<STATEDIM, INPUTDIM>::Propagate(
-    Eigen::Matrix<double, STATEDIM, 1>* state,
-    const Eigen::Matrix<double, INPUTDIM, 1> &input) {
+Eigen::Matrix<double, STATEDIM, 1>
+  LinearSystemModel<STATEDIM, INPUTDIM>::Propagate(
+    const Eigen::Matrix<double, STATEDIM, 1>& state,
+    const Eigen::Matrix<double, INPUTDIM, 1>& input) const {
 
   // If there is no input, we don't need to compute the matrix multiplication.
   if (INPUTDIM == 0) {
-    *state = system_mat_ * (*state) + system_noise_->mean();
+    return system_mat_ * state + system_noise_->mean();
   } else {
-    *state = system_mat_ * (*state) + input_mat_ * input
-        + system_noise_->mean();
+    return system_mat_ * state + input_mat_ * input + system_noise_->mean();
   }
 }
 

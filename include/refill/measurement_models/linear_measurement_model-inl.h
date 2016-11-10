@@ -29,7 +29,7 @@ LinearMeasurementModel<STATEDIM, MEASDIM>::LinearMeasurementModel(
 template<int STATEDIM, int MEASDIM>
 Eigen::Matrix<double, MEASDIM, 1>
   LinearMeasurementModel<STATEDIM, MEASDIM>::Observe(
-    const Eigen::Matrix<double, STATEDIM, 1>& state) {
+    const Eigen::Matrix<double, STATEDIM, 1>& state) const {
   return measurement_mat_ * state + measurement_noise_->mean();
 }
 

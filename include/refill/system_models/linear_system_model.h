@@ -18,13 +18,22 @@ class LinearSystemModel : public SystemModelBase<STATEDIM, INPUTDIM> {
                     const Eigen::Matrix<double, STATEDIM, INPUTDIM>& input_mat =
                         Eigen::MatrixXd::Zero(STATEDIM, INPUTDIM));
 
-  int dim() const { return system_mat_.cols(); }
-  void Propagate(Eigen::Matrix<double, STATEDIM, 1>* state,
-                 const Eigen::Matrix<double, INPUTDIM, 1>& input =
-                     Eigen::VectorXd::Zero(INPUTDIM));
+  int dim() const {
+    return system_mat_.cols();
+  }
 
-  DistributionInterface<STATEDIM>* GetSystemNoise() {
+  // Propagate a state vector through the linear system model
+  Eigen::Matrix<double, STATEDIM, 1> Propagate(
+      const Eigen::Matrix<double, STATEDIM, 1>& state,
+      const Eigen::Matrix<double, INPUTDIM, 1>& input = Eigen::VectorXd::Zero(
+          INPUTDIM)) const;
+
+  DistributionInterface<STATEDIM>* GetSystemNoise() const {
     return system_noise_.get();
+  }
+
+  Eigen::Matrix<double, STATEDIM, STATEDIM> GetSystemMatrix() const {
+    return system_mat_;
   }
 
  private:
