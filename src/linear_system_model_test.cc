@@ -6,8 +6,8 @@
 namespace refill {
 
 TEST(LinearSystemModelTest, Fullrun) {
-  const int state_dim = 2;
-  const int input_dim = 1;
+  constexpr int state_dim = 2;
+  constexpr int input_dim = 1;
 
   Eigen::MatrixXd system_mat(state_dim, state_dim);
   Eigen::MatrixXd input_mat(state_dim, input_dim);

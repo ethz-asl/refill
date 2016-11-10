@@ -6,8 +6,8 @@
 namespace refill {
 
 TEST(KalmanFilterTest, FullRun) {
-  const int state_dim = 2;
-  const int meas_dim  = 2;
+  constexpr int state_dim = 2;
+  constexpr int meas_dim  = 2;
 
   GaussianDistribution<state_dim> init_state;
   GaussianDistribution<state_dim> sys_noise;
