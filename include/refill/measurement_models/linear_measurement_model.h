@@ -17,9 +17,13 @@ class LinearMeasurementModel : public MeasurementModelBase<STATEDIM, MEASDIM> {
       const DistributionInterface<MEASDIM>& measurement_noise =
           GaussianDistribution<MEASDIM>());
 
-  int dim() const {
+  int GetStateDim() const {
+    return measurement_mat_.cols();
+  }
+  int GetMeasurementDim() const {
     return measurement_mat_.rows();
   }
+
   Eigen::Matrix<double, MEASDIM, 1> Observe(
       const Eigen::Matrix<double, STATEDIM, 1>& state) const;
 
@@ -27,7 +31,7 @@ class LinearMeasurementModel : public MeasurementModelBase<STATEDIM, MEASDIM> {
     return measurement_noise_.get();
   }
 
-  Eigen::Matrix<double, MEASDIM, STATEDIM> GetMeasurementMatrix() const {
+  Eigen::Matrix<double, MEASDIM, STATEDIM> GetJacobian() const {
     return measurement_mat_;
   }
 

@@ -1,30 +1,28 @@
-#ifndef REFILL_FILTERS_KALMAN_FILTER_INL_H_
-#define REFILL_FILTERS_KALMAN_FILTER_INL_H_
+#ifndef REFILL_FILTERS_EXTENDED_KALMAN_FILTER_INL_H_
+#define REFILL_FILTERS_EXTENDED_KALMAN_FILTER_INL_H_
 
 #include <glog/logging.h>
 
 namespace refill {
 
-template<int STATEDIM, int MEASDIM, int INPUTDIM>
-KalmanFilter<STATEDIM, MEASDIM, INPUTDIM>::KalmanFilter() {
+template<int STATEDIM>
+ExtendedKalmanFilter<STATEDIM>::ExtendedKalmanFilter() {
 }
 
-template<int STATEDIM, int MEASDIM, int INPUTDIM>
-KalmanFilter<STATEDIM, MEASDIM, INPUTDIM>::KalmanFilter(
+template<int STATEDIM>
+ExtendedKalmanFilter<STATEDIM>::ExtendedKalmanFilter(
     const GaussianDistribution<STATEDIM>& initial_state)
     : state_(initial_state) {
 }
 
-template<int STATEDIM, int MEASDIM, int INPUTDIM>
-void KalmanFilter<STATEDIM, MEASDIM, INPUTDIM>::Predict(
-    const LinearSystemModel<STATEDIM, INPUTDIM>& system_model,
+template<int STATEDIM>
+template<int INPUTDIM>
+void ExtendedKalmanFilter<STATEDIM>::Predict(
+    const SystemModelBase<STATEDIM, INPUTDIM>& system_model,
     const Eigen::Matrix<double, INPUTDIM, 1>& input) {
-  if (STATEDIM == Eigen::Dynamic) {
-    CHECK_EQ(state_.dim(), system_model.dim());
-  }
 
   Eigen::Matrix<double, STATEDIM, STATEDIM> system_mat;
-  system_mat = system_model.GetSystemMatrix();
+  system_mat = system_model.GetJacobian();
 
   state_.SetDistParam(
       system_model.Propagate(state_.mean(), input),
@@ -32,21 +30,18 @@ void KalmanFilter<STATEDIM, MEASDIM, INPUTDIM>::Predict(
           + system_model.GetSystemNoise()->cov());
 }
 
-template<int STATEDIM, int MEASDIM, int INPUTDIM>
-void KalmanFilter<STATEDIM, MEASDIM, INPUTDIM>::Update(
-    const LinearMeasurementModel<STATEDIM, MEASDIM>& measurement_model,
+template<int STATEDIM>
+template<int MEASDIM>
+void ExtendedKalmanFilter<STATEDIM>::Update(
+    const MeasurementModelBase<STATEDIM, MEASDIM>& measurement_model,
     const Eigen::Matrix<double, MEASDIM, 1>& measurement) {
-  CHECK_EQ(measurement.size(), measurement_model.dim());
+  CHECK_EQ(measurement.size(), measurement_model.GetMeasurementDim());
 
   Eigen::Matrix<double, MEASDIM, STATEDIM> measurement_mat;
-  measurement_mat = measurement_model.GetMeasurementMatrix();
-
-  if (STATEDIM == Eigen::Dynamic) {
-    CHECK_EQ(state_.dim(), measurement_mat.cols());
-  }
+  measurement_mat = measurement_model.GetJacobian();
 
   if (MEASDIM == Eigen::Dynamic) {
-    CHECK_EQ(measurement.rows(), measurement_mat.rows());
+    CHECK_EQ(measurement.size(), measurement_model.GetMeasurementDim());
   }
 
   Eigen::Matrix<double, MEASDIM, 1> innovation;
@@ -66,4 +61,4 @@ void KalmanFilter<STATEDIM, MEASDIM, INPUTDIM>::Update(
 
 }  // namespace refill
 
-#endif  // REFILL_FILTERS_KALMAN_FILTER_INL_H_
+#endif  // REFILL_FILTERS_EXTENDED_KALMAN_FILTER_INL_H_

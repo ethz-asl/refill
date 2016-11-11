@@ -24,12 +24,20 @@ LinearMeasurementModel<STATEDIM, MEASDIM>::LinearMeasurementModel(
     const DistributionInterface<MEASDIM>& measurement_noise)
     : measurement_mat_(measurement_mat),
       measurement_noise_(measurement_noise.Clone()) {
+
+  if (MEASDIM == Eigen::Dynamic) {
+    CHECK_EQ(measurement_mat_.rows(), measurement_noise_->mean().size());
+  }
 }
 
 template<int STATEDIM, int MEASDIM>
 Eigen::Matrix<double, MEASDIM, 1>
   LinearMeasurementModel<STATEDIM, MEASDIM>::Observe(
     const Eigen::Matrix<double, STATEDIM, 1>& state) const {
+  if (STATEDIM == Eigen::Dynamic) {
+    CHECK_EQ(state.size(), measurement_mat_.cols());
+  }
+
   return measurement_mat_ * state + measurement_noise_->mean();
 }
 

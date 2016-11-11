@@ -13,7 +13,9 @@ class SystemModelBase {
   virtual Eigen::Matrix<double, STATEDIM, 1> Propagate(
       const Eigen::Matrix<double, STATEDIM, 1>& state,
       const Eigen::Matrix<double, INPUTDIM, 1>& input) const = 0;
-  virtual int dim() const = 0;
+  virtual int GetStateDim() const = 0;
+  virtual int GetInputDim() const = 0;
+  virtual Eigen::Matrix<double, STATEDIM, STATEDIM> GetJacobian() const = 0;
   virtual DistributionInterface<STATEDIM>* GetSystemNoise() const = 0;
 };
 

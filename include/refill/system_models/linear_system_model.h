@@ -18,8 +18,12 @@ class LinearSystemModel : public SystemModelBase<STATEDIM, INPUTDIM> {
                     const Eigen::Matrix<double, STATEDIM, INPUTDIM>& input_mat =
                         Eigen::MatrixXd::Zero(STATEDIM, INPUTDIM));
 
-  int dim() const {
-    return system_mat_.cols();
+  int GetStateDim() const {
+    return system_mat_.rows();
+  }
+
+  int GetInputDim() const {
+    return input_mat_.cols();
   }
 
   // Propagate a state vector through the linear system model
@@ -32,7 +36,7 @@ class LinearSystemModel : public SystemModelBase<STATEDIM, INPUTDIM> {
     return system_noise_.get();
   }
 
-  Eigen::Matrix<double, STATEDIM, STATEDIM> GetSystemMatrix() const {
+  Eigen::Matrix<double, STATEDIM, STATEDIM> GetJacobian() const {
     return system_mat_;
   }
 

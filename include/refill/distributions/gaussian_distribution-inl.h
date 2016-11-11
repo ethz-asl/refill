@@ -38,7 +38,7 @@ void GaussianDistribution<DIM>::SetDistParam(
     Eigen::Matrix<double, DIM, DIM> dist_cov) {
   if (DIM == Eigen::Dynamic) {
     CHECK_EQ(dist_mean.size(), dist_cov.rows());
-    CHECK_EQ(dist_cov.rows(), dist_mean.cols());
+    CHECK_EQ(dist_cov.rows(), dist_cov.cols());
   }
 
   Eigen::LLT<Eigen::Matrix<double, DIM, DIM>> chol_of_cov(dist_cov);

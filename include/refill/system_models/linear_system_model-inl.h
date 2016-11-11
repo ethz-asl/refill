@@ -32,7 +32,7 @@ LinearSystemModel<STATEDIM, INPUTDIM>::LinearSystemModel(
   if (STATEDIM == Eigen::Dynamic) {
     CHECK_EQ(state_dim, system_mat.cols());
     CHECK_EQ(state_dim, input_mat.rows());
-    CHECK_EQ(state_dim, system_noise.mean().rows());
+    CHECK_EQ(state_dim, system_noise.mean().size());
   }
 }
 
@@ -42,8 +42,16 @@ Eigen::Matrix<double, STATEDIM, 1>
     const Eigen::Matrix<double, STATEDIM, 1>& state,
     const Eigen::Matrix<double, INPUTDIM, 1>& input) const {
 
+  if (STATEDIM == Eigen::Dynamic) {
+    CHECK_EQ(state.size(), system_mat_.rows());
+  }
+
+  if (INPUTDIM == Eigen::Dynamic) {
+    CHECK_EQ(input.rows(), input_mat_.cols());
+  }
+
   // If there is no input, we don't need to compute the matrix multiplication.
-  if (INPUTDIM == 0) {
+  if (input_mat_.cols() == 0) {
     return system_mat_ * state + system_noise_->mean();
   } else {
     return system_mat_ * state + input_mat_ * input + system_noise_->mean();
