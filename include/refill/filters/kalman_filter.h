@@ -12,7 +12,7 @@ namespace refill {
 
 template<int STATEDIM = Eigen::Dynamic, int MEASDIM = Eigen::Dynamic,
     int INPUTDIM = 0>
-class KalmanFilter : public FilterBase<STATEDIM, MEASDIM> {
+class KalmanFilter : public FilterBase<STATEDIM, MEASDIM, INPUTDIM> {
  public:
   KalmanFilter();
   explicit KalmanFilter(const GaussianDistribution<STATEDIM>& initial_state);
@@ -46,7 +46,7 @@ class KalmanFilter : public FilterBase<STATEDIM, MEASDIM> {
 
 // Alias for a dynamic size version of the Kalman Filter. Notation
 // comptatible to Eigen.
-using KalmanFilterXd = KalmanFilter<Eigen::Dynamic, Eigen::Dynamic>;
+using KalmanFilterXd = KalmanFilter<>;
 
 }  // namespace refill
 

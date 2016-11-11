@@ -7,33 +7,32 @@ namespace refill {
 
 TEST(LinearSystemModelTest, Fullrun) {
   constexpr int state_dim = 2;
-  constexpr int input_dim = 1;
+  constexpr int input_dim = 2;
 
   Eigen::MatrixXd system_mat(state_dim, state_dim);
   Eigen::MatrixXd input_mat(state_dim, input_dim);
   GaussianDistribution<state_dim> system_noise;
 
   system_mat = Eigen::MatrixXd::Identity(state_dim, state_dim);
-  input_mat  = Eigen::MatrixXd::Identity(state_dim, input_dim);
+  input_mat = Eigen::MatrixXd::Identity(state_dim, input_dim);
 
-  system_noise.SetDistParam(Eigen::VectorXd::Ones(state_dim),
-                            Eigen::MatrixXd::Identity(state_dim, state_dim));
+//  system_noise.SetDistParam(Eigen::VectorXd::Ones(state_dim),
+//                            Eigen::MatrixXd::Identity(state_dim, state_dim));
 
-  LinearSystemModel<state_dim, input_dim> lsm(system_mat,
-                                              system_noise,
+  LinearSystemModel<state_dim, input_dim> lsm(system_mat, system_noise,
                                               input_mat);
 
-  ASSERT_EQ(lsm.GetSystemNoise()->mean(), Eigen::VectorXd::Ones(state_dim));
+  ASSERT_EQ(lsm.GetSystemNoise()->mean(), Eigen::VectorXd::Zero(state_dim));
 
   Eigen::Matrix<double, state_dim, 1> state_vec;
   Eigen::VectorXd input_vec(input_dim);
 
   state_vec = Eigen::VectorXd::Ones(state_dim);
-  input_vec = Eigen::VectorXd::Zero(input_dim);
+  input_vec = Eigen::VectorXd::Ones(input_dim);
 
   state_vec = lsm.Propagate(state_vec, input_vec);
 
-  ASSERT_EQ(state_vec, 2*Eigen::VectorXd::Ones(state_dim));
+  ASSERT_EQ(2.0 * Eigen::VectorXd::Ones(state_dim), state_vec) << state_vec;
 }
 
 }  // namespace refill
