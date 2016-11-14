@@ -5,32 +5,32 @@
 
 namespace refill {
 
-template <int STATEDIM, int MEASDIM>
-KalmanFilter<STATEDIM, MEASDIM>::KalmanFilter() {
-  constexpr int cur_sysdim = (STATEDIM == Eigen::Dynamic) ? 1 : STATEDIM;
+template <int STATE_DIM, int MEAS_DIM>
+KalmanFilter<STATE_DIM, MEAS_DIM>::KalmanFilter() {
+  constexpr int cur_sysdim = (STATE_DIM == Eigen::Dynamic) ? 1 : STATE_DIM;
 
   sys_model_ = Eigen::Matrix<double, cur_sysdim, cur_sysdim>::Identity(
       cur_sysdim, cur_sysdim);
 
   // If dimensionality of measurement datastructures has dynamic size, we assume
   // it to be the same as the system model by default.
-  if (MEASDIM == Eigen::Dynamic) {
+  if (MEAS_DIM == Eigen::Dynamic) {
     measurement_model_ =
         Eigen::Matrix<double, cur_sysdim, cur_sysdim>::Identity(cur_sysdim,
                                                                 cur_sysdim);
   } else {
-    measurement_model_ = Eigen::Matrix<double, MEASDIM, cur_sysdim>::Identity(
-        MEASDIM, cur_sysdim);
+    measurement_model_ = Eigen::Matrix<double, MEAS_DIM, cur_sysdim>::Identity(
+        MEAS_DIM, cur_sysdim);
   }
 }
 
-template <int STATEDIM, int MEASDIM>
-KalmanFilter<STATEDIM, MEASDIM>::KalmanFilter(
-    GaussianDistribution<STATEDIM> initial_state,
-    GaussianDistribution<STATEDIM> system_noise,
-    GaussianDistribution<MEASDIM> measurement_noise,
-    Eigen::Matrix<double, STATEDIM, STATEDIM> sys_model,
-    Eigen::Matrix<double, MEASDIM, STATEDIM> obs_model)
+template <int STATE_DIM, int MEAS_DIM>
+KalmanFilter<STATE_DIM, MEAS_DIM>::KalmanFilter(
+    GaussianDistribution<STATE_DIM> initial_state,
+    GaussianDistribution<STATE_DIM> system_noise,
+    GaussianDistribution<MEAS_DIM> measurement_noise,
+    Eigen::Matrix<double, STATE_DIM, STATE_DIM> sys_model,
+    Eigen::Matrix<double, MEAS_DIM, STATE_DIM> obs_model)
     : state_(initial_state),
       system_noise_(system_noise),
       measurement_noise_(measurement_noise),
@@ -39,27 +39,27 @@ KalmanFilter<STATEDIM, MEASDIM>::KalmanFilter(
   const int state_dim = state_.dim();
   const int measurement_dim = measurement_noise.dim();
 
-  if (STATEDIM == Eigen::Dynamic) {
+  if (STATE_DIM == Eigen::Dynamic) {
     CHECK_EQ(state_dim, system_noise.dim());
     CHECK_EQ(state_dim, sys_model.cols());
     CHECK_EQ(state_dim, sys_model.rows());
     CHECK_EQ(state_dim, obs_model.cols());
   }
 
-  if (MEASDIM == Eigen::Dynamic) {
+  if (MEAS_DIM == Eigen::Dynamic) {
     CHECK_EQ(measurement_dim, obs_model.rows());
     CHECK_EQ(measurement_dim, measurement_noise.dim());
   }
 }
 
-template <int STATEDIM, int MEASDIM>
-void KalmanFilter<STATEDIM, MEASDIM>::Update(
-    Eigen::Matrix<double, MEASDIM, 1> measurement) {
+template <int STATE_DIM, int MEAS_DIM>
+void KalmanFilter<STATE_DIM, MEAS_DIM>::Update(
+    Eigen::Matrix<double, MEAS_DIM, 1> measurement) {
   CHECK_EQ(measurement.size(), measurement_model_.rows());
 
-  Eigen::Matrix<double, MEASDIM, 1> innovation;
-  Eigen::Matrix<double, MEASDIM, MEASDIM> residual_cov;
-  Eigen::Matrix<double, STATEDIM, MEASDIM> kalman_gain;
+  Eigen::Matrix<double, MEAS_DIM, 1> innovation;
+  Eigen::Matrix<double, MEAS_DIM, MEAS_DIM> residual_cov;
+  Eigen::Matrix<double, STATE_DIM, MEAS_DIM> kalman_gain;
 
   innovation = measurement - measurement_model_ * state_.mean();
   residual_cov =

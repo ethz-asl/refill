@@ -5,11 +5,11 @@
 
 namespace refill {
 
-template<int STATEDIM, int MEASDIM>
+template<int STATE_DIM, int MEAS_DIM>
 class MeasurementModelBase {
  public:
-  virtual Eigen::Matrix<double, MEASDIM, 1> Observe(
-      const Eigen::Matrix<double, STATEDIM, 1>& state) = 0;
+  virtual Eigen::Matrix<double, MEAS_DIM, 1> Observe(
+      const Eigen::Matrix<double, STATE_DIM, 1>& state) = 0;
   virtual int dim() const = 0;
 };
 

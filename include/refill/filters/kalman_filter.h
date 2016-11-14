@@ -6,27 +6,27 @@
 
 namespace refill {
 
-template <int STATEDIM = Eigen::Dynamic, int MEASDIM = Eigen::Dynamic>
-class KalmanFilter : public FilterBase<STATEDIM, MEASDIM> {
+template <int STATE_DIM = Eigen::Dynamic, int MEAS_DIM = Eigen::Dynamic>
+class KalmanFilter : public FilterBase<STATE_DIM, MEAS_DIM> {
  public:
   KalmanFilter();
-  KalmanFilter(GaussianDistribution<STATEDIM> initial_state,
-               GaussianDistribution<STATEDIM> system_noise,
-               GaussianDistribution<MEASDIM> measurement_noise,
-               Eigen::Matrix<double, STATEDIM, STATEDIM> sys_model,
-               Eigen::Matrix<double, MEASDIM, STATEDIM> obs_model);
+  KalmanFilter(GaussianDistribution<STATE_DIM> initial_state,
+               GaussianDistribution<STATE_DIM> system_noise,
+               GaussianDistribution<MEAS_DIM> measurement_noise,
+               Eigen::Matrix<double, STATE_DIM, STATE_DIM> sys_model,
+               Eigen::Matrix<double, MEAS_DIM, STATE_DIM> obs_model);
 
   void Predict() { state_ = sys_model_ * state_ + system_noise_; }
-  void Update(Eigen::Matrix<double, MEASDIM, 1> measurement);
+  void Update(Eigen::Matrix<double, MEAS_DIM, 1> measurement);
 
-  GaussianDistribution<STATEDIM> state() const { return state_; }
+  GaussianDistribution<STATE_DIM> state() const { return state_; }
 
  private:
-  GaussianDistribution<STATEDIM> state_;
-  GaussianDistribution<STATEDIM> system_noise_;
-  GaussianDistribution<MEASDIM> measurement_noise_;
-  Eigen::Matrix<double, STATEDIM, STATEDIM> sys_model_;
-  Eigen::Matrix<double, MEASDIM, STATEDIM> measurement_model_;
+  GaussianDistribution<STATE_DIM> state_;
+  GaussianDistribution<STATE_DIM> system_noise_;
+  GaussianDistribution<MEAS_DIM> measurement_noise_;
+  Eigen::Matrix<double, STATE_DIM, STATE_DIM> sys_model_;
+  Eigen::Matrix<double, MEAS_DIM, STATE_DIM> measurement_model_;
 };
 
 // Alias for a dynamic size version of the Kalman Filter. Notation

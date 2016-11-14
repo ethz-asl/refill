@@ -8,29 +8,31 @@
 
 namespace refill {
 
-template<int STATEDIM = Eigen::Dynamic, int INPUTDIM = 0>
-class LinearSystemModel : public SystemModelBase<STATEDIM, INPUTDIM> {
+template<int STATE_DIM = Eigen::Dynamic, int INPUT_DIM = 0>
+class LinearSystemModel : public SystemModelBase<STATE_DIM, INPUT_DIM> {
  public:
   LinearSystemModel();
-  LinearSystemModel(const Eigen::Matrix<double, STATEDIM, STATEDIM>& system_mat,
-                    const DistributionInterface<STATEDIM>& system_noise =
-                        GaussianDistribution<STATEDIM>(),
-                    const Eigen::Matrix<double, STATEDIM, INPUTDIM>& input_mat =
-                        Eigen::MatrixXd::Zero(STATEDIM, INPUTDIM));
+  LinearSystemModel(const Eigen::Matrix<double, STATE_DIM, STATE_DIM>&
+                      system_mat,
+                    const DistributionInterface<STATE_DIM>& system_noise =
+                        GaussianDistribution<STATE_DIM>(),
+                    const Eigen::Matrix<double, STATE_DIM, INPUT_DIM>&
+                      input_mat =
+                        Eigen::MatrixXd::Zero(STATE_DIM, INPUT_DIM));
 
   int dim() const { return system_mat_.cols(); }
-  void Propagate(Eigen::Matrix<double, STATEDIM, 1>* state,
-                 const Eigen::Matrix<double, INPUTDIM, 1>& input =
-                     Eigen::VectorXd::Zero(INPUTDIM));
+  void Propagate(Eigen::Matrix<double, STATE_DIM, 1>* state,
+                 const Eigen::Matrix<double, INPUT_DIM, 1>& input =
+                     Eigen::VectorXd::Zero(INPUT_DIM));
 
-  DistributionInterface<STATEDIM>* GetSystemNoise() {
+  DistributionInterface<STATE_DIM>* GetSystemNoise() {
     return system_noise_.get();
   }
 
  private:
-  Eigen::Matrix<double, STATEDIM, STATEDIM> system_mat_;
-  Eigen::Matrix<double, STATEDIM, INPUTDIM> input_mat_;
-  std::unique_ptr<DistributionInterface<STATEDIM>> system_noise_;
+  Eigen::Matrix<double, STATE_DIM, STATE_DIM> system_mat_;
+  Eigen::Matrix<double, STATE_DIM, INPUT_DIM> input_mat_;
+  std::unique_ptr<DistributionInterface<STATE_DIM>> system_noise_;
 };
 
 typedef LinearSystemModel<Eigen::Dynamic, Eigen::Dynamic> LinearSystemModelXd;

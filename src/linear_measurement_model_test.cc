@@ -17,14 +17,15 @@ TEST(LinearMeasurementModelTest, Fullrun) {
   measurement_noise.SetDistParam(Eigen::VectorXd::Zero(meas_dim),
                                  Eigen::MatrixXd::Identity(meas_dim, meas_dim));
 
-  LinearMeasurementModel<state_dim, meas_dim> lmm(measurement_mat,
-                                                  measurement_noise);
+  LinearMeasurementModel<state_dim, meas_dim> linear_measurement_model(
+      measurement_mat, measurement_noise);
 
   Eigen::VectorXd state(state_dim);
 
   state = Eigen::VectorXd::Ones(state_dim);
 
-  ASSERT_EQ(lmm.Observe(state), Eigen::VectorXd::Ones(meas_dim));
+  ASSERT_EQ(linear_measurement_model.Observe(state),
+            Eigen::VectorXd::Ones(meas_dim));
 }
 
 }  // namespace refill
