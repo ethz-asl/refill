@@ -21,7 +21,7 @@ TEST(LinearSystemModelTest, Fullrun) {
       Eigen::VectorXd::Zero(kStateDim),
       Eigen::MatrixXd::Identity(kStateDim, kStateDim));
 
-  system_noise.SetDistParam(Eigen::VectorXd::Ones(kStateDim),
+  system_noise.setDistParam(Eigen::VectorXd::Ones(kStateDim),
                             Eigen::MatrixXd::Identity(kStateDim, kStateDim));
 
   // Set up system model
@@ -35,17 +35,17 @@ TEST(LinearSystemModelTest, Fullrun) {
   input_vec = Eigen::VectorXd::Ones(kInputDim);
 
   // Propagate the state vector through the system
-  state_vec = system_model.Propagate(state_vec, input_vec);
+  state_vec = system_model.propagate(state_vec, input_vec);
 
   // Check that propagation was correct
   ASSERT_EQ(state_vec, Eigen::VectorXd::Ones(kStateDim) * 3.0);
 
   // Check that dimension getters work
-  ASSERT_EQ(system_model.GetStateDim(), kStateDim);
-  ASSERT_EQ(system_model.GetInputDim(), kInputDim);
+  ASSERT_EQ(system_model.getStateDim(), kStateDim);
+  ASSERT_EQ(system_model.getInputDim(), kInputDim);
 
   // Check that Jacobian getter works
-  ASSERT_EQ(system_model.GetJacobian(), system_mat);
+  ASSERT_EQ(system_model.getJacobian(), system_mat);
 }
 
 }  // namespace refill

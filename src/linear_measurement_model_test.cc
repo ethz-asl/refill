@@ -15,7 +15,7 @@ TEST(LinearMeasurementModelTest, Fullrun) {
 
   // Set up measurement noise
   GaussianDistribution<kMeasurementDim> measurement_noise;
-  measurement_noise.SetDistParam(
+  measurement_noise.setDistParam(
       Eigen::VectorXd::Ones(kMeasurementDim),
       Eigen::MatrixXd::Identity(kMeasurementDim, kMeasurementDim));
 
@@ -28,15 +28,15 @@ TEST(LinearMeasurementModelTest, Fullrun) {
   state = Eigen::VectorXd::Ones(kStateDim);
 
   // Check if observation works
-  ASSERT_EQ(measurement_model.Observe(state),
+  ASSERT_EQ(measurement_model.observe(state),
             Eigen::VectorXd::Ones(kMeasurementDim) * 2.0);
 
   // Check if dimension getters work
-  ASSERT_EQ(measurement_model.GetStateDim(), kStateDim);
-  ASSERT_EQ(measurement_model.GetMeasurementDim(), kMeasurementDim);
+  ASSERT_EQ(measurement_model.getStateDim(), kStateDim);
+  ASSERT_EQ(measurement_model.getMeasurementDim(), kMeasurementDim);
 
   // Check if Jacobian getter works
-  ASSERT_EQ(measurement_model.GetJacobian(), measurement_mat);
+  ASSERT_EQ(measurement_model.getJacobian(), measurement_mat);
 }
 
 }  // namespace refill

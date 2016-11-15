@@ -36,7 +36,7 @@ class LinearMeasurementModel
     return measurement_noise_.get();
   }
 
-  Eigen::Matrix<double, MEAS_DIM, STATE_DIM> GetJacobian() const {
+  Eigen::Matrix<double, MEAS_DIM, STATE_DIM> getJacobian() const {
     return measurement_mat_;
   }
 
@@ -78,12 +78,20 @@ LinearMeasurementModel<STATE_DIM, MEAS_DIM>::LinearMeasurementModel(
     const DistributionInterface<MEAS_DIM>& measurement_noise)
     : measurement_mat_(measurement_mat),
       measurement_noise_(measurement_noise.clone()) {
+
+  if (MEAS_DIM == Eigen::Dynamic) {
+    CHECK_EQ(measurement_mat_.rows(), measurement_noise_->mean().size());
+  }
 }
 
 template<int STATE_DIM, int MEAS_DIM>
 Eigen::Matrix<double, MEAS_DIM, 1>
   LinearMeasurementModel<STATE_DIM, MEAS_DIM>::observe(
     const Eigen::Matrix<double, STATE_DIM, 1>& state) const {
+  if (STATE_DIM == Eigen::Dynamic) {
+    CHECK_EQ(state.size(), measurement_mat_.cols());
+  }
+
   return measurement_mat_ * state + measurement_noise_->mean();
 }
 

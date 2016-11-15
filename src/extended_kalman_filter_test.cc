@@ -7,7 +7,7 @@
 
 namespace refill {
 
-TEST(KalmanFilterTest, FullRun) {
+TEST(ExtendedKalmanFilterTest, FullRun) {
   // Tests with templated size
   constexpr int kStateDim = 3;
   constexpr int kMeasurementDim = 3;
@@ -48,14 +48,14 @@ TEST(KalmanFilterTest, FullRun) {
                                                                 1);
 
   // Predict one step
-  KF.Predict(system_model, input);
+  KF.predict(system_model, input);
 
   ASSERT_EQ(KF.state().mean(), Eigen::VectorXd::Ones(kStateDim));
   ASSERT_EQ(KF.state().cov(),
             Eigen::MatrixXd::Identity(kStateDim, kStateDim) * 2.0);
 
   // Update with measurement
-  KF.Update(measurement_model, measurement);
+  KF.update(measurement_model, measurement);
 
   ASSERT_EQ(KF.state().mean(), Eigen::VectorXd::Ones(kStateDim));
 
@@ -90,13 +90,13 @@ TEST(KalmanFilterTest, FullRun) {
   inputXd = Eigen::VectorXd::Ones(kInputDim);
   measurementXd = Eigen::VectorXd::Ones(kMeasurementDim);
 
-  KFXd.Predict(system_modelXd, inputXd);
+  KFXd.predict(system_modelXd, inputXd);
 
   ASSERT_EQ(KFXd.state().mean(), Eigen::VectorXd::Ones(kStateDim));
   ASSERT_EQ(KFXd.state().cov(),
             Eigen::MatrixXd::Identity(kStateDim, kStateDim) * 2.0);
 
-  KFXd.Update(measurement_modelXd, measurementXd);
+  KFXd.update(measurement_modelXd, measurementXd);
 
   ASSERT_EQ(KFXd.state().mean(), Eigen::VectorXd::Ones(kStateDim));
 

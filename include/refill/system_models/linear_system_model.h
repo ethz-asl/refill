@@ -52,26 +52,27 @@ class LinearSystemModel : public SystemModelBase<STATE_DIM, INPUT_DIM> {
   std::unique_ptr<DistributionInterface<STATE_DIM>> system_noise_;
 };
 
-typedef LinearSystemModel<Eigen::Dynamic, Eigen::Dynamic> LinearSystemModelXd;
+typedef LinearSystemModel<Eigen::Dynamic, Eigen::Dynamic>
+        LinearSystemModelXd;
 
 // Function definitions
 
 template<int STATE_DIM, int INPUT_DIM>
 LinearSystemModel<STATE_DIM, INPUT_DIM>::LinearSystemModel() {
-  constexpr int kCurrentSystemDim =
+  constexpr int kCurrentSystemDIm =
       (STATE_DIM == Eigen::Dynamic) ? 1 : STATE_DIM;
-  constexpr int kCurrentInputDim =
+  constexpr int kCurrentInputDIm =
       (INPUT_DIM == Eigen::Dynamic) ? 1 : INPUT_DIM;
 
   system_mat_ =
-      Eigen::Matrix<double, kCurrentSystemDim, kCurrentSystemDim>::Identity(
-          kCurrentSystemDim, kCurrentSystemDim);
+      Eigen::Matrix<double, kCurrentSystemDIm, kCurrentSystemDIm>::Identity(
+          kCurrentSystemDIm, kCurrentSystemDIm);
   input_mat_ =
-      Eigen::Matrix<double, kCurrentSystemDim, kCurrentInputDim>::Identity(
-          kCurrentSystemDim, kCurrentInputDim);
+      Eigen::Matrix<double, kCurrentSystemDIm, kCurrentInputDIm>::Identity(
+          kCurrentSystemDIm, kCurrentInputDIm);
 
-  // In case of no declaration of system noise, we use standard normal gaussian
-  system_noise_.reset(new GaussianDistribution<kCurrentSystemDim>());
+  // In case of no declaration of system noise, we use standard normal gaussian.
+  system_noise_.reset(new GaussianDistribution<kCurrentSystemDIm>());
 }
 
 template<int STATE_DIM, int INPUT_DIM>
@@ -80,7 +81,13 @@ LinearSystemModel<STATE_DIM, INPUT_DIM>::LinearSystemModel(
     const DistributionInterface<STATE_DIM>& system_noise)
     : system_mat_(system_mat),
       system_noise_(system_noise.clone()),
-      input_mat_(Eigen::MatrixXd::Zero(STATE_DIM, INPUT_DIM)) {
+      input_mat_(Eigen::MatrixXd::Zero(0, 0)) {
+  const int kStateDim = system_mat.rows();
+
+  if (STATE_DIM == Eigen::Dynamic) {
+    CHECK_EQ(kStateDim, system_mat.cols());
+    CHECK_EQ(kStateDim, system_noise.mean().size());
+  }
 }
 
 template<int STATE_DIM, int INPUT_DIM>
@@ -91,6 +98,13 @@ LinearSystemModel<STATE_DIM, INPUT_DIM>::LinearSystemModel(
     : system_mat_(system_mat),
       input_mat_(input_mat),
       system_noise_(system_noise.clone()) {
+  const int kStateDim = system_mat.rows();
+
+  if (STATE_DIM == Eigen::Dynamic) {
+    CHECK_EQ(kStateDim, system_mat.cols());
+    CHECK_EQ(kStateDim, input_mat.rows());
+    CHECK_EQ(kStateDim, system_noise.mean().size());
+  }
 }
 
 template<int STATE_DIM, int INPUT_DIM>
@@ -104,14 +118,21 @@ template<int STATE_DIM, int INPUT_DIM>
 Eigen::Matrix<double, STATE_DIM, 1>
   LinearSystemModel<STATE_DIM, INPUT_DIM>::propagate(
     const Eigen::Matrix<double, STATE_DIM, 1>& state,
-    const Eigen::Matrix<double, INPUT_DIM, 1> &input) const {
+    const Eigen::Matrix<double, INPUT_DIM, 1>& input) const {
+
+  if (STATE_DIM == Eigen::Dynamic) {
+    CHECK_EQ(state.size(), system_mat_.rows());
+  }
+
+  if (INPUT_DIM == Eigen::Dynamic) {
+    CHECK_EQ(input.rows(), input_mat_.cols());
+  }
 
   // If there is no input, we don't need to compute the matrix multiplication.
-  if (INPUT_DIM == 0) {
-    *state = system_mat_ * (*state) + system_noise_->mean();
+  if (input_mat_.cols() == 0) {
+    return system_mat_ * state + system_noise_->mean();
   } else {
-    *state = system_mat_ * (*state) + input_mat_ * input
-        + system_noise_->mean();
+    return system_mat_ * state + input_mat_ * input + system_noise_->mean();
   }
 }
 
