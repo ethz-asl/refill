@@ -6,11 +6,10 @@
 namespace refill {
 
 // Interface class for distributions
-template<int DIM>
 class DistributionInterface {
  public:
-  virtual Eigen::Matrix<double, DIM, 1> mean() const = 0;
-  virtual Eigen::Matrix<double, DIM, DIM> cov() const = 0;
+  virtual Eigen::VectorXd mean() const = 0;
+  virtual Eigen::MatrixXd cov() const = 0;
   virtual DistributionInterface* clone() const = 0;
 };
 
@@ -20,9 +19,9 @@ class DistributionInterface {
 //  For new distributions, inherit from this class like this:
 //  class NewDistribution : public DistributionBase<DIM, NewDistribution>
 
-template<int DIM, typename DERIVED>
-class DistributionBase : public DistributionInterface<DIM> {
-  virtual DistributionBase* clone() const {
+template<typename DERIVED>
+class DistributionBase : public DistributionInterface {
+  virtual DistributionInterface* clone() const {
     return new DERIVED(dynamic_cast<DERIVED const&>(*this));
   }
 };
