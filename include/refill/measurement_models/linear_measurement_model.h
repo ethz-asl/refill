@@ -8,14 +8,15 @@
 
 namespace refill {
 
-template<int STATEDIM = Eigen::Dynamic, int MEASDIM = Eigen::Dynamic>
-class LinearMeasurementModel : public MeasurementModelBase<STATEDIM, MEASDIM> {
+template<int STATE_DIM = Eigen::Dynamic, int MEAS_DIM = Eigen::Dynamic>
+class LinearMeasurementModel :
+    public MeasurementModelBase<STATE_DIM, MEAS_DIM> {
  public:
   LinearMeasurementModel();
   LinearMeasurementModel(
-      const Eigen::Matrix<double, MEASDIM, STATEDIM>& measurement_mat,
-      const DistributionInterface<MEASDIM>& measurement_noise =
-          GaussianDistribution<MEASDIM>());
+      const Eigen::Matrix<double, MEAS_DIM, STATE_DIM>& measurement_mat,
+      const DistributionInterface<MEAS_DIM>& measurement_noise =
+          GaussianDistribution<MEAS_DIM>());
 
   int GetStateDim() const {
     return measurement_mat_.cols();
@@ -24,20 +25,20 @@ class LinearMeasurementModel : public MeasurementModelBase<STATEDIM, MEASDIM> {
     return measurement_mat_.rows();
   }
 
-  Eigen::Matrix<double, MEASDIM, 1> Observe(
-      const Eigen::Matrix<double, STATEDIM, 1>& state) const;
+  Eigen::Matrix<double, MEAS_DIM, 1> Observe(
+      const Eigen::Matrix<double, STATE_DIM, 1>& state) const;
 
-  DistributionInterface<MEASDIM>* GetMeasurementNoise() const {
+  DistributionInterface<MEAS_DIM>* GetMeasurementNoise() const {
     return measurement_noise_.get();
   }
 
-  Eigen::Matrix<double, MEASDIM, STATEDIM> GetJacobian() const {
+  Eigen::Matrix<double, MEAS_DIM, STATE_DIM> GetJacobian() const {
     return measurement_mat_;
   }
 
  private:
-  Eigen::Matrix<double, MEASDIM, STATEDIM> measurement_mat_;
-  std::unique_ptr<DistributionInterface<MEASDIM>> measurement_noise_;
+  Eigen::Matrix<double, MEAS_DIM, STATE_DIM> measurement_mat_;
+  std::unique_ptr<DistributionInterface<MEAS_DIM>> measurement_noise_;
 };
 
 typedef LinearMeasurementModel<Eigen::Dynamic, Eigen::Dynamic>

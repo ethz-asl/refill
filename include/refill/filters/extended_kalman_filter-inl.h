@@ -5,23 +5,23 @@
 
 namespace refill {
 
-template<int STATEDIM>
-ExtendedKalmanFilter<STATEDIM>::ExtendedKalmanFilter() {
+template<int STATE_DIM>
+ExtendedKalmanFilter<STATE_DIM>::ExtendedKalmanFilter() {
 }
 
-template<int STATEDIM>
-ExtendedKalmanFilter<STATEDIM>::ExtendedKalmanFilter(
-    const GaussianDistribution<STATEDIM>& initial_state)
+template<int STATE_DIM>
+ExtendedKalmanFilter<STATE_DIM>::ExtendedKalmanFilter(
+    const GaussianDistribution<STATE_DIM>& initial_state)
     : state_(initial_state) {
 }
 
-template<int STATEDIM>
-template<int INPUTDIM>
-void ExtendedKalmanFilter<STATEDIM>::Predict(
-    const SystemModelBase<STATEDIM, INPUTDIM>& system_model,
-    const Eigen::Matrix<double, INPUTDIM, 1>& input) {
+template<int STATE_DIM>
+template<int INPUT_DIM>
+void ExtendedKalmanFilter<STATE_DIM>::Predict(
+    const SystemModelBase<STATE_DIM, INPUT_DIM>& system_model,
+    const Eigen::Matrix<double, INPUT_DIM, 1>& input) {
 
-  Eigen::Matrix<double, STATEDIM, STATEDIM> system_mat;
+  Eigen::Matrix<double, STATE_DIM, STATE_DIM> system_mat;
   system_mat = system_model.GetJacobian();
 
   state_.SetDistParam(
@@ -30,23 +30,23 @@ void ExtendedKalmanFilter<STATEDIM>::Predict(
           + system_model.GetSystemNoise()->cov());
 }
 
-template<int STATEDIM>
-template<int MEASDIM>
-void ExtendedKalmanFilter<STATEDIM>::Update(
-    const MeasurementModelBase<STATEDIM, MEASDIM>& measurement_model,
-    const Eigen::Matrix<double, MEASDIM, 1>& measurement) {
+template<int STATE_DIM>
+template<int MEAS_DIM>
+void ExtendedKalmanFilter<STATE_DIM>::Update(
+    const MeasurementModelBase<STATE_DIM, MEAS_DIM>& measurement_model,
+    const Eigen::Matrix<double, MEAS_DIM, 1>& measurement) {
   CHECK_EQ(measurement.size(), measurement_model.GetMeasurementDim());
 
-  Eigen::Matrix<double, MEASDIM, STATEDIM> measurement_mat;
+  Eigen::Matrix<double, MEAS_DIM, STATE_DIM> measurement_mat;
   measurement_mat = measurement_model.GetJacobian();
 
-  if (MEASDIM == Eigen::Dynamic) {
+  if (MEAS_DIM == Eigen::Dynamic) {
     CHECK_EQ(measurement.size(), measurement_model.GetMeasurementDim());
   }
 
-  Eigen::Matrix<double, MEASDIM, 1> innovation;
-  Eigen::Matrix<double, MEASDIM, MEASDIM> residual_cov;
-  Eigen::Matrix<double, STATEDIM, MEASDIM> kalman_gain;
+  Eigen::Matrix<double, MEAS_DIM, 1> innovation;
+  Eigen::Matrix<double, MEAS_DIM, MEAS_DIM> residual_cov;
+  Eigen::Matrix<double, STATE_DIM, MEAS_DIM> kalman_gain;
 
   innovation = measurement - measurement_model.Observe(state_.mean());
   residual_cov = measurement_mat * state_.cov() * measurement_mat.transpose()

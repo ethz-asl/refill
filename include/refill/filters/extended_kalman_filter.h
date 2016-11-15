@@ -10,30 +10,31 @@
 
 namespace refill {
 
-template<int STATEDIM = Eigen::Dynamic>
-class ExtendedKalmanFilter : public FilterBase<STATEDIM,
-    ExtendedKalmanFilter<STATEDIM>> {
+template<int STATE_DIM = Eigen::Dynamic>
+class ExtendedKalmanFilter : public FilterBase<STATE_DIM,
+    ExtendedKalmanFilter<STATE_DIM>> {
  public:
   ExtendedKalmanFilter();
   explicit ExtendedKalmanFilter(
-      const GaussianDistribution<STATEDIM>& initial_state);
+      const GaussianDistribution<STATE_DIM>& initial_state);
 
-  template<int INPUTDIM = Eigen::Dynamic>
+  template<int INPUT_DIM = Eigen::Dynamic>
   void Predict(
-      const SystemModelBase<STATEDIM, INPUTDIM>& system_model,
-      const Eigen::Matrix<double, INPUTDIM, 1>& input = Eigen::Matrix<double,
-          INPUTDIM, 1>::Zero(INPUTDIM, 1));
+      const SystemModelBase<STATE_DIM, INPUT_DIM>& system_model,
+      const Eigen::Matrix<double, INPUT_DIM, 1>& input = Eigen::Matrix<double,
+          INPUT_DIM, 1>::Zero(INPUT_DIM, 1));
 
-  template<int MEASDIM = Eigen::Dynamic>
-  void Update(const MeasurementModelBase<STATEDIM, MEASDIM>& measurement_model,
-              const Eigen::Matrix<double, MEASDIM, 1>& measurement);
+  template<int MEAS_DIM = Eigen::Dynamic>
+  void Update(
+      const MeasurementModelBase<STATE_DIM, MEAS_DIM>& measurement_model,
+      const Eigen::Matrix<double, MEAS_DIM, 1>& measurement);
 
-  GaussianDistribution<STATEDIM> state() const {
+  GaussianDistribution<STATE_DIM> state() const {
     return state_;
   }
 
  private:
-  GaussianDistribution<STATEDIM> state_;
+  GaussianDistribution<STATE_DIM> state_;
 };
 
 // Alias for a dynamic size version of the Kalman Filter. Notation

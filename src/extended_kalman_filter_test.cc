@@ -1,9 +1,6 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
 
-// Pre-commit linter doesn't like chrono,
-// #include <chrono>
-
 #include "refill/filters/extended_kalman_filter.h"
 #include "refill/system_models/linear_system_model.h"
 #include "refill/measurement_models/linear_measurement_model.h"
@@ -11,96 +8,99 @@
 namespace refill {
 
 TEST(KalmanFilterTest, FullRun) {
-  constexpr int loop_runs = 10000;
+  // Tests with templated size
+  constexpr int kStateDim = 3;
+  constexpr int kMeasurementDim = 3;
+  constexpr int kInputDim = 3;
 
-  // Testing speed with as much templating as possible
-  constexpr int state_dim = 6;
-  constexpr int meas_dim = 3;
-  constexpr int input_dim = 1;
+  // Set up distributions
+  GaussianDistribution<kStateDim> initial_state;
+  GaussianDistribution<kStateDim> system_noise;
+  GaussianDistribution<kMeasurementDim> measurement_noise;
 
-  GaussianDistribution<state_dim> init_state;
-  GaussianDistribution<state_dim> sys_noise;
-  GaussianDistribution<meas_dim> meas_noise;
-  Eigen::Matrix<double, state_dim, state_dim> sys_mat;
-  Eigen::Matrix<double, state_dim, input_dim> input_mat;
-  Eigen::Matrix<double, meas_dim, state_dim> meas_mat;
+  // Set up syste, input and measurement matrix
+  Eigen::Matrix<double, kStateDim, kStateDim> system_mat;
+  Eigen::Matrix<double, kStateDim, kInputDim> input_mat;
+  Eigen::Matrix<double, kMeasurementDim, kStateDim> measurement_mat;
 
-  sys_mat = Eigen::Matrix<double, state_dim, state_dim>::Identity(state_dim,
-                                                                  state_dim);
-  input_mat = Eigen::Matrix<double, state_dim, input_dim>::Identity(state_dim,
-                                                                    input_dim);
-  meas_mat = Eigen::Matrix<double, meas_dim, state_dim>::Identity(meas_dim,
-                                                                  state_dim);
+  system_mat = Eigen::Matrix<double, kStateDim, kStateDim>::Identity(kStateDim,
+                                                                     kStateDim);
+  input_mat = Eigen::Matrix<double, kStateDim, kInputDim>::Identity(kStateDim,
+                                                                    kInputDim);
+  measurement_mat = Eigen::Matrix<double, kMeasurementDim, kStateDim>::Identity(
+      kMeasurementDim, kStateDim);
 
-  LinearSystemModel<state_dim, input_dim> sys_mod(sys_mat, sys_noise,
-                                                  input_mat);
-  LinearMeasurementModel<state_dim, meas_dim> meas_mod(meas_mat, meas_noise);
+  // Set up system and measurement model
+  LinearSystemModel<kStateDim, kInputDim> system_model(system_mat, system_noise,
+                                                       input_mat);
+  LinearMeasurementModel<kStateDim, kMeasurementDim> measurement_model(
+      measurement_mat, measurement_noise);
 
-  ExtendedKalmanFilter<state_dim> kf(init_state);
+  // Set up kalman filter
+  ExtendedKalmanFilter<kStateDim> KF(initial_state);
 
-  Eigen::Matrix<double, input_dim, 1> input;
-  Eigen::Matrix<double, meas_dim, 1> measurement;
+  // Set up input and measurement vector
+  Eigen::Matrix<double, kInputDim, 1> input;
+  Eigen::Matrix<double, kMeasurementDim, 1> measurement;
 
-  input = Eigen::Matrix<double, input_dim, 1>::Ones(input_dim);
-  measurement = Eigen::Matrix<double, meas_dim, 1>::Ones(meas_dim, 1);
+  input = Eigen::Matrix<double, kInputDim, 1>::Ones(kInputDim);
+  measurement = Eigen::Matrix<double, kMeasurementDim, 1>::Ones(kMeasurementDim,
+                                                                1);
 
-//  std::chrono::time_point<std::chrono::system_clock> start, end;
+  // Predict one step
+  KF.Predict(system_model, input);
 
-//  start = std::chrono::system_clock::now();
-  for (int i = 0; i < loop_runs; ++i) {
-    kf.Predict(sys_mod, input);
-    kf.Update(meas_mod, measurement);
-  }
-//  end = std::chrono::system_clock::now();
+  ASSERT_EQ(KF.state().mean(), Eigen::VectorXd::Ones(kStateDim));
+  ASSERT_EQ(KF.state().cov(),
+            Eigen::MatrixXd::Identity(kStateDim, kStateDim) * 2.0);
 
-//  std::chrono::duration<double, std::milli> elapsed_ms_t = end - start;
-//  std::cout << "Elapsed time with templating: " << elapsed_ms_t.count()
-//            << " ms" << std::endl;
+  // Update with measurement
+  KF.Update(measurement_model, measurement);
 
-  // Testing speed with as little templating as possible
-  int s_dim = state_dim;
-  int m_dim = meas_dim;
-  int i_dim = input_dim;
+  ASSERT_EQ(KF.state().mean(), Eigen::VectorXd::Ones(kStateDim));
 
-  GaussianDistributionXd initial_state(Eigen::VectorXd::Zero(s_dim),
-                                       Eigen::MatrixXd::Identity(s_dim, s_dim));
-  GaussianDistributionXd system_noise(Eigen::VectorXd::Zero(s_dim),
-                                      Eigen::MatrixXd::Identity(s_dim, s_dim));
-  GaussianDistributionXd measurement_noise(
-      Eigen::VectorXd::Zero(m_dim), Eigen::MatrixXd::Identity(m_dim, m_dim));
+  // Tests with dynamic size
+  GaussianDistributionXd initial_stateXd(
+      Eigen::VectorXd::Zero(kStateDim),
+      Eigen::MatrixXd::Identity(kStateDim, kStateDim));
+  GaussianDistributionXd system_noiseXd(
+      Eigen::VectorXd::Zero(kStateDim),
+      Eigen::MatrixXd::Identity(kStateDim, kStateDim));
+  GaussianDistributionXd measurement_noiseXd(
+      Eigen::VectorXd::Zero(kMeasurementDim),
+      Eigen::MatrixXd::Identity(kMeasurementDim, kMeasurementDim));
 
-  Eigen::MatrixXd system_mat;
-  Eigen::MatrixXd in_mat;
-  Eigen::MatrixXd measurement_mat;
+  Eigen::MatrixXd system_matXd;
+  Eigen::MatrixXd input_matXd;
+  Eigen::MatrixXd measurement_matXd;
 
-  system_mat = Eigen::MatrixXd::Identity(s_dim, s_dim);
-  in_mat = Eigen::MatrixXd::Identity(s_dim, i_dim);
-  measurement_mat = Eigen::MatrixXd::Identity(m_dim, s_dim);
+  system_matXd = Eigen::MatrixXd::Identity(kStateDim, kStateDim);
+  input_matXd = Eigen::MatrixXd::Identity(kStateDim, kInputDim);
+  measurement_matXd = Eigen::MatrixXd::Identity(kMeasurementDim, kStateDim);
 
-  LinearSystemModelXd system_mod(system_mat, system_noise, in_mat);
-  LinearMeasurementModelXd measurement_mod(measurement_mat, measurement_noise);
+  LinearSystemModelXd system_modelXd(system_matXd, system_noiseXd, input_matXd);
+  LinearMeasurementModelXd measurement_modelXd(measurement_matXd,
+                                               measurement_noiseXd);
 
-  ExtendedKalmanFilterXd kfXd(initial_state);
+  ExtendedKalmanFilterXd KFXd(initial_stateXd);
 
-  Eigen::VectorXd in;
-  Eigen::VectorXd meas;
+  Eigen::VectorXd inputXd;
+  Eigen::VectorXd measurementXd;
 
-  in = Eigen::VectorXd::Ones(i_dim);
-  meas = Eigen::VectorXd::Ones(m_dim);
+  inputXd = Eigen::VectorXd::Ones(kInputDim);
+  measurementXd = Eigen::VectorXd::Ones(kMeasurementDim);
 
-//  start = std::chrono::system_clock::now();
-  for (int i = 0; i < loop_runs; ++i) {
-    kfXd.Predict(system_mod, in);
-    kfXd.Update(measurement_mod, meas);
-  }
-//  end = std::chrono::system_clock::now();
+  KFXd.Predict(system_modelXd, inputXd);
 
-//  std::chrono::duration<double, std::milli> elapsed_ms_nt = end - start;
-//  std::cout << "Elapsed time without templating: " << elapsed_ms_nt.count()
-//            << " ms" << std::endl;
-//  std::cout << "Not templated took "
-//            << elapsed_ms_nt.count() / elapsed_ms_t.count()
-//            << " times as long as templated." << std::endl;
+  ASSERT_EQ(KFXd.state().mean(), Eigen::VectorXd::Ones(kStateDim));
+  ASSERT_EQ(KFXd.state().cov(),
+            Eigen::MatrixXd::Identity(kStateDim, kStateDim) * 2.0);
+
+  KFXd.Update(measurement_modelXd, measurementXd);
+
+  ASSERT_EQ(KFXd.state().mean(), Eigen::VectorXd::Ones(kStateDim));
+
+//  KFXd.Update(measurement_modelXd, measurement);
 }
 
 }  // namespace refill

@@ -6,34 +6,46 @@
 namespace refill {
 
 TEST(LinearSystemModelTest, Fullrun) {
-  constexpr int state_dim = 2;
-  constexpr int input_dim = 2;
+  constexpr int kStateDim = 2;
+  constexpr int kInputDim = 2;
 
-  Eigen::MatrixXd system_mat(state_dim, state_dim);
-  Eigen::MatrixXd input_mat(state_dim, input_dim);
+  // Set up system and input matrix
+  Eigen::MatrixXd system_mat(kStateDim, kStateDim);
+  Eigen::MatrixXd input_mat(kStateDim, kInputDim);
+
+  system_mat = Eigen::MatrixXd::Identity(kStateDim, kStateDim);
+  input_mat = Eigen::MatrixXd::Identity(kStateDim, kInputDim);
+
+  // Set up system noise, with non standard params
   GaussianDistributionXd system_noise(
-      Eigen::VectorXd::Zero(state_dim),
-      Eigen::MatrixXd::Identity(state_dim, state_dim));
+      Eigen::VectorXd::Zero(kStateDim),
+      Eigen::MatrixXd::Identity(kStateDim, kStateDim));
 
-  system_mat = Eigen::MatrixXd::Identity(state_dim, state_dim);
-  input_mat = Eigen::MatrixXd::Identity(state_dim, input_dim);
+  system_noise.SetDistParam(Eigen::VectorXd::Ones(kStateDim),
+                            Eigen::MatrixXd::Identity(kStateDim, kStateDim));
 
-//  system_noise.SetDistParam(Eigen::VectorXd::Ones(state_dim),
-//                            Eigen::MatrixXd::Identity(state_dim, state_dim));
+  // Set up system model
+  LinearSystemModelXd system_model(system_mat, system_noise, input_mat);
 
-  LinearSystemModelXd lsm(system_mat, system_noise, input_mat);
+  // Set up state and input vector
+  Eigen::VectorXd state_vec(kStateDim);
+  Eigen::VectorXd input_vec(kInputDim);
 
-  ASSERT_EQ(lsm.GetSystemNoise()->mean(), Eigen::VectorXd::Zero(state_dim));
+  state_vec = Eigen::VectorXd::Ones(kStateDim);
+  input_vec = Eigen::VectorXd::Ones(kInputDim);
 
-  Eigen::VectorXd state_vec(state_dim);
-  Eigen::VectorXd input_vec(input_dim);
+  // Propagate the state vector through the system
+  state_vec = system_model.Propagate(state_vec, input_vec);
 
-  state_vec = Eigen::VectorXd::Ones(state_dim);
-  input_vec = Eigen::VectorXd::Ones(input_dim);
+  // Check that propagation was correct
+  ASSERT_EQ(state_vec, Eigen::VectorXd::Ones(kStateDim) * 3.0);
 
-  state_vec = lsm.Propagate(state_vec, input_vec);
+  // Check that dimension getters work
+  ASSERT_EQ(system_model.GetStateDim(), kStateDim);
+  ASSERT_EQ(system_model.GetInputDim(), kInputDim);
 
-  ASSERT_EQ(2.0 * Eigen::VectorXd::Ones(state_dim), state_vec) << state_vec;
+  // Check that Jacobian getter works
+  ASSERT_EQ(system_model.GetJacobian(), system_mat);
 }
 
 }  // namespace refill

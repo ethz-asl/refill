@@ -5,48 +5,52 @@
 
 namespace refill {
 
-template<int STATEDIM, int INPUTDIM>
-LinearSystemModel<STATEDIM, INPUTDIM>::LinearSystemModel() {
-  constexpr int cur_sysdim = (STATEDIM == Eigen::Dynamic) ? 1 : STATEDIM;
-  constexpr int cur_indim = (INPUTDIM == Eigen::Dynamic) ? 1 : INPUTDIM;
+template<int STATE_DIM, int INPUT_DIM>
+LinearSystemModel<STATE_DIM, INPUT_DIM>::LinearSystemModel() {
+  constexpr int kCurrentSystemDIm =
+      (STATE_DIM == Eigen::Dynamic) ? 1 : STATE_DIM;
+  constexpr int kCurrentInputDIm =
+      (INPUT_DIM == Eigen::Dynamic) ? 1 : INPUT_DIM;
 
-  system_mat_ = Eigen::Matrix<double, cur_sysdim, cur_sysdim>::Identity(
-      cur_sysdim, cur_sysdim);
-  input_mat_ = Eigen::Matrix<double, cur_sysdim, cur_indim>::Identity(
-      cur_sysdim, cur_indim);
+  system_mat_ =
+      Eigen::Matrix<double, kCurrentSystemDIm, kCurrentSystemDIm>::Identity(
+          kCurrentSystemDIm, kCurrentSystemDIm);
+  input_mat_ =
+      Eigen::Matrix<double, kCurrentSystemDIm, kCurrentInputDIm>::Identity(
+          kCurrentSystemDIm, kCurrentInputDIm);
 
   // In case of no declaration of system noise, we use standard normal gaussian.
-  system_noise_.reset(new GaussianDistribution<cur_sysdim>());
+  system_noise_.reset(new GaussianDistribution<kCurrentSystemDIm>());
 }
 
-template<int STATEDIM, int INPUTDIM>
-LinearSystemModel<STATEDIM, INPUTDIM>::LinearSystemModel(
-    const Eigen::Matrix<double, STATEDIM, STATEDIM>& system_mat,
-    const DistributionInterface<STATEDIM>& system_noise,
-    const Eigen::Matrix<double, STATEDIM, INPUTDIM>& input_mat)
+template<int STATE_DIM, int INPUT_DIM>
+LinearSystemModel<STATE_DIM, INPUT_DIM>::LinearSystemModel(
+    const Eigen::Matrix<double, STATE_DIM, STATE_DIM>& system_mat,
+    const DistributionInterface<STATE_DIM>& system_noise,
+    const Eigen::Matrix<double, STATE_DIM, INPUT_DIM>& input_mat)
     : system_mat_(system_mat),
       input_mat_(input_mat),
       system_noise_(system_noise.Clone()) {
   const int state_dim = system_mat.rows();
 
-  if (STATEDIM == Eigen::Dynamic) {
+  if (STATE_DIM == Eigen::Dynamic) {
     CHECK_EQ(state_dim, system_mat.cols());
     CHECK_EQ(state_dim, input_mat.rows());
     CHECK_EQ(state_dim, system_noise.mean().size());
   }
 }
 
-template<int STATEDIM, int INPUTDIM>
-Eigen::Matrix<double, STATEDIM, 1>
-  LinearSystemModel<STATEDIM, INPUTDIM>::Propagate(
-    const Eigen::Matrix<double, STATEDIM, 1>& state,
-    const Eigen::Matrix<double, INPUTDIM, 1>& input) const {
+template<int STATE_DIM, int INPUT_DIM>
+Eigen::Matrix<double, STATE_DIM, 1>
+  LinearSystemModel<STATE_DIM, INPUT_DIM>::Propagate(
+    const Eigen::Matrix<double, STATE_DIM, 1>& state,
+    const Eigen::Matrix<double, INPUT_DIM, 1>& input) const {
 
-  if (STATEDIM == Eigen::Dynamic) {
+  if (STATE_DIM == Eigen::Dynamic) {
     CHECK_EQ(state.size(), system_mat_.rows());
   }
 
-  if (INPUTDIM == Eigen::Dynamic) {
+  if (INPUT_DIM == Eigen::Dynamic) {
     CHECK_EQ(input.rows(), input_mat_.cols());
   }
 

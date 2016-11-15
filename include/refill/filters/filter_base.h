@@ -8,19 +8,19 @@
 
 namespace refill {
 
-template<int STATEDIM, class FILTER>
+template<int STATE_DIM, class FILTER>
 class FilterBase {
  private:
-  template<int INPUTDIM>
-  void PredictBase(const SystemModelBase<STATEDIM, INPUTDIM>& system_model,
-                   const Eigen::Matrix<double, INPUTDIM, 1>& input) {
+  template<int INPUT_DIM>
+  void PredictBase(const SystemModelBase<STATE_DIM, INPUT_DIM>& system_model,
+                   const Eigen::Matrix<double, INPUT_DIM, 1>& input) {
     static_cast<FILTER*>(this)->Predict(system_model, input);
   }
 
-  template<int MEASDIM>
+  template<int MEAS_DIM>
   void UpdateBase(
-      const MeasurementModelBase<STATEDIM, MEASDIM>& measurement_model,
-      const Eigen::Matrix<double, MEASDIM, 1>& measurement) {
+      const MeasurementModelBase<STATE_DIM, MEAS_DIM>& measurement_model,
+      const Eigen::Matrix<double, MEAS_DIM, 1>& measurement) {
     static_cast<FILTER*>(this)->Update(measurement_model, measurement);
   }
 };

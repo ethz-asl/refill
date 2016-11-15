@@ -7,16 +7,16 @@
 
 namespace refill {
 
-template<int STATEDIM, int INPUTDIM>
+template<int STATE_DIM, int INPUT_DIM>
 class SystemModelBase {
  public:
-  virtual Eigen::Matrix<double, STATEDIM, 1> Propagate(
-      const Eigen::Matrix<double, STATEDIM, 1>& state,
-      const Eigen::Matrix<double, INPUTDIM, 1>& input) const = 0;
+  virtual Eigen::Matrix<double, STATE_DIM, 1> Propagate(
+      const Eigen::Matrix<double, STATE_DIM, 1>& state,
+      const Eigen::Matrix<double, INPUT_DIM, 1>& input) const = 0;
   virtual int GetStateDim() const = 0;
   virtual int GetInputDim() const = 0;
-  virtual Eigen::Matrix<double, STATEDIM, STATEDIM> GetJacobian() const = 0;
-  virtual DistributionInterface<STATEDIM>* GetSystemNoise() const = 0;
+  virtual Eigen::Matrix<double, STATE_DIM, STATE_DIM> GetJacobian() const = 0;
+  virtual DistributionInterface<STATE_DIM>* GetSystemNoise() const = 0;
 };
 
 }  // namespace refill

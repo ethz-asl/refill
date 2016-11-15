@@ -6,25 +6,37 @@
 namespace refill {
 
 TEST(LinearMeasurementModelTest, Fullrun) {
-  constexpr int state_dim = 2;
-  constexpr int meas_dim = 1;
+  constexpr int kStateDim = 2;
+  constexpr int kMeasurementDim = 1;
 
-  Eigen::MatrixXd measurement_mat(meas_dim, state_dim);
+  // Set up measurement matrix
+  Eigen::MatrixXd measurement_mat(kMeasurementDim, kStateDim);
+  measurement_mat = Eigen::MatrixXd::Identity(kMeasurementDim, kStateDim);
 
-  measurement_mat = Eigen::MatrixXd::Identity(meas_dim, state_dim);
-  GaussianDistribution<meas_dim> measurement_noise;
+  // Set up measurement noise
+  GaussianDistribution<kMeasurementDim> measurement_noise;
+  measurement_noise.SetDistParam(
+      Eigen::VectorXd::Ones(kMeasurementDim),
+      Eigen::MatrixXd::Identity(kMeasurementDim, kMeasurementDim));
 
-  measurement_noise.SetDistParam(Eigen::VectorXd::Zero(meas_dim),
-                                 Eigen::MatrixXd::Identity(meas_dim, meas_dim));
+  // Set up linear measurement model
+  LinearMeasurementModel<kStateDim, kMeasurementDim> measurement_model(
+      measurement_mat, measurement_noise);
 
-  LinearMeasurementModel<state_dim, meas_dim> lmm(measurement_mat,
-                                                  measurement_noise);
+  // Set up state vector for observation
+  Eigen::VectorXd state(kStateDim);
+  state = Eigen::VectorXd::Ones(kStateDim);
 
-  Eigen::VectorXd state(state_dim);
+  // Check if observation works
+  ASSERT_EQ(measurement_model.Observe(state),
+            Eigen::VectorXd::Ones(kMeasurementDim) * 2.0);
 
-  state = Eigen::VectorXd::Ones(state_dim);
+  // Check if dimension getters work
+  ASSERT_EQ(measurement_model.GetStateDim(), kStateDim);
+  ASSERT_EQ(measurement_model.GetMeasurementDim(), kMeasurementDim);
 
-  ASSERT_EQ(lmm.Observe(state), Eigen::VectorXd::Ones(meas_dim));
+  // Check if Jacobian getter works
+  ASSERT_EQ(measurement_model.GetJacobian(), measurement_mat);
 }
 
 }  // namespace refill
