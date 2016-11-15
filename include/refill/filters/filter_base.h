@@ -12,16 +12,16 @@ template<int STATE_DIM, class FILTER>
 class FilterBase {
  private:
   template<int INPUT_DIM>
-  void PredictBase(const SystemModelBase<STATE_DIM, INPUT_DIM>& system_model,
+  void predictBase(const SystemModelBase<STATE_DIM, INPUT_DIM>& system_model,
                    const Eigen::Matrix<double, INPUT_DIM, 1>& input) {
-    static_cast<FILTER*>(this)->Predict(system_model, input);
+    static_cast<FILTER*>(this)->predict(system_model, input);
   }
 
   template<int MEAS_DIM>
-  void UpdateBase(
+  void updateBase(
       const MeasurementModelBase<STATE_DIM, MEAS_DIM>& measurement_model,
       const Eigen::Matrix<double, MEAS_DIM, 1>& measurement) {
-    static_cast<FILTER*>(this)->Update(measurement_model, measurement);
+    static_cast<FILTER*>(this)->update(measurement_model, measurement);
   }
 };
 

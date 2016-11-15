@@ -1,7 +1,7 @@
 #include "refill/measurement_models/linear_measurement_model.h"
 
-#include <gtest/gtest.h>
 #include <Eigen/Dense>
+#include <gtest/gtest.h>
 
 namespace refill {
 
