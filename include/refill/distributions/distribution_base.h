@@ -11,7 +11,7 @@ class DistributionInterface {
  public:
   virtual Eigen::Matrix<double, DIM, 1> mean() const = 0;
   virtual Eigen::Matrix<double, DIM, DIM> cov() const = 0;
-  virtual DistributionInterface* Clone() const = 0;
+  virtual DistributionInterface* clone() const = 0;
 };
 
 
@@ -23,7 +23,7 @@ class DistributionInterface {
 
 template<int DIM, typename DERIVED>
 class DistributionBase : public DistributionInterface<DIM> {
-  virtual DistributionBase* Clone() const {
+  virtual DistributionBase* clone() const {
     return new DERIVED(dynamic_cast<DERIVED const&>(*this));
   }
 };

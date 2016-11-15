@@ -8,9 +8,9 @@ namespace refill {
 template<int STATE_DIM, int MEAS_DIM>
 class MeasurementModelBase {
  public:
-  virtual Eigen::Matrix<double, MEAS_DIM, 1> Observe(
+  virtual Eigen::Matrix<double, MEAS_DIM, 1> observe(
       const Eigen::Matrix<double, STATE_DIM, 1>& state) = 0;
-  virtual int dim() const = 0;
+  virtual int dimension() const = 0;
 };
 
 }  // namespace refill

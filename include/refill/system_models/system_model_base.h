@@ -8,9 +8,9 @@ namespace refill {
 template <int STATE_DIM, int INPUT_DIM>
 class SystemModelBase {
  public:
-  virtual void Propagate(Eigen::Matrix<double, STATE_DIM, 1>* state,
+  virtual void propagate(Eigen::Matrix<double, STATE_DIM, 1>* state,
                          const Eigen::Matrix<double, INPUT_DIM, 1>& input) = 0;
-  virtual int dim() const = 0;
+  virtual int dimension() const = 0;
 };
 
 }  // namespace refill
