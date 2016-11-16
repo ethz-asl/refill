@@ -5,11 +5,11 @@
 
 namespace refill {
 
-template <int STATEDIM = Eigen::Dynamic, int MEASDIM = Eigen::Dynamic>
+template <int STATE_DIM = Eigen::Dynamic, int MEAS_DIM = Eigen::Dynamic>
 class FilterBase {
  public:
-  virtual void Predict() = 0;
-  virtual void Update(Eigen::Matrix<double, MEASDIM, 1> measurement) = 0;
+  virtual void predict() = 0;
+  virtual void update(Eigen::Matrix<double, MEAS_DIM, 1> measurement) = 0;
 };
 
 }  // namespace refill

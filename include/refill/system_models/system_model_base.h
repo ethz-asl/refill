@@ -5,12 +5,12 @@
 
 namespace refill {
 
-template <int STATEDIM, int INPUTDIM>
+template <int STATE_DIM, int INPUT_DIM>
 class SystemModelBase {
  public:
-  virtual void Propagate(Eigen::Matrix<double, STATEDIM, 1>* state,
-                         const Eigen::Matrix<double, INPUTDIM, 1>& input) = 0;
-  virtual int dim() const = 0;
+  virtual void propagate(Eigen::Matrix<double, STATE_DIM, 1>* state,
+                         const Eigen::Matrix<double, INPUT_DIM, 1>& input) = 0;
+  virtual int dimension() const = 0;
 };
 
 }  // namespace refill
