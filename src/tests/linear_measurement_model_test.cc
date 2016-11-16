@@ -10,18 +10,17 @@ TEST(LinearMeasurementModelTest, Fullrun) {
   constexpr int kMeasurementDim = 1;
 
   // Set up measurement matrix
-  Eigen::MatrixXd measurement_mat(kMeasurementDim, kStateDim);
+  Eigen::MatrixXd measurement_mat;
   measurement_mat = Eigen::MatrixXd::Identity(kMeasurementDim, kStateDim);
 
   // Set up measurement noise
-  GaussianDistribution<kMeasurementDim> measurement_noise;
+  GaussianDistribution measurement_noise;
   measurement_noise.setDistParam(
       Eigen::VectorXd::Ones(kMeasurementDim),
       Eigen::MatrixXd::Identity(kMeasurementDim, kMeasurementDim));
 
   // Set up linear measurement model
-  LinearMeasurementModel<kStateDim, kMeasurementDim> measurement_model(
-      measurement_mat, measurement_noise);
+  LinearMeasurementModel measurement_model(measurement_mat, measurement_noise);
 
   // Set up state vector for observation
   Eigen::VectorXd state(kStateDim);
@@ -37,6 +36,8 @@ TEST(LinearMeasurementModelTest, Fullrun) {
 
   // Check if Jacobian getter works
   ASSERT_EQ(measurement_model.getJacobian(), measurement_mat);
+
+  // TODO(jwidauer): Add more test cases
 }
 
 }  // namespace refill

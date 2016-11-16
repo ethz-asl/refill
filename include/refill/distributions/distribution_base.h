@@ -8,6 +8,7 @@ namespace refill {
 // Interface class for distributions
 class DistributionInterface {
  public:
+//  virtual ~DistributionInterface();
   virtual Eigen::VectorXd mean() const = 0;
   virtual Eigen::MatrixXd cov() const = 0;
   virtual DistributionInterface* clone() const = 0;

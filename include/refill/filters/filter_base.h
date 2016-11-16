@@ -8,21 +8,13 @@
 
 namespace refill {
 
-template<int STATE_DIM, class FILTER>
 class FilterBase {
- private:
-  template<int INPUT_DIM>
-  void predictBase(const SystemModelBase<STATE_DIM, INPUT_DIM>& system_model,
-                   const Eigen::Matrix<double, INPUT_DIM, 1>& input) {
-    static_cast<FILTER*>(this)->predict(system_model, input);
-  }
-
-  template<int MEAS_DIM>
-  void updateBase(
-      const MeasurementModelBase<STATE_DIM, MEAS_DIM>& measurement_model,
-      const Eigen::Matrix<double, MEAS_DIM, 1>& measurement) {
-    static_cast<FILTER*>(this)->update(measurement_model, measurement);
-  }
+ public:
+//  virtual ~FilterBase();
+  virtual void predict(const SystemModelBase& system_model,
+                       const Eigen::VectorXd& input) = 0;
+  virtual void update(const MeasurementModelBase& measurement_model,
+                      const Eigen::VectorXd& measurement) = 0;
 };
 
 }  // namespace refill

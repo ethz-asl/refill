@@ -9,8 +9,8 @@ namespace refill {
 
 class SystemModelBase {
  public:
-  virtual ~SystemModelBase();
-  virtual Eigen::MatrixXd propagate(
+//  virtual ~SystemModelBase();
+  virtual Eigen::VectorXd propagate(
       const Eigen::VectorXd& state,
       const Eigen::VectorXd& input) const = 0;
   virtual int getStateDim() const = 0;

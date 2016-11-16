@@ -10,22 +10,19 @@ TEST(LinearSystemModelTest, Fullrun) {
   constexpr int kInputDim = 2;
 
   // Set up system and input matrix
-  Eigen::MatrixXd system_mat(kStateDim, kStateDim);
-  Eigen::MatrixXd input_mat(kStateDim, kInputDim);
+  Eigen::MatrixXd system_mat;
+  Eigen::MatrixXd input_mat;
 
   system_mat = Eigen::MatrixXd::Identity(kStateDim, kStateDim);
   input_mat = Eigen::MatrixXd::Identity(kStateDim, kInputDim);
 
   // Set up system noise, with non standard params
-  GaussianDistributionXd system_noise(
-      Eigen::VectorXd::Zero(kStateDim),
-      Eigen::MatrixXd::Identity(kStateDim, kStateDim));
-
+  GaussianDistribution system_noise;
   system_noise.setDistParam(Eigen::VectorXd::Ones(kStateDim),
                             Eigen::MatrixXd::Identity(kStateDim, kStateDim));
 
   // Set up system model
-  LinearSystemModelXd system_model(system_mat, system_noise, input_mat);
+  LinearSystemModel system_model(system_mat, system_noise, input_mat);
 
   // Set up state and input vector
   Eigen::VectorXd state_vec(kStateDim);
@@ -46,6 +43,8 @@ TEST(LinearSystemModelTest, Fullrun) {
 
   // Check that Jacobian getter works
   ASSERT_EQ(system_model.getJacobian(), system_mat);
+
+  // TODO(jwidauer): Add more test cases
 }
 
 }  // namespace refill

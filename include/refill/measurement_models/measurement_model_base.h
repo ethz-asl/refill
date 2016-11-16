@@ -7,15 +7,15 @@
 
 namespace refill {
 
-template<int STATE_DIM, int MEAS_DIM>
 class MeasurementModelBase {
  public:
-  virtual Eigen::Matrix<double, MEAS_DIM, 1> observe(
-      const Eigen::Matrix<double, STATE_DIM, 1>& state) const = 0;
+//  virtual ~MeasurementModelBase();
+  virtual Eigen::VectorXd observe(
+      const Eigen::VectorXd& state) const = 0;
   virtual int getStateDim() const = 0;
   virtual int getMeasurementDim() const = 0;
-  virtual DistributionInterface<MEAS_DIM>* getMeasurementNoise() const = 0;
-  virtual Eigen::Matrix<double, MEAS_DIM, STATE_DIM> getJacobian() const = 0;
+  virtual DistributionInterface* getMeasurementNoise() const = 0;
+  virtual Eigen::MatrixXd getJacobian() const = 0;
 };
 
 }  // namespace refill
