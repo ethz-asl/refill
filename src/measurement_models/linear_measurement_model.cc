@@ -5,7 +5,7 @@ namespace refill {
 LinearMeasurementModel::LinearMeasurementModel() {
   // In case of call to standard constructor,
   // we assume a one dimensional system, with one measurement.
-  measurement_mat_ = Eigen::MatrixXd::Identity(1, 1);
+  measurement_mapping_ = Eigen::MatrixXd::Identity(1, 1);
 
   // In case of call to standard constructor,
   // we use univariate standard normal gaussian.
@@ -14,16 +14,16 @@ LinearMeasurementModel::LinearMeasurementModel() {
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mat)
-    : measurement_mat_(measurement_mat) {
+    : measurement_mapping_(measurement_mat) {
   measurement_noise_.reset(new GaussianDistribution(measurement_mat.rows()));
 }
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mat,
     const DistributionInterface& measurement_noise)
-    : measurement_mat_(measurement_mat),
+    : measurement_mapping_(measurement_mat),
       measurement_noise_(measurement_noise.clone()) {
-  CHECK_EQ(measurement_mat_.rows(), measurement_noise.mean().size());
+  CHECK_EQ(measurement_mapping_.rows(), measurement_noise.mean().size());
 }
 
 void LinearMeasurementModel::setMeasurementParameters(
@@ -34,17 +34,17 @@ void LinearMeasurementModel::setMeasurementParameters(
 
 Eigen::VectorXd LinearMeasurementModel::observe(
     const Eigen::VectorXd& state) const {
-  CHECK_EQ(state.size(), measurement_mat_.cols());
+  CHECK_EQ(state.size(), measurement_mapping_.cols());
 
-  return measurement_mat_ * state + measurement_noise_->mean();
+  return measurement_mapping_ * state + measurement_noise_->mean();
 }
 
 int LinearMeasurementModel::getStateDim() const {
-  return measurement_mat_.cols();
+  return measurement_mapping_.cols();
 }
 
 int LinearMeasurementModel::getMeasurementDim() const {
-  return measurement_mat_.rows();
+  return measurement_mapping_.rows();
 }
 
 DistributionInterface* LinearMeasurementModel::getMeasurementNoise() const {
@@ -54,7 +54,7 @@ DistributionInterface* LinearMeasurementModel::getMeasurementNoise() const {
 }
 
 Eigen::MatrixXd LinearMeasurementModel::getJacobian() const {
-  return measurement_mat_;
+  return measurement_mapping_;
 }
 
 }  // namespace refill

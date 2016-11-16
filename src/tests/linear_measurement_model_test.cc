@@ -10,8 +10,8 @@ TEST(LinearMeasurementModelTest, Fullrun) {
   constexpr int kMeasurementDim = 1;
 
   // Set up measurement matrix
-  Eigen::MatrixXd measurement_mat;
-  measurement_mat = Eigen::MatrixXd::Identity(kMeasurementDim, kStateDim);
+  Eigen::MatrixXd measurement_mat = Eigen::MatrixXd::Identity(kMeasurementDim,
+                                                              kStateDim);
 
   // Set up measurement noise
   GaussianDistribution measurement_noise;
@@ -23,8 +23,7 @@ TEST(LinearMeasurementModelTest, Fullrun) {
   LinearMeasurementModel measurement_model(measurement_mat, measurement_noise);
 
   // Set up state vector for observation
-  Eigen::VectorXd state(kStateDim);
-  state = Eigen::VectorXd::Ones(kStateDim);
+  Eigen::VectorXd state = Eigen::VectorXd::Ones(kStateDim);
 
   // Check if observation works
   ASSERT_EQ(measurement_model.observe(state),

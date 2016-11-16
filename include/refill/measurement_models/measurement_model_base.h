@@ -9,7 +9,6 @@ namespace refill {
 
 class MeasurementModelBase {
  public:
-//  virtual ~MeasurementModelBase();
   virtual Eigen::VectorXd observe(
       const Eigen::VectorXd& state) const = 0;
   virtual int getStateDim() const = 0;

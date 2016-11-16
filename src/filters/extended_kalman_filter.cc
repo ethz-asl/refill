@@ -19,8 +19,7 @@ void ExtendedKalmanFilter::predict(const SystemModelBase& system_model) {
 
 void ExtendedKalmanFilter::predict(const SystemModelBase& system_model,
                                    const Eigen::VectorXd& input) {
-  Eigen::MatrixXd system_mat;
-  system_mat = system_model.getJacobian();
+  Eigen::MatrixXd system_mat = system_model.getJacobian();
 
   state_.setDistParam(
       system_model.propagate(state_.mean(), input),
@@ -28,22 +27,18 @@ void ExtendedKalmanFilter::predict(const SystemModelBase& system_model,
           + system_model.getSystemNoise()->cov());
 }
 
-void ExtendedKalmanFilter::update(
-    const MeasurementModelBase& measurement_model,
-    const Eigen::VectorXd& measurement) {
+void ExtendedKalmanFilter::update(const MeasurementModelBase& measurement_model,
+                                  const Eigen::VectorXd& measurement) {
   CHECK_EQ(measurement.size(), measurement_model.getMeasurementDim());
 
-  Eigen::MatrixXd measurement_mat;
-  measurement_mat = measurement_model.getJacobian();
+  Eigen::MatrixXd measurement_mat = measurement_model.getJacobian();
 
-  Eigen::VectorXd innovation;
-  Eigen::MatrixXd residual_cov;
-  Eigen::MatrixXd kalman_gain;
-
-  innovation = measurement - measurement_model.observe(state_.mean());
-  residual_cov = measurement_mat * state_.cov() * measurement_mat.transpose()
+  Eigen::VectorXd innovation = measurement
+      - measurement_model.observe(state_.mean());
+  Eigen::MatrixXd residual_cov = measurement_mat * state_.cov()
+      * measurement_mat.transpose()
       + measurement_model.getMeasurementNoise()->cov();
-  kalman_gain = state_.cov() * measurement_mat.transpose()
+  Eigen::MatrixXd kalman_gain = state_.cov() * measurement_mat.transpose()
       * residual_cov.inverse();
 
   state_.setDistParam(

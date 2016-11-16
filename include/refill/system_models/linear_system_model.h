@@ -35,8 +35,8 @@ class LinearSystemModel : public SystemModelBase {
   DistributionInterface* getSystemNoise() const;
 
  private:
-  Eigen::MatrixXd system_mat_;
-  Eigen::MatrixXd input_mat_;
+  Eigen::MatrixXd system_mapping_;
+  Eigen::MatrixXd input_mapping_;
   std::unique_ptr<DistributionInterface> system_noise_;
 };
 

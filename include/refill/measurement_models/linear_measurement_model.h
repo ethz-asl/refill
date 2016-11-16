@@ -27,7 +27,7 @@ class LinearMeasurementModel : public MeasurementModelBase {
   DistributionInterface* getMeasurementNoise() const;
 
  private:
-  Eigen::MatrixXd measurement_mat_;
+  Eigen::MatrixXd measurement_mapping_;
   std::unique_ptr<DistributionInterface> measurement_noise_;
 };
 

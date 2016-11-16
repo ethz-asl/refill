@@ -6,17 +6,17 @@ GaussianDistribution::GaussianDistribution() {
   // For the standard constructor, we use a univariate standard normal
   // distribution.
   mean_ = Eigen::VectorXd::Zero(1);
-  covmat_ = Eigen::MatrixXd::Identity(1, 1);
+  covariance_ = Eigen::MatrixXd::Identity(1, 1);
 }
 
 GaussianDistribution::GaussianDistribution(const GaussianDistribution& dist) {
-  covmat_ = dist.covmat_;
+  covariance_ = dist.covariance_;
   mean_ = dist.mean_;
 }
 
 GaussianDistribution::GaussianDistribution(const int& dimension) {
   mean_ = Eigen::VectorXd::Zero(dimension);
-  covmat_ = Eigen::MatrixXd::Identity(dimension, dimension);
+  covariance_ = Eigen::MatrixXd::Identity(dimension, dimension);
 }
 
 GaussianDistribution::GaussianDistribution(const Eigen::VectorXd& dist_mean,
@@ -33,7 +33,7 @@ void GaussianDistribution::setDistParam(const Eigen::VectorXd& dist_mean,
   CHECK(chol_of_cov.info() != Eigen::NumericalIssue) << "Matrix not s.p.d.";
 
   mean_ = dist_mean;
-  covmat_ = dist_cov;
+  covariance_ = dist_cov;
 }
 
 void GaussianDistribution::setMean(const Eigen::VectorXd& mean) {
@@ -48,7 +48,7 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
   Eigen::LLT<Eigen::MatrixXd> chol_of_cov(cov);
   CHECK_NE(chol_of_cov.info(), Eigen::NumericalIssue)<< "Matrix not s.p.d.";
 
-  covmat_ = cov;
+  covariance_ = cov;
 }
 
 int GaussianDistribution::dimension() const {
@@ -60,10 +60,9 @@ Eigen::VectorXd GaussianDistribution::mean() const {
 }
 
 Eigen::MatrixXd GaussianDistribution::cov() const {
-  return covmat_;
+  return covariance_;
 }
 
-// Operator overloading
 GaussianDistribution GaussianDistribution::operator+(
     const GaussianDistribution &right_side) {
 
@@ -71,7 +70,7 @@ GaussianDistribution GaussianDistribution::operator+(
       << "Distribution dimensions do not match.";
 
   GaussianDistribution result(mean_ + right_side.mean(),
-                              covmat_ + right_side.cov());
+                              covariance_ + right_side.cov());
   return result;
 }
 
@@ -83,8 +82,5 @@ inline GaussianDistribution operator*(const Eigen::MatrixXd &mat,
   return GaussianDistribution(mat * gaussian.mean(),
                               mat * gaussian.cov() * mat.transpose());
 }
-// Non-member operator overloading.
-GaussianDistribution operator*(const Eigen::MatrixXd& mat,
-                               const GaussianDistribution gaussian);
 
 }  // namespace refill

@@ -10,11 +10,8 @@ TEST(LinearSystemModelTest, Fullrun) {
   constexpr int kInputDim = 2;
 
   // Set up system and input matrix
-  Eigen::MatrixXd system_mat;
-  Eigen::MatrixXd input_mat;
-
-  system_mat = Eigen::MatrixXd::Identity(kStateDim, kStateDim);
-  input_mat = Eigen::MatrixXd::Identity(kStateDim, kInputDim);
+  Eigen::MatrixXd system_mat = Eigen::MatrixXd::Identity(kStateDim, kStateDim);
+  Eigen::MatrixXd input_mat = Eigen::MatrixXd::Identity(kStateDim, kInputDim);
 
   // Set up system noise, with non standard params
   GaussianDistribution system_noise;
@@ -25,11 +22,8 @@ TEST(LinearSystemModelTest, Fullrun) {
   LinearSystemModel system_model(system_mat, system_noise, input_mat);
 
   // Set up state and input vector
-  Eigen::VectorXd state_vec(kStateDim);
-  Eigen::VectorXd input_vec(kInputDim);
-
-  state_vec = Eigen::VectorXd::Ones(kStateDim);
-  input_vec = Eigen::VectorXd::Ones(kInputDim);
+  Eigen::VectorXd state_vec = Eigen::VectorXd::Ones(kStateDim);
+  Eigen::VectorXd input_vec = Eigen::VectorXd::Ones(kInputDim);
 
   // Propagate the state vector through the system
   state_vec = system_model.propagate(state_vec, input_vec);

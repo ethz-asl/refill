@@ -28,7 +28,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   GaussianDistribution operator+(const GaussianDistribution& right_side);
 
  private:
-  Eigen::MatrixXd covmat_;
+  Eigen::MatrixXd covariance_;
   Eigen::VectorXd mean_;
 };
 

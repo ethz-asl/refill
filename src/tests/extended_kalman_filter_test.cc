@@ -18,13 +18,12 @@ TEST(ExtendedKalmanFilterTest, FullRun) {
   GaussianDistribution measurement_noiseXd(kMeasurementDim);
 
   // Set up system, input and measurement matrix
-  Eigen::MatrixXd system_mat;
-  Eigen::MatrixXd input_mat;
-  Eigen::MatrixXd measurement_mat;
-
-  system_mat = Eigen::MatrixXd::Identity(kStateDim, kStateDim);
-  input_mat = Eigen::MatrixXd::Identity(kStateDim, kInputDim);
-  measurement_mat = Eigen::MatrixXd::Identity(kMeasurementDim, kStateDim);
+  const Eigen::MatrixXd system_mat = Eigen::MatrixXd::Identity(kStateDim,
+                                                               kStateDim);
+  const Eigen::MatrixXd input_mat = Eigen::MatrixXd::Identity(kStateDim,
+                                                              kInputDim);
+  const Eigen::MatrixXd measurement_mat = Eigen::MatrixXd::Identity(
+      kMeasurementDim, kStateDim);
 
   // Set up linear system and measurement model
   LinearSystemModel system_model(system_mat, system_noise, input_mat);
@@ -35,11 +34,8 @@ TEST(ExtendedKalmanFilterTest, FullRun) {
   ExtendedKalmanFilter KF(initial_state);
 
   // Set up input and measurement vectors
-  Eigen::VectorXd input;
-  Eigen::VectorXd measurement;
-
-  input = Eigen::VectorXd::Ones(kInputDim);
-  measurement = Eigen::VectorXd::Ones(kMeasurementDim);
+  const Eigen::VectorXd input = Eigen::VectorXd::Ones(kInputDim);
+  const Eigen::VectorXd measurement = Eigen::VectorXd::Ones(kMeasurementDim);
 
   // Perform one prediction step
   KF.predict(system_model, input);
