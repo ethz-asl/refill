@@ -30,6 +30,9 @@ void LinearMeasurementModel::setMeasurementParameters(
     const Eigen::MatrixXd& measurement_mat,
     const DistributionInterface& measurement_noise) {
   CHECK_EQ(measurement_mat.rows(), measurement_noise.mean().size());
+
+  measurement_mapping_ = measurement_mat;
+  measurement_noise_.reset(measurement_noise.clone());
 }
 
 Eigen::VectorXd LinearMeasurementModel::observe(
@@ -48,8 +51,6 @@ int LinearMeasurementModel::getMeasurementDim() const {
 }
 
 DistributionInterface* LinearMeasurementModel::getMeasurementNoise() const {
-  CHECK_NE(measurement_noise_.get(),
-           static_cast<DistributionInterface*>(nullptr));
   return measurement_noise_.get();
 }
 

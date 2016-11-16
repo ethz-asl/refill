@@ -49,6 +49,10 @@ void LinearSystemModel::setSystemParameters(
   if (input_mat.size() != 0) {
     CHECK_EQ(system_mat.rows(), input_mat.rows());
   }
+
+  system_mapping_ = system_mat;
+  system_noise_.reset(system_noise.clone());
+  input_mapping_ = input_mat;
 }
 
 Eigen::VectorXd LinearSystemModel::propagate(
@@ -82,7 +86,6 @@ int LinearSystemModel::getInputDim() const {
 }
 
 DistributionInterface* LinearSystemModel::getSystemNoise() const {
-  CHECK_NE(system_noise_.get(), static_cast<DistributionInterface*>(nullptr));
   return system_noise_.get();
 }
 
