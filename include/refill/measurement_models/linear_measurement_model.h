@@ -4,12 +4,12 @@
 #include <glog/logging.h>
 #include <memory>
 
+#include "refill/measurement_models/linearized_measurement_model.h"
 #include "refill/distributions/gaussian_distribution.h"
-#include "refill/measurement_models/linearizable_measurement_model.h"
 
 namespace refill {
 
-class LinearMeasurementModel : public LinearizableMeasurementModel {
+class LinearMeasurementModel : public LinearizedMeasurementModel {
  public:
   LinearMeasurementModel();
   explicit LinearMeasurementModel(const Eigen::MatrixXd& measurement_mat);

@@ -4,12 +4,12 @@
 #include <glog/logging.h>
 #include <memory>
 
-#include "refill/system_models/linearizable_system_model.h"
+#include "refill/system_models/linearized_system_model.h"
 #include "refill/distributions/gaussian_distribution.h"
 
 namespace refill {
 
-class LinearSystemModel : public LinearizableSystemModel {
+class LinearSystemModel : public LinearizedSystemModel {
  public:
   LinearSystemModel();
   LinearSystemModel(const Eigen::MatrixXd& system_mat,

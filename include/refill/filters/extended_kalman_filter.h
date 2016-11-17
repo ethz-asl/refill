@@ -3,26 +3,26 @@
 
 #include <memory>
 
+#include "refill/measurement_models/linearized_measurement_model.h"
+#include "refill/system_models/linearized_system_model.h"
 #include "refill/distributions/gaussian_distribution.h"
-#include "refill/system_models/linearizable_system_model.h"
-#include "refill/measurement_models/linearizable_measurement_model.h"
 #include "refill/filters/filter_base.h"
 
 namespace refill {
 
-class ExtendedKalmanFilter : public FilterBase<LinearizableSystemModel,
-    LinearizableMeasurementModel> {
+class ExtendedKalmanFilter : public FilterBase<LinearizedSystemModel,
+    LinearizedMeasurementModel> {
  public:
   ExtendedKalmanFilter();
   explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state);
 
   void setState(const GaussianDistribution& state);
 
-  void predict(const LinearizableSystemModel& system_model);
-  void predict(const LinearizableSystemModel& system_model,
+  void predict(const LinearizedSystemModel& system_model);
+  void predict(const LinearizedSystemModel& system_model,
                const Eigen::VectorXd& input);
 
-  void update(const LinearizableMeasurementModel& measurement_model,
+  void update(const LinearizedMeasurementModel& measurement_model,
               const Eigen::VectorXd& measurement);
 
   GaussianDistribution state() const {
