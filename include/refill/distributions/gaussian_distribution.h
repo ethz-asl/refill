@@ -10,7 +10,7 @@ namespace refill {
 class GaussianDistribution : public DistributionBase<GaussianDistribution> {
  public:
   GaussianDistribution();
-  GaussianDistribution(const GaussianDistribution& dist);
+  GaussianDistribution(const GaussianDistribution& dist) = default;
   explicit GaussianDistribution(const int& dimension);
   GaussianDistribution(const Eigen::VectorXd& dist_mean,
                        const Eigen::MatrixXd& dist_cov);

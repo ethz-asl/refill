@@ -14,7 +14,6 @@ class MeasurementModelBase {
   virtual int getStateDim() const = 0;
   virtual int getMeasurementDim() const = 0;
   virtual DistributionInterface* getMeasurementNoise() const = 0;
-  virtual Eigen::MatrixXd getJacobian() const = 0;
 };
 
 }  // namespace refill

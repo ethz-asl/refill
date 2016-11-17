@@ -4,12 +4,12 @@
 #include <glog/logging.h>
 #include <memory>
 
+#include "refill/system_models/linearizable_system_model.h"
 #include "refill/distributions/gaussian_distribution.h"
-#include "refill/system_models/system_model_base.h"
 
 namespace refill {
 
-class LinearSystemModel : public SystemModelBase {
+class LinearSystemModel : public LinearizableSystemModel {
  public:
   LinearSystemModel();
   LinearSystemModel(const Eigen::MatrixXd& system_mat,
@@ -35,6 +35,7 @@ class LinearSystemModel : public SystemModelBase {
   DistributionInterface* getSystemNoise() const;
 
  private:
+  // TODO(jwidauer): Implement noise matrix
   Eigen::MatrixXd system_mapping_;
   Eigen::MatrixXd input_mapping_;
   std::unique_ptr<DistributionInterface> system_noise_;

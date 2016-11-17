@@ -2,21 +2,15 @@
 
 namespace refill {
 
-GaussianDistribution::GaussianDistribution() {
-  // For the standard constructor, we use a univariate standard normal
-  // distribution.
-  mean_ = Eigen::VectorXd::Zero(1);
-  covariance_ = Eigen::MatrixXd::Identity(1, 1);
+// For the standard constructor, we use a univariate standard
+// normal distribution.
+GaussianDistribution::GaussianDistribution()
+    : GaussianDistribution(1) {
 }
 
-GaussianDistribution::GaussianDistribution(const GaussianDistribution& dist) {
-  covariance_ = dist.covariance_;
-  mean_ = dist.mean_;
-}
-
-GaussianDistribution::GaussianDistribution(const int& dimension) {
-  mean_ = Eigen::VectorXd::Zero(dimension);
-  covariance_ = Eigen::MatrixXd::Identity(dimension, dimension);
+GaussianDistribution::GaussianDistribution(const int& dimension)
+    : mean_(Eigen::VectorXd::Zero(dimension)),
+      covariance_(Eigen::MatrixXd::Identity(dimension, dimension)) {
 }
 
 GaussianDistribution::GaussianDistribution(const Eigen::VectorXd& dist_mean,

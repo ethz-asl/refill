@@ -1,6 +1,7 @@
 #ifndef REFILL_DISTRIBUTIONS_DISTRIBUTION_BASE_H_
 #define REFILL_DISTRIBUTIONS_DISTRIBUTION_BASE_H_
 
+#include <glog/logging.h>
 #include <Eigen/Dense>
 
 namespace refill {
@@ -17,12 +18,18 @@ class DistributionInterface {
 //  so the clone function doesn't have to be implemented in every
 //  derived distribution.
 //  For new distributions, inherit from this class like this:
-//  class NewDistribution : public DistributionBase<DIM, NewDistribution>
+//  class NewDistribution : public DistributionBase<NewDistribution>
 
 template<typename DERIVED>
 class DistributionBase : public DistributionInterface {
   virtual DistributionInterface* clone() const {
-    return new DERIVED(dynamic_cast<DERIVED const&>(*this));
+    DERIVED casted_derived_obj;
+    try {
+      casted_derived_obj = dynamic_cast<DERIVED const&>(*this);
+    } catch (const std::bad_cast& e) {
+      LOG(FATAL) << "Tried cloning, but encountered: " << e.what();
+    }
+    return new DERIVED(casted_derived_obj);
   }
 };
 

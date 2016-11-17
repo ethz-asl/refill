@@ -5,11 +5,11 @@
 #include <memory>
 
 #include "refill/distributions/gaussian_distribution.h"
-#include "refill/measurement_models/measurement_model_base.h"
+#include "refill/measurement_models/linearizable_measurement_model.h"
 
 namespace refill {
 
-class LinearMeasurementModel : public MeasurementModelBase {
+class LinearMeasurementModel : public LinearizableMeasurementModel {
  public:
   LinearMeasurementModel();
   explicit LinearMeasurementModel(const Eigen::MatrixXd& measurement_mat);
@@ -27,6 +27,7 @@ class LinearMeasurementModel : public MeasurementModelBase {
   DistributionInterface* getMeasurementNoise() const;
 
  private:
+  // TODO(jwidauer): Implement noise matrix
   Eigen::MatrixXd measurement_mapping_;
   std::unique_ptr<DistributionInterface> measurement_noise_;
 };

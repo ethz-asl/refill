@@ -2,20 +2,17 @@
 
 namespace refill {
 
-LinearMeasurementModel::LinearMeasurementModel() {
-  // In case of call to standard constructor,
-  // we assume a one dimensional system, with one measurement.
-  measurement_mapping_ = Eigen::MatrixXd::Identity(1, 1);
-
-  // In case of call to standard constructor,
-  // we use univariate standard normal gaussian.
-  measurement_noise_.reset(new GaussianDistribution(1));
+// In case of call to standard constructor we assume a one dimensional system,
+// with one measurement and univariate standard normal gaussian noise.
+LinearMeasurementModel::LinearMeasurementModel()
+    : measurement_mapping_(Eigen::MatrixXd::Identity(1, 1)),
+      measurement_noise_(new GaussianDistribution(1)) {
 }
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mat)
-    : measurement_mapping_(measurement_mat) {
-  measurement_noise_.reset(new GaussianDistribution(measurement_mat.rows()));
+    : measurement_mapping_(measurement_mat),
+      measurement_noise_(new GaussianDistribution(measurement_mat.rows())) {
 }
 
 LinearMeasurementModel::LinearMeasurementModel(

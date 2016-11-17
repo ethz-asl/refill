@@ -2,13 +2,12 @@
 
 namespace refill {
 
-LinearSystemModel::LinearSystemModel() {
-  // If standard constructor is called, we assume a one dimensional system
-  // without input.
-  system_mapping_ = Eigen::MatrixXd::Identity(1, 1);
-  input_mapping_ = Eigen::MatrixXd::Zero(0, 0);
-
-  system_noise_.reset(new GaussianDistribution(1));
+// If standard constructor is called, we assume a one dimensional system
+// without input.
+LinearSystemModel::LinearSystemModel()
+    : system_mapping_(Eigen::MatrixXd::Identity(1, 1)),
+      input_mapping_(Eigen::MatrixXd::Zero(0, 0)),
+      system_noise_(new GaussianDistribution()) {
 }
 
 // If constructor is called without input matrix, we assume there is no input
