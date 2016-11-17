@@ -12,8 +12,11 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(
     : state_(initial_state) {
 }
 
-void ExtendedKalmanFilter::predict(
-    const LinearizedSystemModel& system_model) {
+void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
+  state_ = state;
+}
+
+void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model) {
   this->predict(system_model,
                 Eigen::VectorXd::Zero(system_model.getInputDim()));
 }
@@ -23,8 +26,9 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   const Eigen::MatrixXd system_mat = system_model.getJacobian();
 
   // TODO(jwidauer): Implement noise matrix.
-  Eigen::VectorXd new_state_mean = system_model.propagate(state_.mean(), input);
-  Eigen::MatrixXd new_state_cov = system_mat * state_.cov()
+  const Eigen::VectorXd new_state_mean = system_model.propagate(state_.mean(),
+                                                                input);
+  const Eigen::MatrixXd new_state_cov = system_mat * state_.cov()
       * system_mat.transpose() + system_model.getSystemNoise()->cov();
 
   state_.setDistParam(new_state_mean, new_state_cov);
@@ -45,8 +49,9 @@ void ExtendedKalmanFilter::update(
   const Eigen::MatrixXd kalman_gain = state_.cov() * measurement_mat.transpose()
       * residual_cov.inverse();
 
-  Eigen::VectorXd new_state_mean = state_.mean() + kalman_gain * innovation;
-  Eigen::MatrixXd new_state_cov = state_.cov()
+  const Eigen::VectorXd new_state_mean = state_.mean()
+      + kalman_gain * innovation;
+  const Eigen::MatrixXd new_state_cov = state_.cov()
       - kalman_gain * residual_cov * kalman_gain.transpose();
 
   state_.setDistParam(new_state_mean, new_state_cov);
