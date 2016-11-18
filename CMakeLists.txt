@@ -1,4 +1,4 @@
-project(Refill)
+project(refill)
 cmake_minimum_required(VERSION 2.8)
 
 # Use C++14
@@ -30,7 +30,6 @@ include_directories(SYSTEM
 )
 
 # LIBRARY
-# Disabled compilation for now as currently everything is templated, which will change later.
 file(GLOB_RECURSE SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 file(GLOB_RECURSE REMOVE_SOURCES "*_test.cc")
 list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
@@ -41,7 +40,6 @@ target_link_libraries(${PROJECT_NAME} ${GLOG_LIBRARIES})
 FILE(GLOB_RECURSE MyTestSources src/*_test.cc)
 add_executable(filtertests ${MyTestSources})
 target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} ${PROJECT_NAME} -lpthread -lm)
-#target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} -lpthread -lm)
 add_test(AllTests filtertests)
 
 # Qt Creator Compatibility ensuring include dir is shown
