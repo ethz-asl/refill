@@ -36,7 +36,7 @@ TEST(LinearSystemModelTest, Fullrun) {
   ASSERT_EQ(system_model.getInputDim(), kInputDim);
 
   // Check that Jacobian getter works
-  ASSERT_EQ(system_model.getJacobian(), system_mat);
+  ASSERT_EQ(system_model.getStateJacobian(state_vec, input_vec), system_mat);
 
   // TODO(jwidauer): Add more test cases
 }

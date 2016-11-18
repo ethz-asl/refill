@@ -1,28 +1,39 @@
 #ifndef REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 #define REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 
+#include <Eigen/Dense>
 #include <glog/logging.h>
-#include <memory>
 
 #include "refill/system_models/linearized_system_model.h"
 #include "refill/distributions/gaussian_distribution.h"
 
 namespace refill {
 
+// Class for a system model of the form:
+//   x(k+1) = A * x(k) + B * u(k) + L * v(k)
+// Where x(k) is the state, u(k) the input and v(k) the noise at timestep k.
 class LinearSystemModel : public LinearizedSystemModel {
  public:
   LinearSystemModel();
-  LinearSystemModel(const Eigen::MatrixXd& system_mat,
+  LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                     const DistributionInterface& system_noise);
-  LinearSystemModel(const Eigen::MatrixXd& system_mat,
+  LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                     const DistributionInterface& system_noise,
-                    const Eigen::MatrixXd& input_mat);
+                    const Eigen::MatrixXd& input_mapping);
+  LinearSystemModel(const Eigen::MatrixXd& system_mapping,
+                    const DistributionInterface& system_noise,
+                    const Eigen::MatrixXd& input_mapping,
+                    const Eigen::MatrixXd& noise_mapping);
 
-  void setSystemParameters(const Eigen::MatrixXd& system_mat,
+  void setSystemParameters(const Eigen::MatrixXd& system_mapping,
                            const DistributionInterface& system_noise);
-  void setSystemParameters(const Eigen::MatrixXd& system_mat,
+  void setSystemParameters(const Eigen::MatrixXd& system_mapping,
                            const DistributionInterface& system_noise,
-                           const Eigen::MatrixXd& input_mat);
+                           const Eigen::MatrixXd& input_mapping);
+  void setSystemParameters(const Eigen::MatrixXd& system_mapping,
+                           const DistributionInterface& system_noise,
+                           const Eigen::MatrixXd& input_mapping,
+                           const Eigen::MatrixXd& noise_mapping);
 
   // Propagate a state vector through the linear system model
   Eigen::VectorXd propagate(const Eigen::VectorXd& state) const;
@@ -31,14 +42,16 @@ class LinearSystemModel : public LinearizedSystemModel {
 
   int getStateDim() const;
   int getInputDim() const;
-  Eigen::MatrixXd getJacobian() const;
+  Eigen::MatrixXd getStateJacobian(const Eigen::VectorXd& state,
+                                   const Eigen::VectorXd& input) const;
+  Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
+                                   const Eigen::VectorXd& input) const;
   DistributionInterface* getSystemNoise() const;
 
  private:
-  // TODO(jwidauer): Implement noise matrix
   Eigen::MatrixXd system_mapping_;
   Eigen::MatrixXd input_mapping_;
-  std::unique_ptr<DistributionInterface> system_noise_;
+  Eigen::MatrixXd noise_mapping_;
 };
 
 }  // namespace refill
