@@ -16,7 +16,7 @@ enable_testing()
 find_package(GTest REQUIRED)
 
 # Setup glog
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(Glog)
 if (NOT GLOG_FOUND)
    message(FATAL_ERROR "Can't find Glog")
@@ -31,16 +31,17 @@ include_directories(SYSTEM
 
 # LIBRARY
 # Disabled compilation for now as currently everything is templated, which will change later.
-#file(GLOB_RECURSE SRC_LIST src/*.cc)
-#file(GLOB_RECURSE REMOVE_SOURCES "*_test.cc")
-#list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
-#add_library(${PROJECT_NAME} ${SRC_LIST})
+file(GLOB_RECURSE SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
+file(GLOB_RECURSE REMOVE_SOURCES "*_test.cc")
+list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
+add_library(${PROJECT_NAME} ${SRC_LIST})
+target_link_libraries(${PROJECT_NAME} ${GLOG_LIBRARIES})
 
 # TESTS
-FILE(GLOB MyTestSources src/*_test.cc)
+FILE(GLOB_RECURSE MyTestSources src/*_test.cc)
 add_executable(filtertests ${MyTestSources})
-#target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} Refill)
-target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} -lpthread -lm)
+target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} ${PROJECT_NAME} -lpthread -lm)
+#target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} -lpthread -lm)
 add_test(AllTests filtertests)
 
 # Qt Creator Compatibility ensuring include dir is shown

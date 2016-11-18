@@ -4,103 +4,42 @@
 #include <glog/logging.h>
 #include <memory>
 
+#include "refill/system_models/linearized_system_model.h"
 #include "refill/distributions/gaussian_distribution.h"
-#include "refill/system_models/system_model_base.h"
 
 namespace refill {
 
-template<int STATE_DIM = Eigen::Dynamic, int INPUT_DIM = 0>
-class LinearSystemModel : public SystemModelBase<STATE_DIM, INPUT_DIM> {
+class LinearSystemModel : public LinearizedSystemModel {
  public:
   LinearSystemModel();
-  LinearSystemModel(
-      const Eigen::Matrix<double, STATE_DIM, STATE_DIM>& system_mat,
-      const DistributionInterface<STATE_DIM>& system_noise);
-  LinearSystemModel(
-      const Eigen::Matrix<double, STATE_DIM, STATE_DIM>& system_mat,
-      const DistributionInterface<STATE_DIM>& system_noise,
-      const Eigen::Matrix<double, STATE_DIM, INPUT_DIM>& input_mat);
+  LinearSystemModel(const Eigen::MatrixXd& system_mat,
+                    const DistributionInterface& system_noise);
+  LinearSystemModel(const Eigen::MatrixXd& system_mat,
+                    const DistributionInterface& system_noise,
+                    const Eigen::MatrixXd& input_mat);
 
-  int dimension() const {
-    return system_mat_.cols();
-  }
+  void setSystemParameters(const Eigen::MatrixXd& system_mat,
+                           const DistributionInterface& system_noise);
+  void setSystemParameters(const Eigen::MatrixXd& system_mat,
+                           const DistributionInterface& system_noise,
+                           const Eigen::MatrixXd& input_mat);
 
-  void propagate(Eigen::Matrix<double, STATE_DIM, 1>* state);
-  void propagate(Eigen::Matrix<double, STATE_DIM, 1>* state,
-                 const Eigen::Matrix<double, INPUT_DIM, 1>& input);
+  // Propagate a state vector through the linear system model
+  Eigen::VectorXd propagate(const Eigen::VectorXd& state) const;
+  Eigen::VectorXd propagate(const Eigen::VectorXd& state,
+                            const Eigen::VectorXd& input) const;
 
-  DistributionInterface<STATE_DIM>* getSystemNoise() {
-    CHECK_NE(system_noise_.get(),
-             static_cast<DistributionInterface<STATE_DIM>*>(nullptr));
-    return system_noise_.get();
-  }
+  int getStateDim() const;
+  int getInputDim() const;
+  Eigen::MatrixXd getJacobian() const;
+  DistributionInterface* getSystemNoise() const;
 
  private:
-  Eigen::Matrix<double, STATE_DIM, STATE_DIM> system_mat_;
-  Eigen::Matrix<double, STATE_DIM, INPUT_DIM> input_mat_;
-  std::unique_ptr<DistributionInterface<STATE_DIM>> system_noise_;
+  // TODO(jwidauer): Implement noise matrix
+  Eigen::MatrixXd system_mapping_;
+  Eigen::MatrixXd input_mapping_;
+  std::unique_ptr<DistributionInterface> system_noise_;
 };
-
-typedef LinearSystemModel<Eigen::Dynamic, Eigen::Dynamic> LinearSystemModelXd;
-
-// Function definitions
-
-template<int STATE_DIM, int INPUT_DIM>
-LinearSystemModel<STATE_DIM, INPUT_DIM>::LinearSystemModel() {
-  constexpr int kCurrentSystemDim =
-      (STATE_DIM == Eigen::Dynamic) ? 1 : STATE_DIM;
-  constexpr int kCurrentInputDim =
-      (INPUT_DIM == Eigen::Dynamic) ? 1 : INPUT_DIM;
-
-  system_mat_ =
-      Eigen::Matrix<double, kCurrentSystemDim, kCurrentSystemDim>::Identity(
-          kCurrentSystemDim, kCurrentSystemDim);
-  input_mat_ =
-      Eigen::Matrix<double, kCurrentSystemDim, kCurrentInputDim>::Identity(
-          kCurrentSystemDim, kCurrentInputDim);
-
-  // In case of no declaration of system noise, we use standard normal gaussian
-  system_noise_.reset(new GaussianDistribution<kCurrentSystemDim>());
-}
-
-template<int STATE_DIM, int INPUT_DIM>
-LinearSystemModel<STATE_DIM, INPUT_DIM>::LinearSystemModel(
-    const Eigen::Matrix<double, STATE_DIM, STATE_DIM>& system_mat,
-    const DistributionInterface<STATE_DIM>& system_noise)
-    : system_mat_(system_mat),
-      system_noise_(system_noise.clone()),
-      input_mat_(Eigen::MatrixXd::Zero(STATE_DIM, INPUT_DIM)) {
-}
-
-template<int STATE_DIM, int INPUT_DIM>
-LinearSystemModel<STATE_DIM, INPUT_DIM>::LinearSystemModel(
-    const Eigen::Matrix<double, STATE_DIM, STATE_DIM>& system_mat,
-    const DistributionInterface<STATE_DIM>& system_noise,
-    const Eigen::Matrix<double, STATE_DIM, INPUT_DIM>& input_mat)
-    : system_mat_(system_mat),
-      input_mat_(input_mat),
-      system_noise_(system_noise.clone()) {
-}
-
-template<int STATE_DIM, int INPUT_DIM>
-void LinearSystemModel<STATE_DIM, INPUT_DIM>::propagate(
-    Eigen::Matrix<double, STATE_DIM, 1>* state) {
-  this->propagate(state, Eigen::VectorXd::Zero(INPUT_DIM));
-}
-
-template<int STATE_DIM, int INPUT_DIM>
-void LinearSystemModel<STATE_DIM, INPUT_DIM>::propagate(
-    Eigen::Matrix<double, STATE_DIM, 1>* state,
-    const Eigen::Matrix<double, INPUT_DIM, 1> &input) {
-
-  // If there is no input, we don't need to compute the matrix multiplication.
-  if (INPUT_DIM == 0) {
-    *state = system_mat_ * (*state) + system_noise_->mean();
-  } else {
-    *state = system_mat_ * (*state) + input_mat_ * input
-        + system_noise_->mean();
-  }
-}
 
 }  // namespace refill
 

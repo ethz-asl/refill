@@ -3,13 +3,18 @@
 
 #include <Eigen/Dense>
 
+#include "refill/measurement_models/measurement_model_base.h"
+#include "refill/system_models/system_model_base.h"
+
 namespace refill {
 
-template <int STATE_DIM = Eigen::Dynamic, int MEAS_DIM = Eigen::Dynamic>
+template<typename SYSTEM_MODEL_TYPE, typename MEASUREMENT_MODEL_TYPE>
 class FilterBase {
  public:
-  virtual void predict() = 0;
-  virtual void update(Eigen::Matrix<double, MEAS_DIM, 1> measurement) = 0;
+  virtual void predict(const SYSTEM_MODEL_TYPE& system_model,
+                       const Eigen::VectorXd& input) = 0;
+  virtual void update(const MEASUREMENT_MODEL_TYPE& measurement_model,
+                      const Eigen::VectorXd& measurement) = 0;
 };
 
 }  // namespace refill

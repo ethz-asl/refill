@@ -3,14 +3,18 @@
 
 #include <Eigen/Dense>
 
+#include "refill/distributions/distribution_base.h"
+
 namespace refill {
 
-template <int STATE_DIM, int INPUT_DIM>
 class SystemModelBase {
  public:
-  virtual void propagate(Eigen::Matrix<double, STATE_DIM, 1>* state,
-                         const Eigen::Matrix<double, INPUT_DIM, 1>& input) = 0;
-  virtual int dimension() const = 0;
+  virtual Eigen::VectorXd propagate(
+      const Eigen::VectorXd& state,
+      const Eigen::VectorXd& input) const = 0;
+  virtual int getStateDim() const = 0;
+  virtual int getInputDim() const = 0;
+  virtual DistributionInterface* getSystemNoise() const = 0;
 };
 
 }  // namespace refill

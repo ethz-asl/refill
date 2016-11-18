@@ -3,14 +3,17 @@
 
 #include <Eigen/Dense>
 
+#include "refill/distributions/distribution_base.h"
+
 namespace refill {
 
-template<int STATE_DIM, int MEAS_DIM>
 class MeasurementModelBase {
  public:
-  virtual Eigen::Matrix<double, MEAS_DIM, 1> observe(
-      const Eigen::Matrix<double, STATE_DIM, 1>& state) = 0;
-  virtual int dimension() const = 0;
+  virtual Eigen::VectorXd observe(
+      const Eigen::VectorXd& state) const = 0;
+  virtual int getStateDim() const = 0;
+  virtual int getMeasurementDim() const = 0;
+  virtual DistributionInterface* getMeasurementNoise() const = 0;
 };
 
 }  // namespace refill
