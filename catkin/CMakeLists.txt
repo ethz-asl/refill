@@ -17,7 +17,7 @@ file(GLOB_RECURSE SRC_LIST "../src/*.cc")
 file(GLOB_RECURSE REMOVE_SOURCES "../src/*_test.cc")
 list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
 
-cs_add_library(refill_catkin ${SRC_LIST})
+cs_add_library(refill ${SRC_LIST})
 
 cs_install()
 cs_export(
