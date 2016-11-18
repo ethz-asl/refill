@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>refill_catkin</name>
+  <version>0.0.1</version>
+  <description>
+Catkin interface for Refill.
+  </description>
+  <maintainer email="jwidauer@student.ethz.ch">Jakob Widauer</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+  <depend>glog_catkin</depend>
+  <depend>eigen_catkin</depend>
+</package>
