@@ -7,8 +7,7 @@ namespace refill {
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(1, 1),
                              GaussianDistribution(),
-                             Eigen::MatrixXd::Identity(1, 1)) {
-}
+                             Eigen::MatrixXd::Identity(1, 1)) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
@@ -17,8 +16,7 @@ LinearMeasurementModel::LinearMeasurementModel(
         measurement_mapping,
         measurement_noise,
         Eigen::MatrixXd::Identity(measurement_mapping.rows(),
-                                  measurement_noise.mean().size())) {
-}
+                                  measurement_noise.mean().size())) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
@@ -54,7 +52,8 @@ Eigen::VectorXd LinearMeasurementModel::observe(
     const Eigen::VectorXd& state) const {
   CHECK_EQ(state.size(), measurement_mapping_.cols());
 
-  return measurement_mapping_ * state + measurement_noise_->mean();
+  return measurement_mapping_ * state
+      + noise_mapping_ * measurement_noise_->mean();
 }
 
 int LinearMeasurementModel::getStateDim() const {

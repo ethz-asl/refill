@@ -2,7 +2,6 @@
 #define REFILL_SYSTEM_MODELS_LINEARIZED_SYSTEM_MODEL_H_
 
 #include <Eigen/Dense>
-
 #include <memory>
 
 #include "refill/system_models/system_model_base.h"
@@ -11,7 +10,7 @@ namespace refill {
 
 class LinearizedSystemModel : public SystemModelBase {
  public:
-  LinearizedSystemModel();
+  LinearizedSystemModel() {}
 
   // TODO(jwidauer): Add comment
   virtual Eigen::MatrixXd getStateJacobian(

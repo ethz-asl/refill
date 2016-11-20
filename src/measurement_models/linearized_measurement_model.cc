@@ -2,9 +2,6 @@
 
 namespace refill {
 
-LinearizedMeasurementModel::LinearizedMeasurementModel() {
-}
-
 int LinearizedMeasurementModel::getMeasurementNoiseDim() const {
   return measurement_noise_->mean().size();
 }

@@ -2,9 +2,6 @@
 
 namespace refill {
 
-LinearizedSystemModel::LinearizedSystemModel() {
-}
-
 int LinearizedSystemModel::getSystemNoiseDim() const {
   return system_noise_->mean().size();
 }
