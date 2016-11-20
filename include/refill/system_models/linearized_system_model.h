@@ -5,13 +5,19 @@
 
 #include <memory>
 
+#include "refill/distributions/distribution_base.h"
 #include "refill/system_models/system_model_base.h"
 
 namespace refill {
 
 class LinearizedSystemModel : public SystemModelBase {
  public:
-  LinearizedSystemModel();
+  LinearizedSystemModel() = delete;
+  LinearizedSystemModel(const int& system_dim,
+                        const DistributionInterface& system_noise);
+  LinearizedSystemModel(const int& system_dim,
+                        const DistributionInterface& system_noise,
+                        const int& input_dim);
 
   // TODO(jwidauer): Add comment
   virtual Eigen::MatrixXd getStateJacobian(
@@ -20,8 +26,11 @@ class LinearizedSystemModel : public SystemModelBase {
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
 
   int getSystemNoiseDim() const;
+  DistributionInterface* getSystemNoise() const;
  protected:
   std::unique_ptr<DistributionInterface> system_noise_;
+  const int system_dim_;
+  const int input_dim_;
 };
 
 }  // namespace refill

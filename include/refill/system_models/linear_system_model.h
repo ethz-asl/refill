@@ -46,8 +46,6 @@ class LinearSystemModel : public LinearizedSystemModel {
                                    const Eigen::VectorXd& input) const;
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
                                    const Eigen::VectorXd& input) const;
-  DistributionInterface* getSystemNoise() const;
-
  private:
   Eigen::MatrixXd system_mapping_;
   Eigen::MatrixXd input_mapping_;

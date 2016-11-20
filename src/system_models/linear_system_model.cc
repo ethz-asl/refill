@@ -35,7 +35,9 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise,
                                      const Eigen::MatrixXd& input_mapping,
-                                     const Eigen::MatrixXd& noise_mapping) {
+                                     const Eigen::MatrixXd& noise_mapping)
+    : LinearizedSystemModel(system_mapping.rows(), system_noise,
+                            input_mapping.cols()) {
   this->setSystemParameters(system_mapping, system_noise, input_mapping,
                             noise_mapping);
 }
@@ -97,10 +99,10 @@ Eigen::VectorXd LinearSystemModel::propagate(
 // we don't need to compute the matrix multiplication.
   if (input_mapping_.size() == 0
       || input == Eigen::VectorXd::Zero(input_mapping_.cols())) {
-    return system_mapping_ * state + system_noise_->mean();
+    return system_mapping_ * state + noise_mapping_ * system_noise_->mean();
   } else {
     return system_mapping_ * state + input_mapping_ * input
-        + system_noise_->mean();
+        + noise_mapping_ * system_noise_->mean();
   }
 }
 
@@ -120,10 +122,6 @@ Eigen::MatrixXd LinearSystemModel::getStateJacobian(
 Eigen::MatrixXd LinearSystemModel::getNoiseJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
   return noise_mapping_;
-}
-
-DistributionInterface* LinearSystemModel::getSystemNoise() const {
-  return system_noise_.get();
 }
 
 }  // namespace refill
