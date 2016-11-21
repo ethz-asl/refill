@@ -79,39 +79,33 @@ void LinearSystemModel::setSystemParameters(
   }
 
   system_mapping_ = system_mapping;
-  system_noise_.reset(system_noise.clone());
   input_mapping_ = input_mapping;
   noise_mapping_ = noise_mapping;
+
+  this->setLinearizedSystemParameters(system_mapping.rows(), system_noise,
+                                      input_mapping.cols());
 }
 
 Eigen::VectorXd LinearSystemModel::propagate(
     const Eigen::VectorXd& state) const {
-  return this->propagate(state, Eigen::VectorXd::Zero(input_mapping_.cols()));
+  return this->propagate(state, Eigen::VectorXd::Zero(this->getInputDim()));
 }
 
 Eigen::VectorXd LinearSystemModel::propagate(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
 
-  CHECK_EQ(state.size(), system_mapping_.rows());
-  CHECK_EQ(input.size(), input_mapping_.cols());
+  CHECK_EQ(state.size(), this->getStateDim());
+  CHECK_EQ(input.size(), this->getInputDim());
 
 // If there is no input to the system,
 // we don't need to compute the matrix multiplication.
   if (input_mapping_.size() == 0
-      || input == Eigen::VectorXd::Zero(input_mapping_.cols())) {
+      || input == Eigen::VectorXd::Zero(this->getInputDim())) {
     return system_mapping_ * state + noise_mapping_ * system_noise_->mean();
   } else {
     return system_mapping_ * state + input_mapping_ * input
         + noise_mapping_ * system_noise_->mean();
   }
-}
-
-int LinearSystemModel::getStateDim() const {
-  return system_mapping_.rows();
-}
-
-int LinearSystemModel::getInputDim() const {
-  return input_mapping_.cols();
 }
 
 Eigen::MatrixXd LinearSystemModel::getStateJacobian(

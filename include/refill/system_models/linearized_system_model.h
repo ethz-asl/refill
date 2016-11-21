@@ -2,7 +2,6 @@
 #define REFILL_SYSTEM_MODELS_LINEARIZED_SYSTEM_MODEL_H_
 
 #include <Eigen/Dense>
-
 #include <memory>
 
 #include "refill/distributions/distribution_base.h"
@@ -12,12 +11,17 @@ namespace refill {
 
 class LinearizedSystemModel : public SystemModelBase {
  public:
-  LinearizedSystemModel() = delete;
-  LinearizedSystemModel(const int& system_dim,
+  LinearizedSystemModel(const unsigned int& state_dim,
                         const DistributionInterface& system_noise);
-  LinearizedSystemModel(const int& system_dim,
+  LinearizedSystemModel(const unsigned int& state_dim,
                         const DistributionInterface& system_noise,
-                        const int& input_dim);
+                        const unsigned int& input_dim);
+
+  void setLinearizedSystemParameters(const unsigned int& state_dim,
+                                     const DistributionInterface& system_noise);
+  void setLinearizedSystemParameters(const unsigned int& state_dim,
+                                     const DistributionInterface& system_noise,
+                                     const unsigned int& input_dim);
 
   // TODO(jwidauer): Add comment
   virtual Eigen::MatrixXd getStateJacobian(
@@ -25,12 +29,15 @@ class LinearizedSystemModel : public SystemModelBase {
   virtual Eigen::MatrixXd getNoiseJacobian(
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
 
-  int getSystemNoiseDim() const;
+  unsigned int getStateDim() const;
+  unsigned int getSystemNoiseDim() const;
+  unsigned int getInputDim() const;
   DistributionInterface* getSystemNoise() const;
+
  protected:
   std::unique_ptr<DistributionInterface> system_noise_;
-  const int system_dim_;
-  const int input_dim_;
+  unsigned int state_dim_;
+  unsigned int input_dim_;
 };
 
 }  // namespace refill

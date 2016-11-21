@@ -40,12 +40,11 @@ class LinearSystemModel : public LinearizedSystemModel {
   Eigen::VectorXd propagate(const Eigen::VectorXd& state,
                             const Eigen::VectorXd& input) const;
 
-  int getStateDim() const;
-  int getInputDim() const;
   Eigen::MatrixXd getStateJacobian(const Eigen::VectorXd& state,
                                    const Eigen::VectorXd& input) const;
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
                                    const Eigen::VectorXd& input) const;
+
  private:
   Eigen::MatrixXd system_mapping_;
   Eigen::MatrixXd input_mapping_;

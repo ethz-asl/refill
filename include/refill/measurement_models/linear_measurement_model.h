@@ -26,12 +26,8 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
 
   Eigen::VectorXd observe(const Eigen::VectorXd& state) const;
 
-  int getStateDim() const;
-  int getMeasurementDim() const;
   Eigen::MatrixXd getMeasurementJacobian(const Eigen::VectorXd& state) const;
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state) const;
-  DistributionInterface* getMeasurementNoise() const;
-
  private:
   Eigen::MatrixXd measurement_mapping_;
   Eigen::MatrixXd noise_mapping_;
