@@ -11,6 +11,8 @@ namespace refill {
 
 class LinearMeasurementModel : public LinearizedMeasurementModel {
  public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   // Standard constructor creates an one dimensional measurement model
   // with univariate standard normal gaussian noise.
   LinearMeasurementModel();

@@ -10,7 +10,7 @@ namespace refill {
 
 class FilterBase {
  public:
-  virtual void predict(const Eigen::VectorXd& input) = 0;
+  virtual void predict() = 0;
   virtual void update(const Eigen::VectorXd& measurement) = 0;
 };
 

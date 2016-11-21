@@ -4,15 +4,43 @@
 
 namespace refill {
 
+ExtendedKalmanFilter::ExtendedKalmanFilter()
+    : system_model_(new LinearSystemModel()),
+      measurement_model_(new LinearMeasurementModel()) {}
+
+ExtendedKalmanFilter::ExtendedKalmanFilter(
+    const GaussianDistribution& initial_state)
+    : state_(initial_state),
+      system_model_(nullptr),
+      measurement_model_(nullptr) {}
+
+ExtendedKalmanFilter::ExtendedKalmanFilter(
+    const GaussianDistribution& initial_state,
+    std::unique_ptr<LinearizedSystemModel> system_model,
+    std::unique_ptr<LinearizedMeasurementModel> measurement_model)
+    : state_(initial_state),
+      system_model_(std::move(system_model)),
+      measurement_model_(std::move(measurement_model)) {
+  const int state_dimension = state_.mean().size();
+  const Eigen::VectorXd zero_input = Eigen::VectorXd::Zero(state_dimension);
+
+  CHECK_EQ(system_model->getStateJacobian(state_.mean(), zero_input).rows(),
+           state_dimension);
+  CHECK_EQ(measurement_model->getMeasurementJacobian(state_.mean()).cols(),
+           state_dimension);
+}
+
 void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
   state_ = state;
 }
 
 void ExtendedKalmanFilter::predict() {
+  CHECK_NE(this->sytem_model_, nullptr) << "No default system model provided.";
   this->predict(Eigen::VectorXd::Zero(this->system_model_->getInputDim()));
 }
 
 void ExtendedKalmanFilter::predict(const Eigen::VectorXd& input) {
+  CHECK_NE(this->sytem_model_, nullptr) << "No default system model provided.";
   this->predict(*this->system_model_, input);
 }
 
@@ -31,11 +59,6 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   const Eigen::MatrixXd noise_jacobian =
       system_model.getNoiseJacobian(state_.mean(), input);
 
-  CHECK_EQ(system_jacobian.rows(), system_jacobian.cols());
-  CHECK_EQ(system_model.getStateDim(), system_jacobian.rows());
-  CHECK_EQ(system_model.getStateDim(), noise_jacobian.rows());
-  CHECK_EQ(system_model.getSystemNoiseDim(), noise_jacobian.cols());
-
   const Eigen::VectorXd new_state_mean =
       system_model.propagate(state_.mean(), input);
   const Eigen::MatrixXd new_state_cov =
@@ -47,6 +70,8 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
 }
 
 void ExtendedKalmanFilter::update(const Eigen::VectorXd& measurement) {
+  CHECK_NE(this->measurement_model_, nullptr)
+      << "No default measurement model provided.";
   this->update(*this->measurement_model_, measurement);
 }
 
@@ -60,11 +85,6 @@ void ExtendedKalmanFilter::update(
       measurement_model.getMeasurementJacobian(state_.mean());
   const Eigen::MatrixXd noise_jacobian =
       measurement_model.getNoiseJacobian(state_.mean());
-
-  CHECK_EQ(measurement_model.getMeasurementDim(), measurement_jacobian.rows());
-  CHECK_EQ(measurement_model.getStateDim(), measurement_jacobian.cols());
-  CHECK_EQ(measurement_model.getMeasurementDim(), noise_jacobian.rows());
-  CHECK_EQ(measurement_model.getMeasurementNoiseDim(), noise_jacobian.cols());
 
   const Eigen::VectorXd innovation =
       measurement - measurement_model.observe(state_.mean());

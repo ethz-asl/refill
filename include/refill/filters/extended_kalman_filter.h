@@ -16,11 +16,15 @@ class ExtendedKalmanFilter : public FilterBase {
  public:
   // Default constructor creates a 1d Kalman Filter with identity system and
   // measurement models.
-  ExtendedKalmanFilter()
-      : system_model_(new LinearSystemModel()),
-        measurement_model_(new LinearMeasurementModel()) {}
-  explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state)
-      : state_(initial_state) {}
+  ExtendedKalmanFilter();
+  // Initializes the Kalman filter in a way that expects system models to be
+  // given upon prediction / update.
+  explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state);
+  // The ExtendedKalmanFilter class takes ownership of both models.
+  explicit ExtendedKalmanFilter(
+      const GaussianDistribution& initial_state,
+      std::unique_ptr<LinearizedSystemModel> system_model,
+      std::unique_ptr<LinearizedMeasurementModel> measurement_model);
 
   void setState(const GaussianDistribution& state);
 

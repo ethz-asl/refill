@@ -1,11 +1,11 @@
 #ifndef REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 #define REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 
-#include <Eigen/Dense>
 #include <glog/logging.h>
+#include <Eigen/Dense>
 
-#include "refill/system_models/linearized_system_model.h"
 #include "refill/distributions/gaussian_distribution.h"
+#include "refill/system_models/linearized_system_model.h"
 
 namespace refill {
 
@@ -14,6 +14,8 @@ namespace refill {
 // Where x(k) is the state, u(k) the input and v(k) the noise at timestep k.
 class LinearSystemModel : public LinearizedSystemModel {
  public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   LinearSystemModel();
   LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                     const DistributionInterface& system_noise);
