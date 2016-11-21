@@ -1,16 +1,18 @@
 #ifndef REFILL_MEASUREMENT_MODELS_LINEAR_MEASUREMENT_MODEL_H_
 #define REFILL_MEASUREMENT_MODELS_LINEAR_MEASUREMENT_MODEL_H_
 
-#include <Eigen/Dense>
 #include <glog/logging.h>
+#include <Eigen/Dense>
 
-#include "refill/measurement_models/linearized_measurement_model.h"
 #include "refill/distributions/gaussian_distribution.h"
+#include "refill/measurement_models/linearized_measurement_model.h"
 
 namespace refill {
 
 class LinearMeasurementModel : public LinearizedMeasurementModel {
  public:
+  // Standard constructor creates an one dimensional measurement model
+  // with univariate standard normal gaussian noise.
   LinearMeasurementModel();
   LinearMeasurementModel(const Eigen::MatrixXd& measurement_mapping,
                          const DistributionInterface& measurement_noise);

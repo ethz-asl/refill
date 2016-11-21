@@ -18,7 +18,9 @@ class LinearizedSystemModel : public SystemModelBase {
   virtual Eigen::MatrixXd getNoiseJacobian(
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
 
+  int getInputDim() const = 0;
   int getSystemNoiseDim() const;
+
  protected:
   std::unique_ptr<DistributionInterface> system_noise_;
 };

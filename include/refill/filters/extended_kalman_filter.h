@@ -3,34 +3,43 @@
 
 #include <memory>
 
-#include "refill/measurement_models/linearized_measurement_model.h"
-#include "refill/system_models/linearized_system_model.h"
 #include "refill/distributions/gaussian_distribution.h"
 #include "refill/filters/filter_base.h"
+#include "refill/measurement_models/linear_measurement_model.h"
+#include "refill/measurement_models/linearized_measurement_model.h"
+#include "refill/system_models/linear_system_model.h"
+#include "refill/system_models/linearized_system_model.h"
 
 namespace refill {
 
-class ExtendedKalmanFilter : public FilterBase<LinearizedSystemModel,
-    LinearizedMeasurementModel> {
+class ExtendedKalmanFilter : public FilterBase {
  public:
-  ExtendedKalmanFilter();
-  explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state);
+  // Default constructor creates a 1d Kalman Filter with identity system and
+  // measurement models.
+  ExtendedKalmanFilter()
+      : system_model_(new LinearSystemModel()),
+        measurement_model_(new LinearMeasurementModel()) {}
+  explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state)
+      : state_(initial_state) {}
 
   void setState(const GaussianDistribution& state);
 
+  void predict();
+  void predict(const Eigen::VectorXd& input);
   void predict(const LinearizedSystemModel& system_model);
   void predict(const LinearizedSystemModel& system_model,
                const Eigen::VectorXd& input);
 
+  void update(const Eigen::VectorXd& measurement);
   void update(const LinearizedMeasurementModel& measurement_model,
               const Eigen::VectorXd& measurement);
 
-  GaussianDistribution state() const {
-    return state_;
-  }
+  GaussianDistribution state() const { return state_; }
 
  private:
   GaussianDistribution state_;
+  std::unique_ptr<LinearizedSystemModel> system_model_;
+  std::unique_ptr<LinearizedMeasurementModel> measurement_model_;
 };
 
 }  // namespace refill

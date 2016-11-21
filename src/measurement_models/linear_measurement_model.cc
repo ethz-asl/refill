@@ -2,8 +2,6 @@
 
 namespace refill {
 
-// In case of call to standard constructor we assume a one dimensional system,
-// with one measurement and univariate standard normal gaussian noise.
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(1, 1),
                              GaussianDistribution(),
@@ -13,10 +11,9 @@ LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise)
     : LinearMeasurementModel(
-        measurement_mapping,
-        measurement_noise,
-        Eigen::MatrixXd::Identity(measurement_mapping.rows(),
-                                  measurement_noise.mean().size())) {}
+          measurement_mapping, measurement_noise,
+          Eigen::MatrixXd::Identity(measurement_mapping.rows(),
+                                    measurement_noise.mean().size())) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
@@ -30,8 +27,7 @@ void LinearMeasurementModel::setMeasurementParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise) {
   this->setMeasurementParameters(
-      measurement_mapping,
-      measurement_noise,
+      measurement_mapping, measurement_noise,
       Eigen::MatrixXd::Identity(measurement_mapping.rows(),
                                 measurement_noise.mean().size()));
 }
@@ -52,8 +48,8 @@ Eigen::VectorXd LinearMeasurementModel::observe(
     const Eigen::VectorXd& state) const {
   CHECK_EQ(state.size(), measurement_mapping_.cols());
 
-  return measurement_mapping_ * state
-      + noise_mapping_ * measurement_noise_->mean();
+  return measurement_mapping_ * state +
+         noise_mapping_ * measurement_noise_->mean();
 }
 
 int LinearMeasurementModel::getStateDim() const {

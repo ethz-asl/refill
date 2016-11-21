@@ -1,3 +1,8 @@
+# ReFilL
+
+A recursive filtering library for bayesian tracking of multiple targets.
+
+### Contributing
 Coding style: [Google Style Guide] (https://google.github.io/styleguide/cppguide.html)
 
 Setting up git hooks for development:
