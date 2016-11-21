@@ -13,6 +13,7 @@ class MeasurementModelBase {
       const Eigen::VectorXd& state) const = 0;
   virtual int getStateDim() const = 0;
   virtual int getMeasurementDim() const = 0;
+  virtual int getMeasurementNoiseDim() const = 0;
   virtual DistributionInterface* getMeasurementNoise() const = 0;
 };
 

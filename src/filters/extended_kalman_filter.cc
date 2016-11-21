@@ -23,13 +23,25 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model) {
 
 void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
                                    const Eigen::VectorXd& input) {
-  const Eigen::MatrixXd system_mat = system_model.getJacobian();
+  CHECK_EQ(system_model.getStateDim(), state_.mean().size());
+  CHECK_EQ(system_model.getInputDim(), input.size());
 
-  // TODO(jwidauer): Implement noise matrix.
+  const Eigen::MatrixXd system_jacobian = system_model.getStateJacobian(
+      state_.mean(), input);
+  const Eigen::MatrixXd noise_jacobian = system_model.getNoiseJacobian(
+      state_.mean(), input);
+
+  CHECK_EQ(system_jacobian.rows(), system_jacobian.cols());
+  CHECK_EQ(system_model.getStateDim(), system_jacobian.rows());
+  CHECK_EQ(system_model.getStateDim(), noise_jacobian.rows());
+  CHECK_EQ(system_model.getSystemNoiseDim(), noise_jacobian.cols());
+
   const Eigen::VectorXd new_state_mean = system_model.propagate(state_.mean(),
                                                                 input);
-  const Eigen::MatrixXd new_state_cov = system_mat * state_.cov()
-      * system_mat.transpose() + system_model.getSystemNoise()->cov();
+  const Eigen::MatrixXd new_state_cov = system_jacobian * state_.cov()
+      * system_jacobian.transpose()
+      + noise_jacobian * system_model.getSystemNoise()->cov()
+          * noise_jacobian.transpose();
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }
@@ -37,17 +49,27 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
 void ExtendedKalmanFilter::update(
     const LinearizedMeasurementModel& measurement_model,
     const Eigen::VectorXd& measurement) {
-  CHECK_EQ(measurement.size(), measurement_model.getMeasurementDim());
+  CHECK_EQ(measurement_model.getMeasurementDim(), measurement.size());
+  CHECK_EQ(measurement_model.getStateDim(), state_.mean().size());
 
-  const Eigen::MatrixXd measurement_mat = measurement_model.getJacobian();
+  const Eigen::MatrixXd measurement_jacobian = measurement_model
+      .getMeasurementJacobian(state_.mean());
+  const Eigen::MatrixXd noise_jacobian = measurement_model.getNoiseJacobian(
+      state_.mean());
+
+  CHECK_EQ(measurement_model.getMeasurementDim(), measurement_jacobian.rows());
+  CHECK_EQ(measurement_model.getStateDim(), measurement_jacobian.cols());
+  CHECK_EQ(measurement_model.getMeasurementDim(), noise_jacobian.rows());
+  CHECK_EQ(measurement_model.getMeasurementNoiseDim(), noise_jacobian.cols());
 
   const Eigen::VectorXd innovation = measurement
       - measurement_model.observe(state_.mean());
-  const Eigen::MatrixXd residual_cov = measurement_mat * state_.cov()
-      * measurement_mat.transpose()
-      + measurement_model.getMeasurementNoise()->cov();
-  const Eigen::MatrixXd kalman_gain = state_.cov() * measurement_mat.transpose()
-      * residual_cov.inverse();
+  const Eigen::MatrixXd residual_cov = measurement_jacobian * state_.cov()
+      * measurement_jacobian.transpose()
+      + noise_jacobian * measurement_model.getMeasurementNoise()->cov()
+          * noise_jacobian.transpose();
+  const Eigen::MatrixXd kalman_gain = state_.cov()
+      * measurement_jacobian.transpose() * residual_cov.inverse();
 
   const Eigen::VectorXd new_state_mean = state_.mean()
       + kalman_gain * innovation;

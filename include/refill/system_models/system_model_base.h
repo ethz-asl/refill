@@ -14,6 +14,7 @@ class SystemModelBase {
       const Eigen::VectorXd& input) const = 0;
   virtual int getStateDim() const = 0;
   virtual int getInputDim() const = 0;
+  virtual int getSystemNoiseDim() const = 0;
   virtual DistributionInterface* getSystemNoise() const = 0;
 };
 

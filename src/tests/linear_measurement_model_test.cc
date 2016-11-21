@@ -34,7 +34,7 @@ TEST(LinearMeasurementModelTest, Fullrun) {
   ASSERT_EQ(measurement_model.getMeasurementDim(), kMeasurementDim);
 
   // Check if Jacobian getter works
-  ASSERT_EQ(measurement_model.getJacobian(), measurement_mat);
+  ASSERT_EQ(measurement_model.getMeasurementJacobian(state), measurement_mat);
 
   // TODO(jwidauer): Add more test cases
 }
