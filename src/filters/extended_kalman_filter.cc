@@ -35,12 +35,12 @@ void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
 }
 
 void ExtendedKalmanFilter::predict() {
-  CHECK_NE(this->sytem_model_, nullptr) << "No default system model provided.";
+  CHECK(this->system_model_) << "No default system model provided.";
   this->predict(Eigen::VectorXd::Zero(this->system_model_->getInputDim()));
 }
 
 void ExtendedKalmanFilter::predict(const Eigen::VectorXd& input) {
-  CHECK_NE(this->sytem_model_, nullptr) << "No default system model provided.";
+  CHECK(this->system_model_) << "No default system model provided.";
   this->predict(*this->system_model_, input);
 }
 
@@ -70,7 +70,7 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
 }
 
 void ExtendedKalmanFilter::update(const Eigen::VectorXd& measurement) {
-  CHECK_NE(this->measurement_model_, nullptr)
+  CHECK(this->measurement_model_)
       << "No default measurement model provided.";
   this->update(*this->measurement_model_, measurement);
 }
