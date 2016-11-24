@@ -21,7 +21,7 @@ class ExtendedKalmanFilter : public FilterBase {
   // given upon prediction / update.
   explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state);
   // The ExtendedKalmanFilter class takes ownership of both models.
-  explicit ExtendedKalmanFilter(
+  ExtendedKalmanFilter(
       const GaussianDistribution& initial_state,
       std::unique_ptr<LinearizedSystemModel> system_model,
       std::unique_ptr<LinearizedMeasurementModel> measurement_model);

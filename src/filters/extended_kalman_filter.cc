@@ -22,7 +22,8 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(
       system_model_(std::move(system_model)),
       measurement_model_(std::move(measurement_model)) {
   const int state_dimension = state_.mean().size();
-  const Eigen::VectorXd zero_input = Eigen::VectorXd::Zero(state_dimension);
+  const Eigen::VectorXd zero_input =
+      Eigen::VectorXd::Zero(system_model_->getInputDim());
 
   CHECK_EQ(system_model->getStateJacobian(state_.mean(), zero_input).rows(),
            state_dimension);
@@ -70,8 +71,7 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
 }
 
 void ExtendedKalmanFilter::update(const Eigen::VectorXd& measurement) {
-  CHECK(this->measurement_model_)
-      << "No default measurement model provided.";
+  CHECK(this->measurement_model_) << "No default measurement model provided.";
   this->update(*this->measurement_model_, measurement);
 }
 
