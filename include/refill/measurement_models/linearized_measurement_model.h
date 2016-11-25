@@ -2,7 +2,6 @@
 #define REFILL_MEASUREMENT_MODELS_LINEARIZED_MEASUREMENT_MODEL_H_
 
 #include <Eigen/Dense>
-
 #include <memory>
 
 #include "refill/measurement_models/measurement_model_base.h"

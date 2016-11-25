@@ -20,7 +20,7 @@ class DistributionInterface {
 //  For new distributions, inherit from this class like this:
 //  class NewDistribution : public DistributionBase<NewDistribution>
 
-template<typename DERIVED>
+template <typename DERIVED>
 class DistributionBase : public DistributionInterface {
   virtual DistributionInterface* clone() const {
     DERIVED casted_derived_obj;

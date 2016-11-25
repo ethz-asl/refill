@@ -27,12 +27,14 @@ unsigned int LinearizedMeasurementModel::getMeasurementDim() const {
 }
 
 unsigned int LinearizedMeasurementModel::getMeasurementNoiseDim() const {
-  CHECK(measurement_noise_);
+  CHECK(measurement_noise_)
+      << "[LinearizedMeasurementModel] Measurement noise has not been set.";
   return measurement_noise_->mean().size();
 }
 
 DistributionInterface* LinearizedMeasurementModel::getMeasurementNoise() const {
-  CHECK(measurement_noise_);
+  CHECK(measurement_noise_)
+      << "[LinearizedMeasurementModel] Measurement noise has not been set.";
   return measurement_noise_.get();
 }
 
