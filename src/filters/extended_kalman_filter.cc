@@ -1,12 +1,9 @@
 #include "refill/filters/extended_kalman_filter.h"
 
 #include <Eigen/Dense>
+#include <Eigen/LU>
 
 namespace refill {
-
-ExtendedKalmanFilter::ExtendedKalmanFilter()
-    : system_model_(new LinearSystemModel()),
-      measurement_model_(new LinearMeasurementModel()) {}
 
 ExtendedKalmanFilter::ExtendedKalmanFilter(
     const GaussianDistribution& initial_state)
@@ -22,12 +19,13 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(
       system_model_(std::move(system_model)),
       measurement_model_(std::move(measurement_model)) {
   const int state_dimension = state_.mean().size();
-  const Eigen::VectorXd zero_input = Eigen::VectorXd::Zero(state_dimension);
+  const Eigen::VectorXd zero_input =
+      Eigen::VectorXd::Zero(system_model_->getInputDim());
 
-  CHECK_EQ(system_model->getStateJacobian(state_.mean(), zero_input).rows(),
-           state_dimension);
-  CHECK_EQ(measurement_model->getMeasurementJacobian(state_.mean()).cols(),
-           state_dimension);
+  // The purpose of these checks is to verify that the dimensions of the models
+  // agree with the dimension of the system state.
+  CHECK_EQ(system_model->getStateDim(), state_dimension);
+  CHECK_EQ(measurement_model->getStateDim(), state_dimension);
 }
 
 void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
@@ -36,7 +34,9 @@ void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
 
 void ExtendedKalmanFilter::predict() {
   CHECK(this->system_model_) << "No default system model provided.";
-  this->predict(Eigen::VectorXd::Zero(this->system_model_->getInputDim()));
+
+  const int input_size = this->system_model_->getInputDim();
+  this->predict(Eigen::VectorXd::Zero(input_size));
 }
 
 void ExtendedKalmanFilter::predict(const Eigen::VectorXd& input) {
@@ -45,8 +45,8 @@ void ExtendedKalmanFilter::predict(const Eigen::VectorXd& input) {
 }
 
 void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model) {
-  this->predict(system_model,
-                Eigen::VectorXd::Zero(system_model.getInputDim()));
+  const int input_size = system_model.getInputDim();
+  this->predict(system_model, Eigen::VectorXd::Zero(input_size));
 }
 
 void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
@@ -70,8 +70,7 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
 }
 
 void ExtendedKalmanFilter::update(const Eigen::VectorXd& measurement) {
-  CHECK(this->measurement_model_)
-      << "No default measurement model provided.";
+  CHECK(this->measurement_model_) << "No default measurement model provided.";
   this->update(*this->measurement_model_, measurement);
 }
 
@@ -92,8 +91,16 @@ void ExtendedKalmanFilter::update(
       measurement_jacobian * state_.cov() * measurement_jacobian.transpose() +
       noise_jacobian * measurement_model.getMeasurementNoise()->cov() *
           noise_jacobian.transpose();
-  const Eigen::MatrixXd kalman_gain =
-      state_.cov() * measurement_jacobian.transpose() * residual_cov.inverse();
+
+  // Use of LU decomposition with complete pivoting for computing the inverse
+  // of the residual covariance within Kalman gain computation enables us to
+  // perform invertability checks.
+  Eigen::FullPivLU<Eigen::MatrixXd> residual_cov_lu(residual_cov);
+  CHECK(residual_cov_lu.isInvertible())
+      << "Residual covariance is not invertible.";
+  const Eigen::MatrixXd kalman_gain = state_.cov() *
+                                      measurement_jacobian.transpose() *
+                                      residual_cov_lu.inverse();
 
   const Eigen::VectorXd new_state_mean =
       state_.mean() + kalman_gain * innovation;
