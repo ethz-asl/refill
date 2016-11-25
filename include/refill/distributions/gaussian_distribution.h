@@ -7,9 +7,16 @@
 
 namespace refill {
 
+/**
+ * @brief Class that implements a multivariate Gaussian distribution.
+ */
+
 class GaussianDistribution : public DistributionBase<GaussianDistribution> {
  public:
   GaussianDistribution();
+  /**
+   * @brief Copy constrcutor.
+   */
   GaussianDistribution(const GaussianDistribution& dist) = default;
   explicit GaussianDistribution(const int& dimension);
   GaussianDistribution(const Eigen::VectorXd& dist_mean,

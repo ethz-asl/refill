@@ -1,0 +1,45 @@
+\hypertarget{classrefill_1_1FilterBase}{}\section{refill\+:\+:Filter\+Base$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE $>$ Class Template Reference}
+\label{classrefill_1_1FilterBase}\index{refill\+::\+Filter\+Base$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E $>$@{refill\+::\+Filter\+Base$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E $>$}}
+
+
+{\ttfamily \#include $<$filter\+\_\+base.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classrefill_1_1FilterBase_aebd38bc87b2614e9f9f71b0cab2f74b8}{predict} (const S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE \&system\+\_\+model, const Eigen\+::\+Vector\+Xd \&input)=0
+\item 
+virtual void \hyperlink{classrefill_1_1FilterBase_a1f163ae39c87c5816799ef1a84714613}{update} (const M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE \&measurement\+\_\+model, const Eigen\+::\+Vector\+Xd \&measurement)=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\index{refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}!predict@{predict}}
+\index{predict@{predict}!refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}}
+\subsubsection[{\texorpdfstring{predict(const S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E \&system\+\_\+model, const Eigen\+::\+Vector\+Xd \&input)=0}{predict(const SYSTEM_MODEL_TYPE &system_model, const Eigen::VectorXd &input)=0}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, typename M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE$>$ virtual void {\bf refill\+::\+Filter\+Base}$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE $>$\+::predict (
+\begin{DoxyParamCaption}
+\item[{const S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE \&}]{system\+\_\+model, }
+\item[{const Eigen\+::\+Vector\+Xd \&}]{input}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1FilterBase_aebd38bc87b2614e9f9f71b0cab2f74b8}{}\label{classrefill_1_1FilterBase_aebd38bc87b2614e9f9f71b0cab2f74b8}
+
+
+Implemented in \hyperlink{classrefill_1_1ExtendedKalmanFilter_ae1f0a6cd50a58b8b9c482985b2c04bd7}{refill\+::\+Extended\+Kalman\+Filter}.
+
+\index{refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}!update@{update}}
+\index{update@{update}!refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}}
+\subsubsection[{\texorpdfstring{update(const M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E \&measurement\+\_\+model, const Eigen\+::\+Vector\+Xd \&measurement)=0}{update(const MEASUREMENT_MODEL_TYPE &measurement_model, const Eigen::VectorXd &measurement)=0}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, typename M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE$>$ virtual void {\bf refill\+::\+Filter\+Base}$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE $>$\+::update (
+\begin{DoxyParamCaption}
+\item[{const M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE \&}]{measurement\+\_\+model, }
+\item[{const Eigen\+::\+Vector\+Xd \&}]{measurement}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1FilterBase_a1f163ae39c87c5816799ef1a84714613}{}\label{classrefill_1_1FilterBase_a1f163ae39c87c5816799ef1a84714613}
+
+
+Implemented in \hyperlink{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d74b8ea}{refill\+::\+Extended\+Kalman\+Filter}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/jakob/ros/catkin\+\_\+ws/src/refill/include/refill/filters/\hyperlink{filter__base_8h}{filter\+\_\+base.\+h}\end{DoxyCompactItemize}

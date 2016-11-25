@@ -1,0 +1,92 @@
+\hypertarget{classrefill_1_1SystemModelBase}{}\section{refill\+:\+:System\+Model\+Base Class Reference}
+\label{classrefill_1_1SystemModelBase}\index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
+
+
+{\ttfamily \#include $<$system\+\_\+model\+\_\+base.\+h$>$}
+
+
+
+Inheritance diagram for refill\+:\+:System\+Model\+Base\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{classrefill_1_1SystemModelBase__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}{propagate} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const =0
+\item 
+virtual unsigned int \hyperlink{classrefill_1_1SystemModelBase_a55ce92b53dfdd8ba37dffc6c82a3e545}{get\+State\+Dim} () const =0
+\item 
+virtual unsigned int \hyperlink{classrefill_1_1SystemModelBase_a68947762564d303e72e7442f2f8673f8}{get\+Input\+Dim} () const =0
+\item 
+virtual unsigned int \hyperlink{classrefill_1_1SystemModelBase_a5920efd9833c9d13856e351eb05f679a}{get\+System\+Noise\+Dim} () const =0
+\item 
+virtual \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} $\ast$ \hyperlink{classrefill_1_1SystemModelBase_a54bc6320db72f18aeff35598a4bee3a1}{get\+System\+Noise} () const =0
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!get\+Input\+Dim@{get\+Input\+Dim}}
+\index{get\+Input\+Dim@{get\+Input\+Dim}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
+\subsubsection[{\texorpdfstring{get\+Input\+Dim() const =0}{getInputDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+System\+Model\+Base\+::get\+Input\+Dim (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a68947762564d303e72e7442f2f8673f8}{}\label{classrefill_1_1SystemModelBase_a68947762564d303e72e7442f2f8673f8}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_af93eb816f491145b875ddbc7660c76b0}{refill\+::\+Linearized\+System\+Model}.
+
+\index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!get\+State\+Dim@{get\+State\+Dim}}
+\index{get\+State\+Dim@{get\+State\+Dim}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
+\subsubsection[{\texorpdfstring{get\+State\+Dim() const =0}{getStateDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+System\+Model\+Base\+::get\+State\+Dim (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a55ce92b53dfdd8ba37dffc6c82a3e545}{}\label{classrefill_1_1SystemModelBase_a55ce92b53dfdd8ba37dffc6c82a3e545}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_a9b7a4aa2b6405dacfb97504039ec8143}{refill\+::\+Linearized\+System\+Model}.
+
+\index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!get\+System\+Noise@{get\+System\+Noise}}
+\index{get\+System\+Noise@{get\+System\+Noise}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
+\subsubsection[{\texorpdfstring{get\+System\+Noise() const =0}{getSystemNoise() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Distribution\+Interface}$\ast$ refill\+::\+System\+Model\+Base\+::get\+System\+Noise (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a54bc6320db72f18aeff35598a4bee3a1}{}\label{classrefill_1_1SystemModelBase_a54bc6320db72f18aeff35598a4bee3a1}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_a4d77bbe4bd353226b107548bb93c9c58}{refill\+::\+Linearized\+System\+Model}.
+
+\index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!get\+System\+Noise\+Dim@{get\+System\+Noise\+Dim}}
+\index{get\+System\+Noise\+Dim@{get\+System\+Noise\+Dim}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
+\subsubsection[{\texorpdfstring{get\+System\+Noise\+Dim() const =0}{getSystemNoiseDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+System\+Model\+Base\+::get\+System\+Noise\+Dim (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a5920efd9833c9d13856e351eb05f679a}{}\label{classrefill_1_1SystemModelBase_a5920efd9833c9d13856e351eb05f679a}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_abf0567c21c8e5bbb2427a07a45c9e87c}{refill\+::\+Linearized\+System\+Model}.
+
+\index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!propagate@{propagate}}
+\index{propagate@{propagate}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
+\subsubsection[{\texorpdfstring{propagate(const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const =0}{propagate(const Eigen::VectorXd &state, const Eigen::VectorXd &input) const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual Eigen\+::\+Vector\+Xd refill\+::\+System\+Model\+Base\+::propagate (
+\begin{DoxyParamCaption}
+\item[{const Eigen\+::\+Vector\+Xd \&}]{state, }
+\item[{const Eigen\+::\+Vector\+Xd \&}]{input}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}{}\label{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearSystemModel_a97553653a4daec3884637e1094d558ab}{refill\+::\+Linear\+System\+Model}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/jakob/ros/catkin\+\_\+ws/src/refill/include/refill/system\+\_\+models/\hyperlink{system__model__base_8h}{system\+\_\+model\+\_\+base.\+h}\end{DoxyCompactItemize}
