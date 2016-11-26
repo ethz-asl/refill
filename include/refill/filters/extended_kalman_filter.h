@@ -14,12 +14,10 @@ namespace refill {
 
 class ExtendedKalmanFilter : public FilterBase {
  public:
-  // Default constructor creates a 1d Kalman Filter with identity system and
-  // measurement models.
-  ExtendedKalmanFilter();
   // Initializes the Kalman filter in a way that expects system models to be
   // given upon prediction / update.
   explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state);
+
   // The ExtendedKalmanFilter class takes ownership of both models.
   ExtendedKalmanFilter(
       const GaussianDistribution& initial_state,
@@ -28,13 +26,13 @@ class ExtendedKalmanFilter : public FilterBase {
 
   void setState(const GaussianDistribution& state);
 
-  void predict();
+  void predict() override;
   void predict(const Eigen::VectorXd& input);
   void predict(const LinearizedSystemModel& system_model);
   void predict(const LinearizedSystemModel& system_model,
                const Eigen::VectorXd& input);
 
-  void update(const Eigen::VectorXd& measurement);
+  void update(const Eigen::VectorXd& measurement) override;
   void update(const LinearizedMeasurementModel& measurement_model,
               const Eigen::VectorXd& measurement);
 
