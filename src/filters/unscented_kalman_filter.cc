@@ -34,7 +34,10 @@ UnscentedKalmanFilter::UnscentedKalmanFilter(
       << "State dimension does not agree with measurement model.";
 }
 
-void UnscentedKalmanFilter::predict() {}
+void UnscentedKalmanFilter::predict() {
+  CHECK(system_model_) << "System model not defined.";
+}
+
 void UnscentedKalmanFilter::update(const Eigen::VectorXd& measurement) {
   CHECK_EQ(measurement.rows(), this->measurement_model_->getMeasurementDim())
       << "Measurement has wrong dimension.";

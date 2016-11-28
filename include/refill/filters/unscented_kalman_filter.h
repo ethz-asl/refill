@@ -12,6 +12,17 @@
 
 namespace refill {
 
+constexpr unsigned int kUkfUseMultipleSampleSets = 1u;
+constexpr unsigned int kUkfSampleJointDistribution = 2u;
+
+constexpr unsigned int kUkfUseEigendecomposition = 1u;
+constexpr unsigned int kUkfUseCholeskyDecomposition = 2u;
+
+typedef struct {
+  const unsigned int sample_set_type = kUkfUseMultipleSampleSets;
+  const unsigned int mat_square_root_algo = kUkfUseCholeskyDecomposition;
+} UkfSettings;
+
 class UnscentedKalmanFilter : public FilterBase {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW

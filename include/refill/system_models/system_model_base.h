@@ -9,9 +9,21 @@ namespace refill {
 
 class SystemModelBase {
  public:
-  virtual Eigen::VectorXd propagate(
-      const Eigen::VectorXd& state,
-      const Eigen::VectorXd& input) const = 0;
+  virtual Eigen::VectorXd propagate(const Eigen::VectorXd& state,
+                                    const Eigen::VectorXd& input) const = 0;
+
+  // TODO(igilitschenski): Remove above interface.
+  virtual Eigen::VectorXd propagate(const Eigen::VectorXd& state,
+                                    const Eigen::VectorXd& input,
+                                    const Eigen::VectorXd& noise) {
+    return Eigen::VectorXd::Zero(3);
+  }
+
+  // Performs propagate on each column of state. Can be reimplemented in a
+  // subclass for improving performance of sample based filters.
+  virtual Eigen::MatrixXd propagateVectorized(const Eigen::MatrixXd& state,
+                                              const Eigen::VectorXd& input,
+                                              const Eigen::VectorXd& noise);
   virtual int getStateDim() const = 0;
   virtual int getInputDim() const = 0;
   virtual int getSystemNoiseDim() const = 0;
