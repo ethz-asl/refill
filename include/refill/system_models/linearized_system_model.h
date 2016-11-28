@@ -11,6 +11,18 @@ namespace refill {
 
 class LinearizedSystemModel : public SystemModelBase {
  public:
+  virtual Eigen::MatrixXd getStateJacobian(
+      const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
+  virtual Eigen::MatrixXd getNoiseJacobian(
+      const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
+
+  std::size_t getStateDim() const;
+  std::size_t getSystemNoiseDim() const;
+  std::size_t getInputDim() const;
+  DistributionInterface* getSystemNoise() const;
+
+ protected:
+  LinearizedSystemModel() = delete;
   LinearizedSystemModel(const std::size_t& state_dim,
                         const DistributionInterface& system_noise);
   LinearizedSystemModel(const std::size_t& state_dim,
@@ -23,18 +35,6 @@ class LinearizedSystemModel : public SystemModelBase {
                                      const DistributionInterface& system_noise,
                                      const std::size_t& input_dim);
 
-  // TODO(jwidauer): Add comment
-  virtual Eigen::MatrixXd getStateJacobian(
-      const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
-  virtual Eigen::MatrixXd getNoiseJacobian(
-      const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
-
-  std::size_t getStateDim() const;
-  std::size_t getSystemNoiseDim() const;
-  std::size_t getInputDim() const;
-  DistributionInterface* getSystemNoise() const;
-
- protected:
   std::unique_ptr<DistributionInterface> system_noise_;
   std::size_t state_dim_;
   std::size_t input_dim_;

@@ -10,15 +10,6 @@ namespace refill {
 
 class LinearizedMeasurementModel : public MeasurementModelBase {
  public:
-  LinearizedMeasurementModel(const std::size_t& state_dim,
-                             const std::size_t& measurement_dim,
-                             const DistributionInterface& measurement_noise);
-
-  void setLinearizedMeasurementModelParameters(
-      const std::size_t& state_dim, const std::size_t& measurement_dim,
-      const DistributionInterface& measurement_noise);
-
-  // TODO(jwidauer): Add comment
   virtual Eigen::MatrixXd getMeasurementJacobian(
       const Eigen::VectorXd& state) const = 0;
   virtual Eigen::MatrixXd getNoiseJacobian(
@@ -28,7 +19,17 @@ class LinearizedMeasurementModel : public MeasurementModelBase {
   std::size_t getMeasurementDim() const;
   std::size_t getMeasurementNoiseDim() const;
   DistributionInterface* getMeasurementNoise() const;
+
  protected:
+  LinearizedMeasurementModel() = delete;
+  LinearizedMeasurementModel(const std::size_t& state_dim,
+                             const std::size_t& measurement_dim,
+                             const DistributionInterface& measurement_noise);
+
+  void setLinearizedMeasurementModelParameters(
+      const std::size_t& state_dim, const std::size_t& measurement_dim,
+      const DistributionInterface& measurement_noise);
+
   std::unique_ptr<DistributionInterface> measurement_noise_;
   std::size_t state_dim_;
   std::size_t measurement_dim_;
