@@ -2,8 +2,6 @@
 
 namespace refill {
 
-// In case of call to standard constructor we assume a one dimensional system,
-// with one measurement and univariate standard normal gaussian noise.
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(1, 1),
                              GaussianDistribution(),
@@ -33,8 +31,7 @@ void LinearMeasurementModel::setMeasurementParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise) {
   this->setMeasurementParameters(
-      measurement_mapping,
-      measurement_noise,
+      measurement_mapping, measurement_noise,
       Eigen::MatrixXd::Identity(measurement_mapping.rows(),
                                 measurement_noise.mean().size()));
 }

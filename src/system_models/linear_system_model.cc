@@ -7,8 +7,7 @@ namespace refill {
 LinearSystemModel::LinearSystemModel()
     : LinearSystemModel(Eigen::MatrixXd::Identity(1, 1), GaussianDistribution(),
                         Eigen::MatrixXd::Zero(0, 0),
-                        Eigen::MatrixXd::Identity(1, 1)) {
-}
+                        Eigen::MatrixXd::Identity(1, 1)) {}
 
 // If constructor is called without input matrix, we assume there is no input.
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
@@ -18,8 +17,7 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
         system_noise,
         Eigen::MatrixXd::Zero(0, 0),
         Eigen::MatrixXd::Identity(system_mapping.rows(),
-                                  system_noise.mean().size())) {
-}
+                                  system_noise.mean().size())) {}
 
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise,
@@ -29,8 +27,7 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
         system_noise,
         input_mapping,
         Eigen::MatrixXd::Identity(system_mapping.rows(),
-                                  system_noise.mean().size())) {
-}
+                                  system_noise.mean().size())) {}
 
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise,
@@ -97,8 +94,8 @@ Eigen::VectorXd LinearSystemModel::propagate(
   CHECK_EQ(state.size(), this->getStateDim());
   CHECK_EQ(input.size(), this->getInputDim());
 
-// If there is no input to the system,
-// we don't need to compute the matrix multiplication.
+  // If there is no input to the system,
+  // we don't need to compute the matrix multiplication.
   if (input_mapping_.size() == 0
       || input == Eigen::VectorXd::Zero(this->getInputDim())) {
     return system_mapping_ * state + noise_mapping_ * system_noise_->mean();

@@ -17,9 +17,9 @@ class SystemModelBase {
   virtual Eigen::VectorXd propagate(
       const Eigen::VectorXd& state,
       const Eigen::VectorXd& input) const = 0;
-  virtual unsigned int getStateDim() const = 0;
-  virtual unsigned int getInputDim() const = 0;
-  virtual unsigned int getSystemNoiseDim() const = 0;
+  virtual std::size_t getStateDim() const = 0;
+  virtual std::size_t getInputDim() const = 0;
+  virtual std::size_t getSystemNoiseDim() const = 0;
   virtual DistributionInterface* getSystemNoise() const = 0;
 };
 

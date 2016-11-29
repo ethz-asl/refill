@@ -11,9 +11,9 @@ class MeasurementModelBase {
  public:
   virtual Eigen::VectorXd observe(
       const Eigen::VectorXd& state) const = 0;
-  virtual unsigned int getStateDim() const = 0;
-  virtual unsigned int getMeasurementDim() const = 0;
-  virtual unsigned int getMeasurementNoiseDim() const = 0;
+  virtual std::size_t getStateDim() const = 0;
+  virtual std::size_t getMeasurementDim() const = 0;
+  virtual std::size_t getMeasurementNoiseDim() const = 0;
   virtual DistributionInterface* getMeasurementNoise() const = 0;
 };
 
