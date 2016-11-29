@@ -3,8 +3,6 @@
 namespace refill {
 
 /**
- * @brief Default constructor.
- *
  * Creates a univariate standard normal distribution.
  */
 GaussianDistribution::GaussianDistribution()
@@ -13,8 +11,6 @@ GaussianDistribution::GaussianDistribution()
 
 
 /**
- * @brief Constructs a normal distribution with given dimension.
- *
  * @param dimension Dimension of the constructed normal distribution.
  */
 GaussianDistribution::GaussianDistribution(const int& dimension)
@@ -23,8 +19,6 @@ GaussianDistribution::GaussianDistribution(const int& dimension)
 }
 
 /**
- * @brief Constructs a gaussian distribution with given mean and covariance.
- *
  * @param dist_mean Mean of the constructed distribution.
  * @param dist_cov Covariance matrix of the constructed distribution.
  */
@@ -34,8 +28,6 @@ GaussianDistribution::GaussianDistribution(const Eigen::VectorXd& dist_mean,
 }
 
 /**
- * @brief Sets the distribution parameters.
- *
  * Also performes checks that the mean and covariance
  * matrix have compatible size.
  *
@@ -55,8 +47,6 @@ void GaussianDistribution::setDistParam(const Eigen::VectorXd& dist_mean,
 }
 
 /**
- * @brief Sets the mean to a new value.
- *
  * Also checks that the new mean has the same dimension as the current mean.
  *
  * @param mean The new distribution mean.
@@ -67,8 +57,6 @@ void GaussianDistribution::setMean(const Eigen::VectorXd& mean) {
 }
 
 /**
- * @brief Sets the covariance matrix to a new value.
- *
  * Also checks that the covariance matrix is a square matrix with the
  * same dimension as the mean and is symmetric positiv definite.
  *
@@ -85,17 +73,13 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
 }
 
 /**
- * @brief Returns the dimension of the distribution
- *
- * @returns the dimension of the distribution.
+ * @return the dimension of the distribution.
  */
 int GaussianDistribution::dimension() const {
   return mean_.size();
 }
 
 /**
- * @brief Returns the current mean of the distribution.
- *
  * @return the current distribution mean.
  */
 Eigen::VectorXd GaussianDistribution::mean() const {
@@ -103,8 +87,6 @@ Eigen::VectorXd GaussianDistribution::mean() const {
 }
 
 /**
- * @brief Returns the current covariance of the distribution.
- *
  * @return the current distribution covariance.
  */
 Eigen::MatrixXd GaussianDistribution::cov() const {
@@ -112,8 +94,6 @@ Eigen::MatrixXd GaussianDistribution::cov() const {
 }
 
 /**
- * @brief Implements the addition of two gaussian distributions.
- *
  * Checks for right dimensionality of distribution.
  *
  * @param right_side Distribution which will be added to `*this`.
@@ -130,8 +110,6 @@ GaussianDistribution GaussianDistribution::operator+(
   return result;
 }
 
-// Non-member overloaded operator for linear transforms of Gaussian random
-// vectors.
 /**
  * @relates GaussianDistribution
  *

@@ -16,21 +16,21 @@ class DistributionInterface {
   /**
    * @brief Returns the mean of the distribution.
    *
-   * @returns mean of the distribution.
+   * @return mean of the distribution.
    */
   virtual Eigen::VectorXd mean() const = 0;
 
   /**
    * @brief Returns the covariance matrix of the distribution.
    *
-   * @returns the covariance matrix of the distribution.
+   * @return the covariance matrix of the distribution.
    */
   virtual Eigen::MatrixXd cov() const = 0;
 
   /**
    * @brief Clones the original distribution.
    *
-   * @returns a pointer to the cloned distribution.
+   * @return a pointer to the cloned distribution.
    */
   virtual DistributionInterface* clone() const = 0;
 };

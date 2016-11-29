@@ -12,7 +12,7 @@ namespace refill {
 /**
  * @brief Interface for system models.
  *
- * All system models have to have this class as an ancestor.
+ * All system models must have this class as an ancestor.
  */
 class SystemModelBase {
  public:
@@ -26,44 +26,30 @@ class SystemModelBase {
   virtual Eigen::VectorXd propagate(const Eigen::VectorXd& state,
                                     const Eigen::VectorXd& input) const = 0;
 
-  /**
-   * @brief Returns the systems state dimension.
-   *
-   * @return the state dimension.
-   */
+  /** @brief Returns the systems state dimension. */
   std::size_t getStateDim() const;
-
-  /**
-   * @brief Returns the systems input dimension.
-   *
-   * @return the input dimension.
-   */
+  /** @brief Returns the systems input dimension. */
   std::size_t getInputDim() const;
-
-  /**
-   * @brief Returns the systems noise dimension.
-   *
-   * @return the noise dimension.
-   */
+  /** @brief Returns the systems noise dimension. */
   std::size_t getSystemNoiseDim() const;
-
-  /**
-   * @brief Returns the system noise.
-   *
-   * @return a pointer to the system noise distribution.
-   */
+  /** @brief Returns a pointer to the system noise. */
   DistributionInterface* getSystemNoise() const;
 
  protected:
+  /** Default constructor should not be used. */
   SystemModelBase() = delete;
+  /** @brief Constructor for a system model without an input. */
   SystemModelBase(const std::size_t& state_dim,
                   const DistributionInterface& system_noise);
+  /** @brief Constructor for a system model with input. */
   SystemModelBase(const std::size_t& state_dim,
                   const DistributionInterface& system_noise,
                   const std::size_t& input_dim);
 
+  /** @brief Function to set the system model parameters without an input. */
   void setSystemModelBaseParameters(const std::size_t& state_dim,
                                     const DistributionInterface& system_noise);
+  /** @brief Function to set the system model parameters with an input. */
   void setSystemModelBaseParameters(const std::size_t& state_dim,
                                     const DistributionInterface& system_noise,
                                     const std::size_t& input_dim);

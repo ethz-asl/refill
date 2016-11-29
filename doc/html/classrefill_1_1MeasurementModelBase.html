@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classrefill_1_1MeasurementModelBase-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">refill::MeasurementModelBase Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -115,24 +116,36 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3a5613bc1ba3317e35436fc78b0d2972"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a3a5613bc1ba3317e35436fc78b0d2972">observe</a> (const Eigen::VectorXd &amp;state) const =0</td></tr>
 <tr class="memdesc:a3a5613bc1ba3317e35436fc78b0d2972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the measurement model to receive the expected measurement.  <a href="#a3a5613bc1ba3317e35436fc78b0d2972">More...</a><br /></td></tr>
 <tr class="separator:a3a5613bc1ba3317e35436fc78b0d2972"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c9eed47a0c98ea9acb8f3b14447dd93"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a5c9eed47a0c98ea9acb8f3b14447dd93">getStateDim</a> () const =0</td></tr>
-<tr class="memdesc:a5c9eed47a0c98ea9acb8f3b14447dd93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models state dimension.  <a href="#a5c9eed47a0c98ea9acb8f3b14447dd93">More...</a><br /></td></tr>
-<tr class="separator:a5c9eed47a0c98ea9acb8f3b14447dd93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a558b2fbbc046d8476808eb5bf0bf232f"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a558b2fbbc046d8476808eb5bf0bf232f">getMeasurementDim</a> () const =0</td></tr>
-<tr class="memdesc:a558b2fbbc046d8476808eb5bf0bf232f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models measurement dimension.  <a href="#a558b2fbbc046d8476808eb5bf0bf232f">More...</a><br /></td></tr>
-<tr class="separator:a558b2fbbc046d8476808eb5bf0bf232f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6c653f6739f282135aae730126adfb5"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#aa6c653f6739f282135aae730126adfb5">getMeasurementNoiseDim</a> () const =0</td></tr>
-<tr class="memdesc:aa6c653f6739f282135aae730126adfb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models noise dimension.  <a href="#aa6c653f6739f282135aae730126adfb5">More...</a><br /></td></tr>
-<tr class="separator:aa6c653f6739f282135aae730126adfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32d1e80e656afeadf299442ef6280b2b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a32d1e80e656afeadf299442ef6280b2b">getMeasurementNoise</a> () const =0</td></tr>
-<tr class="memdesc:a32d1e80e656afeadf299442ef6280b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models noise.  <a href="#a32d1e80e656afeadf299442ef6280b2b">More...</a><br /></td></tr>
-<tr class="separator:a32d1e80e656afeadf299442ef6280b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab87e4a5df150595abe7afcedf2b88b0f"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#ab87e4a5df150595abe7afcedf2b88b0f">getStateDim</a> () const </td></tr>
+<tr class="memdesc:ab87e4a5df150595abe7afcedf2b88b0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models state dimension.  <a href="#ab87e4a5df150595abe7afcedf2b88b0f">More...</a><br /></td></tr>
+<tr class="separator:ab87e4a5df150595abe7afcedf2b88b0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a089b5d23a0cbbfd4ebaa02a2f2a297a9"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a089b5d23a0cbbfd4ebaa02a2f2a297a9">getMeasurementDim</a> () const </td></tr>
+<tr class="memdesc:a089b5d23a0cbbfd4ebaa02a2f2a297a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models measurement dimension.  <a href="#a089b5d23a0cbbfd4ebaa02a2f2a297a9">More...</a><br /></td></tr>
+<tr class="separator:a089b5d23a0cbbfd4ebaa02a2f2a297a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0217dce62430f0888a56d7c7a4cbae28"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a0217dce62430f0888a56d7c7a4cbae28">getMeasurementNoiseDim</a> () const </td></tr>
+<tr class="memdesc:a0217dce62430f0888a56d7c7a4cbae28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models noise dimension.  <a href="#a0217dce62430f0888a56d7c7a4cbae28">More...</a><br /></td></tr>
+<tr class="separator:a0217dce62430f0888a56d7c7a4cbae28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3012ee640691c9b96e76168e35acdb44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a3012ee640691c9b96e76168e35acdb44">getMeasurementNoise</a> () const </td></tr>
+<tr class="memdesc:a3012ee640691c9b96e76168e35acdb44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models noise.  <a href="#a3012ee640691c9b96e76168e35acdb44">More...</a><br /></td></tr>
+<tr class="separator:a3012ee640691c9b96e76168e35acdb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a908c61f87825591b8b0f061bb5a20453"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a908c61f87825591b8b0f061bb5a20453">MeasurementModelBase</a> ()=delete</td></tr>
+<tr class="memdesc:a908c61f87825591b8b0f061bb5a20453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor should not be used.  <a href="#a908c61f87825591b8b0f061bb5a20453">More...</a><br /></td></tr>
+<tr class="separator:a908c61f87825591b8b0f061bb5a20453"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecd0e5adaf05179b8fdb49c1dbb7c049"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#aecd0e5adaf05179b8fdb49c1dbb7c049">MeasurementModelBase</a> (const std::size_t &amp;state_dim, const std::size_t &amp;measurement_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;measurement_noise)</td></tr>
+<tr class="memdesc:aecd0e5adaf05179b8fdb49c1dbb7c049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the measurement model base class.  <a href="#aecd0e5adaf05179b8fdb49c1dbb7c049">More...</a><br /></td></tr>
+<tr class="separator:aecd0e5adaf05179b8fdb49c1dbb7c049"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9d94ffba2c1347dfe342865670d0185"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#aa9d94ffba2c1347dfe342865670d0185">setMeasurementModelBaseParameters</a> (const std::size_t &amp;state_dim, const std::size_t &amp;measurement_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;measurement_noise)</td></tr>
+<tr class="memdesc:aa9d94ffba2c1347dfe342865670d0185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to set the measurement model base parameters.  <a href="#aa9d94ffba2c1347dfe342865670d0185">More...</a><br /></td></tr>
+<tr class="separator:aa9d94ffba2c1347dfe342865670d0185"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for measurement models. </p>
-<p>All measurement models have to have this class as an ancestor. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a558b2fbbc046d8476808eb5bf0bf232f"></a>
+<p>All measurement models must have this class as an ancestor. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a908c61f87825591b8b0f061bb5a20453"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -140,107 +153,144 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::size_t refill::MeasurementModelBase::getMeasurementDim </td>
+          <td class="memname">refill::MeasurementModelBase::MeasurementModelBase </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default constructor should not be used. </p>
+
+</div>
+</div>
+<a class="anchor" id="aecd0e5adaf05179b8fdb49c1dbb7c049"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">refill::MeasurementModelBase::MeasurementModelBase </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>state_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>measurement_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;&#160;</td>
+          <td class="paramname"><em>measurement_noise</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor for the measurement model base class. </p>
+<p>Use this constructor when inheriting from this class. The constructor clones the measurement noise, so it can be used again.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state_dim</td><td>The state dimension. </td></tr>
+    <tr><td class="paramname">measurement_dim</td><td>The measurement dimension. </td></tr>
+    <tr><td class="paramname">measurement_noise</td><td>The measurement noise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a089b5d23a0cbbfd4ebaa02a2f2a297a9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t refill::MeasurementModelBase::getMeasurementDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Returns the measurement models measurement dimension. </p>
 <dl class="section return"><dt>Returns</dt><dd>the measurement dimension. </dd></dl>
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#aed3deac071dbf35901303ef42ba2163d">refill::LinearizedMeasurementModel</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a32d1e80e656afeadf299442ef6280b2b"></a>
+<a class="anchor" id="a3012ee640691c9b96e76168e35acdb44"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a>* refill::MeasurementModelBase::getMeasurementNoise </td>
+          <td class="memname"><a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> * refill::MeasurementModelBase::getMeasurementNoise </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Returns the measurement models noise. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the measurement model noise distribution. </dd></dl>
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a320cf84380a5a4f03a6cacee8ef74bf6">refill::LinearizedMeasurementModel</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="aa6c653f6739f282135aae730126adfb5"></a>
+<a class="anchor" id="a0217dce62430f0888a56d7c7a4cbae28"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::size_t refill::MeasurementModelBase::getMeasurementNoiseDim </td>
+          <td class="memname">std::size_t refill::MeasurementModelBase::getMeasurementNoiseDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Returns the measurement models noise dimension. </p>
 <dl class="section return"><dt>Returns</dt><dd>the noise dimension. </dd></dl>
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#ad6b71dfa7fa9a77544ed76f83781af6e">refill::LinearizedMeasurementModel</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a5c9eed47a0c98ea9acb8f3b14447dd93"></a>
+<a class="anchor" id="ab87e4a5df150595abe7afcedf2b88b0f"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::size_t refill::MeasurementModelBase::getStateDim </td>
+          <td class="memname">std::size_t refill::MeasurementModelBase::getStateDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Returns the measurement models state dimension. </p>
 <dl class="section return"><dt>Returns</dt><dd>the state dimension. </dd></dl>
-
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a370fd9906f5f718e5fdb2f4dfa1a59bf">refill::LinearizedMeasurementModel</a>.</p>
 
 </div>
 </div>
@@ -279,8 +329,60 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a class="anchor" id="aa9d94ffba2c1347dfe342865670d0185"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void refill::MeasurementModelBase::setMeasurementModelBaseParameters </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>state_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>measurement_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;&#160;</td>
+          <td class="paramname"><em>measurement_noise</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to set the measurement model base parameters. </p>
+<p>The function clones the measurement noise, so it can be used again.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state_dim</td><td>The state dimension. </td></tr>
+    <tr><td class="paramname">measurement_dim</td><td>The measurement dimension. </td></tr>
+    <tr><td class="paramname">measurement_noise</td><td>The measurement noise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/jakob/ros/catkin_ws/src/refill/include/refill/measurement_models/<a class="el" href="measurement__model__base_8h_source.html">measurement_model_base.h</a></li>
+<li>/home/jakob/ros/catkin_ws/src/refill/src/measurement_models/<a class="el" href="measurement__model__base_8cc.html">measurement_model_base.cc</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

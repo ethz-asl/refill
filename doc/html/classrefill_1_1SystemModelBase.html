@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classrefill_1_1SystemModelBase-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">refill::SystemModelBase Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -105,7 +106,7 @@ Inheritance diagram for refill::SystemModelBase:</div>
 <div class="dyncontent">
 <div class="center"><img src="classrefill_1_1SystemModelBase__inherit__graph.png" border="0" usemap="#refill_1_1SystemModelBase_inherit__map" alt="Inheritance graph"/></div>
 <map name="refill_1_1SystemModelBase_inherit__map" id="refill_1_1SystemModelBase_inherit__map">
-<area shape="rect" id="node2" href="classrefill_1_1LinearizedSystemModel.html" title="refill::LinearizedSystem\lModel" alt="" coords="11,80,169,121"/>
+<area shape="rect" id="node2" href="classrefill_1_1LinearizedSystemModel.html" title="Class that implements a linearized system model. " alt="" coords="11,80,169,121"/>
 <area shape="rect" id="node3" href="classrefill_1_1LinearSystemModel.html" title="refill::LinearSystemModel" alt="" coords="5,169,175,196"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
@@ -115,24 +116,41 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a92d2c65291b3086f810e362cf4194eb0"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a92d2c65291b3086f810e362cf4194eb0">propagate</a> (const Eigen::VectorXd &amp;state, const Eigen::VectorXd &amp;input) const =0</td></tr>
 <tr class="memdesc:a92d2c65291b3086f810e362cf4194eb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagates a state vector through the system model.  <a href="#a92d2c65291b3086f810e362cf4194eb0">More...</a><br /></td></tr>
 <tr class="separator:a92d2c65291b3086f810e362cf4194eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae51c98bc767eb19e6764fdcf52f0bea9"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#ae51c98bc767eb19e6764fdcf52f0bea9">getStateDim</a> () const =0</td></tr>
-<tr class="memdesc:ae51c98bc767eb19e6764fdcf52f0bea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems state dimension.  <a href="#ae51c98bc767eb19e6764fdcf52f0bea9">More...</a><br /></td></tr>
-<tr class="separator:ae51c98bc767eb19e6764fdcf52f0bea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade51fae436fc40614090566abce36544"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#ade51fae436fc40614090566abce36544">getInputDim</a> () const =0</td></tr>
-<tr class="memdesc:ade51fae436fc40614090566abce36544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems input dimension.  <a href="#ade51fae436fc40614090566abce36544">More...</a><br /></td></tr>
-<tr class="separator:ade51fae436fc40614090566abce36544"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d591e69b86dbec48beb9b2022e30e32"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a7d591e69b86dbec48beb9b2022e30e32">getSystemNoiseDim</a> () const =0</td></tr>
-<tr class="memdesc:a7d591e69b86dbec48beb9b2022e30e32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems noise dimension.  <a href="#a7d591e69b86dbec48beb9b2022e30e32">More...</a><br /></td></tr>
-<tr class="separator:a7d591e69b86dbec48beb9b2022e30e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54bc6320db72f18aeff35598a4bee3a1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a54bc6320db72f18aeff35598a4bee3a1">getSystemNoise</a> () const =0</td></tr>
-<tr class="memdesc:a54bc6320db72f18aeff35598a4bee3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the system noise.  <a href="#a54bc6320db72f18aeff35598a4bee3a1">More...</a><br /></td></tr>
-<tr class="separator:a54bc6320db72f18aeff35598a4bee3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56128ef3ffd3a0f4fb5ebaa543b5f719"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a56128ef3ffd3a0f4fb5ebaa543b5f719">getStateDim</a> () const </td></tr>
+<tr class="memdesc:a56128ef3ffd3a0f4fb5ebaa543b5f719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems state dimension.  <a href="#a56128ef3ffd3a0f4fb5ebaa543b5f719">More...</a><br /></td></tr>
+<tr class="separator:a56128ef3ffd3a0f4fb5ebaa543b5f719"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada4237797b93bf1da249edd2c4ec91a2"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#ada4237797b93bf1da249edd2c4ec91a2">getInputDim</a> () const </td></tr>
+<tr class="memdesc:ada4237797b93bf1da249edd2c4ec91a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems input dimension.  <a href="#ada4237797b93bf1da249edd2c4ec91a2">More...</a><br /></td></tr>
+<tr class="separator:ada4237797b93bf1da249edd2c4ec91a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef4177aef8fba2c5a7c0c749c88d1c66"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#aef4177aef8fba2c5a7c0c749c88d1c66">getSystemNoiseDim</a> () const </td></tr>
+<tr class="memdesc:aef4177aef8fba2c5a7c0c749c88d1c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems noise dimension.  <a href="#aef4177aef8fba2c5a7c0c749c88d1c66">More...</a><br /></td></tr>
+<tr class="separator:aef4177aef8fba2c5a7c0c749c88d1c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f733310da14248ab7f5a41840eb88b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a2f733310da14248ab7f5a41840eb88b7">getSystemNoise</a> () const </td></tr>
+<tr class="memdesc:a2f733310da14248ab7f5a41840eb88b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the system noise.  <a href="#a2f733310da14248ab7f5a41840eb88b7">More...</a><br /></td></tr>
+<tr class="separator:a2f733310da14248ab7f5a41840eb88b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a047ffd2ad50367f6015e18c316892e7f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a047ffd2ad50367f6015e18c316892e7f">SystemModelBase</a> ()=delete</td></tr>
+<tr class="separator:a047ffd2ad50367f6015e18c316892e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08f44c52bb46c5e2eb28a22f28845685"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a08f44c52bb46c5e2eb28a22f28845685">SystemModelBase</a> (const std::size_t &amp;state_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise)</td></tr>
+<tr class="memdesc:a08f44c52bb46c5e2eb28a22f28845685"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a system model without an input.  <a href="#a08f44c52bb46c5e2eb28a22f28845685">More...</a><br /></td></tr>
+<tr class="separator:a08f44c52bb46c5e2eb28a22f28845685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06e615416890160ecdece6a3c7511b5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a06e615416890160ecdece6a3c7511b5c">SystemModelBase</a> (const std::size_t &amp;state_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise, const std::size_t &amp;input_dim)</td></tr>
+<tr class="memdesc:a06e615416890160ecdece6a3c7511b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a system model with input.  <a href="#a06e615416890160ecdece6a3c7511b5c">More...</a><br /></td></tr>
+<tr class="separator:a06e615416890160ecdece6a3c7511b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6aeac2bb57bdc72db21a90005ab292f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#ab6aeac2bb57bdc72db21a90005ab292f">setSystemModelBaseParameters</a> (const std::size_t &amp;state_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise)</td></tr>
+<tr class="memdesc:ab6aeac2bb57bdc72db21a90005ab292f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to set the system model parameters without an input.  <a href="#ab6aeac2bb57bdc72db21a90005ab292f">More...</a><br /></td></tr>
+<tr class="separator:ab6aeac2bb57bdc72db21a90005ab292f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b">setSystemModelBaseParameters</a> (const std::size_t &amp;state_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise, const std::size_t &amp;input_dim)</td></tr>
+<tr class="memdesc:a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to set the system model parameters with an input.  <a href="#a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b">More...</a><br /></td></tr>
+<tr class="separator:a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for system models. </p>
-<p>All system models have to have this class as an ancestor. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ade51fae436fc40614090566abce36544"></a>
+<p>All system models must have this class as an ancestor. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a047ffd2ad50367f6015e18c316892e7f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -140,107 +158,187 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::size_t refill::SystemModelBase::getInputDim </td>
+          <td class="memname">refill::SystemModelBase::SystemModelBase </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Default constructor should not be used. </p>
+
+</div>
+</div>
+<a class="anchor" id="a08f44c52bb46c5e2eb28a22f28845685"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">refill::SystemModelBase::SystemModelBase </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>state_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;&#160;</td>
+          <td class="paramname"><em>system_noise</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor for a system model without an input. </p>
+<p>Use this constructor if your system does not have an input. The constructor clones the system noise, so it can be used again.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state_dim</td><td>The systems state dimension. </td></tr>
+    <tr><td class="paramname">system_noise</td><td>The system noise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a06e615416890160ecdece6a3c7511b5c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">refill::SystemModelBase::SystemModelBase </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>state_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;&#160;</td>
+          <td class="paramname"><em>system_noise</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>input_dim</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor for a system model with input. </p>
+<p>Use this constructor if your system model does have an input. The constructor clones the system noise, so it can be used again.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state_dim</td><td>The systems state dimension. </td></tr>
+    <tr><td class="paramname">system_noise</td><td>The system noise. </td></tr>
+    <tr><td class="paramname">input_dim</td><td>The systems input dimension. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ada4237797b93bf1da249edd2c4ec91a2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t refill::SystemModelBase::getInputDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Returns the systems input dimension. </p>
 <dl class="section return"><dt>Returns</dt><dd>the input dimension. </dd></dl>
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#ab0b9fad6d7af0a461f9a94fa050e9452">refill::LinearizedSystemModel</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="ae51c98bc767eb19e6764fdcf52f0bea9"></a>
+<a class="anchor" id="a56128ef3ffd3a0f4fb5ebaa543b5f719"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::size_t refill::SystemModelBase::getStateDim </td>
+          <td class="memname">std::size_t refill::SystemModelBase::getStateDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Returns the systems state dimension. </p>
 <dl class="section return"><dt>Returns</dt><dd>the state dimension. </dd></dl>
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a4969844eca728ca6666ff5350885f437">refill::LinearizedSystemModel</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a54bc6320db72f18aeff35598a4bee3a1"></a>
+<a class="anchor" id="a2f733310da14248ab7f5a41840eb88b7"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a>* refill::SystemModelBase::getSystemNoise </td>
+          <td class="memname"><a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> * refill::SystemModelBase::getSystemNoise </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Returns the system noise. </p>
+<p>Returns a pointer to the system noise. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the system noise distribution. </dd></dl>
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a4d77bbe4bd353226b107548bb93c9c58">refill::LinearizedSystemModel</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a7d591e69b86dbec48beb9b2022e30e32"></a>
+<a class="anchor" id="aef4177aef8fba2c5a7c0c749c88d1c66"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::size_t refill::SystemModelBase::getSystemNoiseDim </td>
+          <td class="memname">std::size_t refill::SystemModelBase::getSystemNoiseDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Returns the systems noise dimension. </p>
 <dl class="section return"><dt>Returns</dt><dd>the noise dimension. </dd></dl>
-
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a67b3556f960893d194d8550a71883d90">refill::LinearizedSystemModel</a>.</p>
 
 </div>
 </div>
@@ -290,8 +388,87 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a class="anchor" id="ab6aeac2bb57bdc72db21a90005ab292f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void refill::SystemModelBase::setSystemModelBaseParameters </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>state_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;&#160;</td>
+          <td class="paramname"><em>system_noise</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to set the system model parameters without an input. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void refill::SystemModelBase::setSystemModelBaseParameters </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>state_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;&#160;</td>
+          <td class="paramname"><em>system_noise</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>input_dim</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to set the system model parameters with an input. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/jakob/ros/catkin_ws/src/refill/include/refill/system_models/<a class="el" href="system__model__base_8h_source.html">system_model_base.h</a></li>
+<li>/home/jakob/ros/catkin_ws/src/refill/src/system_models/<a class="el" href="system__model__base_8cc.html">system_model_base.cc</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

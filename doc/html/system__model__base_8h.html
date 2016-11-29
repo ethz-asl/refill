@@ -92,14 +92,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">system_model_base.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Eigen/Dense&gt;</code><br />
+<div class="textblock"><code>#include &lt;glog/logging.h&gt;</code><br />
+<code>#include &lt;Eigen/Dense&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 <code>#include &quot;<a class="el" href="distribution__base_8h_source.html">refill/distributions/distribution_base.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for system_model_base.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="system__model__base_8h__incl.png" border="0" usemap="#_2home_2jakob_2ros_2catkin__ws_2src_2refill_2include_2refill_2system__models_2system__model__base_8h" alt=""/></div>
 <map name="_2home_2jakob_2ros_2catkin__ws_2src_2refill_2include_2refill_2system__models_2system__model__base_8h" id="_2home_2jakob_2ros_2catkin__ws_2src_2refill_2include_2refill_2system__models_2system__model__base_8h">
-<area shape="rect" id="node3" href="distribution__base_8h.html" title="refill/distributions\l/distribution_base.h" alt="" coords="92,124,227,165"/>
+<area shape="rect" id="node5" href="distribution__base_8h.html" title="refill/distributions\l/distribution_base.h" alt="" coords="49,124,184,165"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -107,13 +109,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="system__model__base_8h__dep__incl.png" border="0" usemap="#_2home_2jakob_2ros_2catkin__ws_2src_2refill_2include_2refill_2system__models_2system__model__base_8hdep" alt=""/></div>
 <map name="_2home_2jakob_2ros_2catkin__ws_2src_2refill_2include_2refill_2system__models_2system__model__base_8hdep" id="_2home_2jakob_2ros_2catkin__ws_2src_2refill_2include_2refill_2system__models_2system__model__base_8hdep">
-<area shape="rect" id="node2" href="filter__base_8h.html" title="/home/jakob/ros/catkin\l_ws/src/refill/include\l/refill/filters/filter_base.h" alt="" coords="5,131,167,187"/>
-<area shape="rect" id="node5" href="linearized__system__model_8h.html" title="/home/jakob/ros/catkin\l_ws/src/refill/include\l/refill/system_models/linearized\l_system_model.h" alt="" coords="191,124,397,195"/>
-<area shape="rect" id="node3" href="extended__kalman__filter_8h.html" title="/home/jakob/ros/catkin\l_ws/src/refill/include\l/refill/filters/extended\l_kalman_filter.h" alt="" coords="81,361,235,432"/>
-<area shape="rect" id="node4" href="extended__kalman__filter_8cc.html" title="/home/jakob/ros/catkin\l_ws/src/refill/src/filters\l/extended_kalman_filter.cc" alt="" coords="69,480,247,536"/>
-<area shape="rect" id="node6" href="linearized__system__model_8cc.html" title="/home/jakob/ros/catkin\l_ws/src/refill/src/system\l_models/linearized_system\l_model.cc" alt="" coords="196,243,376,313"/>
-<area shape="rect" id="node7" href="linear__system__model_8h.html" title="/home/jakob/ros/catkin\l_ws/src/refill/include\l/refill/system_models/linear\l_system_model.h" alt="" coords="401,243,582,313"/>
-<area shape="rect" id="node8" href="linear__system__model_8cc.html" title="/home/jakob/ros/catkin\l_ws/src/refill/src/system\l_models/linear_system_model.cc" alt="" coords="383,369,599,425"/>
+<area shape="rect" id="node2" href="system__model__base_8cc.html" title="/home/jakob/ros/catkin\l_ws/src/refill/src/system\l_models/system_model_base.cc" alt="" coords="5,131,219,187"/>
+<area shape="rect" id="node3" href="filter__base_8h.html" title="/home/jakob/ros/catkin\l_ws/src/refill/include\l/refill/filters/filter_base.h" alt="" coords="149,250,310,306"/>
+<area shape="rect" id="node6" href="linearized__system__model_8h.html" title="/home/jakob/ros/catkin\l_ws/src/refill/include\l/refill/system_models/linearized\l_system_model.h" alt="" coords="347,124,552,195"/>
+<area shape="rect" id="node4" href="extended__kalman__filter_8h.html" title="/home/jakob/ros/catkin\l_ws/src/refill/include\l/refill/filters/extended\l_kalman_filter.h" alt="" coords="271,361,425,432"/>
+<area shape="rect" id="node5" href="extended__kalman__filter_8cc.html" title="/home/jakob/ros/catkin\l_ws/src/refill/src/filters\l/extended_kalman_filter.cc" alt="" coords="259,480,437,536"/>
+<area shape="rect" id="node7" href="linearized__system__model_8cc.html" title="/home/jakob/ros/catkin\l_ws/src/refill/src/system\l_models/linearized_system\l_model.cc" alt="" coords="386,243,566,313"/>
+<area shape="rect" id="node8" href="linear__system__model_8h.html" title="/home/jakob/ros/catkin\l_ws/src/refill/include\l/refill/system_models/linear\l_system_model.h" alt="" coords="591,243,772,313"/>
+<area shape="rect" id="node9" href="linear__system__model_8cc.html" title="/home/jakob/ros/catkin\l_ws/src/refill/src/system\l_models/linear_system_model.cc" alt="" coords="573,369,789,425"/>
 </map>
 </div>
 </div>

@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="node1" href="$classrefill_1_1SystemModelBase.html" title="Interface for system models. " alt="" coords="5,13,169,39"/>
-<area shape="rect" id="node2" href="$classrefill_1_1LinearizedSystemModel.html" title="refill::LinearizedSystem\lModel" alt="" coords="217,5,376,47"/>
+<area shape="rect" id="node2" href="$classrefill_1_1LinearizedSystemModel.html" title="Class that implements a linearized system model. " alt="" coords="217,5,376,47"/>
 <area shape="rect" id="node3" href="$classrefill_1_1LinearSystemModel.html" title="refill::LinearSystemModel" alt="" coords="424,13,593,39"/>
 </map>
