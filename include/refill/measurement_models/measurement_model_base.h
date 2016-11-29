@@ -2,6 +2,7 @@
 #define REFILL_MEASUREMENT_MODELS_MEASUREMENT_MODEL_BASE_H_
 
 #include <Eigen/Dense>
+#include <memory>
 
 #include "refill/distributions/distribution_base.h"
 
@@ -20,36 +21,50 @@ class MeasurementModelBase {
    * @param state The state vector used for the observation.
    * @return the expected measurement given the current state.
    */
-  virtual Eigen::VectorXd observe(
-      const Eigen::VectorXd& state) const = 0;
+  virtual Eigen::VectorXd observe(const Eigen::VectorXd& state) const = 0;
 
   /**
    * @brief Returns the measurement models state dimension.
    *
    * @return the state dimension.
    */
-  virtual std::size_t getStateDim() const = 0;
+  std::size_t getStateDim() const;
 
   /**
    * @brief Returns the measurement models measurement dimension.
    *
    * @return the measurement dimension.
    */
-  virtual std::size_t getMeasurementDim() const = 0;
+  std::size_t getMeasurementDim() const;
 
   /**
    * @brief Returns the measurement models noise dimension.
    *
    * @return the noise dimension.
    */
-  virtual std::size_t getMeasurementNoiseDim() const = 0;
+  std::size_t getMeasurementNoiseDim() const;
 
   /**
    * @brief Returns the measurement models noise.
    *
    * @return a pointer to the measurement model noise distribution.
    */
-  virtual DistributionInterface* getMeasurementNoise() const = 0;
+  DistributionInterface* getMeasurementNoise() const;
+
+ protected:
+  MeasurementModelBase() = delete;
+  MeasurementModelBase(const std::size_t& state_dim,
+                       const std::size_t& measurement_dim,
+                       const DistributionInterface& measurement_noise);
+
+  void setMeasurementModelBaseParameters(
+      const std::size_t& state_dim, const std::size_t& measurement_dim,
+      const DistributionInterface& measurement_noise);
+
+ private:
+  std::unique_ptr<DistributionInterface> measurement_noise_;
+  std::size_t state_dim_;
+  std::size_t measurement_dim_;
 };
 
 }  // namespace refill

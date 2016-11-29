@@ -31,7 +31,8 @@ void LinearMeasurementModel::setMeasurementParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise) {
   this->setMeasurementParameters(
-      measurement_mapping, measurement_noise,
+      measurement_mapping,
+      measurement_noise,
       Eigen::MatrixXd::Identity(measurement_mapping.rows(),
                                 measurement_noise.mean().size()));
 }
@@ -46,9 +47,9 @@ void LinearMeasurementModel::setMeasurementParameters(
   measurement_mapping_ = measurement_mapping;
   noise_mapping_ = noise_mapping;
 
-  this->setLinearizedMeasurementModelParameters(measurement_mapping.cols(),
-                                                measurement_mapping.rows(),
-                                                measurement_noise);
+  this->setMeasurementModelBaseParameters(measurement_mapping.cols(),
+                                          measurement_mapping.rows(),
+                                          measurement_noise);
 }
 
 Eigen::VectorXd LinearMeasurementModel::observe(
@@ -56,7 +57,7 @@ Eigen::VectorXd LinearMeasurementModel::observe(
   CHECK_EQ(state.size(), this->getStateDim());
 
   return measurement_mapping_ * state
-      + noise_mapping_ * measurement_noise_->mean();
+      + noise_mapping_ * this->getMeasurementNoise()->mean();
 }
 
 Eigen::MatrixXd LinearMeasurementModel::getMeasurementJacobian(
