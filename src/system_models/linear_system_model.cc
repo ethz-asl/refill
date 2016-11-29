@@ -27,7 +27,8 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
         system_noise,
         input_mapping,
         Eigen::MatrixXd::Identity(system_mapping.rows(),
-                                  system_noise.mean().size())) {}
+                                  system_noise.mean().size())) {
+}
 
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise,
@@ -79,8 +80,8 @@ void LinearSystemModel::setSystemParameters(
   input_mapping_ = input_mapping;
   noise_mapping_ = noise_mapping;
 
-  this->setLinearizedSystemParameters(system_mapping.rows(), system_noise,
-                                      input_mapping.cols());
+  this->setSystemModelBaseParameters(system_mapping.rows(), system_noise,
+                                           input_mapping.cols());
 }
 
 Eigen::VectorXd LinearSystemModel::propagate(
@@ -98,10 +99,11 @@ Eigen::VectorXd LinearSystemModel::propagate(
   // we don't need to compute the matrix multiplication.
   if (input_mapping_.size() == 0
       || input == Eigen::VectorXd::Zero(this->getInputDim())) {
-    return system_mapping_ * state + noise_mapping_ * system_noise_->mean();
+    return system_mapping_ * state
+        + noise_mapping_ * this->getSystemNoise()->mean();
   } else {
     return system_mapping_ * state + input_mapping_ * input
-        + noise_mapping_ * system_noise_->mean();
+        + noise_mapping_ * this->getSystemNoise()->mean();
   }
 }
 
