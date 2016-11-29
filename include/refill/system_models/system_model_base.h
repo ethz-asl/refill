@@ -7,6 +7,11 @@
 
 namespace refill {
 
+/**
+ * @brief Interface for system models.
+ *
+ * All system models have to have this class as an ancestor.
+ */
 class SystemModelBase {
  public:
   virtual Eigen::VectorXd propagate(
