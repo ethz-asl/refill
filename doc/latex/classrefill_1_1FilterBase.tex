@@ -1,42 +1,49 @@
-\hypertarget{classrefill_1_1FilterBase}{}\section{refill\+:\+:Filter\+Base$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE $>$ Class Template Reference}
-\label{classrefill_1_1FilterBase}\index{refill\+::\+Filter\+Base$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E $>$@{refill\+::\+Filter\+Base$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E $>$}}
+\hypertarget{classrefill_1_1FilterBase}{}\section{refill\+:\+:Filter\+Base Class Reference}
+\label{classrefill_1_1FilterBase}\index{refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}}
 
 
 {\ttfamily \#include $<$filter\+\_\+base.\+h$>$}
 
+
+
+Inheritance diagram for refill\+:\+:Filter\+Base\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classrefill_1_1FilterBase__inherit__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual void \hyperlink{classrefill_1_1FilterBase_aebd38bc87b2614e9f9f71b0cab2f74b8}{predict} (const S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE \&system\+\_\+model, const Eigen\+::\+Vector\+Xd \&input)=0
+virtual void \hyperlink{classrefill_1_1FilterBase_a0f4c8d98624f222e3389f206fa1a1655}{predict} ()=0
 \item 
-virtual void \hyperlink{classrefill_1_1FilterBase_a1f163ae39c87c5816799ef1a84714613}{update} (const M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE \&measurement\+\_\+model, const Eigen\+::\+Vector\+Xd \&measurement)=0
+virtual void \hyperlink{classrefill_1_1FilterBase_a24802735102854284ad9a8a78ceba8f8}{update} (const Eigen\+::\+Vector\+Xd \&measurement)=0
 \end{DoxyCompactItemize}
 
 
 \subsection{Member Function Documentation}
 \index{refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}!predict@{predict}}
 \index{predict@{predict}!refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}}
-\subsubsection[{\texorpdfstring{predict(const S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E \&system\+\_\+model, const Eigen\+::\+Vector\+Xd \&input)=0}{predict(const SYSTEM_MODEL_TYPE &system_model, const Eigen::VectorXd &input)=0}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, typename M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE$>$ virtual void {\bf refill\+::\+Filter\+Base}$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE $>$\+::predict (
+\subsubsection[{\texorpdfstring{predict()=0}{predict()=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void refill\+::\+Filter\+Base\+::predict (
 \begin{DoxyParamCaption}
-\item[{const S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE \&}]{system\+\_\+model, }
-\item[{const Eigen\+::\+Vector\+Xd \&}]{input}
+{}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1FilterBase_aebd38bc87b2614e9f9f71b0cab2f74b8}{}\label{classrefill_1_1FilterBase_aebd38bc87b2614e9f9f71b0cab2f74b8}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1FilterBase_a0f4c8d98624f222e3389f206fa1a1655}{}\label{classrefill_1_1FilterBase_a0f4c8d98624f222e3389f206fa1a1655}
 
 
-Implemented in \hyperlink{classrefill_1_1ExtendedKalmanFilter_ae1f0a6cd50a58b8b9c482985b2c04bd7}{refill\+::\+Extended\+Kalman\+Filter}.
+Implemented in \hyperlink{classrefill_1_1ExtendedKalmanFilter_af290e17d6dba04b4dee9bdb3b5dc7f01}{refill\+::\+Extended\+Kalman\+Filter}.
 
 \index{refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}!update@{update}}
 \index{update@{update}!refill\+::\+Filter\+Base@{refill\+::\+Filter\+Base}}
-\subsubsection[{\texorpdfstring{update(const M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+P\+E \&measurement\+\_\+model, const Eigen\+::\+Vector\+Xd \&measurement)=0}{update(const MEASUREMENT_MODEL_TYPE &measurement_model, const Eigen::VectorXd &measurement)=0}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, typename M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE$>$ virtual void {\bf refill\+::\+Filter\+Base}$<$ S\+Y\+S\+T\+E\+M\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE, M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE $>$\+::update (
+\subsubsection[{\texorpdfstring{update(const Eigen\+::\+Vector\+Xd \&measurement)=0}{update(const Eigen::VectorXd &measurement)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void refill\+::\+Filter\+Base\+::update (
 \begin{DoxyParamCaption}
-\item[{const M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+M\+O\+D\+E\+L\+\_\+\+T\+Y\+PE \&}]{measurement\+\_\+model, }
 \item[{const Eigen\+::\+Vector\+Xd \&}]{measurement}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1FilterBase_a1f163ae39c87c5816799ef1a84714613}{}\label{classrefill_1_1FilterBase_a1f163ae39c87c5816799ef1a84714613}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1FilterBase_a24802735102854284ad9a8a78ceba8f8}{}\label{classrefill_1_1FilterBase_a24802735102854284ad9a8a78ceba8f8}
 
 
-Implemented in \hyperlink{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d74b8ea}{refill\+::\+Extended\+Kalman\+Filter}.
+Implemented in \hyperlink{classrefill_1_1ExtendedKalmanFilter_a8d1fb40b3e129965dfa2b0aabab6d8fb}{refill\+::\+Extended\+Kalman\+Filter}.
 
 
 

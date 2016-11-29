@@ -2,6 +2,11 @@
 \label{classrefill_1_1MeasurementModelBase}\index{refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}}
 
 
+Interface for measurement models.  
+
+
+
+
 {\ttfamily \#include $<$measurement\+\_\+model\+\_\+base.\+h$>$}
 
 
@@ -17,28 +22,40 @@ Inheritance diagram for refill\+:\+:Measurement\+Model\+Base\+:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 virtual Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1MeasurementModelBase_a3a5613bc1ba3317e35436fc78b0d2972}{observe} (const Eigen\+::\+Vector\+Xd \&state) const =0
-\item 
-virtual unsigned int \hyperlink{classrefill_1_1MeasurementModelBase_a53ba9314f3246cc7bcaac67b47b47949}{get\+State\+Dim} () const =0
-\item 
-virtual unsigned int \hyperlink{classrefill_1_1MeasurementModelBase_a7421f11cf3153252d5e4309d2d0ba96d}{get\+Measurement\+Dim} () const =0
-\item 
-virtual unsigned int \hyperlink{classrefill_1_1MeasurementModelBase_a0cc78094412f6251cbeaeca3b037ece3}{get\+Measurement\+Noise\+Dim} () const =0
-\item 
+\begin{DoxyCompactList}\small\item\em Use the measurement model to receive the expected measurement. \end{DoxyCompactList}\item 
+virtual std\+::size\+\_\+t \hyperlink{classrefill_1_1MeasurementModelBase_a5c9eed47a0c98ea9acb8f3b14447dd93}{get\+State\+Dim} () const =0
+\begin{DoxyCompactList}\small\item\em Returns the measurement models state dimension. \end{DoxyCompactList}\item 
+virtual std\+::size\+\_\+t \hyperlink{classrefill_1_1MeasurementModelBase_a558b2fbbc046d8476808eb5bf0bf232f}{get\+Measurement\+Dim} () const =0
+\begin{DoxyCompactList}\small\item\em Returns the measurement models measurement dimension. \end{DoxyCompactList}\item 
+virtual std\+::size\+\_\+t \hyperlink{classrefill_1_1MeasurementModelBase_aa6c653f6739f282135aae730126adfb5}{get\+Measurement\+Noise\+Dim} () const =0
+\begin{DoxyCompactList}\small\item\em Returns the measurement models noise dimension. \end{DoxyCompactList}\item 
 virtual \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} $\ast$ \hyperlink{classrefill_1_1MeasurementModelBase_a32d1e80e656afeadf299442ef6280b2b}{get\+Measurement\+Noise} () const =0
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns the measurement models noise. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Interface for measurement models. 
+
+All measurement models have to have this class as an ancestor. 
 
 \subsection{Member Function Documentation}
 \index{refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}!get\+Measurement\+Dim@{get\+Measurement\+Dim}}
 \index{get\+Measurement\+Dim@{get\+Measurement\+Dim}!refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}}
-\subsubsection[{\texorpdfstring{get\+Measurement\+Dim() const =0}{getMeasurementDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+Measurement\+Model\+Base\+::get\+Measurement\+Dim (
+\subsubsection[{\texorpdfstring{get\+Measurement\+Dim() const =0}{getMeasurementDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::size\+\_\+t refill\+::\+Measurement\+Model\+Base\+::get\+Measurement\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1MeasurementModelBase_a7421f11cf3153252d5e4309d2d0ba96d}{}\label{classrefill_1_1MeasurementModelBase_a7421f11cf3153252d5e4309d2d0ba96d}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1MeasurementModelBase_a558b2fbbc046d8476808eb5bf0bf232f}{}\label{classrefill_1_1MeasurementModelBase_a558b2fbbc046d8476808eb5bf0bf232f}
 
 
-Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_a75254cd8533f1d7cf15ab0135903e4e0}{refill\+::\+Linearized\+Measurement\+Model}.
+Returns the measurement models measurement dimension. 
+
+\begin{DoxyReturn}{Returns}
+the measurement dimension. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_aed3deac071dbf35901303ef42ba2163d}{refill\+::\+Linearized\+Measurement\+Model}.
 
 \index{refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}!get\+Measurement\+Noise@{get\+Measurement\+Noise}}
 \index{get\+Measurement\+Noise@{get\+Measurement\+Noise}!refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}}
@@ -49,29 +66,50 @@ Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_a75254cd8533
 ) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1MeasurementModelBase_a32d1e80e656afeadf299442ef6280b2b}{}\label{classrefill_1_1MeasurementModelBase_a32d1e80e656afeadf299442ef6280b2b}
 
 
+Returns the measurement models noise. 
+
+\begin{DoxyReturn}{Returns}
+a pointer to the measurement model noise distribution. 
+\end{DoxyReturn}
+
+
 Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_a320cf84380a5a4f03a6cacee8ef74bf6}{refill\+::\+Linearized\+Measurement\+Model}.
 
 \index{refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}!get\+Measurement\+Noise\+Dim@{get\+Measurement\+Noise\+Dim}}
 \index{get\+Measurement\+Noise\+Dim@{get\+Measurement\+Noise\+Dim}!refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}}
-\subsubsection[{\texorpdfstring{get\+Measurement\+Noise\+Dim() const =0}{getMeasurementNoiseDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+Measurement\+Model\+Base\+::get\+Measurement\+Noise\+Dim (
+\subsubsection[{\texorpdfstring{get\+Measurement\+Noise\+Dim() const =0}{getMeasurementNoiseDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::size\+\_\+t refill\+::\+Measurement\+Model\+Base\+::get\+Measurement\+Noise\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1MeasurementModelBase_a0cc78094412f6251cbeaeca3b037ece3}{}\label{classrefill_1_1MeasurementModelBase_a0cc78094412f6251cbeaeca3b037ece3}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1MeasurementModelBase_aa6c653f6739f282135aae730126adfb5}{}\label{classrefill_1_1MeasurementModelBase_aa6c653f6739f282135aae730126adfb5}
 
 
-Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_a389e47cdf14ca24528affbafdd7e5c67}{refill\+::\+Linearized\+Measurement\+Model}.
+Returns the measurement models noise dimension. 
+
+\begin{DoxyReturn}{Returns}
+the noise dimension. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_ad6b71dfa7fa9a77544ed76f83781af6e}{refill\+::\+Linearized\+Measurement\+Model}.
 
 \index{refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}!get\+State\+Dim@{get\+State\+Dim}}
 \index{get\+State\+Dim@{get\+State\+Dim}!refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}}
-\subsubsection[{\texorpdfstring{get\+State\+Dim() const =0}{getStateDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+Measurement\+Model\+Base\+::get\+State\+Dim (
+\subsubsection[{\texorpdfstring{get\+State\+Dim() const =0}{getStateDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::size\+\_\+t refill\+::\+Measurement\+Model\+Base\+::get\+State\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1MeasurementModelBase_a53ba9314f3246cc7bcaac67b47b47949}{}\label{classrefill_1_1MeasurementModelBase_a53ba9314f3246cc7bcaac67b47b47949}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1MeasurementModelBase_a5c9eed47a0c98ea9acb8f3b14447dd93}{}\label{classrefill_1_1MeasurementModelBase_a5c9eed47a0c98ea9acb8f3b14447dd93}
 
 
-Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_aed8dd3245704f8e4da22ea7a2aa76eda}{refill\+::\+Linearized\+Measurement\+Model}.
+Returns the measurement models state dimension. 
+
+\begin{DoxyReturn}{Returns}
+the state dimension. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_a370fd9906f5f718e5fdb2f4dfa1a59bf}{refill\+::\+Linearized\+Measurement\+Model}.
 
 \index{refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}!observe@{observe}}
 \index{observe@{observe}!refill\+::\+Measurement\+Model\+Base@{refill\+::\+Measurement\+Model\+Base}}
@@ -80,6 +118,18 @@ Implemented in \hyperlink{classrefill_1_1LinearizedMeasurementModel_aed8dd324570
 \item[{const Eigen\+::\+Vector\+Xd \&}]{state}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1MeasurementModelBase_a3a5613bc1ba3317e35436fc78b0d2972}{}\label{classrefill_1_1MeasurementModelBase_a3a5613bc1ba3317e35436fc78b0d2972}
+
+
+Use the measurement model to receive the expected measurement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state vector used for the observation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the expected measurement given the current state. 
+\end{DoxyReturn}
 
 
 Implemented in \hyperlink{classrefill_1_1LinearMeasurementModel_a01404c7ce5395e586738d73213c89e59}{refill\+::\+Linear\+Measurement\+Model}.

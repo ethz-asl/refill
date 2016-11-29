@@ -25,56 +25,75 @@ Collaboration diagram for refill\+:\+:Linearized\+Measurement\+Model\+:\nopagebr
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classrefill_1_1LinearizedMeasurementModel_ade8947f23e677e3a611c4e4e1be60a73}{Linearized\+Measurement\+Model} (const unsigned int \&state\+\_\+dim, const unsigned int \&measurement\+\_\+dim, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&measurement\+\_\+noise)
-\item 
-void \hyperlink{classrefill_1_1LinearizedMeasurementModel_a727f747799d41004eb934d063c7818b0}{set\+Linearized\+Measurement\+Model\+Parameters} (const unsigned int \&state\+\_\+dim, const unsigned int \&measurement\+\_\+dim, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&measurement\+\_\+noise)
-\item 
 virtual Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearizedMeasurementModel_a1a9fbbf32f4e71b666ee6609cdc99da7}{get\+Measurement\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state) const =0
 \item 
 virtual Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearizedMeasurementModel_a3573eb964dd7bff58b05af85fa46a8a0}{get\+Noise\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state) const =0
 \item 
-unsigned int \hyperlink{classrefill_1_1LinearizedMeasurementModel_aed8dd3245704f8e4da22ea7a2aa76eda}{get\+State\+Dim} () const 
-\item 
-unsigned int \hyperlink{classrefill_1_1LinearizedMeasurementModel_a75254cd8533f1d7cf15ab0135903e4e0}{get\+Measurement\+Dim} () const 
-\item 
-unsigned int \hyperlink{classrefill_1_1LinearizedMeasurementModel_a389e47cdf14ca24528affbafdd7e5c67}{get\+Measurement\+Noise\+Dim} () const 
-\item 
+std\+::size\+\_\+t \hyperlink{classrefill_1_1LinearizedMeasurementModel_a370fd9906f5f718e5fdb2f4dfa1a59bf}{get\+State\+Dim} () const 
+\begin{DoxyCompactList}\small\item\em Returns the measurement models state dimension. \end{DoxyCompactList}\item 
+std\+::size\+\_\+t \hyperlink{classrefill_1_1LinearizedMeasurementModel_aed3deac071dbf35901303ef42ba2163d}{get\+Measurement\+Dim} () const 
+\begin{DoxyCompactList}\small\item\em Returns the measurement models measurement dimension. \end{DoxyCompactList}\item 
+std\+::size\+\_\+t \hyperlink{classrefill_1_1LinearizedMeasurementModel_ad6b71dfa7fa9a77544ed76f83781af6e}{get\+Measurement\+Noise\+Dim} () const 
+\begin{DoxyCompactList}\small\item\em Returns the measurement models noise dimension. \end{DoxyCompactList}\item 
 \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} $\ast$ \hyperlink{classrefill_1_1LinearizedMeasurementModel_a320cf84380a5a4f03a6cacee8ef74bf6}{get\+Measurement\+Noise} () const 
+\begin{DoxyCompactList}\small\item\em Returns the measurement models noise. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classrefill_1_1LinearizedMeasurementModel_ac87d48f8d870169199cdb34a643c4286}{Linearized\+Measurement\+Model} ()=delete
+\item 
+\hyperlink{classrefill_1_1LinearizedMeasurementModel_a9acbec9c9d778a53ba395e7a2fe1ecfa}{Linearized\+Measurement\+Model} (const std\+::size\+\_\+t \&state\+\_\+dim, const std\+::size\+\_\+t \&measurement\+\_\+dim, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&measurement\+\_\+noise)
+\item 
+void \hyperlink{classrefill_1_1LinearizedMeasurementModel_a841db0359ae5ad41bfbe9ed8e1d3f1b6}{set\+Linearized\+Measurement\+Model\+Parameters} (const std\+::size\+\_\+t \&state\+\_\+dim, const std\+::size\+\_\+t \&measurement\+\_\+dim, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&measurement\+\_\+noise)
 \end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 std\+::unique\+\_\+ptr$<$ \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} $>$ \hyperlink{classrefill_1_1LinearizedMeasurementModel_ac15f42823cd7fb338ea5bd79e528627a}{measurement\+\_\+noise\+\_\+}
 \item 
-unsigned int \hyperlink{classrefill_1_1LinearizedMeasurementModel_aff98ef53117db9491cff63baa48cdafd}{state\+\_\+dim\+\_\+}
+std\+::size\+\_\+t \hyperlink{classrefill_1_1LinearizedMeasurementModel_affd27c9960289d05413760b4682140a1}{state\+\_\+dim\+\_\+}
 \item 
-unsigned int \hyperlink{classrefill_1_1LinearizedMeasurementModel_a45474ea2dc1ca250805ee69c45dad6f3}{measurement\+\_\+dim\+\_\+}
+std\+::size\+\_\+t \hyperlink{classrefill_1_1LinearizedMeasurementModel_ac3f6cee57566f9494706f4e735a65c64}{measurement\+\_\+dim\+\_\+}
 \end{DoxyCompactItemize}
 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!Linearized\+Measurement\+Model@{Linearized\+Measurement\+Model}}
 \index{Linearized\+Measurement\+Model@{Linearized\+Measurement\+Model}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
-\subsubsection[{\texorpdfstring{Linearized\+Measurement\+Model(const unsigned int \&state\+\_\+dim, const unsigned int \&measurement\+\_\+dim, const Distribution\+Interface \&measurement\+\_\+noise)}{LinearizedMeasurementModel(const unsigned int &state_dim, const unsigned int &measurement_dim, const DistributionInterface &measurement_noise)}}]{\setlength{\rightskip}{0pt plus 5cm}refill\+::\+Linearized\+Measurement\+Model\+::\+Linearized\+Measurement\+Model (
+\subsubsection[{\texorpdfstring{Linearized\+Measurement\+Model()=delete}{LinearizedMeasurementModel()=delete}}]{\setlength{\rightskip}{0pt plus 5cm}refill\+::\+Linearized\+Measurement\+Model\+::\+Linearized\+Measurement\+Model (
 \begin{DoxyParamCaption}
-\item[{const unsigned int \&}]{state\+\_\+dim, }
-\item[{const unsigned int \&}]{measurement\+\_\+dim, }
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [delete]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_ac87d48f8d870169199cdb34a643c4286}{}\label{classrefill_1_1LinearizedMeasurementModel_ac87d48f8d870169199cdb34a643c4286}
+\index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!Linearized\+Measurement\+Model@{Linearized\+Measurement\+Model}}
+\index{Linearized\+Measurement\+Model@{Linearized\+Measurement\+Model}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
+\subsubsection[{\texorpdfstring{Linearized\+Measurement\+Model(const std\+::size\+\_\+t \&state\+\_\+dim, const std\+::size\+\_\+t \&measurement\+\_\+dim, const Distribution\+Interface \&measurement\+\_\+noise)}{LinearizedMeasurementModel(const std::size_t &state_dim, const std::size_t &measurement_dim, const DistributionInterface &measurement_noise)}}]{\setlength{\rightskip}{0pt plus 5cm}refill\+::\+Linearized\+Measurement\+Model\+::\+Linearized\+Measurement\+Model (
+\begin{DoxyParamCaption}
+\item[{const std\+::size\+\_\+t \&}]{state\+\_\+dim, }
+\item[{const std\+::size\+\_\+t \&}]{measurement\+\_\+dim, }
 \item[{const {\bf Distribution\+Interface} \&}]{measurement\+\_\+noise}
 \end{DoxyParamCaption}
-)}\hypertarget{classrefill_1_1LinearizedMeasurementModel_ade8947f23e677e3a611c4e4e1be60a73}{}\label{classrefill_1_1LinearizedMeasurementModel_ade8947f23e677e3a611c4e4e1be60a73}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_a9acbec9c9d778a53ba395e7a2fe1ecfa}{}\label{classrefill_1_1LinearizedMeasurementModel_a9acbec9c9d778a53ba395e7a2fe1ecfa}
 
 
 \subsection{Member Function Documentation}
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!get\+Measurement\+Dim@{get\+Measurement\+Dim}}
 \index{get\+Measurement\+Dim@{get\+Measurement\+Dim}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
-\subsubsection[{\texorpdfstring{get\+Measurement\+Dim() const }{getMeasurementDim() const }}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int refill\+::\+Linearized\+Measurement\+Model\+::get\+Measurement\+Dim (
+\subsubsection[{\texorpdfstring{get\+Measurement\+Dim() const }{getMeasurementDim() const }}]{\setlength{\rightskip}{0pt plus 5cm}std\+::size\+\_\+t refill\+::\+Linearized\+Measurement\+Model\+::get\+Measurement\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_a75254cd8533f1d7cf15ab0135903e4e0}{}\label{classrefill_1_1LinearizedMeasurementModel_a75254cd8533f1d7cf15ab0135903e4e0}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_aed3deac071dbf35901303ef42ba2163d}{}\label{classrefill_1_1LinearizedMeasurementModel_aed3deac071dbf35901303ef42ba2163d}
 
 
-Implements \hyperlink{classrefill_1_1MeasurementModelBase_a7421f11cf3153252d5e4309d2d0ba96d}{refill\+::\+Measurement\+Model\+Base}.
+Returns the measurement models measurement dimension. 
+
+\begin{DoxyReturn}{Returns}
+the measurement dimension. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classrefill_1_1MeasurementModelBase_a558b2fbbc046d8476808eb5bf0bf232f}{refill\+::\+Measurement\+Model\+Base}.
 
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!get\+Measurement\+Jacobian@{get\+Measurement\+Jacobian}}
 \index{get\+Measurement\+Jacobian@{get\+Measurement\+Jacobian}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
@@ -96,18 +115,32 @@ Implemented in \hyperlink{classrefill_1_1LinearMeasurementModel_a84f3241d0ced9d0
 ) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_a320cf84380a5a4f03a6cacee8ef74bf6}{}\label{classrefill_1_1LinearizedMeasurementModel_a320cf84380a5a4f03a6cacee8ef74bf6}
 
 
+Returns the measurement models noise. 
+
+\begin{DoxyReturn}{Returns}
+a pointer to the measurement model noise distribution. 
+\end{DoxyReturn}
+
+
 Implements \hyperlink{classrefill_1_1MeasurementModelBase_a32d1e80e656afeadf299442ef6280b2b}{refill\+::\+Measurement\+Model\+Base}.
 
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!get\+Measurement\+Noise\+Dim@{get\+Measurement\+Noise\+Dim}}
 \index{get\+Measurement\+Noise\+Dim@{get\+Measurement\+Noise\+Dim}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
-\subsubsection[{\texorpdfstring{get\+Measurement\+Noise\+Dim() const }{getMeasurementNoiseDim() const }}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int refill\+::\+Linearized\+Measurement\+Model\+::get\+Measurement\+Noise\+Dim (
+\subsubsection[{\texorpdfstring{get\+Measurement\+Noise\+Dim() const }{getMeasurementNoiseDim() const }}]{\setlength{\rightskip}{0pt plus 5cm}std\+::size\+\_\+t refill\+::\+Linearized\+Measurement\+Model\+::get\+Measurement\+Noise\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_a389e47cdf14ca24528affbafdd7e5c67}{}\label{classrefill_1_1LinearizedMeasurementModel_a389e47cdf14ca24528affbafdd7e5c67}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_ad6b71dfa7fa9a77544ed76f83781af6e}{}\label{classrefill_1_1LinearizedMeasurementModel_ad6b71dfa7fa9a77544ed76f83781af6e}
 
 
-Implements \hyperlink{classrefill_1_1MeasurementModelBase_a0cc78094412f6251cbeaeca3b037ece3}{refill\+::\+Measurement\+Model\+Base}.
+Returns the measurement models noise dimension. 
+
+\begin{DoxyReturn}{Returns}
+the noise dimension. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classrefill_1_1MeasurementModelBase_aa6c653f6739f282135aae730126adfb5}{refill\+::\+Measurement\+Model\+Base}.
 
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!get\+Noise\+Jacobian@{get\+Noise\+Jacobian}}
 \index{get\+Noise\+Jacobian@{get\+Noise\+Jacobian}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
@@ -122,36 +155,43 @@ Implemented in \hyperlink{classrefill_1_1LinearMeasurementModel_ab31ce79fd4d2c62
 
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!get\+State\+Dim@{get\+State\+Dim}}
 \index{get\+State\+Dim@{get\+State\+Dim}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
-\subsubsection[{\texorpdfstring{get\+State\+Dim() const }{getStateDim() const }}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int refill\+::\+Linearized\+Measurement\+Model\+::get\+State\+Dim (
+\subsubsection[{\texorpdfstring{get\+State\+Dim() const }{getStateDim() const }}]{\setlength{\rightskip}{0pt plus 5cm}std\+::size\+\_\+t refill\+::\+Linearized\+Measurement\+Model\+::get\+State\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_aed8dd3245704f8e4da22ea7a2aa76eda}{}\label{classrefill_1_1LinearizedMeasurementModel_aed8dd3245704f8e4da22ea7a2aa76eda}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_a370fd9906f5f718e5fdb2f4dfa1a59bf}{}\label{classrefill_1_1LinearizedMeasurementModel_a370fd9906f5f718e5fdb2f4dfa1a59bf}
 
 
-Implements \hyperlink{classrefill_1_1MeasurementModelBase_a53ba9314f3246cc7bcaac67b47b47949}{refill\+::\+Measurement\+Model\+Base}.
+Returns the measurement models state dimension. 
+
+\begin{DoxyReturn}{Returns}
+the state dimension. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classrefill_1_1MeasurementModelBase_a5c9eed47a0c98ea9acb8f3b14447dd93}{refill\+::\+Measurement\+Model\+Base}.
 
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!set\+Linearized\+Measurement\+Model\+Parameters@{set\+Linearized\+Measurement\+Model\+Parameters}}
 \index{set\+Linearized\+Measurement\+Model\+Parameters@{set\+Linearized\+Measurement\+Model\+Parameters}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
-\subsubsection[{\texorpdfstring{set\+Linearized\+Measurement\+Model\+Parameters(const unsigned int \&state\+\_\+dim, const unsigned int \&measurement\+\_\+dim, const Distribution\+Interface \&measurement\+\_\+noise)}{setLinearizedMeasurementModelParameters(const unsigned int &state_dim, const unsigned int &measurement_dim, const DistributionInterface &measurement_noise)}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Linearized\+Measurement\+Model\+::set\+Linearized\+Measurement\+Model\+Parameters (
+\subsubsection[{\texorpdfstring{set\+Linearized\+Measurement\+Model\+Parameters(const std\+::size\+\_\+t \&state\+\_\+dim, const std\+::size\+\_\+t \&measurement\+\_\+dim, const Distribution\+Interface \&measurement\+\_\+noise)}{setLinearizedMeasurementModelParameters(const std::size_t &state_dim, const std::size_t &measurement_dim, const DistributionInterface &measurement_noise)}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Linearized\+Measurement\+Model\+::set\+Linearized\+Measurement\+Model\+Parameters (
 \begin{DoxyParamCaption}
-\item[{const unsigned int \&}]{state\+\_\+dim, }
-\item[{const unsigned int \&}]{measurement\+\_\+dim, }
+\item[{const std\+::size\+\_\+t \&}]{state\+\_\+dim, }
+\item[{const std\+::size\+\_\+t \&}]{measurement\+\_\+dim, }
 \item[{const {\bf Distribution\+Interface} \&}]{measurement\+\_\+noise}
 \end{DoxyParamCaption}
-)}\hypertarget{classrefill_1_1LinearizedMeasurementModel_a727f747799d41004eb934d063c7818b0}{}\label{classrefill_1_1LinearizedMeasurementModel_a727f747799d41004eb934d063c7818b0}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_a841db0359ae5ad41bfbe9ed8e1d3f1b6}{}\label{classrefill_1_1LinearizedMeasurementModel_a841db0359ae5ad41bfbe9ed8e1d3f1b6}
 
 
 \subsection{Member Data Documentation}
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!measurement\+\_\+dim\+\_\+@{measurement\+\_\+dim\+\_\+}}
 \index{measurement\+\_\+dim\+\_\+@{measurement\+\_\+dim\+\_\+}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
-\subsubsection[{\texorpdfstring{measurement\+\_\+dim\+\_\+}{measurement_dim_}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int refill\+::\+Linearized\+Measurement\+Model\+::measurement\+\_\+dim\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_a45474ea2dc1ca250805ee69c45dad6f3}{}\label{classrefill_1_1LinearizedMeasurementModel_a45474ea2dc1ca250805ee69c45dad6f3}
+\subsubsection[{\texorpdfstring{measurement\+\_\+dim\+\_\+}{measurement_dim_}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::size\+\_\+t refill\+::\+Linearized\+Measurement\+Model\+::measurement\+\_\+dim\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_ac3f6cee57566f9494706f4e735a65c64}{}\label{classrefill_1_1LinearizedMeasurementModel_ac3f6cee57566f9494706f4e735a65c64}
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!measurement\+\_\+noise\+\_\+@{measurement\+\_\+noise\+\_\+}}
 \index{measurement\+\_\+noise\+\_\+@{measurement\+\_\+noise\+\_\+}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
 \subsubsection[{\texorpdfstring{measurement\+\_\+noise\+\_\+}{measurement_noise_}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::unique\+\_\+ptr$<${\bf Distribution\+Interface}$>$ refill\+::\+Linearized\+Measurement\+Model\+::measurement\+\_\+noise\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_ac15f42823cd7fb338ea5bd79e528627a}{}\label{classrefill_1_1LinearizedMeasurementModel_ac15f42823cd7fb338ea5bd79e528627a}
 \index{refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}!state\+\_\+dim\+\_\+@{state\+\_\+dim\+\_\+}}
 \index{state\+\_\+dim\+\_\+@{state\+\_\+dim\+\_\+}!refill\+::\+Linearized\+Measurement\+Model@{refill\+::\+Linearized\+Measurement\+Model}}
-\subsubsection[{\texorpdfstring{state\+\_\+dim\+\_\+}{state_dim_}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int refill\+::\+Linearized\+Measurement\+Model\+::state\+\_\+dim\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_aff98ef53117db9491cff63baa48cdafd}{}\label{classrefill_1_1LinearizedMeasurementModel_aff98ef53117db9491cff63baa48cdafd}
+\subsubsection[{\texorpdfstring{state\+\_\+dim\+\_\+}{state_dim_}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::size\+\_\+t refill\+::\+Linearized\+Measurement\+Model\+::state\+\_\+dim\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classrefill_1_1LinearizedMeasurementModel_affd27c9960289d05413760b4682140a1}{}\label{classrefill_1_1LinearizedMeasurementModel_affd27c9960289d05413760b4682140a1}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

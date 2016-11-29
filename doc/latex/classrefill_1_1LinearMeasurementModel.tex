@@ -25,7 +25,7 @@ Collaboration diagram for refill\+:\+:Linear\+Measurement\+Model\+:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classrefill_1_1LinearMeasurementModel_a90e4ff5a3fd39b3c727b389320ec1e41}{Linear\+Measurement\+Model} ()
+E\+I\+G\+E\+N\+\_\+\+M\+A\+K\+E\+\_\+\+A\+L\+I\+G\+N\+E\+D\+\_\+\+O\+P\+E\+R\+A\+T\+O\+R\+\_\+\+N\+EW \hyperlink{classrefill_1_1LinearMeasurementModel_a90e4ff5a3fd39b3c727b389320ec1e41}{Linear\+Measurement\+Model} ()
 \item 
 \hyperlink{classrefill_1_1LinearMeasurementModel_ab1b3cb8e8a8e6bc1f311b9cdb96da8b7}{Linear\+Measurement\+Model} (const Eigen\+::\+Matrix\+Xd \&measurement\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&measurement\+\_\+noise)
 \item 
@@ -36,7 +36,7 @@ void \hyperlink{classrefill_1_1LinearMeasurementModel_a4086510d927ce6ad15a94fe7d
 void \hyperlink{classrefill_1_1LinearMeasurementModel_aa514c963fd37c9aed1b2f60f833fa472}{set\+Measurement\+Parameters} (const Eigen\+::\+Matrix\+Xd \&measurement\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&measurement\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&noise\+\_\+mapping)
 \item 
 Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1LinearMeasurementModel_a01404c7ce5395e586738d73213c89e59}{observe} (const Eigen\+::\+Vector\+Xd \&state) const 
-\item 
+\begin{DoxyCompactList}\small\item\em Use the measurement model to receive the expected measurement. \end{DoxyCompactList}\item 
 Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearMeasurementModel_a84f3241d0ced9d0b017b498bfed438eb}{get\+Measurement\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state) const 
 \item 
 Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearMeasurementModel_ab31ce79fd4d2c62717443a052249f8f6}{get\+Noise\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state) const 
@@ -101,6 +101,18 @@ Implements \hyperlink{classrefill_1_1LinearizedMeasurementModel_a3573eb964dd7bff
 \item[{const Eigen\+::\+Vector\+Xd \&}]{state}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearMeasurementModel_a01404c7ce5395e586738d73213c89e59}{}\label{classrefill_1_1LinearMeasurementModel_a01404c7ce5395e586738d73213c89e59}
+
+
+Use the measurement model to receive the expected measurement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state vector used for the observation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the expected measurement given the current state. 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classrefill_1_1MeasurementModelBase_a3a5613bc1ba3317e35436fc78b0d2972}{refill\+::\+Measurement\+Model\+Base}.

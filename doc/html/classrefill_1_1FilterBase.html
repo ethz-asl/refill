@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Refill: refill::FilterBase&lt; SYSTEM_MODEL_TYPE, MEASUREMENT_MODEL_TYPE &gt; Class Template Reference</title>
+<title>Refill: refill::FilterBase Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -92,45 +92,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classrefill_1_1FilterBase-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">refill::FilterBase&lt; SYSTEM_MODEL_TYPE, MEASUREMENT_MODEL_TYPE &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">refill::FilterBase Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="filter__base_8h_source.html">filter_base.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for refill::FilterBase:</div>
+<div class="dyncontent">
+<div class="center"><img src="classrefill_1_1FilterBase__inherit__graph.png" border="0" usemap="#refill_1_1FilterBase_inherit__map" alt="Inheritance graph"/></div>
+<map name="refill_1_1FilterBase_inherit__map" id="refill_1_1FilterBase_inherit__map">
+<area shape="rect" id="node2" href="classrefill_1_1ExtendedKalmanFilter.html" title="refill::ExtendedKalmanFilter" alt="" coords="5,80,188,107"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aebd38bc87b2614e9f9f71b0cab2f74b8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1FilterBase.html#aebd38bc87b2614e9f9f71b0cab2f74b8">predict</a> (const SYSTEM_MODEL_TYPE &amp;system_model, const Eigen::VectorXd &amp;input)=0</td></tr>
-<tr class="separator:aebd38bc87b2614e9f9f71b0cab2f74b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f163ae39c87c5816799ef1a84714613"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1FilterBase.html#a1f163ae39c87c5816799ef1a84714613">update</a> (const MEASUREMENT_MODEL_TYPE &amp;measurement_model, const Eigen::VectorXd &amp;measurement)=0</td></tr>
-<tr class="separator:a1f163ae39c87c5816799ef1a84714613"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f4c8d98624f222e3389f206fa1a1655"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1FilterBase.html#a0f4c8d98624f222e3389f206fa1a1655">predict</a> ()=0</td></tr>
+<tr class="separator:a0f4c8d98624f222e3389f206fa1a1655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24802735102854284ad9a8a78ceba8f8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1FilterBase.html#a24802735102854284ad9a8a78ceba8f8">update</a> (const Eigen::VectorXd &amp;measurement)=0</td></tr>
+<tr class="separator:a24802735102854284ad9a8a78ceba8f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aebd38bc87b2614e9f9f71b0cab2f74b8"></a>
+<a class="anchor" id="a0f4c8d98624f222e3389f206fa1a1655"></a>
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename SYSTEM_MODEL_TYPE, typename MEASUREMENT_MODEL_TYPE&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classrefill_1_1FilterBase.html">refill::FilterBase</a>&lt; SYSTEM_MODEL_TYPE, MEASUREMENT_MODEL_TYPE &gt;::predict </td>
+          <td class="memname">virtual void refill::FilterBase::predict </td>
           <td>(</td>
-          <td class="paramtype">const SYSTEM_MODEL_TYPE &amp;&#160;</td>
-          <td class="paramname"><em>system_model</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>input</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -140,35 +135,23 @@ template&lt;typename SYSTEM_MODEL_TYPE, typename MEASUREMENT_MODEL_TYPE&gt; </di
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#ae1f0a6cd50a58b8b9c482985b2c04bd7">refill::ExtendedKalmanFilter</a>.</p>
+<p>Implemented in <a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#af290e17d6dba04b4dee9bdb3b5dc7f01">refill::ExtendedKalmanFilter</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1f163ae39c87c5816799ef1a84714613"></a>
+<a class="anchor" id="a24802735102854284ad9a8a78ceba8f8"></a>
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename SYSTEM_MODEL_TYPE, typename MEASUREMENT_MODEL_TYPE&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classrefill_1_1FilterBase.html">refill::FilterBase</a>&lt; SYSTEM_MODEL_TYPE, MEASUREMENT_MODEL_TYPE &gt;::update </td>
+          <td class="memname">virtual void refill::FilterBase::update </td>
           <td>(</td>
-          <td class="paramtype">const MEASUREMENT_MODEL_TYPE &amp;&#160;</td>
-          <td class="paramname"><em>measurement_model</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>measurement</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>measurement</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -178,7 +161,7 @@ template&lt;typename SYSTEM_MODEL_TYPE, typename MEASUREMENT_MODEL_TYPE&gt; </di
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a7d498bfa574e87ef06c30df91d74b8ea">refill::ExtendedKalmanFilter</a>.</p>
+<p>Implemented in <a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a8d1fb40b3e129965dfa2b0aabab6d8fb">refill::ExtendedKalmanFilter</a>.</p>
 
 </div>
 </div>

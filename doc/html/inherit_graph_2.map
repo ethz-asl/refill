@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classrefill_1_1FilterBase.html" title="refill::FilterBase\l\&lt; SYSTEM_MODEL_TYPE,\l MEASUREMENT_MODEL_TYPE \&gt;" alt="" coords="5,5,244,61"/>
+<area shape="rect" id="node1" href="$classrefill_1_1MeasurementModelBase.html" title="Interface for measurement models. " alt="" coords="5,13,204,39"/>
+<area shape="rect" id="node2" href="$classrefill_1_1LinearizedMeasurementModel.html" title="refill::LinearizedMeasurement\lModel" alt="" coords="252,5,444,47"/>
+<area shape="rect" id="node3" href="$classrefill_1_1LinearMeasurementModel.html" title="refill::LinearMeasurement\lModel" alt="" coords="492,5,660,47"/>
 </map>

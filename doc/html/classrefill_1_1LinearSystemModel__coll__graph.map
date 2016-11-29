@@ -1,5 +1,5 @@
 <map id="refill::LinearSystemModel" name="refill::LinearSystemModel">
 <area shape="rect" id="node2" href="$classrefill_1_1LinearizedSystemModel.html" title="refill::LinearizedSystem\lModel" alt="" coords="65,199,224,240"/>
-<area shape="rect" id="node3" href="$classrefill_1_1SystemModelBase.html" title="refill::SystemModelBase" alt="" coords="5,102,169,129"/>
+<area shape="rect" id="node3" href="$classrefill_1_1SystemModelBase.html" title="Interface for system models. " alt="" coords="5,102,169,129"/>
 <area shape="rect" id="node5" href="$classrefill_1_1DistributionInterface.html" title="Interface for distributions. " alt="" coords="187,5,358,32"/>
 </map>

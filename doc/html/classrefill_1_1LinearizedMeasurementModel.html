@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classrefill_1_1LinearizedMeasurementModel-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -104,7 +105,7 @@ Inheritance diagram for refill::LinearizedMeasurementModel:</div>
 <div class="center"><img src="classrefill_1_1LinearizedMeasurementModel__inherit__graph.png" border="0" usemap="#refill_1_1LinearizedMeasurementModel_inherit__map" alt="Inheritance graph"/></div>
 <map name="refill_1_1LinearizedMeasurementModel_inherit__map" id="refill_1_1LinearizedMeasurementModel_inherit__map">
 <area shape="rect" id="node3" href="classrefill_1_1LinearMeasurementModel.html" title="refill::LinearMeasurement\lModel" alt="" coords="21,169,189,211"/>
-<area shape="rect" id="node2" href="classrefill_1_1MeasurementModelBase.html" title="refill::MeasurementModelBase" alt="" coords="5,5,204,32"/>
+<area shape="rect" id="node2" href="classrefill_1_1MeasurementModelBase.html" title="Interface for measurement models. " alt="" coords="5,5,204,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -112,57 +113,93 @@ Collaboration diagram for refill::LinearizedMeasurementModel:</div>
 <div class="dyncontent">
 <div class="center"><img src="classrefill_1_1LinearizedMeasurementModel__coll__graph.png" border="0" usemap="#refill_1_1LinearizedMeasurementModel_coll__map" alt="Collaboration graph"/></div>
 <map name="refill_1_1LinearizedMeasurementModel_coll__map" id="refill_1_1LinearizedMeasurementModel_coll__map">
-<area shape="rect" id="node2" href="classrefill_1_1MeasurementModelBase.html" title="refill::MeasurementModelBase" alt="" coords="5,102,204,129"/>
+<area shape="rect" id="node2" href="classrefill_1_1MeasurementModelBase.html" title="Interface for measurement models. " alt="" coords="5,102,204,129"/>
 <area shape="rect" id="node4" href="classrefill_1_1DistributionInterface.html" title="Interface for distributions. " alt="" coords="222,5,393,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ade8947f23e677e3a611c4e4e1be60a73"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#ade8947f23e677e3a611c4e4e1be60a73">LinearizedMeasurementModel</a> (const unsigned int &amp;state_dim, const unsigned int &amp;measurement_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;measurement_noise)</td></tr>
-<tr class="separator:ade8947f23e677e3a611c4e4e1be60a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a727f747799d41004eb934d063c7818b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a727f747799d41004eb934d063c7818b0">setLinearizedMeasurementModelParameters</a> (const unsigned int &amp;state_dim, const unsigned int &amp;measurement_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;measurement_noise)</td></tr>
-<tr class="separator:a727f747799d41004eb934d063c7818b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a9fbbf32f4e71b666ee6609cdc99da7"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a1a9fbbf32f4e71b666ee6609cdc99da7">getMeasurementJacobian</a> (const Eigen::VectorXd &amp;state) const =0</td></tr>
 <tr class="separator:a1a9fbbf32f4e71b666ee6609cdc99da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3573eb964dd7bff58b05af85fa46a8a0"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a3573eb964dd7bff58b05af85fa46a8a0">getNoiseJacobian</a> (const Eigen::VectorXd &amp;state) const =0</td></tr>
 <tr class="separator:a3573eb964dd7bff58b05af85fa46a8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed8dd3245704f8e4da22ea7a2aa76eda"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#aed8dd3245704f8e4da22ea7a2aa76eda">getStateDim</a> () const </td></tr>
-<tr class="separator:aed8dd3245704f8e4da22ea7a2aa76eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75254cd8533f1d7cf15ab0135903e4e0"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a75254cd8533f1d7cf15ab0135903e4e0">getMeasurementDim</a> () const </td></tr>
-<tr class="separator:a75254cd8533f1d7cf15ab0135903e4e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a389e47cdf14ca24528affbafdd7e5c67"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a389e47cdf14ca24528affbafdd7e5c67">getMeasurementNoiseDim</a> () const </td></tr>
-<tr class="separator:a389e47cdf14ca24528affbafdd7e5c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a370fd9906f5f718e5fdb2f4dfa1a59bf"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a370fd9906f5f718e5fdb2f4dfa1a59bf">getStateDim</a> () const </td></tr>
+<tr class="memdesc:a370fd9906f5f718e5fdb2f4dfa1a59bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models state dimension.  <a href="#a370fd9906f5f718e5fdb2f4dfa1a59bf">More...</a><br /></td></tr>
+<tr class="separator:a370fd9906f5f718e5fdb2f4dfa1a59bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed3deac071dbf35901303ef42ba2163d"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#aed3deac071dbf35901303ef42ba2163d">getMeasurementDim</a> () const </td></tr>
+<tr class="memdesc:aed3deac071dbf35901303ef42ba2163d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models measurement dimension.  <a href="#aed3deac071dbf35901303ef42ba2163d">More...</a><br /></td></tr>
+<tr class="separator:aed3deac071dbf35901303ef42ba2163d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6b71dfa7fa9a77544ed76f83781af6e"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#ad6b71dfa7fa9a77544ed76f83781af6e">getMeasurementNoiseDim</a> () const </td></tr>
+<tr class="memdesc:ad6b71dfa7fa9a77544ed76f83781af6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models noise dimension.  <a href="#ad6b71dfa7fa9a77544ed76f83781af6e">More...</a><br /></td></tr>
+<tr class="separator:ad6b71dfa7fa9a77544ed76f83781af6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a320cf84380a5a4f03a6cacee8ef74bf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a320cf84380a5a4f03a6cacee8ef74bf6">getMeasurementNoise</a> () const </td></tr>
+<tr class="memdesc:a320cf84380a5a4f03a6cacee8ef74bf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the measurement models noise.  <a href="#a320cf84380a5a4f03a6cacee8ef74bf6">More...</a><br /></td></tr>
 <tr class="separator:a320cf84380a5a4f03a6cacee8ef74bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classrefill_1_1MeasurementModelBase"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classrefill_1_1MeasurementModelBase')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classrefill_1_1MeasurementModelBase.html">refill::MeasurementModelBase</a></td></tr>
 <tr class="memitem:a3a5613bc1ba3317e35436fc78b0d2972 inherit pub_methods_classrefill_1_1MeasurementModelBase"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1MeasurementModelBase.html#a3a5613bc1ba3317e35436fc78b0d2972">observe</a> (const Eigen::VectorXd &amp;state) const =0</td></tr>
+<tr class="memdesc:a3a5613bc1ba3317e35436fc78b0d2972 inherit pub_methods_classrefill_1_1MeasurementModelBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the measurement model to receive the expected measurement.  <a href="#a3a5613bc1ba3317e35436fc78b0d2972">More...</a><br /></td></tr>
 <tr class="separator:a3a5613bc1ba3317e35436fc78b0d2972 inherit pub_methods_classrefill_1_1MeasurementModelBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ac87d48f8d870169199cdb34a643c4286"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#ac87d48f8d870169199cdb34a643c4286">LinearizedMeasurementModel</a> ()=delete</td></tr>
+<tr class="separator:ac87d48f8d870169199cdb34a643c4286"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9acbec9c9d778a53ba395e7a2fe1ecfa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a9acbec9c9d778a53ba395e7a2fe1ecfa">LinearizedMeasurementModel</a> (const std::size_t &amp;state_dim, const std::size_t &amp;measurement_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;measurement_noise)</td></tr>
+<tr class="separator:a9acbec9c9d778a53ba395e7a2fe1ecfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a841db0359ae5ad41bfbe9ed8e1d3f1b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a841db0359ae5ad41bfbe9ed8e1d3f1b6">setLinearizedMeasurementModelParameters</a> (const std::size_t &amp;state_dim, const std::size_t &amp;measurement_dim, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;measurement_noise)</td></tr>
+<tr class="separator:a841db0359ae5ad41bfbe9ed8e1d3f1b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ac15f42823cd7fb338ea5bd79e528627a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#ac15f42823cd7fb338ea5bd79e528627a">measurement_noise_</a></td></tr>
 <tr class="separator:ac15f42823cd7fb338ea5bd79e528627a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff98ef53117db9491cff63baa48cdafd"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#aff98ef53117db9491cff63baa48cdafd">state_dim_</a></td></tr>
-<tr class="separator:aff98ef53117db9491cff63baa48cdafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45474ea2dc1ca250805ee69c45dad6f3"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#a45474ea2dc1ca250805ee69c45dad6f3">measurement_dim_</a></td></tr>
-<tr class="separator:a45474ea2dc1ca250805ee69c45dad6f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd27c9960289d05413760b4682140a1"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#affd27c9960289d05413760b4682140a1">state_dim_</a></td></tr>
+<tr class="separator:affd27c9960289d05413760b4682140a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3f6cee57566f9494706f4e735a65c64"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearizedMeasurementModel.html#ac3f6cee57566f9494706f4e735a65c64">measurement_dim_</a></td></tr>
+<tr class="separator:ac3f6cee57566f9494706f4e735a65c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ade8947f23e677e3a611c4e4e1be60a73"></a>
+<a class="anchor" id="ac87d48f8d870169199cdb34a643c4286"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">refill::LinearizedMeasurementModel::LinearizedMeasurementModel </td>
           <td>(</td>
-          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9acbec9c9d778a53ba395e7a2fe1ecfa"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">refill::LinearizedMeasurementModel::LinearizedMeasurementModel </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
           <td class="paramname"><em>state_dim</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
           <td class="paramname"><em>measurement_dim</em>, </td>
         </tr>
         <tr>
@@ -177,12 +214,17 @@ Protected Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a75254cd8533f1d7cf15ab0135903e4e0"></a>
+<a class="anchor" id="aed3deac071dbf35901303ef42ba2163d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -190,7 +232,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int refill::LinearizedMeasurementModel::getMeasurementDim </td>
+          <td class="memname">std::size_t refill::LinearizedMeasurementModel::getMeasurementDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -203,7 +245,10 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classrefill_1_1MeasurementModelBase.html#a7421f11cf3153252d5e4309d2d0ba96d">refill::MeasurementModelBase</a>.</p>
+<p>Returns the measurement models measurement dimension. </p>
+<dl class="section return"><dt>Returns</dt><dd>the measurement dimension. </dd></dl>
+
+<p>Implements <a class="el" href="classrefill_1_1MeasurementModelBase.html#a558b2fbbc046d8476808eb5bf0bf232f">refill::MeasurementModelBase</a>.</p>
 
 </div>
 </div>
@@ -254,11 +299,14 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the measurement models noise. </p>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the measurement model noise distribution. </dd></dl>
+
 <p>Implements <a class="el" href="classrefill_1_1MeasurementModelBase.html#a32d1e80e656afeadf299442ef6280b2b">refill::MeasurementModelBase</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a389e47cdf14ca24528affbafdd7e5c67"></a>
+<a class="anchor" id="ad6b71dfa7fa9a77544ed76f83781af6e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -266,7 +314,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int refill::LinearizedMeasurementModel::getMeasurementNoiseDim </td>
+          <td class="memname">std::size_t refill::LinearizedMeasurementModel::getMeasurementNoiseDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -279,7 +327,10 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classrefill_1_1MeasurementModelBase.html#a0cc78094412f6251cbeaeca3b037ece3">refill::MeasurementModelBase</a>.</p>
+<p>Returns the measurement models noise dimension. </p>
+<dl class="section return"><dt>Returns</dt><dd>the noise dimension. </dd></dl>
+
+<p>Implements <a class="el" href="classrefill_1_1MeasurementModelBase.html#aa6c653f6739f282135aae730126adfb5">refill::MeasurementModelBase</a>.</p>
 
 </div>
 </div>
@@ -309,7 +360,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aed8dd3245704f8e4da22ea7a2aa76eda"></a>
+<a class="anchor" id="a370fd9906f5f718e5fdb2f4dfa1a59bf"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -317,7 +368,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int refill::LinearizedMeasurementModel::getStateDim </td>
+          <td class="memname">std::size_t refill::LinearizedMeasurementModel::getStateDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -330,24 +381,30 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classrefill_1_1MeasurementModelBase.html#a53ba9314f3246cc7bcaac67b47b47949">refill::MeasurementModelBase</a>.</p>
+<p>Returns the measurement models state dimension. </p>
+<dl class="section return"><dt>Returns</dt><dd>the state dimension. </dd></dl>
+
+<p>Implements <a class="el" href="classrefill_1_1MeasurementModelBase.html#a5c9eed47a0c98ea9acb8f3b14447dd93">refill::MeasurementModelBase</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a727f747799d41004eb934d063c7818b0"></a>
+<a class="anchor" id="a841db0359ae5ad41bfbe9ed8e1d3f1b6"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void refill::LinearizedMeasurementModel::setLinearizedMeasurementModelParameters </td>
           <td>(</td>
-          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
           <td class="paramname"><em>state_dim</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramtype">const std::size_t &amp;&#160;</td>
           <td class="paramname"><em>measurement_dim</em>, </td>
         </tr>
         <tr>
@@ -362,12 +419,17 @@ Protected Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a45474ea2dc1ca250805ee69c45dad6f3"></a>
+<a class="anchor" id="ac3f6cee57566f9494706f4e735a65c64"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -375,7 +437,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int refill::LinearizedMeasurementModel::measurement_dim_</td>
+          <td class="memname">std::size_t refill::LinearizedMeasurementModel::measurement_dim_</td>
         </tr>
       </table>
   </td>
@@ -407,7 +469,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aff98ef53117db9491cff63baa48cdafd"></a>
+<a class="anchor" id="affd27c9960289d05413760b4682140a1"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -415,7 +477,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int refill::LinearizedMeasurementModel::state_dim_</td>
+          <td class="memname">std::size_t refill::LinearizedMeasurementModel::state_dim_</td>
         </tr>
       </table>
   </td>

@@ -96,6 +96,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Interface for system models.  
+ <a href="classrefill_1_1SystemModelBase.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="system__model__base_8h_source.html">system_model_base.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for refill::SystemModelBase:</div>
@@ -110,18 +113,26 @@ Inheritance diagram for refill::SystemModelBase:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a92d2c65291b3086f810e362cf4194eb0"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a92d2c65291b3086f810e362cf4194eb0">propagate</a> (const Eigen::VectorXd &amp;state, const Eigen::VectorXd &amp;input) const =0</td></tr>
+<tr class="memdesc:a92d2c65291b3086f810e362cf4194eb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagates a state vector through the system model.  <a href="#a92d2c65291b3086f810e362cf4194eb0">More...</a><br /></td></tr>
 <tr class="separator:a92d2c65291b3086f810e362cf4194eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55ce92b53dfdd8ba37dffc6c82a3e545"><td class="memItemLeft" align="right" valign="top">virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a55ce92b53dfdd8ba37dffc6c82a3e545">getStateDim</a> () const =0</td></tr>
-<tr class="separator:a55ce92b53dfdd8ba37dffc6c82a3e545"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68947762564d303e72e7442f2f8673f8"><td class="memItemLeft" align="right" valign="top">virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a68947762564d303e72e7442f2f8673f8">getInputDim</a> () const =0</td></tr>
-<tr class="separator:a68947762564d303e72e7442f2f8673f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5920efd9833c9d13856e351eb05f679a"><td class="memItemLeft" align="right" valign="top">virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a5920efd9833c9d13856e351eb05f679a">getSystemNoiseDim</a> () const =0</td></tr>
-<tr class="separator:a5920efd9833c9d13856e351eb05f679a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae51c98bc767eb19e6764fdcf52f0bea9"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#ae51c98bc767eb19e6764fdcf52f0bea9">getStateDim</a> () const =0</td></tr>
+<tr class="memdesc:ae51c98bc767eb19e6764fdcf52f0bea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems state dimension.  <a href="#ae51c98bc767eb19e6764fdcf52f0bea9">More...</a><br /></td></tr>
+<tr class="separator:ae51c98bc767eb19e6764fdcf52f0bea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade51fae436fc40614090566abce36544"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#ade51fae436fc40614090566abce36544">getInputDim</a> () const =0</td></tr>
+<tr class="memdesc:ade51fae436fc40614090566abce36544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems input dimension.  <a href="#ade51fae436fc40614090566abce36544">More...</a><br /></td></tr>
+<tr class="separator:ade51fae436fc40614090566abce36544"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d591e69b86dbec48beb9b2022e30e32"><td class="memItemLeft" align="right" valign="top">virtual std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a7d591e69b86dbec48beb9b2022e30e32">getSystemNoiseDim</a> () const =0</td></tr>
+<tr class="memdesc:a7d591e69b86dbec48beb9b2022e30e32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems noise dimension.  <a href="#a7d591e69b86dbec48beb9b2022e30e32">More...</a><br /></td></tr>
+<tr class="separator:a7d591e69b86dbec48beb9b2022e30e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54bc6320db72f18aeff35598a4bee3a1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a54bc6320db72f18aeff35598a4bee3a1">getSystemNoise</a> () const =0</td></tr>
+<tr class="memdesc:a54bc6320db72f18aeff35598a4bee3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the system noise.  <a href="#a54bc6320db72f18aeff35598a4bee3a1">More...</a><br /></td></tr>
 <tr class="separator:a54bc6320db72f18aeff35598a4bee3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a68947762564d303e72e7442f2f8673f8"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Interface for system models. </p>
+<p>All system models have to have this class as an ancestor. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ade51fae436fc40614090566abce36544"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -129,7 +140,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual unsigned int refill::SystemModelBase::getInputDim </td>
+          <td class="memname">virtual std::size_t refill::SystemModelBase::getInputDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -142,11 +153,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#af93eb816f491145b875ddbc7660c76b0">refill::LinearizedSystemModel</a>.</p>
+<p>Returns the systems input dimension. </p>
+<dl class="section return"><dt>Returns</dt><dd>the input dimension. </dd></dl>
+
+<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#ab0b9fad6d7af0a461f9a94fa050e9452">refill::LinearizedSystemModel</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a55ce92b53dfdd8ba37dffc6c82a3e545"></a>
+<a class="anchor" id="ae51c98bc767eb19e6764fdcf52f0bea9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -154,7 +168,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual unsigned int refill::SystemModelBase::getStateDim </td>
+          <td class="memname">virtual std::size_t refill::SystemModelBase::getStateDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -167,7 +181,10 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a9b7a4aa2b6405dacfb97504039ec8143">refill::LinearizedSystemModel</a>.</p>
+<p>Returns the systems state dimension. </p>
+<dl class="section return"><dt>Returns</dt><dd>the state dimension. </dd></dl>
+
+<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a4969844eca728ca6666ff5350885f437">refill::LinearizedSystemModel</a>.</p>
 
 </div>
 </div>
@@ -192,11 +209,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the system noise. </p>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the system noise distribution. </dd></dl>
+
 <p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a4d77bbe4bd353226b107548bb93c9c58">refill::LinearizedSystemModel</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5920efd9833c9d13856e351eb05f679a"></a>
+<a class="anchor" id="a7d591e69b86dbec48beb9b2022e30e32"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -204,7 +224,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual unsigned int refill::SystemModelBase::getSystemNoiseDim </td>
+          <td class="memname">virtual std::size_t refill::SystemModelBase::getSystemNoiseDim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -217,7 +237,10 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#abf0567c21c8e5bbb2427a07a45c9e87c">refill::LinearizedSystemModel</a>.</p>
+<p>Returns the systems noise dimension. </p>
+<dl class="section return"><dt>Returns</dt><dd>the noise dimension. </dd></dl>
+
+<p>Implemented in <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a67b3556f960893d194d8550a71883d90">refill::LinearizedSystemModel</a>.</p>
 
 </div>
 </div>
@@ -252,6 +275,16 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Propagates a state vector through the system model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The state vector to be propagated. </td></tr>
+    <tr><td class="paramname">input</td><td>The input vector to the system. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the propagated state vector. </dd></dl>
 
 <p>Implemented in <a class="el" href="classrefill_1_1LinearSystemModel.html#a97553653a4daec3884637e1094d558ab">refill::LinearSystemModel</a>.</p>
 

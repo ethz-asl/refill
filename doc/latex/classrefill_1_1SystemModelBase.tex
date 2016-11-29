@@ -2,6 +2,11 @@
 \label{classrefill_1_1SystemModelBase}\index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
 
 
+Interface for system models.  
+
+
+
+
 {\ttfamily \#include $<$system\+\_\+model\+\_\+base.\+h$>$}
 
 
@@ -17,39 +22,58 @@ Inheritance diagram for refill\+:\+:System\+Model\+Base\+:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 virtual Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}{propagate} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const =0
-\item 
-virtual unsigned int \hyperlink{classrefill_1_1SystemModelBase_a55ce92b53dfdd8ba37dffc6c82a3e545}{get\+State\+Dim} () const =0
-\item 
-virtual unsigned int \hyperlink{classrefill_1_1SystemModelBase_a68947762564d303e72e7442f2f8673f8}{get\+Input\+Dim} () const =0
-\item 
-virtual unsigned int \hyperlink{classrefill_1_1SystemModelBase_a5920efd9833c9d13856e351eb05f679a}{get\+System\+Noise\+Dim} () const =0
-\item 
+\begin{DoxyCompactList}\small\item\em Propagates a state vector through the system model. \end{DoxyCompactList}\item 
+virtual std\+::size\+\_\+t \hyperlink{classrefill_1_1SystemModelBase_ae51c98bc767eb19e6764fdcf52f0bea9}{get\+State\+Dim} () const =0
+\begin{DoxyCompactList}\small\item\em Returns the systems state dimension. \end{DoxyCompactList}\item 
+virtual std\+::size\+\_\+t \hyperlink{classrefill_1_1SystemModelBase_ade51fae436fc40614090566abce36544}{get\+Input\+Dim} () const =0
+\begin{DoxyCompactList}\small\item\em Returns the systems input dimension. \end{DoxyCompactList}\item 
+virtual std\+::size\+\_\+t \hyperlink{classrefill_1_1SystemModelBase_a7d591e69b86dbec48beb9b2022e30e32}{get\+System\+Noise\+Dim} () const =0
+\begin{DoxyCompactList}\small\item\em Returns the systems noise dimension. \end{DoxyCompactList}\item 
 virtual \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} $\ast$ \hyperlink{classrefill_1_1SystemModelBase_a54bc6320db72f18aeff35598a4bee3a1}{get\+System\+Noise} () const =0
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns the system noise. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Interface for system models. 
+
+All system models have to have this class as an ancestor. 
 
 \subsection{Member Function Documentation}
 \index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!get\+Input\+Dim@{get\+Input\+Dim}}
 \index{get\+Input\+Dim@{get\+Input\+Dim}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
-\subsubsection[{\texorpdfstring{get\+Input\+Dim() const =0}{getInputDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+System\+Model\+Base\+::get\+Input\+Dim (
+\subsubsection[{\texorpdfstring{get\+Input\+Dim() const =0}{getInputDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::size\+\_\+t refill\+::\+System\+Model\+Base\+::get\+Input\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a68947762564d303e72e7442f2f8673f8}{}\label{classrefill_1_1SystemModelBase_a68947762564d303e72e7442f2f8673f8}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_ade51fae436fc40614090566abce36544}{}\label{classrefill_1_1SystemModelBase_ade51fae436fc40614090566abce36544}
 
 
-Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_af93eb816f491145b875ddbc7660c76b0}{refill\+::\+Linearized\+System\+Model}.
+Returns the systems input dimension. 
+
+\begin{DoxyReturn}{Returns}
+the input dimension. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_ab0b9fad6d7af0a461f9a94fa050e9452}{refill\+::\+Linearized\+System\+Model}.
 
 \index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!get\+State\+Dim@{get\+State\+Dim}}
 \index{get\+State\+Dim@{get\+State\+Dim}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
-\subsubsection[{\texorpdfstring{get\+State\+Dim() const =0}{getStateDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+System\+Model\+Base\+::get\+State\+Dim (
+\subsubsection[{\texorpdfstring{get\+State\+Dim() const =0}{getStateDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::size\+\_\+t refill\+::\+System\+Model\+Base\+::get\+State\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a55ce92b53dfdd8ba37dffc6c82a3e545}{}\label{classrefill_1_1SystemModelBase_a55ce92b53dfdd8ba37dffc6c82a3e545}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_ae51c98bc767eb19e6764fdcf52f0bea9}{}\label{classrefill_1_1SystemModelBase_ae51c98bc767eb19e6764fdcf52f0bea9}
 
 
-Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_a9b7a4aa2b6405dacfb97504039ec8143}{refill\+::\+Linearized\+System\+Model}.
+Returns the systems state dimension. 
+
+\begin{DoxyReturn}{Returns}
+the state dimension. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_a4969844eca728ca6666ff5350885f437}{refill\+::\+Linearized\+System\+Model}.
 
 \index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!get\+System\+Noise@{get\+System\+Noise}}
 \index{get\+System\+Noise@{get\+System\+Noise}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
@@ -60,18 +84,32 @@ Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_a9b7a4aa2b6405dac
 ) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a54bc6320db72f18aeff35598a4bee3a1}{}\label{classrefill_1_1SystemModelBase_a54bc6320db72f18aeff35598a4bee3a1}
 
 
+Returns the system noise. 
+
+\begin{DoxyReturn}{Returns}
+a pointer to the system noise distribution. 
+\end{DoxyReturn}
+
+
 Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_a4d77bbe4bd353226b107548bb93c9c58}{refill\+::\+Linearized\+System\+Model}.
 
 \index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!get\+System\+Noise\+Dim@{get\+System\+Noise\+Dim}}
 \index{get\+System\+Noise\+Dim@{get\+System\+Noise\+Dim}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
-\subsubsection[{\texorpdfstring{get\+System\+Noise\+Dim() const =0}{getSystemNoiseDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int refill\+::\+System\+Model\+Base\+::get\+System\+Noise\+Dim (
+\subsubsection[{\texorpdfstring{get\+System\+Noise\+Dim() const =0}{getSystemNoiseDim() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::size\+\_\+t refill\+::\+System\+Model\+Base\+::get\+System\+Noise\+Dim (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a5920efd9833c9d13856e351eb05f679a}{}\label{classrefill_1_1SystemModelBase_a5920efd9833c9d13856e351eb05f679a}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a7d591e69b86dbec48beb9b2022e30e32}{}\label{classrefill_1_1SystemModelBase_a7d591e69b86dbec48beb9b2022e30e32}
 
 
-Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_abf0567c21c8e5bbb2427a07a45c9e87c}{refill\+::\+Linearized\+System\+Model}.
+Returns the systems noise dimension. 
+
+\begin{DoxyReturn}{Returns}
+the noise dimension. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_a67b3556f960893d194d8550a71883d90}{refill\+::\+Linearized\+System\+Model}.
 
 \index{refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}!propagate@{propagate}}
 \index{propagate@{propagate}!refill\+::\+System\+Model\+Base@{refill\+::\+System\+Model\+Base}}
@@ -81,6 +119,20 @@ Implemented in \hyperlink{classrefill_1_1LinearizedSystemModel_abf0567c21c8e5bbb
 \item[{const Eigen\+::\+Vector\+Xd \&}]{input}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}{}\label{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}
+
+
+Propagates a state vector through the system model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state vector to be propagated. \\
+\hline
+{\em input} & The input vector to the system. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the propagated state vector. 
+\end{DoxyReturn}
 
 
 Implemented in \hyperlink{classrefill_1_1LinearSystemModel_a97553653a4daec3884637e1094d558ab}{refill\+::\+Linear\+System\+Model}.

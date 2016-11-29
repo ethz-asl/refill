@@ -102,7 +102,7 @@ Inheritance diagram for refill::ExtendedKalmanFilter:</div>
 <div class="dyncontent">
 <div class="center"><img src="classrefill_1_1ExtendedKalmanFilter__inherit__graph.png" border="0" usemap="#refill_1_1ExtendedKalmanFilter_inherit__map" alt="Inheritance graph"/></div>
 <map name="refill_1_1ExtendedKalmanFilter_inherit__map" id="refill_1_1ExtendedKalmanFilter_inherit__map">
-<area shape="rect" id="node2" href="classrefill_1_1FilterBase.html" title="refill::FilterBase\l\&lt; LinearizedSystemModel,\l LinearizedMeasurementModel \&gt;" alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node2" href="classrefill_1_1FilterBase.html" title="refill::FilterBase" alt="" coords="40,5,153,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -110,43 +110,34 @@ Collaboration diagram for refill::ExtendedKalmanFilter:</div>
 <div class="dyncontent">
 <div class="center"><img src="classrefill_1_1ExtendedKalmanFilter__coll__graph.png" border="0" usemap="#refill_1_1ExtendedKalmanFilter_coll__map" alt="Collaboration graph"/></div>
 <map name="refill_1_1ExtendedKalmanFilter_coll__map" id="refill_1_1ExtendedKalmanFilter_coll__map">
-<area shape="rect" id="node2" href="classrefill_1_1FilterBase.html" title="refill::FilterBase\l\&lt; LinearizedSystemModel,\l LinearizedMeasurementModel \&gt;" alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node2" href="classrefill_1_1FilterBase.html" title="refill::FilterBase" alt="" coords="40,5,153,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abf91ae94c74b1c2b8867e047d0859157"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#abf91ae94c74b1c2b8867e047d0859157">ExtendedKalmanFilter</a> ()</td></tr>
-<tr class="separator:abf91ae94c74b1c2b8867e047d0859157"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6ca041395079f69d8d32ea7376bdac5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#af6ca041395079f69d8d32ea7376bdac5">ExtendedKalmanFilter</a> (const <a class="el" href="classrefill_1_1GaussianDistribution.html">GaussianDistribution</a> &amp;initial_state)</td></tr>
 <tr class="separator:af6ca041395079f69d8d32ea7376bdac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11d410f46897d4c052578bdcc76c622a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a11d410f46897d4c052578bdcc76c622a">ExtendedKalmanFilter</a> (const <a class="el" href="classrefill_1_1GaussianDistribution.html">GaussianDistribution</a> &amp;initial_state, std::unique_ptr&lt; <a class="el" href="classrefill_1_1LinearizedSystemModel.html">LinearizedSystemModel</a> &gt; system_model, std::unique_ptr&lt; <a class="el" href="classrefill_1_1LinearizedMeasurementModel.html">LinearizedMeasurementModel</a> &gt; measurement_model)</td></tr>
+<tr class="separator:a11d410f46897d4c052578bdcc76c622a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10ebb05351e9e18a460e1fce35ba479a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a10ebb05351e9e18a460e1fce35ba479a">setState</a> (const <a class="el" href="classrefill_1_1GaussianDistribution.html">GaussianDistribution</a> &amp;<a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a7a8f223486039d0232e6c9d0d10b25d3">state</a>)</td></tr>
 <tr class="separator:a10ebb05351e9e18a460e1fce35ba479a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af290e17d6dba04b4dee9bdb3b5dc7f01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#af290e17d6dba04b4dee9bdb3b5dc7f01">predict</a> () override</td></tr>
+<tr class="separator:af290e17d6dba04b4dee9bdb3b5dc7f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65b8503942b9c6900c05516c4e93f986"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a65b8503942b9c6900c05516c4e93f986">predict</a> (const Eigen::VectorXd &amp;input)</td></tr>
+<tr class="separator:a65b8503942b9c6900c05516c4e93f986"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a186407ebdf927d7a498a3e9a78a15ffc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a186407ebdf927d7a498a3e9a78a15ffc">predict</a> (const <a class="el" href="classrefill_1_1LinearizedSystemModel.html">LinearizedSystemModel</a> &amp;system_model)</td></tr>
 <tr class="separator:a186407ebdf927d7a498a3e9a78a15ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1f0a6cd50a58b8b9c482985b2c04bd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#ae1f0a6cd50a58b8b9c482985b2c04bd7">predict</a> (const <a class="el" href="classrefill_1_1LinearizedSystemModel.html">LinearizedSystemModel</a> &amp;system_model, const Eigen::VectorXd &amp;input)</td></tr>
 <tr class="separator:ae1f0a6cd50a58b8b9c482985b2c04bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d1fb40b3e129965dfa2b0aabab6d8fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a8d1fb40b3e129965dfa2b0aabab6d8fb">update</a> (const Eigen::VectorXd &amp;measurement) override</td></tr>
+<tr class="separator:a8d1fb40b3e129965dfa2b0aabab6d8fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d498bfa574e87ef06c30df91d74b8ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a7d498bfa574e87ef06c30df91d74b8ea">update</a> (const <a class="el" href="classrefill_1_1LinearizedMeasurementModel.html">LinearizedMeasurementModel</a> &amp;measurement_model, const Eigen::VectorXd &amp;measurement)</td></tr>
 <tr class="separator:a7d498bfa574e87ef06c30df91d74b8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a8f223486039d0232e6c9d0d10b25d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrefill_1_1GaussianDistribution.html">GaussianDistribution</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1ExtendedKalmanFilter.html#a7a8f223486039d0232e6c9d0d10b25d3">state</a> () const </td></tr>
 <tr class="separator:a7a8f223486039d0232e6c9d0d10b25d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="abf91ae94c74b1c2b8867e047d0859157"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">refill::ExtendedKalmanFilter::ExtendedKalmanFilter </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="af6ca041395079f69d8d32ea7376bdac5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -171,7 +162,88 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a11d410f46897d4c052578bdcc76c622a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">refill::ExtendedKalmanFilter::ExtendedKalmanFilter </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrefill_1_1GaussianDistribution.html">GaussianDistribution</a> &amp;&#160;</td>
+          <td class="paramname"><em>initial_state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classrefill_1_1LinearizedSystemModel.html">LinearizedSystemModel</a> &gt;&#160;</td>
+          <td class="paramname"><em>system_model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classrefill_1_1LinearizedMeasurementModel.html">LinearizedMeasurementModel</a> &gt;&#160;</td>
+          <td class="paramname"><em>measurement_model</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="af290e17d6dba04b4dee9bdb3b5dc7f01"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void refill::ExtendedKalmanFilter::predict </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classrefill_1_1FilterBase.html#a0f4c8d98624f222e3389f206fa1a1655">refill::FilterBase</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a65b8503942b9c6900c05516c4e93f986"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void refill::ExtendedKalmanFilter::predict </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a186407ebdf927d7a498a3e9a78a15ffc"></a>
 <div class="memitem">
 <div class="memproto">
@@ -191,9 +263,6 @@ Public Member Functions</h2></td></tr>
 <a class="anchor" id="ae1f0a6cd50a58b8b9c482985b2c04bd7"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void refill::ExtendedKalmanFilter::predict </td>
@@ -213,14 +282,7 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>Implements <a class="el" href="classrefill_1_1FilterBase.html#aebd38bc87b2614e9f9f71b0cab2f74b8">refill::FilterBase&lt; LinearizedSystemModel, LinearizedMeasurementModel &gt;</a>.</p>
 
 </div>
 </div>
@@ -263,12 +325,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7d498bfa574e87ef06c30df91d74b8ea"></a>
+<a class="anchor" id="a8d1fb40b3e129965dfa2b0aabab6d8fb"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void refill::ExtendedKalmanFilter::update </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
+          <td class="paramname"><em>measurement</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classrefill_1_1FilterBase.html#a24802735102854284ad9a8a78ceba8f8">refill::FilterBase</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7d498bfa574e87ef06c30df91d74b8ea"></a>
+<div class="memitem">
+<div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void refill::ExtendedKalmanFilter::update </td>
@@ -288,14 +373,7 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>Implements <a class="el" href="classrefill_1_1FilterBase.html#a1f163ae39c87c5816799ef1a84714613">refill::FilterBase&lt; LinearizedSystemModel, LinearizedMeasurementModel &gt;</a>.</p>
 
 </div>
 </div>

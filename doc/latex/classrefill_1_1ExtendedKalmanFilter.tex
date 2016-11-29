@@ -10,7 +10,7 @@ Inheritance diagram for refill\+:\+:Extended\+Kalman\+Filter\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=238pt]{classrefill_1_1ExtendedKalmanFilter__inherit__graph}
+\includegraphics[width=217pt]{classrefill_1_1ExtendedKalmanFilter__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -19,21 +19,27 @@ Collaboration diagram for refill\+:\+:Extended\+Kalman\+Filter\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=238pt]{classrefill_1_1ExtendedKalmanFilter__coll__graph}
+\includegraphics[width=217pt]{classrefill_1_1ExtendedKalmanFilter__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classrefill_1_1ExtendedKalmanFilter_abf91ae94c74b1c2b8867e047d0859157}{Extended\+Kalman\+Filter} ()
-\item 
 \hyperlink{classrefill_1_1ExtendedKalmanFilter_af6ca041395079f69d8d32ea7376bdac5}{Extended\+Kalman\+Filter} (const \hyperlink{classrefill_1_1GaussianDistribution}{Gaussian\+Distribution} \&initial\+\_\+state)
 \item 
+\hyperlink{classrefill_1_1ExtendedKalmanFilter_a11d410f46897d4c052578bdcc76c622a}{Extended\+Kalman\+Filter} (const \hyperlink{classrefill_1_1GaussianDistribution}{Gaussian\+Distribution} \&initial\+\_\+state, std\+::unique\+\_\+ptr$<$ \hyperlink{classrefill_1_1LinearizedSystemModel}{Linearized\+System\+Model} $>$ system\+\_\+model, std\+::unique\+\_\+ptr$<$ \hyperlink{classrefill_1_1LinearizedMeasurementModel}{Linearized\+Measurement\+Model} $>$ measurement\+\_\+model)
+\item 
 void \hyperlink{classrefill_1_1ExtendedKalmanFilter_a10ebb05351e9e18a460e1fce35ba479a}{set\+State} (const \hyperlink{classrefill_1_1GaussianDistribution}{Gaussian\+Distribution} \&\hyperlink{classrefill_1_1ExtendedKalmanFilter_a7a8f223486039d0232e6c9d0d10b25d3}{state})
+\item 
+void \hyperlink{classrefill_1_1ExtendedKalmanFilter_af290e17d6dba04b4dee9bdb3b5dc7f01}{predict} () override
+\item 
+void \hyperlink{classrefill_1_1ExtendedKalmanFilter_a65b8503942b9c6900c05516c4e93f986}{predict} (const Eigen\+::\+Vector\+Xd \&input)
 \item 
 void \hyperlink{classrefill_1_1ExtendedKalmanFilter_a186407ebdf927d7a498a3e9a78a15ffc}{predict} (const \hyperlink{classrefill_1_1LinearizedSystemModel}{Linearized\+System\+Model} \&system\+\_\+model)
 \item 
 void \hyperlink{classrefill_1_1ExtendedKalmanFilter_ae1f0a6cd50a58b8b9c482985b2c04bd7}{predict} (const \hyperlink{classrefill_1_1LinearizedSystemModel}{Linearized\+System\+Model} \&system\+\_\+model, const Eigen\+::\+Vector\+Xd \&input)
+\item 
+void \hyperlink{classrefill_1_1ExtendedKalmanFilter_a8d1fb40b3e129965dfa2b0aabab6d8fb}{update} (const Eigen\+::\+Vector\+Xd \&measurement) override
 \item 
 void \hyperlink{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d74b8ea}{update} (const \hyperlink{classrefill_1_1LinearizedMeasurementModel}{Linearized\+Measurement\+Model} \&measurement\+\_\+model, const Eigen\+::\+Vector\+Xd \&measurement)
 \item 
@@ -44,21 +50,41 @@ void \hyperlink{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d7
 \subsection{Constructor \& Destructor Documentation}
 \index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!Extended\+Kalman\+Filter@{Extended\+Kalman\+Filter}}
 \index{Extended\+Kalman\+Filter@{Extended\+Kalman\+Filter}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
-\subsubsection[{\texorpdfstring{Extended\+Kalman\+Filter()}{ExtendedKalmanFilter()}}]{\setlength{\rightskip}{0pt plus 5cm}refill\+::\+Extended\+Kalman\+Filter\+::\+Extended\+Kalman\+Filter (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{classrefill_1_1ExtendedKalmanFilter_abf91ae94c74b1c2b8867e047d0859157}{}\label{classrefill_1_1ExtendedKalmanFilter_abf91ae94c74b1c2b8867e047d0859157}
-\index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!Extended\+Kalman\+Filter@{Extended\+Kalman\+Filter}}
-\index{Extended\+Kalman\+Filter@{Extended\+Kalman\+Filter}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
 \subsubsection[{\texorpdfstring{Extended\+Kalman\+Filter(const Gaussian\+Distribution \&initial\+\_\+state)}{ExtendedKalmanFilter(const GaussianDistribution &initial_state)}}]{\setlength{\rightskip}{0pt plus 5cm}refill\+::\+Extended\+Kalman\+Filter\+::\+Extended\+Kalman\+Filter (
 \begin{DoxyParamCaption}
 \item[{const {\bf Gaussian\+Distribution} \&}]{initial\+\_\+state}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [explicit]}}\hypertarget{classrefill_1_1ExtendedKalmanFilter_af6ca041395079f69d8d32ea7376bdac5}{}\label{classrefill_1_1ExtendedKalmanFilter_af6ca041395079f69d8d32ea7376bdac5}
+\index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!Extended\+Kalman\+Filter@{Extended\+Kalman\+Filter}}
+\index{Extended\+Kalman\+Filter@{Extended\+Kalman\+Filter}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
+\subsubsection[{\texorpdfstring{Extended\+Kalman\+Filter(const Gaussian\+Distribution \&initial\+\_\+state, std\+::unique\+\_\+ptr$<$ Linearized\+System\+Model $>$ system\+\_\+model, std\+::unique\+\_\+ptr$<$ Linearized\+Measurement\+Model $>$ measurement\+\_\+model)}{ExtendedKalmanFilter(const GaussianDistribution &initial_state, std::unique_ptr< LinearizedSystemModel > system_model, std::unique_ptr< LinearizedMeasurementModel > measurement_model)}}]{\setlength{\rightskip}{0pt plus 5cm}refill\+::\+Extended\+Kalman\+Filter\+::\+Extended\+Kalman\+Filter (
+\begin{DoxyParamCaption}
+\item[{const {\bf Gaussian\+Distribution} \&}]{initial\+\_\+state, }
+\item[{std\+::unique\+\_\+ptr$<$ {\bf Linearized\+System\+Model} $>$}]{system\+\_\+model, }
+\item[{std\+::unique\+\_\+ptr$<$ {\bf Linearized\+Measurement\+Model} $>$}]{measurement\+\_\+model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}}\hypertarget{classrefill_1_1ExtendedKalmanFilter_a11d410f46897d4c052578bdcc76c622a}{}\label{classrefill_1_1ExtendedKalmanFilter_a11d410f46897d4c052578bdcc76c622a}
 
 
 \subsection{Member Function Documentation}
+\index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!predict@{predict}}
+\index{predict@{predict}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
+\subsubsection[{\texorpdfstring{predict() override}{predict() override}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Extended\+Kalman\+Filter\+::predict (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}\hypertarget{classrefill_1_1ExtendedKalmanFilter_af290e17d6dba04b4dee9bdb3b5dc7f01}{}\label{classrefill_1_1ExtendedKalmanFilter_af290e17d6dba04b4dee9bdb3b5dc7f01}
+
+
+Implements \hyperlink{classrefill_1_1FilterBase_a0f4c8d98624f222e3389f206fa1a1655}{refill\+::\+Filter\+Base}.
+
+\index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!predict@{predict}}
+\index{predict@{predict}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
+\subsubsection[{\texorpdfstring{predict(const Eigen\+::\+Vector\+Xd \&input)}{predict(const Eigen::VectorXd &input)}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Extended\+Kalman\+Filter\+::predict (
+\begin{DoxyParamCaption}
+\item[{const Eigen\+::\+Vector\+Xd \&}]{input}
+\end{DoxyParamCaption}
+)}\hypertarget{classrefill_1_1ExtendedKalmanFilter_a65b8503942b9c6900c05516c4e93f986}{}\label{classrefill_1_1ExtendedKalmanFilter_a65b8503942b9c6900c05516c4e93f986}
 \index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!predict@{predict}}
 \index{predict@{predict}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
 \subsubsection[{\texorpdfstring{predict(const Linearized\+System\+Model \&system\+\_\+model)}{predict(const LinearizedSystemModel &system_model)}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Extended\+Kalman\+Filter\+::predict (
@@ -73,11 +99,7 @@ void \hyperlink{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d7
 \item[{const {\bf Linearized\+System\+Model} \&}]{system\+\_\+model, }
 \item[{const Eigen\+::\+Vector\+Xd \&}]{input}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1ExtendedKalmanFilter_ae1f0a6cd50a58b8b9c482985b2c04bd7}{}\label{classrefill_1_1ExtendedKalmanFilter_ae1f0a6cd50a58b8b9c482985b2c04bd7}
-
-
-Implements \hyperlink{classrefill_1_1FilterBase_aebd38bc87b2614e9f9f71b0cab2f74b8}{refill\+::\+Filter\+Base$<$ Linearized\+System\+Model, Linearized\+Measurement\+Model $>$}.
-
+)}\hypertarget{classrefill_1_1ExtendedKalmanFilter_ae1f0a6cd50a58b8b9c482985b2c04bd7}{}\label{classrefill_1_1ExtendedKalmanFilter_ae1f0a6cd50a58b8b9c482985b2c04bd7}
 \index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!set\+State@{set\+State}}
 \index{set\+State@{set\+State}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
 \subsubsection[{\texorpdfstring{set\+State(const Gaussian\+Distribution \&state)}{setState(const GaussianDistribution &state)}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Extended\+Kalman\+Filter\+::set\+State (
@@ -94,16 +116,23 @@ Implements \hyperlink{classrefill_1_1FilterBase_aebd38bc87b2614e9f9f71b0cab2f74b
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classrefill_1_1ExtendedKalmanFilter_a7a8f223486039d0232e6c9d0d10b25d3}{}\label{classrefill_1_1ExtendedKalmanFilter_a7a8f223486039d0232e6c9d0d10b25d3}
 \index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!update@{update}}
 \index{update@{update}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
+\subsubsection[{\texorpdfstring{update(const Eigen\+::\+Vector\+Xd \&measurement) override}{update(const Eigen::VectorXd &measurement) override}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Extended\+Kalman\+Filter\+::update (
+\begin{DoxyParamCaption}
+\item[{const Eigen\+::\+Vector\+Xd \&}]{measurement}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}\hypertarget{classrefill_1_1ExtendedKalmanFilter_a8d1fb40b3e129965dfa2b0aabab6d8fb}{}\label{classrefill_1_1ExtendedKalmanFilter_a8d1fb40b3e129965dfa2b0aabab6d8fb}
+
+
+Implements \hyperlink{classrefill_1_1FilterBase_a24802735102854284ad9a8a78ceba8f8}{refill\+::\+Filter\+Base}.
+
+\index{refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}!update@{update}}
+\index{update@{update}!refill\+::\+Extended\+Kalman\+Filter@{refill\+::\+Extended\+Kalman\+Filter}}
 \subsubsection[{\texorpdfstring{update(const Linearized\+Measurement\+Model \&measurement\+\_\+model, const Eigen\+::\+Vector\+Xd \&measurement)}{update(const LinearizedMeasurementModel &measurement_model, const Eigen::VectorXd &measurement)}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Extended\+Kalman\+Filter\+::update (
 \begin{DoxyParamCaption}
 \item[{const {\bf Linearized\+Measurement\+Model} \&}]{measurement\+\_\+model, }
 \item[{const Eigen\+::\+Vector\+Xd \&}]{measurement}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d74b8ea}{}\label{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d74b8ea}
-
-
-Implements \hyperlink{classrefill_1_1FilterBase_a1f163ae39c87c5816799ef1a84714613}{refill\+::\+Filter\+Base$<$ Linearized\+System\+Model, Linearized\+Measurement\+Model $>$}.
-
+)}\hypertarget{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d74b8ea}{}\label{classrefill_1_1ExtendedKalmanFilter_a7d498bfa574e87ef06c30df91d74b8ea}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

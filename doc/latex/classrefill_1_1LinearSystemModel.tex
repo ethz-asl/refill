@@ -25,7 +25,7 @@ Collaboration diagram for refill\+:\+:Linear\+System\+Model\+:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classrefill_1_1LinearSystemModel_a3e65d1c380d1c9abf807ca3a4814043e}{Linear\+System\+Model} ()
+E\+I\+G\+E\+N\+\_\+\+M\+A\+K\+E\+\_\+\+A\+L\+I\+G\+N\+E\+D\+\_\+\+O\+P\+E\+R\+A\+T\+O\+R\+\_\+\+N\+EW \hyperlink{classrefill_1_1LinearSystemModel_a3e65d1c380d1c9abf807ca3a4814043e}{Linear\+System\+Model} ()
 \item 
 \hyperlink{classrefill_1_1LinearSystemModel_ab153e34ae8b09eedf442841f744851e6}{Linear\+System\+Model} (const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&system\+\_\+noise)
 \item 
@@ -42,7 +42,7 @@ void \hyperlink{classrefill_1_1LinearSystemModel_aae2e0643e8091ccb36c14496a4e863
 Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1LinearSystemModel_a6071f788057f7b1a4f382fbefd446369}{propagate} (const Eigen\+::\+Vector\+Xd \&state) const 
 \item 
 Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1LinearSystemModel_a97553653a4daec3884637e1094d558ab}{propagate} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const 
-\item 
+\begin{DoxyCompactList}\small\item\em Propagates a state vector through the system model. \end{DoxyCompactList}\item 
 Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearSystemModel_a165b006f5758fd0a24cec545cbfa67b6}{get\+State\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const 
 \item 
 Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearSystemModel_ab6f766c6412db70c7fcb6676d68c1461}{get\+Noise\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const 
@@ -127,6 +127,20 @@ Implements \hyperlink{classrefill_1_1LinearizedSystemModel_a4a0bd58431d96f37cf52
 \item[{const Eigen\+::\+Vector\+Xd \&}]{input}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearSystemModel_a97553653a4daec3884637e1094d558ab}{}\label{classrefill_1_1LinearSystemModel_a97553653a4daec3884637e1094d558ab}
+
+
+Propagates a state vector through the system model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state vector to be propagated. \\
+\hline
+{\em input} & The input vector to the system. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the propagated state vector. 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}{refill\+::\+System\+Model\+Base}.
