@@ -31,9 +31,9 @@ Collaboration diagram for refill\+:\+:Linearized\+System\+Model\+:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 virtual Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearizedSystemModel_a4a0bd58431d96f37cf52494fcbcd2d07}{get\+State\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const =0
-\item 
+\begin{DoxyCompactList}\small\item\em Function to get $ A_k $, which is the system Jacobian w.\+r.\+t. the system state. \end{DoxyCompactList}\item 
 virtual Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearizedSystemModel_a2fdc435d8e47f27ad167ff31827a1c48}{get\+Noise\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const =0
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Functoin to get $ L_k $, which is the system Jacobian w.\+r.\+t. the system noise. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -52,17 +52,19 @@ This class is an interface for system models with Jacobians.
 
 Its intended purpose is to implement system models of the form\+:
 
-$ x_k = f(x_{k-1}, u_k, v_k)$
+$ x_k = f(x_{k-1}, u_k, v_k) $
 
 With Jacobians\+:
 
-$ A_k = \frac{\partial f}{\partial x}(x_{k-1}, u_k, \mu_k)$
+$ A_k = \frac{\partial f}{\partial x}(x_{k-1}, u_k, \mu_k) $
 
 and
 
-$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k)$
+$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k) $
 
-Where $x_k$ denotes the system state, $u_k$ the system input, $v_k$ the system noise and $\mu_k$ the noise mean at timestep $k$. 
+Where $ x_k $ denotes the system state, $ u_k $ the system input, $ v_k $ the system noise and $ \mu_k $ the noise mean at timestep $ k $.
+
+To implement a system model that works with the \hyperlink{classrefill_1_1ExtendedKalmanFilter}{Extended\+Kalman\+Filter}, inherit from this class and implement your own \hyperlink{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}{propagate()}, \hyperlink{classrefill_1_1LinearizedSystemModel_a4a0bd58431d96f37cf52494fcbcd2d07}{get\+State\+Jacobian()} and \hyperlink{classrefill_1_1LinearizedSystemModel_a2fdc435d8e47f27ad167ff31827a1c48}{get\+Noise\+Jacobian()} functions. 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{refill\+::\+Linearized\+System\+Model@{refill\+::\+Linearized\+System\+Model}!Linearized\+System\+Model@{Linearized\+System\+Model}}
@@ -134,6 +136,20 @@ Use this constructor if your system does have an input. The constructor clones t
 ) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1LinearizedSystemModel_a2fdc435d8e47f27ad167ff31827a1c48}{}\label{classrefill_1_1LinearizedSystemModel_a2fdc435d8e47f27ad167ff31827a1c48}
 
 
+Functoin to get $ L_k $, which is the system Jacobian w.\+r.\+t. the system noise. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current system state. \\
+\hline
+{\em input} & The current system input. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the system model Jacobian w.\+r.\+t. the system noise $v_k$. 
+\end{DoxyReturn}
+
+
 Implemented in \hyperlink{classrefill_1_1LinearSystemModel_ab6f766c6412db70c7fcb6676d68c1461}{refill\+::\+Linear\+System\+Model}.
 
 \index{refill\+::\+Linearized\+System\+Model@{refill\+::\+Linearized\+System\+Model}!get\+State\+Jacobian@{get\+State\+Jacobian}}
@@ -144,6 +160,20 @@ Implemented in \hyperlink{classrefill_1_1LinearSystemModel_ab6f766c6412db70c7fcb
 \item[{const Eigen\+::\+Vector\+Xd \&}]{input}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1LinearizedSystemModel_a4a0bd58431d96f37cf52494fcbcd2d07}{}\label{classrefill_1_1LinearizedSystemModel_a4a0bd58431d96f37cf52494fcbcd2d07}
+
+
+Function to get $ A_k $, which is the system Jacobian w.\+r.\+t. the system state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current system state. \\
+\hline
+{\em input} & The current system input. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the system model Jacobian w.\+r.\+t. the system state $x_k$. 
+\end{DoxyReturn}
 
 
 Implemented in \hyperlink{classrefill_1_1LinearSystemModel_a165b006f5758fd0a24cec545cbfa67b6}{refill\+::\+Linear\+System\+Model}.

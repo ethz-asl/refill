@@ -22,7 +22,7 @@ Inheritance diagram for refill\+:\+:System\+Model\+Base\+:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 virtual Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}{propagate} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const =0
-\begin{DoxyCompactList}\small\item\em Propagates a state vector through the system model. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Propagates a state and input vector through the system model. \end{DoxyCompactList}\item 
 std\+::size\+\_\+t \hyperlink{classrefill_1_1SystemModelBase_a56128ef3ffd3a0f4fb5ebaa543b5f719}{get\+State\+Dim} () const 
 \begin{DoxyCompactList}\small\item\em Returns the systems state dimension. \end{DoxyCompactList}\item 
 std\+::size\+\_\+t \hyperlink{classrefill_1_1SystemModelBase_ada4237797b93bf1da249edd2c4ec91a2}{get\+Input\+Dim} () const 
@@ -173,7 +173,7 @@ the noise dimension.
 ) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}{}\label{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4194eb0}
 
 
-Propagates a state vector through the system model. 
+Propagates a state and input vector through the system model. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -183,7 +183,7 @@ Propagates a state vector through the system model.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-the propagated state vector. 
+the new state vector. 
 \end{DoxyReturn}
 
 

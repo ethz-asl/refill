@@ -2,6 +2,11 @@
 \label{classrefill_1_1LinearSystemModel}\index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}}
 
 
+Class that implements a linear system model.  
+
+
+
+
 {\ttfamily \#include $<$linear\+\_\+system\+\_\+model.\+h$>$}
 
 
@@ -28,27 +33,38 @@ Collaboration diagram for refill\+:\+:Linear\+System\+Model\+:\nopagebreak
 E\+I\+G\+E\+N\+\_\+\+M\+A\+K\+E\+\_\+\+A\+L\+I\+G\+N\+E\+D\+\_\+\+O\+P\+E\+R\+A\+T\+O\+R\+\_\+\+N\+EW \hyperlink{classrefill_1_1LinearSystemModel_a3e65d1c380d1c9abf807ca3a4814043e}{Linear\+System\+Model} ()
 \item 
 \hyperlink{classrefill_1_1LinearSystemModel_ab153e34ae8b09eedf442841f744851e6}{Linear\+System\+Model} (const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&system\+\_\+noise)
-\item 
+\begin{DoxyCompactList}\small\item\em Constructor for a system model without an input and a simple noise mapping. \end{DoxyCompactList}\item 
 \hyperlink{classrefill_1_1LinearSystemModel_a48ede1019cfda95201e84371562d376b}{Linear\+System\+Model} (const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&system\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&input\+\_\+mapping)
-\item 
+\begin{DoxyCompactList}\small\item\em Constructor for a system model with an input and a simple noise mapping. \end{DoxyCompactList}\item 
 \hyperlink{classrefill_1_1LinearSystemModel_a35cfa05a9104d41f924acd5a9b183deb}{Linear\+System\+Model} (const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&system\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&input\+\_\+mapping, const Eigen\+::\+Matrix\+Xd \&noise\+\_\+mapping)
-\item 
+\begin{DoxyCompactList}\small\item\em Constructor for a system model with an input and a specific noise mapping. \end{DoxyCompactList}\item 
 void \hyperlink{classrefill_1_1LinearSystemModel_aa1644a0a0d363634205eaa7d1e1bfea8}{set\+System\+Parameters} (const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&system\+\_\+noise)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the system model parameters for a system without an input and a simple noise mapping. \end{DoxyCompactList}\item 
 void \hyperlink{classrefill_1_1LinearSystemModel_a1bfe228bb42920399034c39ff59ae09d}{set\+System\+Parameters} (const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&system\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&input\+\_\+mapping)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the system model parameters for a system with an input and a simple noise mapping. \end{DoxyCompactList}\item 
 void \hyperlink{classrefill_1_1LinearSystemModel_aae2e0643e8091ccb36c14496a4e86334}{set\+System\+Parameters} (const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const \hyperlink{classrefill_1_1DistributionInterface}{Distribution\+Interface} \&system\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&input\+\_\+mapping, const Eigen\+::\+Matrix\+Xd \&noise\+\_\+mapping)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the system model parameters for a system with an input and a specific noise mapping. \end{DoxyCompactList}\item 
 Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1LinearSystemModel_a6071f788057f7b1a4f382fbefd446369}{propagate} (const Eigen\+::\+Vector\+Xd \&state) const 
-\item 
+\begin{DoxyCompactList}\small\item\em Propagates the state vector through the system model. \end{DoxyCompactList}\item 
 Eigen\+::\+Vector\+Xd \hyperlink{classrefill_1_1LinearSystemModel_a97553653a4daec3884637e1094d558ab}{propagate} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const 
-\begin{DoxyCompactList}\small\item\em Propagates a state vector through the system model. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Propagates the state and input vector through the system model. \end{DoxyCompactList}\item 
 Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearSystemModel_a165b006f5758fd0a24cec545cbfa67b6}{get\+State\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const 
-\item 
+\begin{DoxyCompactList}\small\item\em Function to get $ A_k $, which is the system Jacobian w.\+r.\+t. the system state. \end{DoxyCompactList}\item 
 Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearSystemModel_ab6f766c6412db70c7fcb6676d68c1461}{get\+Noise\+Jacobian} (const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Function to get $ L_k $, which is the system Jacobian w.\+r.\+t. the system noise. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
+
+\subsection{Detailed Description}
+Class that implements a linear system model. 
+
+This class is an implementation of linear system models of the form\+:
+
+$ x_k = A_k \cdot x_{k-1} + B_k \cdot u_k + L_k \cdot v_k $
+
+Where $ x_k $ is the system state, $ u_k $ the system input, $ v_k $ the system noise, $ A_k $ the system mapping, $ B_k $ the input mapping and $ L_k $ the noise mapping at time step $ k $.
+
+Use this class together with the \hyperlink{classrefill_1_1LinearMeasurementModel}{Linear\+Measurement\+Model}, noise of type \hyperlink{classrefill_1_1GaussianDistribution}{Gaussian\+Distribution} and the \hyperlink{classrefill_1_1ExtendedKalmanFilter}{Extended\+Kalman\+Filter} if you want to implement a simple kalman filter. 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}!Linear\+System\+Model@{Linear\+System\+Model}}
@@ -66,6 +82,21 @@ Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearSystemModel_ab6f766c6412db
 \item[{const {\bf Distribution\+Interface} \&}]{system\+\_\+noise}
 \end{DoxyParamCaption}
 )}\hypertarget{classrefill_1_1LinearSystemModel_ab153e34ae8b09eedf442841f744851e6}{}\label{classrefill_1_1LinearSystemModel_ab153e34ae8b09eedf442841f744851e6}
+
+
+Constructor for a system model without an input and a simple noise mapping. 
+
+This constructor assumes that there is no system input and sets the noise mapping to an identity matrix.
+
+It also checks if {\itshape system\+\_\+mapping} is a square matrix.
+
+
+\begin{DoxyParams}{Parameters}
+{\em system\+\_\+mapping} & The matrix $ A_k $. \\
+\hline
+{\em system\+\_\+noise} & The system noise $ v_k $. \\
+\hline
+\end{DoxyParams}
 \index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}!Linear\+System\+Model@{Linear\+System\+Model}}
 \index{Linear\+System\+Model@{Linear\+System\+Model}!refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}}
 \subsubsection[{\texorpdfstring{Linear\+System\+Model(const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const Distribution\+Interface \&system\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&input\+\_\+mapping)}{LinearSystemModel(const Eigen::MatrixXd &system_mapping, const DistributionInterface &system_noise, const Eigen::MatrixXd &input_mapping)}}]{\setlength{\rightskip}{0pt plus 5cm}refill\+::\+Linear\+System\+Model\+::\+Linear\+System\+Model (
@@ -75,6 +106,23 @@ Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearSystemModel_ab6f766c6412db
 \item[{const Eigen\+::\+Matrix\+Xd \&}]{input\+\_\+mapping}
 \end{DoxyParamCaption}
 )}\hypertarget{classrefill_1_1LinearSystemModel_a48ede1019cfda95201e84371562d376b}{}\label{classrefill_1_1LinearSystemModel_a48ede1019cfda95201e84371562d376b}
+
+
+Constructor for a system model with an input and a simple noise mapping. 
+
+This constructor sets the noise mapping to an identity matrix.
+
+It also checks whether {\itshape system\+\_\+mapping} is a square matrix and {\itshape input\+\_\+mapping} is of right dimensions if it has a size different from 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em system\+\_\+mapping} & The matrix $ A_k $. \\
+\hline
+{\em system\+\_\+noise} & The system noise $ v_k $. \\
+\hline
+{\em input\+\_\+mapping} & The input mapping $ B_k $. \\
+\hline
+\end{DoxyParams}
 \index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}!Linear\+System\+Model@{Linear\+System\+Model}}
 \index{Linear\+System\+Model@{Linear\+System\+Model}!refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}}
 \subsubsection[{\texorpdfstring{Linear\+System\+Model(const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const Distribution\+Interface \&system\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&input\+\_\+mapping, const Eigen\+::\+Matrix\+Xd \&noise\+\_\+mapping)}{LinearSystemModel(const Eigen::MatrixXd &system_mapping, const DistributionInterface &system_noise, const Eigen::MatrixXd &input_mapping, const Eigen::MatrixXd &noise_mapping)}}]{\setlength{\rightskip}{0pt plus 5cm}refill\+::\+Linear\+System\+Model\+::\+Linear\+System\+Model (
@@ -87,6 +135,25 @@ Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearSystemModel_ab6f766c6412db
 )}\hypertarget{classrefill_1_1LinearSystemModel_a35cfa05a9104d41f924acd5a9b183deb}{}\label{classrefill_1_1LinearSystemModel_a35cfa05a9104d41f924acd5a9b183deb}
 
 
+Constructor for a system model with an input and a specific noise mapping. 
+
+This constructor sets all linear system parameters.
+
+It also checks whether {\itshape system\+\_\+mapping} is a square matrix, {\itshape noise\+\_\+mapping} is of right dimensions and, if {\itshape input\+\_\+mapping} has a size different from 0, whether {\itshape input\+\_\+mapping} has the right dimensions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em system\+\_\+mapping} & The system matrix $ A_k $. \\
+\hline
+{\em system\+\_\+noise} & The system noise $ v_k $. \\
+\hline
+{\em input\+\_\+mapping} & The input mapping $ B_k $. \\
+\hline
+{\em noise\+\_\+mapping} & The noise mapping $ L_k $. \\
+\hline
+\end{DoxyParams}
+
+
 \subsection{Member Function Documentation}
 \index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}!get\+Noise\+Jacobian@{get\+Noise\+Jacobian}}
 \index{get\+Noise\+Jacobian@{get\+Noise\+Jacobian}!refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}}
@@ -96,6 +163,22 @@ Eigen\+::\+Matrix\+Xd \hyperlink{classrefill_1_1LinearSystemModel_ab6f766c6412db
 \item[{const Eigen\+::\+Vector\+Xd \&}]{input}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearSystemModel_ab6f766c6412db70c7fcb6676d68c1461}{}\label{classrefill_1_1LinearSystemModel_ab6f766c6412db70c7fcb6676d68c1461}
+
+
+Function to get $ L_k $, which is the system Jacobian w.\+r.\+t. the system noise. 
+
+Since this is a linear system, it only returns $ L_k $.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current system state. \\
+\hline
+{\em input} & The current system input. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the system model Jacobian w.\+r.\+t. the system noise $ v_k $. 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classrefill_1_1LinearizedSystemModel_a2fdc435d8e47f27ad167ff31827a1c48}{refill\+::\+Linearized\+System\+Model}.
@@ -110,6 +193,22 @@ Implements \hyperlink{classrefill_1_1LinearizedSystemModel_a2fdc435d8e47f27ad167
 ) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearSystemModel_a165b006f5758fd0a24cec545cbfa67b6}{}\label{classrefill_1_1LinearSystemModel_a165b006f5758fd0a24cec545cbfa67b6}
 
 
+Function to get $ A_k $, which is the system Jacobian w.\+r.\+t. the system state. 
+
+Since this is a linear system, it only returns $ A_k $.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current system state. \\
+\hline
+{\em input} & The current system input. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the system model Jacobian w.\+r.\+t. the system state $ x_k $. 
+\end{DoxyReturn}
+
+
 Implements \hyperlink{classrefill_1_1LinearizedSystemModel_a4a0bd58431d96f37cf52494fcbcd2d07}{refill\+::\+Linearized\+System\+Model}.
 
 \index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}!propagate@{propagate}}
@@ -119,6 +218,22 @@ Implements \hyperlink{classrefill_1_1LinearizedSystemModel_a4a0bd58431d96f37cf52
 \item[{const Eigen\+::\+Vector\+Xd \&}]{state}
 \end{DoxyParamCaption}
 ) const}\hypertarget{classrefill_1_1LinearSystemModel_a6071f788057f7b1a4f382fbefd446369}{}\label{classrefill_1_1LinearSystemModel_a6071f788057f7b1a4f382fbefd446369}
+
+
+Propagates the state vector through the system model. 
+
+Assumes that the system has no input.
+
+Also checks that the state vector has compatible size with the system model.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current system state vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new state vector. 
+\end{DoxyReturn}
 \index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}!propagate@{propagate}}
 \index{propagate@{propagate}!refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}}
 \subsubsection[{\texorpdfstring{propagate(const Eigen\+::\+Vector\+Xd \&state, const Eigen\+::\+Vector\+Xd \&input) const }{propagate(const Eigen::VectorXd &state, const Eigen::VectorXd &input) const }}]{\setlength{\rightskip}{0pt plus 5cm}Eigen\+::\+Vector\+Xd refill\+::\+Linear\+System\+Model\+::propagate (
@@ -129,17 +244,19 @@ Implements \hyperlink{classrefill_1_1LinearizedSystemModel_a4a0bd58431d96f37cf52
 ) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classrefill_1_1LinearSystemModel_a97553653a4daec3884637e1094d558ab}{}\label{classrefill_1_1LinearSystemModel_a97553653a4daec3884637e1094d558ab}
 
 
-Propagates a state vector through the system model. 
+Propagates the state and input vector through the system model. 
+
+Also checks that the state and input vectors have compatible size with the system model.
 
 
 \begin{DoxyParams}{Parameters}
-{\em state} & The state vector to be propagated. \\
+{\em state} & The current system state vector. \\
 \hline
-{\em input} & The input vector to the system. \\
+{\em input} & The current system input vector. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-the propagated state vector. 
+the new state vector. 
 \end{DoxyReturn}
 
 
@@ -153,6 +270,21 @@ Implements \hyperlink{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4
 \item[{const {\bf Distribution\+Interface} \&}]{system\+\_\+noise}
 \end{DoxyParamCaption}
 )}\hypertarget{classrefill_1_1LinearSystemModel_aa1644a0a0d363634205eaa7d1e1bfea8}{}\label{classrefill_1_1LinearSystemModel_aa1644a0a0d363634205eaa7d1e1bfea8}
+
+
+Sets the system model parameters for a system without an input and a simple noise mapping. 
+
+Assumes that there is no input mapping and sets the noise mapping to an identity matrix.
+
+Also checks whether {\itshape system\+\_\+mapping} is a square matrix.
+
+
+\begin{DoxyParams}{Parameters}
+{\em system\+\_\+mapping} & The system matrix $ A_k $. \\
+\hline
+{\em system\+\_\+noise} & The system noise $ v_k $ \\
+\hline
+\end{DoxyParams}
 \index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}!set\+System\+Parameters@{set\+System\+Parameters}}
 \index{set\+System\+Parameters@{set\+System\+Parameters}!refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}}
 \subsubsection[{\texorpdfstring{set\+System\+Parameters(const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const Distribution\+Interface \&system\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&input\+\_\+mapping)}{setSystemParameters(const Eigen::MatrixXd &system_mapping, const DistributionInterface &system_noise, const Eigen::MatrixXd &input_mapping)}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Linear\+System\+Model\+::set\+System\+Parameters (
@@ -162,6 +294,23 @@ Implements \hyperlink{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4
 \item[{const Eigen\+::\+Matrix\+Xd \&}]{input\+\_\+mapping}
 \end{DoxyParamCaption}
 )}\hypertarget{classrefill_1_1LinearSystemModel_a1bfe228bb42920399034c39ff59ae09d}{}\label{classrefill_1_1LinearSystemModel_a1bfe228bb42920399034c39ff59ae09d}
+
+
+Sets the system model parameters for a system with an input and a simple noise mapping. 
+
+Sets the noise mapping to an identity matrix.
+
+Also checks whether {\itshape system\+\_\+mapping} is a square matrix and {\itshape input\+\_\+mapping} is of right dimensions if it has a size different from 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em system\+\_\+mapping} & The system matrix $ A_k $. \\
+\hline
+{\em system\+\_\+noise} & The system noise $ v_k $. \\
+\hline
+{\em input\+\_\+mapping} & The input mapping $ B_k $. \\
+\hline
+\end{DoxyParams}
 \index{refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}!set\+System\+Parameters@{set\+System\+Parameters}}
 \index{set\+System\+Parameters@{set\+System\+Parameters}!refill\+::\+Linear\+System\+Model@{refill\+::\+Linear\+System\+Model}}
 \subsubsection[{\texorpdfstring{set\+System\+Parameters(const Eigen\+::\+Matrix\+Xd \&system\+\_\+mapping, const Distribution\+Interface \&system\+\_\+noise, const Eigen\+::\+Matrix\+Xd \&input\+\_\+mapping, const Eigen\+::\+Matrix\+Xd \&noise\+\_\+mapping)}{setSystemParameters(const Eigen::MatrixXd &system_mapping, const DistributionInterface &system_noise, const Eigen::MatrixXd &input_mapping, const Eigen::MatrixXd &noise_mapping)}}]{\setlength{\rightskip}{0pt plus 5cm}void refill\+::\+Linear\+System\+Model\+::set\+System\+Parameters (
@@ -172,6 +321,25 @@ Implements \hyperlink{classrefill_1_1SystemModelBase_a92d2c65291b3086f810e362cf4
 \item[{const Eigen\+::\+Matrix\+Xd \&}]{noise\+\_\+mapping}
 \end{DoxyParamCaption}
 )}\hypertarget{classrefill_1_1LinearSystemModel_aae2e0643e8091ccb36c14496a4e86334}{}\label{classrefill_1_1LinearSystemModel_aae2e0643e8091ccb36c14496a4e86334}
+
+
+Sets the system model parameters for a system with an input and a specific noise mapping. 
+
+Sets all system parameters.
+
+Also checks whether {\itshape system\+\_\+mapping} is a square matrix, {\itshape noise\+\_\+mapping} is of right dimensions and, if {\itshape input\+\_\+mapping} has a size different from 0, whether {\itshape input\+\_\+mapping} has the right dimensions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em system\+\_\+mapping} & \\
+\hline
+{\em system\+\_\+noise} & \\
+\hline
+{\em input\+\_\+mapping} & \\
+\hline
+{\em noise\+\_\+mapping} & \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

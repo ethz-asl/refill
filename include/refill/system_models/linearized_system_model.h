@@ -15,23 +15,43 @@ namespace refill {
  *
  * Its intended purpose is to implement system models of the form:
  *
- * @f$ x_k = f(x_{k-1}, u_k, v_k)@f$
+ * @f$ x_k = f(x_{k-1}, u_k, v_k) @f$
  *
  * With Jacobians:
  *
- * @f$ A_k = \frac{\partial f}{\partial x}(x_{k-1}, u_k, \mu_k)@f$
+ * @f$ A_k = \frac{\partial f}{\partial x}(x_{k-1}, u_k, \mu_k) @f$
  *
  * and
  *
- * @f$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k)@f$
+ * @f$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k) @f$
  *
- * Where @f$x_k@f$ denotes the system state, @f$u_k@f$ the system input,
- * @f$v_k@f$ the system noise and @f$\mu_k@f$ the noise mean at timestep @f$k@f$.
+ * Where @f$ x_k @f$ denotes the system state, @f$ u_k @f$ the system input,
+ * @f$ v_k @f$ the system noise and @f$ \mu_k @f$ the noise mean at timestep @f$ k @f$.
+ *
+ * To implement a system model that works with the ExtendedKalmanFilter,
+ * inherit from this class and implement your own propagate(),
+ * getStateJacobian() and getNoiseJacobian() functions.
  */
 class LinearizedSystemModel : public SystemModelBase {
  public:
+  /**
+   * @brief Function to get @f$ A_k @f$, which is the system Jacobian w.r.t.
+   *        the system state.
+   *
+   * @param state The current system state.
+   * @param input The current system input.
+   * @return the system model Jacobian w.r.t. the system state @f$x_k@f$.
+   */
   virtual Eigen::MatrixXd getStateJacobian(
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
+  /**
+   * @brief Functoin to get @f$ L_k @f$, which is the system Jacobian w.r.t.
+   *        the system noise.
+   *
+   * @param state The current system state.
+   * @param input The current system input.
+   * @return the system model Jacobian w.r.t. the system noise @f$v_k@f$.
+   */
   virtual Eigen::MatrixXd getNoiseJacobian(
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
 

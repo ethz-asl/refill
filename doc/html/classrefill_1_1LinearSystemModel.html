@@ -96,6 +96,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Class that implements a linear system model.  
+ <a href="classrefill_1_1LinearSystemModel.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="linear__system__model_8h_source.html">linear_system_model.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for refill::LinearSystemModel:</div>
@@ -121,25 +124,34 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3e65d1c380d1c9abf807ca3a4814043e"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#a3e65d1c380d1c9abf807ca3a4814043e">LinearSystemModel</a> ()</td></tr>
 <tr class="separator:a3e65d1c380d1c9abf807ca3a4814043e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab153e34ae8b09eedf442841f744851e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#ab153e34ae8b09eedf442841f744851e6">LinearSystemModel</a> (const Eigen::MatrixXd &amp;system_mapping, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise)</td></tr>
+<tr class="memdesc:ab153e34ae8b09eedf442841f744851e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a system model without an input and a simple noise mapping.  <a href="#ab153e34ae8b09eedf442841f744851e6">More...</a><br /></td></tr>
 <tr class="separator:ab153e34ae8b09eedf442841f744851e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48ede1019cfda95201e84371562d376b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#a48ede1019cfda95201e84371562d376b">LinearSystemModel</a> (const Eigen::MatrixXd &amp;system_mapping, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise, const Eigen::MatrixXd &amp;input_mapping)</td></tr>
+<tr class="memdesc:a48ede1019cfda95201e84371562d376b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a system model with an input and a simple noise mapping.  <a href="#a48ede1019cfda95201e84371562d376b">More...</a><br /></td></tr>
 <tr class="separator:a48ede1019cfda95201e84371562d376b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35cfa05a9104d41f924acd5a9b183deb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#a35cfa05a9104d41f924acd5a9b183deb">LinearSystemModel</a> (const Eigen::MatrixXd &amp;system_mapping, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise, const Eigen::MatrixXd &amp;input_mapping, const Eigen::MatrixXd &amp;noise_mapping)</td></tr>
+<tr class="memdesc:a35cfa05a9104d41f924acd5a9b183deb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a system model with an input and a specific noise mapping.  <a href="#a35cfa05a9104d41f924acd5a9b183deb">More...</a><br /></td></tr>
 <tr class="separator:a35cfa05a9104d41f924acd5a9b183deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1644a0a0d363634205eaa7d1e1bfea8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#aa1644a0a0d363634205eaa7d1e1bfea8">setSystemParameters</a> (const Eigen::MatrixXd &amp;system_mapping, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise)</td></tr>
+<tr class="memdesc:aa1644a0a0d363634205eaa7d1e1bfea8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the system model parameters for a system without an input and a simple noise mapping.  <a href="#aa1644a0a0d363634205eaa7d1e1bfea8">More...</a><br /></td></tr>
 <tr class="separator:aa1644a0a0d363634205eaa7d1e1bfea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bfe228bb42920399034c39ff59ae09d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#a1bfe228bb42920399034c39ff59ae09d">setSystemParameters</a> (const Eigen::MatrixXd &amp;system_mapping, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise, const Eigen::MatrixXd &amp;input_mapping)</td></tr>
+<tr class="memdesc:a1bfe228bb42920399034c39ff59ae09d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the system model parameters for a system with an input and a simple noise mapping.  <a href="#a1bfe228bb42920399034c39ff59ae09d">More...</a><br /></td></tr>
 <tr class="separator:a1bfe228bb42920399034c39ff59ae09d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae2e0643e8091ccb36c14496a4e86334"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#aae2e0643e8091ccb36c14496a4e86334">setSystemParameters</a> (const Eigen::MatrixXd &amp;system_mapping, const <a class="el" href="classrefill_1_1DistributionInterface.html">DistributionInterface</a> &amp;system_noise, const Eigen::MatrixXd &amp;input_mapping, const Eigen::MatrixXd &amp;noise_mapping)</td></tr>
+<tr class="memdesc:aae2e0643e8091ccb36c14496a4e86334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the system model parameters for a system with an input and a specific noise mapping.  <a href="#aae2e0643e8091ccb36c14496a4e86334">More...</a><br /></td></tr>
 <tr class="separator:aae2e0643e8091ccb36c14496a4e86334"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6071f788057f7b1a4f382fbefd446369"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#a6071f788057f7b1a4f382fbefd446369">propagate</a> (const Eigen::VectorXd &amp;state) const </td></tr>
+<tr class="memdesc:a6071f788057f7b1a4f382fbefd446369"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagates the state vector through the system model.  <a href="#a6071f788057f7b1a4f382fbefd446369">More...</a><br /></td></tr>
 <tr class="separator:a6071f788057f7b1a4f382fbefd446369"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97553653a4daec3884637e1094d558ab"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#a97553653a4daec3884637e1094d558ab">propagate</a> (const Eigen::VectorXd &amp;state, const Eigen::VectorXd &amp;input) const </td></tr>
-<tr class="memdesc:a97553653a4daec3884637e1094d558ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagates a state vector through the system model.  <a href="#a97553653a4daec3884637e1094d558ab">More...</a><br /></td></tr>
+<tr class="memdesc:a97553653a4daec3884637e1094d558ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagates the state and input vector through the system model.  <a href="#a97553653a4daec3884637e1094d558ab">More...</a><br /></td></tr>
 <tr class="separator:a97553653a4daec3884637e1094d558ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a165b006f5758fd0a24cec545cbfa67b6"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#a165b006f5758fd0a24cec545cbfa67b6">getStateJacobian</a> (const Eigen::VectorXd &amp;state, const Eigen::VectorXd &amp;input) const </td></tr>
+<tr class="memdesc:a165b006f5758fd0a24cec545cbfa67b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get <img class="formulaInl" alt="$ A_k $" src="form_29.png"/>, which is the system Jacobian w.r.t. the system state.  <a href="#a165b006f5758fd0a24cec545cbfa67b6">More...</a><br /></td></tr>
 <tr class="separator:a165b006f5758fd0a24cec545cbfa67b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6f766c6412db70c7fcb6676d68c1461"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1LinearSystemModel.html#ab6f766c6412db70c7fcb6676d68c1461">getNoiseJacobian</a> (const Eigen::VectorXd &amp;state, const Eigen::VectorXd &amp;input) const </td></tr>
+<tr class="memdesc:ab6f766c6412db70c7fcb6676d68c1461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get <img class="formulaInl" alt="$ L_k $" src="form_30.png"/>, which is the system Jacobian w.r.t. the system noise.  <a href="#ab6f766c6412db70c7fcb6676d68c1461">More...</a><br /></td></tr>
 <tr class="separator:ab6f766c6412db70c7fcb6676d68c1461"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classrefill_1_1SystemModelBase"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classrefill_1_1SystemModelBase')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classrefill_1_1SystemModelBase.html">refill::SystemModelBase</a></td></tr>
 <tr class="memitem:a56128ef3ffd3a0f4fb5ebaa543b5f719 inherit pub_methods_classrefill_1_1SystemModelBase"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a56128ef3ffd3a0f4fb5ebaa543b5f719">getStateDim</a> () const </td></tr>
@@ -183,7 +195,13 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b inherit pro_methods_classrefill_1_1SystemModelBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to set the system model parameters with an input.  <a href="#a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b">More...</a><br /></td></tr>
 <tr class="separator:a6fcf6bb1b44bfd7ccd1c0f2f1d20d53b inherit pro_methods_classrefill_1_1SystemModelBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class that implements a linear system model. </p>
+<p>This class is an implementation of linear system models of the form:</p>
+<p><img class="formulaInl" alt="$ x_k = A_k \cdot x_{k-1} + B_k \cdot u_k + L_k \cdot v_k $" src="form_35.png"/></p>
+<p>Where <img class="formulaInl" alt="$ x_k $" src="form_18.png"/> is the system state, <img class="formulaInl" alt="$ u_k $" src="form_25.png"/> the system input, <img class="formulaInl" alt="$ v_k $" src="form_26.png"/> the system noise, <img class="formulaInl" alt="$ A_k $" src="form_29.png"/> the system mapping, <img class="formulaInl" alt="$ B_k $" src="form_33.png"/> the input mapping and <img class="formulaInl" alt="$ L_k $" src="form_30.png"/> the noise mapping at time step <img class="formulaInl" alt="$ k $" src="form_21.png"/>.</p>
+<p>Use this class together with the <a class="el" href="classrefill_1_1LinearMeasurementModel.html" title="Class that implements a linear measurement model. ">LinearMeasurementModel</a>, noise of type <a class="el" href="classrefill_1_1GaussianDistribution.html" title="Class that implements a multivariate Gaussian distribution. ">GaussianDistribution</a> and the <a class="el" href="classrefill_1_1ExtendedKalmanFilter.html">ExtendedKalmanFilter</a> if you want to implement a simple kalman filter. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a3e65d1c380d1c9abf807ca3a4814043e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -223,6 +241,17 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Constructor for a system model without an input and a simple noise mapping. </p>
+<p>This constructor assumes that there is no system input and sets the noise mapping to an identity matrix.</p>
+<p>It also checks if <em>system_mapping</em> is a square matrix.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">system_mapping</td><td>The matrix <img class="formulaInl" alt="$ A_k $" src="form_29.png"/>. </td></tr>
+    <tr><td class="paramname">system_noise</td><td>The system noise <img class="formulaInl" alt="$ v_k $" src="form_26.png"/>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a class="anchor" id="a48ede1019cfda95201e84371562d376b"></a>
@@ -254,6 +283,18 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructor for a system model with an input and a simple noise mapping. </p>
+<p>This constructor sets the noise mapping to an identity matrix.</p>
+<p>It also checks whether <em>system_mapping</em> is a square matrix and <em>input_mapping</em> is of right dimensions if it has a size different from 0.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">system_mapping</td><td>The matrix <img class="formulaInl" alt="$ A_k $" src="form_29.png"/>. </td></tr>
+    <tr><td class="paramname">system_noise</td><td>The system noise <img class="formulaInl" alt="$ v_k $" src="form_26.png"/>. </td></tr>
+    <tr><td class="paramname">input_mapping</td><td>The input mapping <img class="formulaInl" alt="$ B_k $" src="form_33.png"/>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -293,6 +334,19 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Constructor for a system model with an input and a specific noise mapping. </p>
+<p>This constructor sets all linear system parameters.</p>
+<p>It also checks whether <em>system_mapping</em> is a square matrix, <em>noise_mapping</em> is of right dimensions and, if <em>input_mapping</em> has a size different from 0, whether <em>input_mapping</em> has the right dimensions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">system_mapping</td><td>The system matrix <img class="formulaInl" alt="$ A_k $" src="form_29.png"/>. </td></tr>
+    <tr><td class="paramname">system_noise</td><td>The system noise <img class="formulaInl" alt="$ v_k $" src="form_26.png"/>. </td></tr>
+    <tr><td class="paramname">input_mapping</td><td>The input mapping <img class="formulaInl" alt="$ B_k $" src="form_33.png"/>. </td></tr>
+    <tr><td class="paramname">noise_mapping</td><td>The noise mapping <img class="formulaInl" alt="$ L_k $" src="form_30.png"/>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -327,6 +381,17 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Function to get <img class="formulaInl" alt="$ L_k $" src="form_30.png"/>, which is the system Jacobian w.r.t. the system noise. </p>
+<p>Since this is a linear system, it only returns <img class="formulaInl" alt="$ L_k $" src="form_30.png"/>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The current system state. </td></tr>
+    <tr><td class="paramname">input</td><td>The current system input. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the system model Jacobian w.r.t. the system noise <img class="formulaInl" alt="$ v_k $" src="form_26.png"/>. </dd></dl>
 
 <p>Implements <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a2fdc435d8e47f27ad167ff31827a1c48">refill::LinearizedSystemModel</a>.</p>
 
@@ -364,6 +429,17 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Function to get <img class="formulaInl" alt="$ A_k $" src="form_29.png"/>, which is the system Jacobian w.r.t. the system state. </p>
+<p>Since this is a linear system, it only returns <img class="formulaInl" alt="$ A_k $" src="form_29.png"/>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The current system state. </td></tr>
+    <tr><td class="paramname">input</td><td>The current system input. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the system model Jacobian w.r.t. the system state <img class="formulaInl" alt="$ x_k $" src="form_18.png"/>. </dd></dl>
+
 <p>Implements <a class="el" href="classrefill_1_1LinearizedSystemModel.html#a4a0bd58431d96f37cf52494fcbcd2d07">refill::LinearizedSystemModel</a>.</p>
 
 </div>
@@ -381,6 +457,17 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Propagates the state vector through the system model. </p>
+<p>Assumes that the system has no input.</p>
+<p>Also checks that the state vector has compatible size with the system model.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The current system state vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the new state vector. </dd></dl>
 
 </div>
 </div>
@@ -416,15 +503,16 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Propagates a state vector through the system model. </p>
+<p>Propagates the state and input vector through the system model. </p>
+<p>Also checks that the state and input vectors have compatible size with the system model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">state</td><td>The state vector to be propagated. </td></tr>
-    <tr><td class="paramname">input</td><td>The input vector to the system. </td></tr>
+    <tr><td class="paramname">state</td><td>The current system state vector. </td></tr>
+    <tr><td class="paramname">input</td><td>The current system input vector. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the propagated state vector. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the new state vector. </dd></dl>
 
 <p>Implements <a class="el" href="classrefill_1_1SystemModelBase.html#a92d2c65291b3086f810e362cf4194eb0">refill::SystemModelBase</a>.</p>
 
@@ -453,6 +541,17 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the system model parameters for a system without an input and a simple noise mapping. </p>
+<p>Assumes that there is no input mapping and sets the noise mapping to an identity matrix.</p>
+<p>Also checks whether <em>system_mapping</em> is a square matrix.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">system_mapping</td><td>The system matrix <img class="formulaInl" alt="$ A_k $" src="form_29.png"/>. </td></tr>
+    <tr><td class="paramname">system_noise</td><td>The system noise <img class="formulaInl" alt="$ v_k $" src="form_26.png"/> </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -485,6 +584,18 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the system model parameters for a system with an input and a simple noise mapping. </p>
+<p>Sets the noise mapping to an identity matrix.</p>
+<p>Also checks whether <em>system_mapping</em> is a square matrix and <em>input_mapping</em> is of right dimensions if it has a size different from 0.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">system_mapping</td><td>The system matrix <img class="formulaInl" alt="$ A_k $" src="form_29.png"/>. </td></tr>
+    <tr><td class="paramname">system_noise</td><td>The system noise <img class="formulaInl" alt="$ v_k $" src="form_26.png"/>. </td></tr>
+    <tr><td class="paramname">input_mapping</td><td>The input mapping <img class="formulaInl" alt="$ B_k $" src="form_33.png"/>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -523,6 +634,19 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the system model parameters for a system with an input and a specific noise mapping. </p>
+<p>Sets all system parameters.</p>
+<p>Also checks whether <em>system_mapping</em> is a square matrix, <em>noise_mapping</em> is of right dimensions and, if <em>input_mapping</em> has a size different from 0, whether <em>input_mapping</em> has the right dimensions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">system_mapping</td><td></td></tr>
+    <tr><td class="paramname">system_noise</td><td></td></tr>
+    <tr><td class="paramname">input_mapping</td><td></td></tr>
+    <tr><td class="paramname">noise_mapping</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

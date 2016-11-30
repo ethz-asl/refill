@@ -107,14 +107,14 @@ Inheritance diagram for refill::SystemModelBase:</div>
 <div class="center"><img src="classrefill_1_1SystemModelBase__inherit__graph.png" border="0" usemap="#refill_1_1SystemModelBase_inherit__map" alt="Inheritance graph"/></div>
 <map name="refill_1_1SystemModelBase_inherit__map" id="refill_1_1SystemModelBase_inherit__map">
 <area shape="rect" id="node2" href="classrefill_1_1LinearizedSystemModel.html" title="Class that implements a linearized system model. " alt="" coords="11,80,169,121"/>
-<area shape="rect" id="node3" href="classrefill_1_1LinearSystemModel.html" title="refill::LinearSystemModel" alt="" coords="5,169,175,196"/>
+<area shape="rect" id="node3" href="classrefill_1_1LinearSystemModel.html" title="Class that implements a linear system model. " alt="" coords="5,169,175,196"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a92d2c65291b3086f810e362cf4194eb0"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a92d2c65291b3086f810e362cf4194eb0">propagate</a> (const Eigen::VectorXd &amp;state, const Eigen::VectorXd &amp;input) const =0</td></tr>
-<tr class="memdesc:a92d2c65291b3086f810e362cf4194eb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagates a state vector through the system model.  <a href="#a92d2c65291b3086f810e362cf4194eb0">More...</a><br /></td></tr>
+<tr class="memdesc:a92d2c65291b3086f810e362cf4194eb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagates a state and input vector through the system model.  <a href="#a92d2c65291b3086f810e362cf4194eb0">More...</a><br /></td></tr>
 <tr class="separator:a92d2c65291b3086f810e362cf4194eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56128ef3ffd3a0f4fb5ebaa543b5f719"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrefill_1_1SystemModelBase.html#a56128ef3ffd3a0f4fb5ebaa543b5f719">getStateDim</a> () const </td></tr>
 <tr class="memdesc:a56128ef3ffd3a0f4fb5ebaa543b5f719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the systems state dimension.  <a href="#a56128ef3ffd3a0f4fb5ebaa543b5f719">More...</a><br /></td></tr>
@@ -374,7 +374,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Propagates a state vector through the system model. </p>
+<p>Propagates a state and input vector through the system model. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">state</td><td>The state vector to be propagated. </td></tr>
@@ -382,7 +382,7 @@ Protected Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the propagated state vector. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the new state vector. </dd></dl>
 
 <p>Implemented in <a class="el" href="classrefill_1_1LinearSystemModel.html#a97553653a4daec3884637e1094d558ab">refill::LinearSystemModel</a>.</p>
 

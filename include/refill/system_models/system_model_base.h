@@ -17,11 +17,11 @@ namespace refill {
 class SystemModelBase {
  public:
   /**
-   * @brief Propagates a state vector through the system model.
+   * @brief Propagates a state and input vector through the system model.
    *
    * @param state The state vector to be propagated.
    * @param input The input vector to the system.
-   * @return the propagated state vector.
+   * @return the new state vector.
    */
   virtual Eigen::VectorXd propagate(const Eigen::VectorXd& state,
                                     const Eigen::VectorXd& input) const = 0;

@@ -9,7 +9,15 @@ LinearSystemModel::LinearSystemModel()
                         Eigen::MatrixXd::Zero(0, 0),
                         Eigen::MatrixXd::Identity(1, 1)) {}
 
-// If constructor is called without input matrix, we assume there is no input.
+/**
+ * This constructor assumes that there is no system input and sets the
+ * noise mapping to an identity matrix.
+ *
+ * It also checks if @e system_mapping is a square matrix.
+ *
+ * @param system_mapping The matrix @f$ A_k @f$.
+ * @param system_noise The system noise @f$ v_k @f$.
+ */
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise)
     : LinearSystemModel(
@@ -19,6 +27,16 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
         Eigen::MatrixXd::Identity(system_mapping.rows(),
                                   system_noise.mean().size())) {}
 
+/**
+ * This constructor sets the noise mapping to an identity matrix.
+ *
+ * It also checks whether @e system_mapping is a square matrix and
+ * @e input_mapping is of right dimensions if it has a size different from 0.
+ *
+ * @param system_mapping The matrix @f$ A_k @f$.
+ * @param system_noise The system noise @f$ v_k @f$.
+ * @param input_mapping The input mapping @f$ B_k @f$.
+ */
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise,
                                      const Eigen::MatrixXd& input_mapping)
@@ -30,6 +48,18 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                   system_noise.mean().size())) {
 }
 
+/**
+ * This constructor sets all linear system parameters.
+ *
+ * It also checks whether @e system_mapping is a square matrix,
+ * @e noise_mapping is of right dimensions and, if @e input_mapping has a
+ * size different from 0, whether @e input_mapping has the right dimensions.
+ *
+ * @param system_mapping The system matrix @f$ A_k @f$.
+ * @param system_noise The system noise @f$ v_k @f$.
+ * @param input_mapping The input mapping @f$ B_k @f$.
+ * @param noise_mapping The noise mapping @f$ L_k @f$.
+ */
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise,
                                      const Eigen::MatrixXd& input_mapping,
@@ -40,6 +70,15 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                             noise_mapping);
 }
 
+/**
+ * Assumes that there is no input mapping and sets the noise mapping to an
+ * identity matrix.
+ *
+ * Also checks whether @e system_mapping is a square matrix.
+ *
+ * @param system_mapping The system matrix @f$ A_k @f$.
+ * @param system_noise The system noise @f$ v_k @f$
+ */
 void LinearSystemModel::setSystemParameters(
     const Eigen::MatrixXd& system_mapping,
     const DistributionInterface& system_noise) {
@@ -51,6 +90,16 @@ void LinearSystemModel::setSystemParameters(
                                 system_noise.mean().size()));
 }
 
+/**
+ * Sets the noise mapping to an identity matrix.
+ *
+ * Also checks whether @e system_mapping is a square matrix and
+ * @e input_mapping is of right dimensions if it has a size different from 0.
+ *
+ * @param system_mapping The system matrix @f$ A_k @f$.
+ * @param system_noise The system noise @f$ v_k @f$.
+ * @param input_mapping The input mapping @f$ B_k @f$.
+ */
 void LinearSystemModel::setSystemParameters(
     const Eigen::MatrixXd& system_mapping,
     const DistributionInterface& system_noise,
@@ -63,6 +112,18 @@ void LinearSystemModel::setSystemParameters(
                                 system_noise.mean().size()));
 }
 
+/**
+ * Sets all system parameters.
+ *
+ * Also checks whether @e system_mapping is a square matrix,
+ * @e noise_mapping is of right dimensions and, if @e input_mapping has a
+ * size different from 0, whether @e input_mapping has the right dimensions.
+ *
+ * @param system_mapping
+ * @param system_noise
+ * @param input_mapping
+ * @param noise_mapping
+ */
 void LinearSystemModel::setSystemParameters(
     const Eigen::MatrixXd& system_mapping,
     const DistributionInterface& system_noise,
@@ -84,11 +145,27 @@ void LinearSystemModel::setSystemParameters(
                                            input_mapping.cols());
 }
 
+/**
+ * Assumes that the system has no input.
+ *
+ * Also checks that the state vector has compatible size with the system model.
+ *
+ * @param state The current system state vector.
+ * @return the new state vector.
+ */
 Eigen::VectorXd LinearSystemModel::propagate(
     const Eigen::VectorXd& state) const {
   return this->propagate(state, Eigen::VectorXd::Zero(this->getInputDim()));
 }
 
+/**
+ * Also checks that the state and input vectors have compatible size with the
+ * system model.
+ *
+ * @param state The current system state vector.
+ * @param input The current system input vector.
+ * @return the new state vector.
+ */
 Eigen::VectorXd LinearSystemModel::propagate(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
 
@@ -107,11 +184,25 @@ Eigen::VectorXd LinearSystemModel::propagate(
   }
 }
 
+/**
+ * Since this is a linear system, it only returns @f$ A_k @f$.
+ *
+ * @param state The current system state.
+ * @param input The current system input.
+ * @return the system model Jacobian w.r.t. the system state @f$ x_k @f$.
+ */
 Eigen::MatrixXd LinearSystemModel::getStateJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
   return system_mapping_;
 }
 
+/**
+ * Since this is a linear system, it only returns @f$ L_k @f$.
+ *
+ * @param state The current system state.
+ * @param input The current system input.
+ * @return the system model Jacobian w.r.t. the system noise @f$ v_k @f$.
+ */
 Eigen::MatrixXd LinearSystemModel::getNoiseJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
   return noise_mapping_;
