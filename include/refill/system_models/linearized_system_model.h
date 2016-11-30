@@ -15,7 +15,18 @@ namespace refill {
  *
  * Its intended purpose is to implement system models of the form:
  *
- * \f$ x_{k+1} = f(x_k, \nu_k)\f$
+ * @f$ x_k = f(x_{k-1}, u_k, v_k)@f$
+ *
+ * With Jacobians:
+ *
+ * @f$ A_k = \frac{\partial f}{\partial x}(x_{k-1}, u_k, \mu_k)@f$
+ *
+ * and
+ *
+ * @f$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k)@f$
+ *
+ * Where @f$x_k@f$ denotes the system state, @f$u_k@f$ the system input,
+ * @f$v_k@f$ the system noise and @f$\mu_k@f$ the noise mean at timestep @f$k@f$.
  */
 class LinearizedSystemModel : public SystemModelBase {
  public:

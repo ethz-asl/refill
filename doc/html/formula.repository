@@ -1,2 +1,13 @@
 \form#0:$ x_{k+1} = f(x_k, \mu_k)$
 \form#1:$ x_{k+1} = f(x_k, \nu_k)$
+\form#2:$ x_k = f(x_{k-1}, u_k, v_k)$
+\form#3:\[ x_k = f(x_{k-1}, u_k, v_k)\]
+\form#4:$\displaystyle x_k = f(x_{k-1}, u_k, v_k)$
+\form#5:$ A_k = \frac{\d f}{\d x}(x_{k-1}, u_k, \mu_k)$
+\form#6:$x_k$
+\form#7:$u_k$
+\form#8:$v_k$
+\form#9:$k$
+\form#10:$ A_k = \frac{\partial f}{\partial x}(x_{k-1}, u_k, \mu_k)$
+\form#11:$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k)$
+\form#12:$\mu_k$

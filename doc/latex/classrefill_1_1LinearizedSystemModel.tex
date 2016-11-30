@@ -52,7 +52,17 @@ This class is an interface for system models with Jacobians.
 
 Its intended purpose is to implement system models of the form\+:
 
-$ x_{k+1} = f(x_k, \Nu_k)$ 
+$ x_k = f(x_{k-1}, u_k, v_k)$
+
+With Jacobians\+:
+
+$ A_k = \frac{\partial f}{\partial x}(x_{k-1}, u_k, \mu_k)$
+
+and
+
+$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k)$
+
+Where $x_k$ denotes the system state, $u_k$ the system input, $v_k$ the system noise and $\mu_k$ the noise mean at timestep $k$. 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{refill\+::\+Linearized\+System\+Model@{refill\+::\+Linearized\+System\+Model}!Linearized\+System\+Model@{Linearized\+System\+Model}}

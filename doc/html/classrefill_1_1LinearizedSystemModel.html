@@ -173,7 +173,12 @@ Protected Member Functions</h2></td></tr>
 <div class="textblock"><p>Class that implements a linearized system model. </p>
 <p>This class is an interface for system models with Jacobians.</p>
 <p>Its intended purpose is to implement system models of the form:</p>
-<p><img class="formulaInl" alt="$ x_{k+1} = f(x_k, \Nu_k)$" src="form_2.png"/> </p>
+<p><img class="formulaInl" alt="$ x_k = f(x_{k-1}, u_k, v_k)$" src="form_2.png"/></p>
+<p>With Jacobians:</p>
+<p><img class="formulaInl" alt="$ A_k = \frac{\partial f}{\partial x}(x_{k-1}, u_k, \mu_k)$" src="form_10.png"/></p>
+<p>and</p>
+<p><img class="formulaInl" alt="$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k)$" src="form_11.png"/></p>
+<p>Where <img class="formulaInl" alt="$x_k$" src="form_6.png"/> denotes the system state, <img class="formulaInl" alt="$u_k$" src="form_7.png"/> the system input, <img class="formulaInl" alt="$v_k$" src="form_8.png"/> the system noise and <img class="formulaInl" alt="$\mu_k$" src="form_12.png"/> the noise mean at timestep <img class="formulaInl" alt="$k$" src="form_9.png"/>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aa0c5e6dea98f7d287b8b2928a42d91fe"></a>
 <div class="memitem">
