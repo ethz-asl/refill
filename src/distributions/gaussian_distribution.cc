@@ -5,13 +5,11 @@ namespace refill {
 // For the standard constructor, we use a univariate standard
 // normal distribution.
 GaussianDistribution::GaussianDistribution()
-    : GaussianDistribution(1) {
-}
+    : GaussianDistribution(0) {}
 
 GaussianDistribution::GaussianDistribution(const int& dimension)
     : mean_(Eigen::VectorXd::Zero(dimension)),
-      covariance_(Eigen::MatrixXd::Identity(dimension, dimension)) {
-}
+      covariance_(Eigen::MatrixXd::Identity(dimension, dimension)) {}
 
 GaussianDistribution::GaussianDistribution(const Eigen::VectorXd& dist_mean,
                                            const Eigen::MatrixXd& dist_cov) {

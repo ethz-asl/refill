@@ -14,6 +14,7 @@ namespace refill {
 
 class ExtendedKalmanFilter : public FilterBase {
  public:
+  ExtendedKalmanFilter();
   // Initializes the Kalman filter in a way that expects system models to be
   // given upon prediction / update.
   explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state);
