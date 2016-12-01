@@ -8,9 +8,18 @@
 
 namespace refill {
 
+/**
+ * @brief Interface for all filters
+ *
+ * This class is an interface for all filters in refill.
+ *
+ * It must be an ancestor of all filters implemented in refill.
+ */
 class FilterBase {
  public:
+  /** @brief Perform a prediction step. */
   virtual void predict() = 0;
+  /** @brief Perform an update with a measurement. */
   virtual void update(const Eigen::VectorXd& measurement) = 0;
 };
 

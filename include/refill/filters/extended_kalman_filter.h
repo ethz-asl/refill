@@ -12,30 +12,67 @@
 
 namespace refill {
 
+/**
+ * @brief Implementation of an extended Kalman filter.
+ *
+ * This class is an implementation of an extended Kalman filter.
+ *
+ * It can also be used as a standard Kalman filter, if used with a
+ * LinearSystemModel, LinearMeasurementModel and GaussianDistribution noise.
+ */
 class ExtendedKalmanFilter : public FilterBase {
  public:
-  // Initializes the Kalman filter in a way that expects system models to be
-  // given upon prediction / update.
+  /**
+   * @brief Initializes the Kalman filter in a way that expects system models
+   *        to be given upon prediction / update.
+   */
   explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state);
 
-  // The ExtendedKalmanFilter class takes ownership of both models.
+  /**
+   * @brief Initialized the Kalman filter to use the standard models, if
+   *        not stated otherwise.
+   */
   explicit ExtendedKalmanFilter(
       const GaussianDistribution& initial_state,
       std::unique_ptr<LinearizedSystemModel> system_model,
       std::unique_ptr<LinearizedMeasurementModel> measurement_model);
 
+  /** @brief Sets the state of the Kalman filter. */
   void setState(const GaussianDistribution& state);
 
+  /**
+   * @brief Performs a prediction step with the standard system model and
+   *        no input.
+   */
   void predict() override;
+  /**
+   * @brief Performs a prediction step with the standard system model and
+   *        an input.
+   */
   void predict(const Eigen::VectorXd& input);
+  /**
+   * @brief Performs a prediction step using the provided system model and
+   *        no input.
+   */
   void predict(const LinearizedSystemModel& system_model);
+  /**
+   * @brief Performs a prediction step using the provided system model and
+   *        and input.
+   */
   void predict(const LinearizedSystemModel& system_model,
                const Eigen::VectorXd& input);
 
+  /** @brief Performs an update using the standard measurement model. */
   void update(const Eigen::VectorXd& measurement) override;
+  /** @brief Performs an update using the provided measurement model. */
   void update(const LinearizedMeasurementModel& measurement_model,
               const Eigen::VectorXd& measurement);
 
+  /**
+   * @brief Function to get the current filter state.
+   *
+   * @return the current filter state.
+   */
   GaussianDistribution state() const { return state_; }
 
  private:

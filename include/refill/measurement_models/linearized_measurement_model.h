@@ -15,7 +15,7 @@ namespace refill {
  *
  * Its intended purpose is to implement measurement models of the form:
  *
- * @f$ y_k = h(x_k, w_k)@f$
+ * @f$ y_k = h_k(x_k, w_k)@f$
  *
  * With Jacobians:
  *

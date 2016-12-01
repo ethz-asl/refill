@@ -51,3 +51,7 @@ build/
 
 # Catkin ignore file
 *CATKIN_IGNORE
+
+# Generated documentation directories
+doc/
+!doc/config.DoxyFile

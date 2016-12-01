@@ -15,7 +15,7 @@ namespace refill {
  *
  * Its intended purpose is to implement system models of the form:
  *
- * @f$ x_k = f(x_{k-1}, u_k, v_k) @f$
+ * @f$ x_k = f_k(x_{k-1}, u_k, v_k) @f$
  *
  * With Jacobians:
  *

@@ -1,5 +1,0 @@
-<map id="refill::DistributionInterface" name="refill::DistributionInterface">
-<area shape="rect" id="node2" href="$classrefill_1_1DistributionBase.html" title="refill::DistributionBase\l\&lt; GaussianDistribution \&gt;" alt="" coords="224,5,391,47"/>
-<area shape="rect" id="node4" href="$classrefill_1_1DistributionBase.html" title="Class that implements the CRTP. " alt="" coords="232,71,383,112"/>
-<area shape="rect" id="node3" href="$classrefill_1_1GaussianDistribution.html" title="Class that implements a multivariate Gaussian distribution. " alt="" coords="439,13,613,39"/>
-</map>
