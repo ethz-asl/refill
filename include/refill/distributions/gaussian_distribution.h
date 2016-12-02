@@ -2,6 +2,8 @@
 #define REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 
 #include <glog/logging.h>
+#include <algorithm>
+#include <random>
 
 #include "refill/distributions/distribution_base.h"
 
@@ -24,6 +26,8 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   int dimension() const;
   Eigen::VectorXd mean() const;
   Eigen::MatrixXd cov() const;
+
+  Eigen::VectorXd drawSample() const;
 
   GaussianDistribution operator+(const GaussianDistribution& right_side);
 

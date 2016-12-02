@@ -18,7 +18,7 @@ GaussianDistribution::GaussianDistribution(const Eigen::VectorXd& dist_mean,
 
 void GaussianDistribution::setDistParam(const Eigen::VectorXd& dist_mean,
                                         const Eigen::MatrixXd& dist_cov) {
-  CHECK_EQ(dist_mean.size(), dist_cov.rows());
+  CHECK_EQ(dist_mean.rows(), dist_cov.rows());
   CHECK_EQ(dist_cov.rows(), dist_cov.cols());
 
   Eigen::LLT<Eigen::MatrixXd> chol_of_cov(dist_cov);
@@ -29,7 +29,7 @@ void GaussianDistribution::setDistParam(const Eigen::VectorXd& dist_mean,
 }
 
 void GaussianDistribution::setMean(const Eigen::VectorXd& mean) {
-  CHECK_EQ(this->dimension(), mean.size());
+  CHECK_EQ(this->dimension(), mean.rows());
   mean_ = mean;
 }
 
@@ -44,7 +44,7 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
 }
 
 int GaussianDistribution::dimension() const {
-  return mean_.size();
+  return mean_.rows();
 }
 
 Eigen::VectorXd GaussianDistribution::mean() const {
@@ -53,6 +53,27 @@ Eigen::VectorXd GaussianDistribution::mean() const {
 
 Eigen::MatrixXd GaussianDistribution::cov() const {
   return covariance_;
+}
+
+Eigen::VectorXd GaussianDistribution::drawSample() const {
+  CHECK_NE(mean_.rows(), 0)
+      << "[GaussianDistribution] Distribution parameters have not been set.";
+
+  // Generate normal distributed random vector
+  std::random_device true_rng;
+  std::default_random_engine generator(true_rng);
+  std::normal_distribution<double> normal_dist(0.0, 1.0);
+
+  Eigen::VectorXd uniform_random_vector(mean_.rows());
+  for (int i=0; i < mean_.rows(); ++i) {
+    uniform_random_vector[i] = normal_dist(generator);
+  }
+
+  // Calculate matrix L
+  Eigen::LLT<Eigen::MatrixXd> chol_of_cov(covariance_);
+  Eigen::MatrixXd L = chol_of_cov.matrixL();
+
+  return mean_ + L * uniform_random_vector;
 }
 
 GaussianDistribution GaussianDistribution::operator+(

@@ -16,13 +16,13 @@ SystemModelBase::SystemModelBase(const std::size_t& state_dim,
 }
 
 void SystemModelBase::setSystemModelBaseParameters(
-    const size_t& state_dim, const DistributionInterface& system_noise) {
+    const std::size_t& state_dim, const DistributionInterface& system_noise) {
   this->setSystemModelBaseParameters(state_dim, system_noise, 0);
 }
 
 void SystemModelBase::setSystemModelBaseParameters(
-    const size_t& state_dim, const DistributionInterface& system_noise,
-    const size_t& input_dim) {
+    const std::size_t& state_dim, const DistributionInterface& system_noise,
+    const std::size_t& input_dim) {
   state_dim_ = state_dim;
   system_noise_.reset(system_noise.clone());
   input_dim_ = input_dim;
