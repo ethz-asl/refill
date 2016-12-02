@@ -45,7 +45,7 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
   covariance_ = cov;
 }
 
-int GaussianDistribution::dimension() const {
+size_t GaussianDistribution::dimension() const {
   return mean_.size();
 }
 

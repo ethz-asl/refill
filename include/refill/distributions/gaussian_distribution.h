@@ -1,7 +1,9 @@
 #ifndef REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 #define REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 
+#include <Eigen/Dense>
 #include <glog/logging.h>
+#include <stdlib.h>
 
 #include "refill/distributions/distribution_base.h"
 
@@ -21,15 +23,15 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   void setMean(const Eigen::VectorXd& mean);
   void setCov(const Eigen::MatrixXd& cov);
 
-  int dimension() const;
+  size_t dimension() const;
   Eigen::VectorXd mean() const;
   Eigen::MatrixXd cov() const;
 
   GaussianDistribution operator+(const GaussianDistribution& right_side);
 
  private:
-  Eigen::MatrixXd covariance_;
   Eigen::VectorXd mean_;
+  Eigen::MatrixXd covariance_;
 };
 
 }  // namespace refill

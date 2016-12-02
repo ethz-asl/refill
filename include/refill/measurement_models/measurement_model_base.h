@@ -2,6 +2,9 @@
 #define REFILL_MEASUREMENT_MODELS_MEASUREMENT_MODEL_BASE_H_
 
 #include <Eigen/Dense>
+#include <glog/logging.h>
+#include <stdlib.h>
+
 #include <memory>
 
 #include "refill/distributions/distribution_base.h"
@@ -12,25 +15,25 @@ class MeasurementModelBase {
  public:
   virtual Eigen::VectorXd observe(const Eigen::VectorXd& state) const = 0;
 
-  std::size_t getStateDim() const;
-  std::size_t getMeasurementDim() const;
-  std::size_t getMeasurementNoiseDim() const;
+  size_t getStateDim() const;
+  size_t getMeasurementDim() const;
+  size_t getMeasurementNoiseDim() const;
   DistributionInterface* getMeasurementNoise() const;
 
  protected:
   MeasurementModelBase() = delete;
-  MeasurementModelBase(const std::size_t& state_dim,
-                       const std::size_t& measurement_dim,
+  MeasurementModelBase(const size_t& state_dim,
+                       const size_t& measurement_dim,
                        const DistributionInterface& measurement_noise);
 
   void setMeasurementModelBaseParameters(
-      const std::size_t& state_dim, const std::size_t& measurement_dim,
+      const size_t& state_dim, const size_t& measurement_dim,
       const DistributionInterface& measurement_noise);
 
  private:
+  size_t state_dim_;
+  size_t measurement_dim_;
   std::unique_ptr<DistributionInterface> measurement_noise_;
-  std::size_t state_dim_;
-  std::size_t measurement_dim_;
 };
 
 }  // namespace refill

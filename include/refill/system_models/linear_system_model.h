@@ -1,8 +1,8 @@
 #ifndef REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 #define REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 
-#include <glog/logging.h>
 #include <Eigen/Dense>
+#include <glog/logging.h>
 
 #include "refill/distributions/gaussian_distribution.h"
 #include "refill/system_models/linearized_system_model.h"
