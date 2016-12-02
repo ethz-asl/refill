@@ -3,7 +3,6 @@
 
 #include <Eigen/Dense>
 #include <glog/logging.h>
-#include <stdlib.h>
 
 #include <memory>
 
@@ -15,24 +14,24 @@ class MeasurementModelBase {
  public:
   virtual Eigen::VectorXd observe(const Eigen::VectorXd& state) const = 0;
 
-  size_t getStateDim() const;
-  size_t getMeasurementDim() const;
-  size_t getMeasurementNoiseDim() const;
+  std::size_t getStateDim() const;
+  std::size_t getMeasurementDim() const;
+  std::size_t getMeasurementNoiseDim() const;
   DistributionInterface* getMeasurementNoise() const;
 
  protected:
   MeasurementModelBase() = delete;
-  MeasurementModelBase(const size_t& state_dim,
-                       const size_t& measurement_dim,
+  MeasurementModelBase(const std::size_t& state_dim,
+                       const std::size_t& measurement_dim,
                        const DistributionInterface& measurement_noise);
 
   void setMeasurementModelBaseParameters(
-      const size_t& state_dim, const size_t& measurement_dim,
+      const std::size_t& state_dim, const std::size_t& measurement_dim,
       const DistributionInterface& measurement_noise);
 
  private:
-  size_t state_dim_;
-  size_t measurement_dim_;
+  std::size_t state_dim_;
+  std::size_t measurement_dim_;
   std::unique_ptr<DistributionInterface> measurement_noise_;
 };
 

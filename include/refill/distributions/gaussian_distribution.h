@@ -3,7 +3,6 @@
 
 #include <Eigen/Dense>
 #include <glog/logging.h>
-#include <stdlib.h>
 
 #include "refill/distributions/distribution_base.h"
 
@@ -23,7 +22,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   void setMean(const Eigen::VectorXd& mean);
   void setCov(const Eigen::MatrixXd& cov);
 
-  size_t dimension() const;
+  std::size_t dimension() const;
   Eigen::VectorXd mean() const;
   Eigen::MatrixXd cov() const;
 

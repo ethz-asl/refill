@@ -2,7 +2,6 @@
 #define REFILL_SYSTEM_MODELS_LINEARIZED_SYSTEM_MODEL_H_
 
 #include <Eigen/Dense>
-#include <stdlib.h>
 
 #include "refill/distributions/distribution_base.h"
 #include "refill/system_models/system_model_base.h"
@@ -18,11 +17,11 @@ class LinearizedSystemModel : public SystemModelBase {
 
  protected:
   LinearizedSystemModel() = delete;
-  LinearizedSystemModel(const size_t& state_dim,
+  LinearizedSystemModel(const std::size_t& state_dim,
                         const DistributionInterface& system_noise);
-  LinearizedSystemModel(const size_t& state_dim,
+  LinearizedSystemModel(const std::size_t& state_dim,
                         const DistributionInterface& system_noise,
-                        const size_t& input_dim);
+                        const std::size_t& input_dim);
 };
 
 }  // namespace refill

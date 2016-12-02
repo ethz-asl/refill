@@ -2,7 +2,6 @@
 #define REFILL_MEASUREMENT_MODELS_LINEARIZED_MEASUREMENT_MODEL_H_
 
 #include <Eigen/Dense>
-#include <stdlib.h>
 
 #include "refill/measurement_models/measurement_model_base.h"
 
@@ -17,8 +16,8 @@ class LinearizedMeasurementModel : public MeasurementModelBase {
 
  protected:
   LinearizedMeasurementModel() = delete;
-  LinearizedMeasurementModel(const size_t& state_dim,
-                             const size_t& measurement_dim,
+  LinearizedMeasurementModel(const std::size_t& state_dim,
+                             const std::size_t& measurement_dim,
                              const DistributionInterface& measurement_noise);
 };
 

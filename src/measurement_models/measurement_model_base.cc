@@ -3,7 +3,7 @@
 namespace refill {
 
 MeasurementModelBase::MeasurementModelBase(
-    const size_t& state_dim, const size_t& measurement_dim,
+    const std::size_t& state_dim, const std::size_t& measurement_dim,
     const DistributionInterface& measurement_noise)
     : state_dim_(state_dim),
       measurement_dim_(measurement_dim),
@@ -11,22 +11,22 @@ MeasurementModelBase::MeasurementModelBase(
 }
 
 void MeasurementModelBase::setMeasurementModelBaseParameters(
-    const size_t& state_dim, const size_t& measurement_dim,
+    const std::size_t& state_dim, const std::size_t& measurement_dim,
     const DistributionInterface& measurement_noise) {
   state_dim_ = state_dim;
   measurement_dim_ = measurement_dim;
   measurement_noise_.reset(measurement_noise.clone());
 }
 
-size_t MeasurementModelBase::getStateDim() const {
+std::size_t MeasurementModelBase::getStateDim() const {
   return state_dim_;
 }
 
-size_t MeasurementModelBase::getMeasurementDim() const {
+std::size_t MeasurementModelBase::getMeasurementDim() const {
   return measurement_dim_;
 }
 
-size_t MeasurementModelBase::getMeasurementNoiseDim() const {
+std::size_t MeasurementModelBase::getMeasurementNoiseDim() const {
   CHECK(measurement_noise_) << "Measurement noise has not been set.";
   return measurement_noise_->mean().size();
 }
