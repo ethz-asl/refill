@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <glog/logging.h>
+#include <typeinfo>
 
 namespace refill {
 
