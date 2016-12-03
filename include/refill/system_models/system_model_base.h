@@ -4,6 +4,7 @@
 #include <Eigen/Dense>
 #include <glog/logging.h>
 
+#include <cstdlib>
 #include <memory>
 
 #include "refill/distributions/distribution_base.h"

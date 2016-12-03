@@ -3,6 +3,8 @@
 
 #include <Eigen/Dense>
 
+#include <cstdlib>
+
 #include "refill/distributions/distribution_base.h"
 #include "refill/system_models/system_model_base.h"
 

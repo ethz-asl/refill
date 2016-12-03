@@ -1,5 +1,7 @@
 #include "refill/distributions/gaussian_distribution.h"
 
+using std::size_t;
+
 namespace refill {
 
 // For the standard constructor, we use a univariate standard
@@ -45,7 +47,7 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
   covariance_ = cov;
 }
 
-std::size_t GaussianDistribution::dimension() const {
+size_t GaussianDistribution::dimension() const {
   return mean_.size();
 }
 

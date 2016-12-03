@@ -3,6 +3,8 @@
 
 #include <Eigen/Dense>
 
+#include <cstdlib>
+
 #include "refill/measurement_models/measurement_model_base.h"
 
 namespace refill {

@@ -4,6 +4,8 @@
 #include <Eigen/Dense>
 #include <glog/logging.h>
 
+#include <cstdlib>
+
 #include "refill/distributions/distribution_base.h"
 
 namespace refill {
