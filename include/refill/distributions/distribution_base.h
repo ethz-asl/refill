@@ -1,8 +1,8 @@
 #ifndef REFILL_DISTRIBUTIONS_DISTRIBUTION_BASE_H_
 #define REFILL_DISTRIBUTIONS_DISTRIBUTION_BASE_H_
 
-#include <glog/logging.h>
 #include <Eigen/Dense>
+#include <glog/logging.h>
 #include <typeinfo>
 
 namespace refill {

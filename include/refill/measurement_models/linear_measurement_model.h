@@ -1,8 +1,8 @@
 #ifndef REFILL_MEASUREMENT_MODELS_LINEAR_MEASUREMENT_MODEL_H_
 #define REFILL_MEASUREMENT_MODELS_LINEAR_MEASUREMENT_MODEL_H_
 
-#include <glog/logging.h>
 #include <Eigen/Dense>
+#include <glog/logging.h>
 
 #include "refill/distributions/gaussian_distribution.h"
 #include "refill/measurement_models/linearized_measurement_model.h"
@@ -30,11 +30,8 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
 
   Eigen::VectorXd observe(const Eigen::VectorXd& state) const;
 
-  int getStateDim() const;
-  int getMeasurementDim() const;
   Eigen::MatrixXd getMeasurementJacobian(const Eigen::VectorXd& state) const;
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state) const;
-  DistributionInterface* getMeasurementNoise() const;
 
  private:
   Eigen::MatrixXd measurement_mapping_;
