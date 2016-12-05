@@ -3,8 +3,10 @@
 
 #include <glog/logging.h>
 #include <Eigen/Dense>
+
+#include <functional>
 #include <memory>
-#include <random>
+#include <utility>
 #include <vector>
 
 #include "refill/distributions/distribution_base.h"
@@ -14,12 +16,15 @@
 
 namespace refill {
 
+template<typename ParticleType>
 class ParticleFilter : public FilterBase {
  public:
+  using ParticleVectorType = std::vector<std::pair<ParticleType, double>>;
+
   ParticleFilter();
-  ParticleFilter(const size_t& n_particles,
+  ParticleFilter(const std::size_t& n_particles,
                  const DistributionInterface& initial_state_dist);
-  ParticleFilter(const size_t& n_particles,
+  ParticleFilter(const std::size_t& n_particles,
                  const DistributionInterface& initial_state_dist,
                  std::unique_ptr<SystemModelBase> system_model,
                  std::unique_ptr<MeasurementModelBase> measurement_model);
@@ -37,14 +42,10 @@ class ParticleFilter : public FilterBase {
  private:
   void resample();
 
-  struct ParticleType {
-    Eigen::VectorXd state;
-    double weight;
-  };
-
-  std::vector<ParticleType> particles_;
+  ParticleVectorType particles_;
   std::unique_ptr<SystemModelBase> system_model_;
   std::unique_ptr<MeasurementModelBase> measurement_model_;
+  std::function<void(ParticleVectorType*)> resample_method_;
 };
 
 }  // namespace refill
