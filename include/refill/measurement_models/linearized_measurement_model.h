@@ -3,7 +3,11 @@
 
 #include <Eigen/Dense>
 
+#include <cstdlib>
+
 #include "refill/measurement_models/measurement_model_base.h"
+
+using std::size_t;
 
 namespace refill {
 
@@ -16,8 +20,8 @@ class LinearizedMeasurementModel : public MeasurementModelBase {
 
  protected:
   LinearizedMeasurementModel() = delete;
-  LinearizedMeasurementModel(const std::size_t& state_dim,
-                             const std::size_t& measurement_dim,
+  LinearizedMeasurementModel(const size_t& state_dim,
+                             const size_t& measurement_dim,
                              const DistributionInterface& measurement_noise);
 };
 

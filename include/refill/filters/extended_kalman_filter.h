@@ -1,6 +1,9 @@
 #ifndef REFILL_FILTERS_EXTENDED_KALMAN_FILTER_H_
 #define REFILL_FILTERS_EXTENDED_KALMAN_FILTER_H_
 
+#include <Eigen/Dense>
+#include <glog/logging.h>
+
 #include <memory>
 
 #include "refill/distributions/gaussian_distribution.h"
