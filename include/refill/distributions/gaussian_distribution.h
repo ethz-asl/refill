@@ -8,6 +8,8 @@
 
 #include "refill/distributions/distribution_base.h"
 
+using std::size_t;
+
 namespace refill {
 
 class GaussianDistribution : public DistributionBase<GaussianDistribution> {
@@ -24,7 +26,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   void setMean(const Eigen::VectorXd& mean);
   void setCov(const Eigen::MatrixXd& cov);
 
-  std::size_t dimension() const;
+  size_t dimension() const;
   Eigen::VectorXd mean() const;
   Eigen::MatrixXd cov() const;
 

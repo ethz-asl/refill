@@ -9,6 +9,8 @@
 
 #include "refill/distributions/distribution_base.h"
 
+using std::size_t;
+
 namespace refill {
 
 class SystemModelBase {
@@ -16,28 +18,28 @@ class SystemModelBase {
   virtual Eigen::VectorXd propagate(const Eigen::VectorXd& state,
                                     const Eigen::VectorXd& input) const = 0;
 
-  std::size_t getStateDim() const;
-  std::size_t getInputDim() const;
-  std::size_t getSystemNoiseDim() const;
+  size_t getStateDim() const;
+  size_t getInputDim() const;
+  size_t getSystemNoiseDim() const;
   DistributionInterface* getSystemNoise() const;
 
  protected:
   SystemModelBase() = delete;
-  SystemModelBase(const std::size_t& state_dim,
+  SystemModelBase(const size_t& state_dim,
                   const DistributionInterface& system_noise);
-  SystemModelBase(const std::size_t& state_dim,
+  SystemModelBase(const size_t& state_dim,
                   const DistributionInterface& system_noise,
-                  const std::size_t& input_dim);
+                  const size_t& input_dim);
 
-  void setSystemModelBaseParameters(const std::size_t& state_dim,
+  void setSystemModelBaseParameters(const size_t& state_dim,
                            const DistributionInterface& system_noise);
-  void setSystemModelBaseParameters(const std::size_t& state_dim,
+  void setSystemModelBaseParameters(const size_t& state_dim,
                            const DistributionInterface& system_noise,
-                           const std::size_t& input_dim);
+                           const size_t& input_dim);
 
  private:
-  std::size_t state_dim_;
-  std::size_t input_dim_;
+  size_t state_dim_;
+  size_t input_dim_;
   std::unique_ptr<DistributionInterface> system_noise_;
 };
 
