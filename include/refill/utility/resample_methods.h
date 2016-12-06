@@ -33,17 +33,19 @@ void importanceSampling(std::vector<ParticleType<StateType>>* particles) {
 
   // Create new vector of resampled particles
   std::vector<ParticleType<StateType>> tmp_particles(n_particles);
+  double uniform_weight = 1 / n_particles;
   for (ParticleType<StateType>& tmp_particle : tmp_particles) {
     double particle_random_num = uniform_dist(random_engine);
 
     for (int i = 0; i < n_particles; ++i) {
       if (particle_random_num < cum_sum[i]) {
         tmp_particle.first = particles->at(i).first;
+        tmp_particle.second = uniform_weight;
+        break;
       }
     }
   }
 
-  // TODO(jwidauer): set particle weights
   *particles = tmp_particles;
 }
 
