@@ -5,8 +5,7 @@ namespace refill {
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(0, 0),
                              GaussianDistribution(),
-                             Eigen::MatrixXd::Identity(0, 0)) {
-}
+                             Eigen::MatrixXd::Identity(0, 0)) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
@@ -15,8 +14,7 @@ LinearMeasurementModel::LinearMeasurementModel(
         measurement_mapping,
         measurement_noise,
         Eigen::MatrixXd::Identity(measurement_mapping.rows(),
-                                  measurement_noise.mean().size())) {
-}
+                                  measurement_noise.mean().size())) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
