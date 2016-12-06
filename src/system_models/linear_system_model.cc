@@ -101,10 +101,10 @@ Eigen::VectorXd LinearSystemModel::propagate(
   if (input_mapping_.size() == 0
       || input == Eigen::VectorXd::Zero(this->getInputDim())) {
     return system_mapping_ * state
-    + noise_mapping_ * this->getSystemNoise()->mean();
+        + noise_mapping_ * this->getSystemNoise()->mean();
   } else {
     return system_mapping_ * state + input_mapping_ * input
-    + noise_mapping_ * this->getSystemNoise()->mean();
+        + noise_mapping_ * this->getSystemNoise()->mean();
   }
 }
 

@@ -4,8 +4,6 @@ using std::size_t;
 
 namespace refill {
 
-// For the standard constructor, we use a univariate standard
-// normal distribution.
 GaussianDistribution::GaussianDistribution()
     : GaussianDistribution(0) {}
 

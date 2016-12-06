@@ -62,7 +62,7 @@ Eigen::VectorXd LinearMeasurementModel::observe(
   CHECK_EQ(state.size(), this->getStateDim());
 
   return measurement_mapping_ * state
-  + noise_mapping_ * this->getMeasurementNoise()->mean();
+      + noise_mapping_ * this->getMeasurementNoise()->mean();
 }
 
 Eigen::MatrixXd LinearMeasurementModel::getMeasurementJacobian(
