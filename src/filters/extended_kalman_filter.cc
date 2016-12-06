@@ -5,6 +5,11 @@
 
 namespace refill {
 
+ExtendedKalmanFilter::ExtendedKalmanFilter()
+    : state_(GaussianDistribution()),
+      system_model_(nullptr),
+      measurement_model_(nullptr) {}
+
 ExtendedKalmanFilter::ExtendedKalmanFilter(
     const GaussianDistribution& initial_state)
     : state_(initial_state),
@@ -64,7 +69,7 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   const Eigen::MatrixXd new_state_cov =
       system_jacobian * state_.cov() * system_jacobian.transpose() +
       noise_jacobian * system_model.getSystemNoise()->cov() *
-          noise_jacobian.transpose();
+      noise_jacobian.transpose();
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }
