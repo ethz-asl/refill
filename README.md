@@ -25,7 +25,7 @@ A discussion about this can be found [here] (https://askubuntu.com/questions/145
 
 ### Documentation
 
-To generate documentation for this library, doxygen has to be installed. Then run the following commands:
+To generate documentation for this library, [doxygen](www.doxygen.org) has to be installed. Then run the following commands:
 
 ```
 cd doc
