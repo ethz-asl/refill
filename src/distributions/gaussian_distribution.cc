@@ -9,6 +9,9 @@ namespace refill {
  *
  * Use this if you don't know the dimension beforehand or don't know the
  * parameters.
+ *
+ * To be able to use the distribution, first set the parameters using the
+ * setDistParam() function.
  */
 GaussianDistribution::GaussianDistribution()
     : GaussianDistribution(0) {}

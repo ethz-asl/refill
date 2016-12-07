@@ -2,8 +2,14 @@
 
 namespace refill {
 
-// If standard constructor is called, we assume a one dimensional system
-// without input.
+/**
+ * This constructor sets up an empty linear system model.
+ *
+ * It can be useful for class member construction.
+ *
+ * To be able to use the model after using this constructor, first set the
+ * parameters using the setSystemParameters() function.
+ */
 LinearSystemModel::LinearSystemModel()
     : LinearSystemModel(Eigen::MatrixXd::Identity(0, 0), GaussianDistribution(),
                         Eigen::MatrixXd::Zero(0, 0),

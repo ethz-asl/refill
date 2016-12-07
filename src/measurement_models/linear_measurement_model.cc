@@ -2,6 +2,14 @@
 
 namespace refill {
 
+/**
+ * This constructor sets up an empty linear measurement model.
+ *
+ * It can be useful for class member construction.
+ *
+ * To be able to use the model after using this constructor, first set the
+ * parameters using the setMeasurementParameters() function.
+ */
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(0, 0),
                              GaussianDistribution(),

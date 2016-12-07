@@ -28,6 +28,7 @@ class LinearSystemModel : public LinearizedSystemModel {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  /** @brief Constructs an empty linear system model. */
   LinearSystemModel();
   /** @brief Constructor for a system model without an input and a
    *         simple noise mapping.

@@ -28,8 +28,7 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  // Standard constructor creates an one dimensional measurement model
-  // with univariate standard normal gaussian noise.
+  /** @brief Constructs an empty linear measurement model. */
   LinearMeasurementModel();
   /** @brief Constructor for a measurement model with a simple
    *         noise mapping.
