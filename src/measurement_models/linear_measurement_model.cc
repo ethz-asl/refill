@@ -5,8 +5,7 @@ namespace refill {
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(0, 0),
                              GaussianDistribution(),
-                             Eigen::MatrixXd::Identity(0, 0)) {
-}
+                             Eigen::MatrixXd::Identity(0, 0)) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
@@ -15,8 +14,7 @@ LinearMeasurementModel::LinearMeasurementModel(
         measurement_mapping,
         measurement_noise,
         Eigen::MatrixXd::Identity(measurement_mapping.rows(),
-                                  measurement_noise.mean().size())) {
-}
+                                  measurement_noise.mean().size())) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
@@ -57,24 +55,24 @@ void LinearMeasurementModel::setMeasurementParameters(
 
 Eigen::VectorXd LinearMeasurementModel::observe(
     const Eigen::VectorXd& state) const {
-  CHECK_NE(this->getStateDim(), 0) << "[LinearMeasurementModel]"
+  CHECK_NE(this->getStateDim(), 0)
       << " Measurement model has not been initialized.";
   CHECK_EQ(state.size(), this->getStateDim());
 
   return measurement_mapping_ * state
-  + noise_mapping_ * this->getMeasurementNoise()->mean();
+      + noise_mapping_ * this->getMeasurementNoise()->mean();
 }
 
 Eigen::MatrixXd LinearMeasurementModel::getMeasurementJacobian(
     const Eigen::VectorXd& state) const {
-  CHECK_NE(this->getStateDim(), 0) << "[LinearMeasurementModel]"
+  CHECK_NE(this->getStateDim(), 0)
       << " Measurement model has not been initialized.";
   return measurement_mapping_;
 }
 
 Eigen::MatrixXd LinearMeasurementModel::getNoiseJacobian(
     const Eigen::VectorXd& state) const {
-  CHECK_NE(this->getStateDim(), 0) <<"[LinearMeasurementModel]"
+  CHECK_NE(this->getStateDim(), 0)
       << " Measurement model has not been initialized.";
   return noise_mapping_;
 }

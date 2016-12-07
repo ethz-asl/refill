@@ -91,7 +91,7 @@ Eigen::VectorXd LinearSystemModel::propagate(
 Eigen::VectorXd LinearSystemModel::propagate(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
   CHECK_NE(this->getStateDim(), 0)
-      << "[LinearSystemModel] System model has not been initialized.";
+      << "System model has not been initialized.";
 
   CHECK_EQ(state.size(), this->getStateDim());
   CHECK_EQ(input.size(), this->getInputDim());
@@ -101,24 +101,24 @@ Eigen::VectorXd LinearSystemModel::propagate(
   if (input_mapping_.size() == 0
       || input == Eigen::VectorXd::Zero(this->getInputDim())) {
     return system_mapping_ * state
-    + noise_mapping_ * this->getSystemNoise()->mean();
+        + noise_mapping_ * this->getSystemNoise()->mean();
   } else {
     return system_mapping_ * state + input_mapping_ * input
-    + noise_mapping_ * this->getSystemNoise()->mean();
+        + noise_mapping_ * this->getSystemNoise()->mean();
   }
 }
 
 Eigen::MatrixXd LinearSystemModel::getStateJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
   CHECK_NE(this->getStateDim(), 0)
-        << "[LinearSystemModel] System model has not been initialized.";
+        << "System model has not been initialized.";
   return system_mapping_;
 }
 
 Eigen::MatrixXd LinearSystemModel::getNoiseJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
   CHECK_NE(this->getStateDim(), 0)
-        << "[LinearSystemModel] System model has not been initialized.";
+        << "System model has not been initialized.";
   return noise_mapping_;
 }
 
