@@ -1,6 +1,9 @@
 #include "refill/system_models/system_model_base.h"
 
+using std::size_t;
+
 namespace refill {
+
 
 /**
  * Use this constructor if your system does not have an input.
@@ -9,9 +12,10 @@ namespace refill {
  * @param state_dim The systems state dimension.
  * @param system_noise The system noise.
  */
-SystemModelBase::SystemModelBase(const std::size_t& state_dim,
+SystemModelBase::SystemModelBase(const size_t& state_dim,
                                  const DistributionInterface& system_noise)
     : SystemModelBase(state_dim, system_noise, 0) {}
+
 
 /**
  * Use this constructor if your system model does have an input.
@@ -21,9 +25,9 @@ SystemModelBase::SystemModelBase(const std::size_t& state_dim,
  * @param system_noise The system noise.
  * @param input_dim The systems input dimension.
  */
-SystemModelBase::SystemModelBase(const std::size_t& state_dim,
+SystemModelBase::SystemModelBase(const size_t& state_dim,
                                  const DistributionInterface& system_noise,
-                                 const std::size_t& input_dim)
+                                 const size_t& input_dim)
     : state_dim_(state_dim),
       input_dim_(input_dim),
       system_noise_(system_noise.clone()) {}
@@ -59,22 +63,22 @@ void SystemModelBase::setSystemModelBaseParameters(
 /**
  * @return the state dimension.
  */
-std::size_t SystemModelBase::getStateDim() const {
+size_t SystemModelBase::getStateDim() const {
   return state_dim_;
 }
 
 /**
  * @return the input dimension.
  */
-std::size_t SystemModelBase::getInputDim() const {
+size_t SystemModelBase::getInputDim() const {
   return input_dim_;
 }
 
 /**
  * @return the noise dimension.
  */
-std::size_t SystemModelBase::getSystemNoiseDim() const {
-  CHECK(system_noise_) << "[SystemModelBase] System noise has not been set.";
+size_t SystemModelBase::getSystemNoiseDim() const {
+  CHECK(system_noise_) << "System noise has not been set.";
   return system_noise_->mean().size();
 }
 
@@ -82,7 +86,7 @@ std::size_t SystemModelBase::getSystemNoiseDim() const {
  * @return a pointer to the system noise distribution.
  */
 DistributionInterface* SystemModelBase::getSystemNoise() const {
-  CHECK(system_noise_) << "[SystemModelBase] System noise has not been set.";
+  CHECK(system_noise_) << "System noise has not been set.";
   return system_noise_.get();
 }
 

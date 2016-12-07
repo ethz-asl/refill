@@ -1,9 +1,14 @@
 #ifndef REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 #define REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 
+#include <Eigen/Dense>
 #include <glog/logging.h>
 
+#include <cstdlib>
+
 #include "refill/distributions/distribution_base.h"
+
+using std::size_t;
 
 namespace refill {
 
@@ -37,7 +42,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   void setCov(const Eigen::MatrixXd& cov);
 
   /** @brief Returns the distributions dimension. */
-  int dimension() const;
+    size_t dimension() const;
   /** @brief Returns the current mean of the distribution. */
   Eigen::VectorXd mean() const;
   /** @brief Returns the current covariance of the distribution. */
@@ -47,8 +52,8 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   GaussianDistribution operator+(const GaussianDistribution& right_side);
 
  private:
-  Eigen::MatrixXd covariance_;
   Eigen::VectorXd mean_;
+  Eigen::MatrixXd covariance_;
 };
 
 }  // namespace refill

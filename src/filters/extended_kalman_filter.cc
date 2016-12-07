@@ -6,6 +6,23 @@
 namespace refill {
 
 /**
+ * Use this constructor if you don't know the initial conditions of the state
+ * or if you're not able to include them at construction.
+ *
+ * A use case example for this would be a filter as a member variable of a
+ * class. There it often is not easy to include an initial state in the
+ * constructor.
+ *
+ * To use the filter after using this constructor, first the state has to be
+ * set using setState() and then a system / measurement model have to be
+ * provided for the prediction / update step.
+ */
+ExtendedKalmanFilter::ExtendedKalmanFilter()
+    : state_(GaussianDistribution()),
+      system_model_(nullptr),
+      measurement_model_(nullptr) {}
+
+/**
  * Use this constructor if you intend to use the filter, by providing a system
  * and measurement model at every prediction / update step.
  *
@@ -109,7 +126,7 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   const Eigen::MatrixXd new_state_cov =
       system_jacobian * state_.cov() * system_jacobian.transpose() +
       noise_jacobian * system_model.getSystemNoise()->cov() *
-          noise_jacobian.transpose();
+      noise_jacobian.transpose();
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }

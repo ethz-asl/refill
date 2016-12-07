@@ -1,6 +1,9 @@
 #ifndef REFILL_FILTERS_EXTENDED_KALMAN_FILTER_H_
 #define REFILL_FILTERS_EXTENDED_KALMAN_FILTER_H_
 
+#include <Eigen/Dense>
+#include <glog/logging.h>
+
 #include <memory>
 
 #include "refill/distributions/gaussian_distribution.h"
@@ -22,6 +25,8 @@ namespace refill {
  */
 class ExtendedKalmanFilter : public FilterBase {
  public:
+  /** @brief Initializes the Kalman filter to no value. */
+  ExtendedKalmanFilter();
   /**
    * @brief Initializes the Kalman filter in a way that expects system models
    *        to be given upon prediction / update.

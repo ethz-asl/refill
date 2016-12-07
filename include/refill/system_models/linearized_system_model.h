@@ -3,8 +3,12 @@
 
 #include <Eigen/Dense>
 
+#include <cstdlib>
+
 #include "refill/distributions/distribution_base.h"
 #include "refill/system_models/system_model_base.h"
+
+using std::size_t;
 
 namespace refill {
 
@@ -58,15 +62,13 @@ class LinearizedSystemModel : public SystemModelBase {
  protected:
   /** @brief Default constructor should not be used. */
   LinearizedSystemModel() = delete;
-
   /** @brief Constructor for a linearized system model without an input. */
-  LinearizedSystemModel(const std::size_t& state_dim,
+  LinearizedSystemModel(const size_t& state_dim,
                         const DistributionInterface& system_noise);
-
   /** @brief Constructor for a linearized system model with an input. */
-  LinearizedSystemModel(const std::size_t& state_dim,
+  LinearizedSystemModel(const size_t& state_dim,
                         const DistributionInterface& system_noise,
-                        const std::size_t& input_dim);
+                        const size_t& input_dim);
 };
 
 }  // namespace refill

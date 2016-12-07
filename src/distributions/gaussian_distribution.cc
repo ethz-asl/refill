@@ -1,13 +1,17 @@
 #include "refill/distributions/gaussian_distribution.h"
 
+using std::size_t;
+
 namespace refill {
 
 /**
- * Creates a univariate standard normal distribution.
+ * Creates an empty GaussianDistribution.
+ *
+ * Use this if you don't know the dimension beforehand or don't know the
+ * parameters.
  */
 GaussianDistribution::GaussianDistribution()
-    : GaussianDistribution(1) {
-}
+    : GaussianDistribution(0) {}
 
 
 /**
@@ -15,8 +19,7 @@ GaussianDistribution::GaussianDistribution()
  */
 GaussianDistribution::GaussianDistribution(const int& dimension)
     : mean_(Eigen::VectorXd::Zero(dimension)),
-      covariance_(Eigen::MatrixXd::Identity(dimension, dimension)) {
-}
+      covariance_(Eigen::MatrixXd::Identity(dimension, dimension)) {}
 
 /**
  * @param dist_mean Mean of the constructed distribution.
@@ -75,7 +78,7 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
 /**
  * @return the dimension of the distribution.
  */
-int GaussianDistribution::dimension() const {
+size_t GaussianDistribution::dimension() const {
   return mean_.size();
 }
 

@@ -1,11 +1,15 @@
 #ifndef REFILL_SYSTEM_MODELS_SYSTEM_MODEL_BASE_H_
 #define REFILL_SYSTEM_MODELS_SYSTEM_MODEL_BASE_H_
 
-#include <glog/logging.h>
 #include <Eigen/Dense>
+#include <glog/logging.h>
+
+#include <cstdlib>
 #include <memory>
 
 #include "refill/distributions/distribution_base.h"
+
+using std::size_t;
 
 namespace refill {
 
@@ -27,11 +31,11 @@ class SystemModelBase {
                                     const Eigen::VectorXd& input) const = 0;
 
   /** @brief Returns the systems state dimension. */
-  std::size_t getStateDim() const;
+  size_t getStateDim() const;
   /** @brief Returns the systems input dimension. */
-  std::size_t getInputDim() const;
+  size_t getInputDim() const;
   /** @brief Returns the systems noise dimension. */
-  std::size_t getSystemNoiseDim() const;
+  size_t getSystemNoiseDim() const;
   /** @brief Returns a pointer to the system noise. */
   DistributionInterface* getSystemNoise() const;
 
@@ -39,25 +43,25 @@ class SystemModelBase {
   /** Default constructor should not be used. */
   SystemModelBase() = delete;
   /** @brief Constructor for a system model without an input. */
-  SystemModelBase(const std::size_t& state_dim,
+  SystemModelBase(const size_t& state_dim,
                   const DistributionInterface& system_noise);
   /** @brief Constructor for a system model with input. */
-  SystemModelBase(const std::size_t& state_dim,
+  SystemModelBase(const size_t& state_dim,
                   const DistributionInterface& system_noise,
-                  const std::size_t& input_dim);
+                  const size_t& input_dim);
 
   /** @brief Function to set the system model parameters without an input. */
-  void setSystemModelBaseParameters(const std::size_t& state_dim,
+  void setSystemModelBaseParameters(const size_t& state_dim,
                                     const DistributionInterface& system_noise);
   /** @brief Function to set the system model parameters with an input. */
-  void setSystemModelBaseParameters(const std::size_t& state_dim,
+  void setSystemModelBaseParameters(const size_t& state_dim,
                                     const DistributionInterface& system_noise,
-                                    const std::size_t& input_dim);
+                                    const size_t& input_dim);
 
  private:
+  size_t state_dim_;
+  size_t input_dim_;
   std::unique_ptr<DistributionInterface> system_noise_;
-  std::size_t state_dim_;
-  std::size_t input_dim_;
 };
 
 }  // namespace refill
