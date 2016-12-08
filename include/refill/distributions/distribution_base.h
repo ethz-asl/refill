@@ -12,6 +12,7 @@ class DistributionInterface {
  public:
   virtual Eigen::VectorXd mean() const = 0;
   virtual Eigen::MatrixXd cov() const = 0;
+  virtual Eigen::VectorXd drawSample() const = 0;
   virtual DistributionInterface* clone() const = 0;
 };
 

@@ -4,16 +4,14 @@ using std::size_t;
 
 namespace refill {
 
-template<typename StateType>
-ParticleFilter<StateType>::ParticleFilter()
+ParticleFilter::ParticleFilter()
     : particles_(0),
       system_model_(nullptr),
       measurement_model_(nullptr),
       resample_method_(nullptr) {
 }
 
-template<typename StateType>
-ParticleFilter<StateType>::ParticleFilter(
+ParticleFilter::ParticleFilter(
     const size_t& n_particles, const DistributionInterface& initial_state_dist,
     const std::function<void(std::vector<ParticleType>*)>& resample_method)
     : particles_(n_particles),
@@ -23,8 +21,7 @@ ParticleFilter<StateType>::ParticleFilter(
   initializeParticles(initial_state_dist);
 }
 
-template<typename StateType>
-ParticleFilter<StateType>::ParticleFilter(
+ParticleFilter::ParticleFilter(
     const size_t& n_particles, const DistributionInterface& initial_state_dist,
     const std::function<void(std::vector<ParticleType>*)>& resample_method,
     std::unique_ptr<SystemModelBase> system_model,
@@ -36,8 +33,7 @@ ParticleFilter<StateType>::ParticleFilter(
   initializeParticles(initial_state_dist);
 }
 
-template<typename StateType>
-void ParticleFilter<StateType>::setFilterParameters(
+void ParticleFilter::setFilterParameters(
     const size_t& n_particles, const DistributionInterface& initial_state_dist,
     const std::function<void(std::vector<ParticleType>*)>& resample_method) {
   particles_.resize(n_particles);
@@ -46,13 +42,11 @@ void ParticleFilter<StateType>::setFilterParameters(
   resample_method_ = resample_method;
 }
 
-template<typename StateType>
-void ParticleFilter<StateType>::setFilterParameters(
-      const size_t& n_particles,
-      const DistributionInterface& initial_state_dist,
-      const std::function<void(std::vector<ParticleType>*)>& resample_method,
-      std::unique_ptr<SystemModelBase> system_model,
-      std::unique_ptr<MeasurementModelBase> measurement_model) {
+void ParticleFilter::setFilterParameters(
+    const size_t& n_particles, const DistributionInterface& initial_state_dist,
+    const std::function<void(std::vector<ParticleType>*)>& resample_method,
+    std::unique_ptr<SystemModelBase> system_model,
+    std::unique_ptr<MeasurementModelBase> measurement_model) {
   particles_.resize(n_particles);
   initializeParticles(initial_state_dist);
 
@@ -62,16 +56,47 @@ void ParticleFilter<StateType>::setFilterParameters(
   resample_method_ = resample_method;
 }
 
-template<typename StateType>
-void ParticleFilter<StateType>::initializeParticles(
+void ParticleFilter::initializeParticles(
     const DistributionInterface& initial_state_dist) {
+  CHECK_NE(particles_.size(), 0) << "Particle vector is empty.";
+
+  double equal_weight = 1 / particles_.size();
   for (ParticleType& particle : particles_) {
-    // TODO(jwidauer): figure out/implement sample drawing
+    particle.first = initial_state_dist.drawSample();
+    particle.second = equal_weight;
   }
 }
 
-template<typename StateType>
-void ParticleFilter<StateType>::resample() {
+void ParticleFilter::predict() {
+  this->predict(Eigen::VectorXd::Zeros(system_model_->getInputDim()));
+}
+
+void ParticleFilter::predict(const Eigen::VectorXd& input) {
+  CHECK_NE(particles_.size(), 0) << "Particle vector is empty.";
+
+  for (ParticleType& particle : particles_) {
+    particle.first = system_model_->propagate(particle.first, input);
+  }
+}
+
+void ParticleFilter::predict(const SystemModelBase& system_model) {
+  this->predict(system_model,
+                Eigen::VectorXd::Zeros(system_model.getInputDim()));
+}
+
+void ParticleFilter::predict(const SystemModelBase& system_model,
+                            const Eigen::VectorXd& input) {
+  CHECK_NE(particles_.size(), 0) << "Particle vector is empty.";
+
+  for (ParticleType& particle : particles_) {
+    particle.first = system_model.propagate(particle.first, input);
+  }
+}
+
+void ParticleFilter::update(const Eigen::VectorXd& measurement) {
+}
+
+void ParticleFilter::resample() {
   resample_method_(&particles_);
 }
 

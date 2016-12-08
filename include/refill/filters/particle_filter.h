@@ -18,10 +18,9 @@ using std::size_t;
 
 namespace refill {
 
-template<typename StateType>
 class ParticleFilter : public FilterBase {
  public:
-  using ParticleType = std::pair<StateType, double>;
+  using ParticleType = std::pair<Eigen::VectorXd, double>;
 
   ParticleFilter();
   ParticleFilter(
