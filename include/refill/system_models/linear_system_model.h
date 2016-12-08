@@ -1,8 +1,8 @@
 #ifndef REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 #define REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 
-#include <glog/logging.h>
 #include <Eigen/Dense>
+#include <glog/logging.h>
 
 #include "refill/distributions/gaussian_distribution.h"
 #include "refill/system_models/linearized_system_model.h"
@@ -42,13 +42,10 @@ class LinearSystemModel : public LinearizedSystemModel {
   Eigen::VectorXd propagate(const Eigen::VectorXd& state,
                             const Eigen::VectorXd& input) const;
 
-  int getStateDim() const;
-  int getInputDim() const;
   Eigen::MatrixXd getStateJacobian(const Eigen::VectorXd& state,
                                    const Eigen::VectorXd& input) const;
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
                                    const Eigen::VectorXd& input) const;
-  DistributionInterface* getSystemNoise() const;
 
  private:
   Eigen::MatrixXd system_mapping_;

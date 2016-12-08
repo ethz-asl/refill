@@ -2,25 +2,27 @@
 #define REFILL_MEASUREMENT_MODELS_LINEARIZED_MEASUREMENT_MODEL_H_
 
 #include <Eigen/Dense>
-#include <memory>
+
+#include <cstdlib>
 
 #include "refill/measurement_models/measurement_model_base.h"
+
+using std::size_t;
 
 namespace refill {
 
 class LinearizedMeasurementModel : public MeasurementModelBase {
  public:
-  LinearizedMeasurementModel() {}
-
-  // TODO(jwidauer): Add comment
   virtual Eigen::MatrixXd getMeasurementJacobian(
       const Eigen::VectorXd& state) const = 0;
   virtual Eigen::MatrixXd getNoiseJacobian(
       const Eigen::VectorXd& state) const = 0;
 
-  int getMeasurementNoiseDim() const;
  protected:
-  std::unique_ptr<DistributionInterface> measurement_noise_;
+  LinearizedMeasurementModel() = delete;
+  LinearizedMeasurementModel(const size_t& state_dim,
+                             const size_t& measurement_dim,
+                             const DistributionInterface& measurement_noise);
 };
 
 }  // namespace refill
