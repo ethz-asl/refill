@@ -19,8 +19,8 @@ constexpr unsigned int kUkfUseEigendecomposition = 1u;
 constexpr unsigned int kUkfUseCholeskyDecomposition = 2u;
 
 typedef struct {
-  const unsigned int sample_set_type = kUkfUseMultipleSampleSets;
-  const unsigned int mat_square_root_algo = kUkfUseCholeskyDecomposition;
+  unsigned int sample_set_type = kUkfUseMultipleSampleSets;
+  unsigned int mat_square_root_algo = kUkfUseCholeskyDecomposition;
 } UkfSettings;
 
 class UnscentedKalmanFilter : public FilterBase {
@@ -37,13 +37,23 @@ class UnscentedKalmanFilter : public FilterBase {
   void predict();
   void update(const Eigen::VectorXd& measurement);
 
-  void computeUnscentedTransform();
+  void setUkfSettings(UkfSettings settings);
 
  private:
   GaussianDistribution state_;
-  Eigen::MatrixXd deterministic_samples;
+  UkfSettings settings_;
+
   std::unique_ptr<SystemModelBase> system_model_;
   std::unique_ptr<MeasurementModelBase> measurement_model_;
+
+  // Only state_samples variable is used when the joint distribution is sampled.
+  // In that case the noise_samples variable remains untouched.
+  Eigen::MatrixXd state_samples_;
+  Eigen::MatrixXd noise_samples_;
+
+  // Computes unscented transform of the current system state and noise.
+  void computeUnscentedTransform(
+      const GaussianDistribution& noise_distribution);
 };
 
 }  // namespace refill

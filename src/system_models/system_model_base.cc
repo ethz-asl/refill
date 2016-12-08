@@ -7,8 +7,9 @@ namespace refill {
 
 Eigen::MatrixXd SystemModelBase::propagateVectorized(
     const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
-    const Eigen::VectorXd& sampled_noise) {
+    const Eigen::MatrixXd& sampled_noise) {
   const size_t state_size = getStateDim();
+  const size_t noise_size = getSystemNoiseDim();
   const size_t state_sample_count = sampled_state.cols();
   const size_t noise_sample_count = sampled_noise.cols();
 
@@ -24,7 +25,11 @@ Eigen::MatrixXd SystemModelBase::propagateVectorized(
        state_sample_id++) {
     for (int noise_sample_id = 0; noise_sample_id < noise_sample_count;
          noise_sample_id++) {
-      // TODO(igilitschenski): FILLME
+      result.block(0, state_sample_id * noise_sample_count + noise_sample_id,
+                   state_size, 1) =
+          propagate(sampled_state.block(0, state_sample_id, 1, state_size),
+                    input,
+                    sampled_noise.block(0, noise_sample_id, 1, noise_size));
     }
   }
 
