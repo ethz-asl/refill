@@ -115,8 +115,6 @@ void UnscentedKalmanFilter::computeUnscentedTransform(
     state_samples_ = state_mean.replicate(1, 2 * state_dimension + 1) +
                      scaled_covariance_root * state_samples_;
   } else {
-    // const Eigen::MatrixXd scaled_covariance =
-    //    (state_dimension / (1 - state_weights)) * state_covariance;
     Eigen::EigenSolver<Eigen::MatrixXd> matrix_root_solver(state_covariance);
     const Eigen::MatrixXd eigenvalues =
         matrix_root_solver.eigenvalues().real().asDiagonal();
