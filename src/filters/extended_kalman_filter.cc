@@ -62,16 +62,12 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(
   CHECK_EQ(measurement_model->getStateDim(), kStateDimension);
 }
 
-/**
- * @param state The new filter state.
- */
+/** @param state The new filter state. */
 void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
   state_ = state;
 }
 
-/**
- * Checks whether the standard system model has been set.
- */
+/** Checks whether the standard system model has been set. */
 void ExtendedKalmanFilter::predict() {
   CHECK(this->system_model_) << "No default system model provided.";
 

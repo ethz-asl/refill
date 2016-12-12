@@ -34,31 +34,23 @@ void MeasurementModelBase::setMeasurementModelBaseParameters(
   measurement_noise_.reset(measurement_noise.clone());
 }
 
-/**
- * @return the state dimension.
- */
+/** @return the state dimension. */
 size_t MeasurementModelBase::getStateDim() const {
   return state_dim_;
 }
 
-/**
- * @return the measurement dimension.
- */
+/** @return the measurement dimension. */
 size_t MeasurementModelBase::getMeasurementDim() const {
   return measurement_dim_;
 }
 
-/**
- * @return the noise dimension.
- */
+/** @return the noise dimension. */
 size_t MeasurementModelBase::getMeasurementNoiseDim() const {
   CHECK(measurement_noise_) << "Measurement noise has not been set.";
   return measurement_noise_->mean().size();
 }
 
-/**
- * @return a pointer to the measurement model noise distribution.
- */
+/** @return a pointer to the measurement model noise distribution. */
 DistributionInterface* MeasurementModelBase::getMeasurementNoise() const {
   CHECK(measurement_noise_) << "Measurement noise has not been set.";
   return measurement_noise_.get();

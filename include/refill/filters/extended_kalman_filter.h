@@ -29,14 +29,12 @@ class ExtendedKalmanFilter : public FilterBase {
   ExtendedKalmanFilter();
   /**
    * @brief Initializes the Kalman filter in a way that expects system models
-   *        to be given upon prediction / update.
-   */
+   *        to be given upon prediction / update. */
   explicit ExtendedKalmanFilter(const GaussianDistribution& initial_state);
 
   /**
    * @brief Initialized the Kalman filter to use the standard models, if
-   *        not stated otherwise.
-   */
+   *        not stated otherwise. */
   explicit ExtendedKalmanFilter(
       const GaussianDistribution& initial_state,
       std::unique_ptr<LinearizedSystemModel> system_model,
@@ -47,23 +45,19 @@ class ExtendedKalmanFilter : public FilterBase {
 
   /**
    * @brief Performs a prediction step with the standard system model and
-   *        no input.
-   */
+   *        no input. */
   void predict() override;
   /**
    * @brief Performs a prediction step with the standard system model and
-   *        an input.
-   */
+   *        an input. */
   void predict(const Eigen::VectorXd& input);
   /**
    * @brief Performs a prediction step using the provided system model and
-   *        no input.
-   */
+   *        no input. */
   void predict(const LinearizedSystemModel& system_model);
   /**
    * @brief Performs a prediction step using the provided system model and
-   *        and input.
-   */
+   *        and input. */
   void predict(const LinearizedSystemModel& system_model,
                const Eigen::VectorXd& input);
 

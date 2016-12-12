@@ -17,9 +17,7 @@ GaussianDistribution::GaussianDistribution()
     : GaussianDistribution(0) {}
 
 
-/**
- * @param dimension Dimension of the constructed normal distribution.
- */
+/** @param dimension Dimension of the constructed normal distribution. */
 GaussianDistribution::GaussianDistribution(const int& dimension)
     : mean_(Eigen::VectorXd::Zero(dimension)),
       covariance_(Eigen::MatrixXd::Identity(dimension, dimension)) {}
@@ -78,23 +76,17 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
   covariance_ = cov;
 }
 
-/**
- * @return the dimension of the distribution.
- */
+/** @return the dimension of the distribution. */
 size_t GaussianDistribution::dimension() const {
   return mean_.size();
 }
 
-/**
- * @return the current distribution mean.
- */
+/** @return the current distribution mean. */
 Eigen::VectorXd GaussianDistribution::mean() const {
   return mean_;
 }
 
-/**
- * @return the current distribution covariance.
- */
+/** @return the current distribution covariance. */
 Eigen::MatrixXd GaussianDistribution::cov() const {
   return covariance_;
 }

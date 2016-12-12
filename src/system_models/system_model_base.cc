@@ -60,31 +60,23 @@ void SystemModelBase::setSystemModelBaseParameters(
   input_dim_ = input_dim;
 }
 
-/**
- * @return the state dimension.
- */
+/** @return the state dimension. */
 size_t SystemModelBase::getStateDim() const {
   return state_dim_;
 }
 
-/**
- * @return the input dimension.
- */
+/** @return the input dimension. */
 size_t SystemModelBase::getInputDim() const {
   return input_dim_;
 }
 
-/**
- * @return the noise dimension.
- */
+/** @return the noise dimension. */
 size_t SystemModelBase::getSystemNoiseDim() const {
   CHECK(system_noise_) << "System noise has not been set.";
   return system_noise_->mean().size();
 }
 
-/**
- * @return a pointer to the system noise distribution.
- */
+/** @return a pointer to the system noise distribution. */
 DistributionInterface* SystemModelBase::getSystemNoise() const {
   CHECK(system_noise_) << "System noise has not been set.";
   return system_noise_.get();

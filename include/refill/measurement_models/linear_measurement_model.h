@@ -31,25 +31,21 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
   /** @brief Constructs an empty linear measurement model. */
   LinearMeasurementModel();
   /** @brief Constructor for a measurement model with a simple
-   *         noise mapping.
-   */
+   *         noise mapping. */
   LinearMeasurementModel(const Eigen::MatrixXd& measurement_mapping,
                          const DistributionInterface& measurement_noise);
   /** @brief Constructor for a measurement model with a specific
-   *         noise mapping.
-   */
+   *         noise mapping. */
   LinearMeasurementModel(const Eigen::MatrixXd& measurement_mapping,
                          const DistributionInterface& measurement_noise,
                          const Eigen::MatrixXd& noise_mapping);
 
   /** @brief Sets the measurement model parameters for a model with a simple
-   *         noise mapping.
-   */
+   *         noise mapping. */
   void setMeasurementParameters(const Eigen::MatrixXd& measurement_mapping,
                                 const DistributionInterface& measurement_noise);
   /** @brief Sets the measurement model parameters for a model with a specific
-   *         noise mapping.
-   */
+   *         noise mapping. */
   void setMeasurementParameters(const Eigen::MatrixXd& measurement_mapping,
                                 const DistributionInterface& measurement_noise,
                                 const Eigen::MatrixXd& noise_mapping);
@@ -57,14 +53,11 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
   /** @brief Use the measurement model to receive the expected measurement. */
   Eigen::VectorXd observe(const Eigen::VectorXd& state) const;
 
-  /**
-   * @brief Function to get @f$ H_k @f$, which is the measurement model
-   *        Jacobian w.r.t. the system state.
-   */
+  /** @brief Function to get @f$ H_k @f$, which is the measurement model
+   *         Jacobian w.r.t. the system state. */
   Eigen::MatrixXd getMeasurementJacobian(const Eigen::VectorXd& state) const;
   /** @brief Function to get @f$ M_k @f$, which is the measurement model
-   *         Jacobian w.r.t. the measurement noise.
-   */
+   *         Jacobian w.r.t. the measurement noise. */
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state) const;
 
  private:

@@ -12,23 +12,17 @@ using std::size_t;
 
 namespace refill {
 
-/**
- * @brief Class that implements a multivariate Gaussian distribution.
- */
-
+/** @brief Class that implements a multivariate Gaussian distribution. */
 class GaussianDistribution : public DistributionBase<GaussianDistribution> {
  public:
   /** @brief Default constructor. */
   GaussianDistribution();
-  /**
-   * @brief Copy constrcutor.
-   */
+  /** @brief Copy constrcutor. */
   GaussianDistribution(const GaussianDistribution& dist) = default;
   /** @brief Constructs a normal distribution with given dimension. */
   explicit GaussianDistribution(const int& dimension);
   /** @brief Constructs a gaussian distribution with given
-   *         mean and covariance.
-   */
+   *         mean and covariance. */
   GaussianDistribution(const Eigen::VectorXd& dist_mean,
                        const Eigen::MatrixXd& dist_cov);
 
