@@ -11,8 +11,11 @@ namespace refill {
 TEST(UnscentedKalmanFilterTest, ElementaryTest) {
   // Initializes default 1d models
   GaussianDistribution initial_state;
-  LinearSystemModel system_model;
-  LinearMeasurementModel measurement_model;
+  GaussianDistribution system_noise;
+  GaussianDistribution measurement_noise;
+  LinearSystemModel system_model(Eigen::MatrixXd::Identity(1, 1), system_noise);
+  LinearMeasurementModel measurement_model(Eigen::MatrixXd::Identity(1, 1),
+                                           measurement_noise);
 
   UnscentedKalmanFilter unscented_kf(initial_state);
 
