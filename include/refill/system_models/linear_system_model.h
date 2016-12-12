@@ -17,8 +17,6 @@ class LinearSystemModel : public LinearizedSystemModel {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  // Standard constructor creates an one dimensional measurement model
-  // with univariate standard normal gaussian noise.
   LinearSystemModel();
   LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                     const DistributionInterface& system_noise);

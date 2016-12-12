@@ -3,9 +3,9 @@
 namespace refill {
 
 LinearMeasurementModel::LinearMeasurementModel()
-    : LinearMeasurementModel(Eigen::MatrixXd::Identity(1, 1),
+    : LinearMeasurementModel(Eigen::MatrixXd::Identity(0, 0),
                              GaussianDistribution(),
-                             Eigen::MatrixXd::Identity(1, 1)) {}
+                             Eigen::MatrixXd::Identity(0, 0)) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
