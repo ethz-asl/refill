@@ -2,8 +2,6 @@
 
 namespace refill {
 
-// If standard constructor is called, we assume a one dimensional system
-// without input.
 LinearSystemModel::LinearSystemModel()
     : LinearSystemModel(Eigen::MatrixXd::Identity(0, 0), GaussianDistribution(),
                         Eigen::MatrixXd::Zero(0, 0),
@@ -12,22 +10,19 @@ LinearSystemModel::LinearSystemModel()
 // If constructor is called without input matrix, we assume there is no input.
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise)
-    : LinearSystemModel(
-        system_mapping,
-        system_noise,
-        Eigen::MatrixXd::Zero(0, 0),
-        Eigen::MatrixXd::Identity(system_mapping.rows(),
-                                  system_noise.mean().size())) {}
+    : LinearSystemModel(system_mapping, system_noise,
+                        Eigen::MatrixXd::Zero(0, 0),
+                        Eigen::MatrixXd::Identity(system_mapping.rows(),
+                                                  system_noise.mean().size())) {
+}
 
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise,
                                      const Eigen::MatrixXd& input_mapping)
-    : LinearSystemModel(
-        system_mapping,
-        system_noise,
-        input_mapping,
-        Eigen::MatrixXd::Identity(system_mapping.rows(),
-                                  system_noise.mean().size())) {}
+    : LinearSystemModel(system_mapping, system_noise, input_mapping,
+                        Eigen::MatrixXd::Identity(system_mapping.rows(),
+                                                  system_noise.mean().size())) {
+}
 
 LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const DistributionInterface& system_noise,
@@ -43,9 +38,7 @@ void LinearSystemModel::setSystemParameters(
     const Eigen::MatrixXd& system_mapping,
     const DistributionInterface& system_noise) {
   this->setSystemParameters(
-      system_mapping,
-      system_noise,
-      Eigen::MatrixXd::Zero(0, 0),
+      system_mapping, system_noise, Eigen::MatrixXd::Zero(0, 0),
       Eigen::MatrixXd::Identity(system_mapping.rows(),
                                 system_noise.mean().size()));
 }
@@ -55,9 +48,7 @@ void LinearSystemModel::setSystemParameters(
     const DistributionInterface& system_noise,
     const Eigen::MatrixXd& input_mapping) {
   this->setSystemParameters(
-      system_mapping,
-      system_noise,
-      input_mapping,
+      system_mapping, system_noise, input_mapping,
       Eigen::MatrixXd::Identity(system_mapping.rows(),
                                 system_noise.mean().size()));
 }
@@ -90,35 +81,32 @@ Eigen::VectorXd LinearSystemModel::propagate(
 
 Eigen::VectorXd LinearSystemModel::propagate(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
-  CHECK_NE(this->getStateDim(), 0)
-      << "System model has not been initialized.";
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
 
   CHECK_EQ(state.size(), this->getStateDim());
   CHECK_EQ(input.size(), this->getInputDim());
 
   // If there is no input to the system,
   // we don't need to compute the matrix multiplication.
-  if (input_mapping_.size() == 0
-      || input == Eigen::VectorXd::Zero(this->getInputDim())) {
-    return system_mapping_ * state
-        + noise_mapping_ * this->getSystemNoise()->mean();
+  if (input_mapping_.size() == 0 ||
+      input == Eigen::VectorXd::Zero(this->getInputDim())) {
+    return system_mapping_ * state +
+           noise_mapping_ * this->getSystemNoise()->mean();
   } else {
-    return system_mapping_ * state + input_mapping_ * input
-        + noise_mapping_ * this->getSystemNoise()->mean();
+    return system_mapping_ * state + input_mapping_ * input +
+           noise_mapping_ * this->getSystemNoise()->mean();
   }
 }
 
 Eigen::MatrixXd LinearSystemModel::getStateJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
-  CHECK_NE(this->getStateDim(), 0)
-        << "System model has not been initialized.";
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
   return system_mapping_;
 }
 
 Eigen::MatrixXd LinearSystemModel::getNoiseJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
-  CHECK_NE(this->getStateDim(), 0)
-        << "System model has not been initialized.";
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
   return noise_mapping_;
 }
 

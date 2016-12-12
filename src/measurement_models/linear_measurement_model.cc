@@ -11,10 +11,9 @@ LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise)
     : LinearMeasurementModel(
-        measurement_mapping,
-        measurement_noise,
-        Eigen::MatrixXd::Identity(measurement_mapping.rows(),
-                                  measurement_noise.mean().size())) {}
+          measurement_mapping, measurement_noise,
+          Eigen::MatrixXd::Identity(measurement_mapping.rows(),
+                                    measurement_noise.mean().size())) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
@@ -23,8 +22,7 @@ LinearMeasurementModel::LinearMeasurementModel(
     : LinearizedMeasurementModel(measurement_mapping.cols(),
                                  measurement_mapping.rows(),
                                  measurement_noise) {
-  this->setMeasurementParameters(measurement_mapping,
-                                 measurement_noise,
+  this->setMeasurementParameters(measurement_mapping, measurement_noise,
                                  noise_mapping);
 }
 
@@ -32,8 +30,7 @@ void LinearMeasurementModel::setMeasurementParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise) {
   this->setMeasurementParameters(
-      measurement_mapping,
-      measurement_noise,
+      measurement_mapping, measurement_noise,
       Eigen::MatrixXd::Identity(measurement_mapping.rows(),
                                 measurement_noise.mean().size()));
 }
@@ -59,8 +56,8 @@ Eigen::VectorXd LinearMeasurementModel::observe(
       << " Measurement model has not been initialized.";
   CHECK_EQ(state.size(), this->getStateDim());
 
-  return measurement_mapping_ * state
-      + noise_mapping_ * this->getMeasurementNoise()->mean();
+  return measurement_mapping_ * state +
+         noise_mapping_ * this->getMeasurementNoise()->mean();
 }
 
 Eigen::MatrixXd LinearMeasurementModel::getMeasurementJacobian(

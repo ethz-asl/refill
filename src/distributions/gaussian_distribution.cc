@@ -4,8 +4,7 @@ using std::size_t;
 
 namespace refill {
 
-GaussianDistribution::GaussianDistribution()
-    : GaussianDistribution(0) {}
+GaussianDistribution::GaussianDistribution() : GaussianDistribution(1) {}
 
 GaussianDistribution::GaussianDistribution(const int& dimension)
     : mean_(Eigen::VectorXd::Zero(dimension)),
@@ -38,26 +37,19 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
   CHECK_EQ(cov.rows(), cov.cols());
 
   Eigen::LLT<Eigen::MatrixXd> chol_of_cov(cov);
-  CHECK_NE(chol_of_cov.info(), Eigen::NumericalIssue)<< "Matrix not s.p.d.";
+  CHECK_NE(chol_of_cov.info(), Eigen::NumericalIssue) << "Matrix not s.p.d.";
 
   covariance_ = cov;
 }
 
-size_t GaussianDistribution::dimension() const {
-  return mean_.size();
-}
+size_t GaussianDistribution::dimension() const { return mean_.size(); }
 
-Eigen::VectorXd GaussianDistribution::mean() const {
-  return mean_;
-}
+Eigen::VectorXd GaussianDistribution::mean() const { return mean_; }
 
-Eigen::MatrixXd GaussianDistribution::cov() const {
-  return covariance_;
-}
+Eigen::MatrixXd GaussianDistribution::cov() const { return covariance_; }
 
 GaussianDistribution GaussianDistribution::operator+(
-    const GaussianDistribution &right_side) {
-
+    const GaussianDistribution& right_side) {
   CHECK(right_side.dimension() == this->dimension())
       << "Distribution dimensions do not match.";
 
@@ -68,7 +60,7 @@ GaussianDistribution GaussianDistribution::operator+(
 
 // Non-member overloaded operator for linear transforms of Gaussian random
 // vectors.
-inline GaussianDistribution operator*(const Eigen::MatrixXd &mat,
+inline GaussianDistribution operator*(const Eigen::MatrixXd& mat,
                                       const GaussianDistribution gaussian) {
   CHECK_EQ(mat.cols(), gaussian.dimension());
   return GaussianDistribution(mat * gaussian.mean(),
