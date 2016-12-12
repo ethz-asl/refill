@@ -2,6 +2,7 @@
 #define REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 
 #include <glog/logging.h>
+
 #include <Eigen/Dense>
 
 #include <cstdlib>
