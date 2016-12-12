@@ -39,6 +39,27 @@ UnscentedKalmanFilter::UnscentedKalmanFilter(
 
 void UnscentedKalmanFilter::predict() {
   CHECK(system_model_) << "System model not defined.";
+
+  const int input_size = this->system_model_->getInputDim();
+  this->predict(*this->system_model_, Eigen::VectorXd::Zero(input_size));
+}
+
+void UnscentedKalmanFilter::predict(const Eigen::VectorXd& input) {
+  CHECK(this->system_model_) << "No default system model provided.";
+  this->predict(*this->system_model_, input);
+}
+
+void UnscentedKalmanFilter::predict(const SystemModelBase& system_model) {
+  const int input_size = system_model.getInputDim();
+  this->predict(system_model, Eigen::VectorXd::Zero(input_size));
+}
+
+void UnscentedKalmanFilter::predict(const SystemModelBase& system_model,
+                                    const Eigen::VectorXd& input) {
+  CHECK_EQ(system_model.getStateDim(), state_.mean().size());
+  CHECK_EQ(system_model.getInputDim(), input.size());
+
+  // TODO(igilitschenski): FILLME
 }
 
 void UnscentedKalmanFilter::setUkfSettings(UkfSettings settings) {
@@ -46,8 +67,18 @@ void UnscentedKalmanFilter::setUkfSettings(UkfSettings settings) {
 }
 
 void UnscentedKalmanFilter::update(const Eigen::VectorXd& measurement) {
-  CHECK_EQ(measurement.rows(), this->measurement_model_->getMeasurementDim())
+  this->update(*this->measurement_model_, measurement);
+}
+
+void UnscentedKalmanFilter::update(
+    const MeasurementModelBase& measurement_model,
+    const Eigen::VectorXd& measurement) {
+  CHECK_EQ(measurement.rows(), measurement_model.getMeasurementDim())
       << "Measurement has wrong dimension.";
+  CHECK_EQ(measurement_model.getStateDim(), state_.dimension())
+      << "Measurement model assumes wrong state dimension.";
+
+  // TODO(igilitschenski): FILLME
 }
 
 // This basically implements the deterministic sample set from Julier (2014),

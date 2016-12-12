@@ -34,8 +34,14 @@ class UnscentedKalmanFilter : public FilterBase {
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<MeasurementModelBase> measurement_model);
 
-  void predict();
-  void update(const Eigen::VectorXd& measurement);
+  void predict() override;
+  void predict(const Eigen::VectorXd& input);
+  void predict(const SystemModelBase& system_model);
+  void predict(const SystemModelBase& system_model,
+               const Eigen::VectorXd& input);
+  void update(const Eigen::VectorXd& measurement) override;
+  void update(const MeasurementModelBase& measurement_model,
+              const Eigen::VectorXd& measurement);
 
   void setUkfSettings(UkfSettings settings);
 
