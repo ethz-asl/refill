@@ -1,8 +1,9 @@
 #ifndef REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 #define REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 
-#include <Eigen/Dense>
 #include <glog/logging.h>
+
+#include <Eigen/Dense>
 
 #include "refill/distributions/gaussian_distribution.h"
 #include "refill/system_models/linearized_system_model.h"
@@ -16,6 +17,8 @@ class LinearSystemModel : public LinearizedSystemModel {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  // Standard constructor creates an one dimensional measurement model
+  // with univariate standard normal gaussian noise.
   LinearSystemModel();
   LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                     const DistributionInterface& system_noise);

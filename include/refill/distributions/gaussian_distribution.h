@@ -1,8 +1,8 @@
 #ifndef REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 #define REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 
-#include <Eigen/Dense>
 #include <glog/logging.h>
+#include <Eigen/Dense>
 
 #include <cstdlib>
 
@@ -14,6 +14,7 @@ namespace refill {
 
 class GaussianDistribution : public DistributionBase<GaussianDistribution> {
  public:
+  // Default constructor creates standard normal gaussian.
   GaussianDistribution();
   GaussianDistribution(const GaussianDistribution& dist) = default;
   explicit GaussianDistribution(const int& dimension);
