@@ -1,7 +1,7 @@
 #include "refill/system_models/linear_system_model.h"
 
-#include <Eigen/Dense>
 #include <gtest/gtest.h>
+#include <Eigen/Dense>
 
 namespace refill {
 
@@ -26,7 +26,8 @@ TEST(LinearSystemModelTest, Fullrun) {
   Eigen::VectorXd input_vec = Eigen::VectorXd::Ones(kInputDim);
 
   // Propagate the state vector through the system
-  state_vec = system_model.propagate(state_vec, input_vec);
+  state_vec = system_model.propagate(state_vec, input_vec,
+                                     system_model.getSystemNoise()->mean());
 
   // Check that propagation was correct
   ASSERT_EQ(state_vec, Eigen::VectorXd::Ones(kStateDim) * 3.0);

@@ -76,11 +76,13 @@ void LinearSystemModel::setSystemParameters(
 
 Eigen::VectorXd LinearSystemModel::propagate(
     const Eigen::VectorXd& state) const {
-  return this->propagate(state, Eigen::VectorXd::Zero(this->getInputDim()));
+  return this->propagate(state, Eigen::VectorXd::Zero(this->getInputDim()),
+                         this->getSystemNoise()->mean());
 }
 
 Eigen::VectorXd LinearSystemModel::propagate(
-    const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
+    const Eigen::VectorXd& state, const Eigen::VectorXd& input,
+    const Eigen::VectorXd& noise) const {
   CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
 
   CHECK_EQ(state.size(), this->getStateDim());
@@ -90,11 +92,10 @@ Eigen::VectorXd LinearSystemModel::propagate(
   // we don't need to compute the matrix multiplication.
   if (input_mapping_.size() == 0 ||
       input == Eigen::VectorXd::Zero(this->getInputDim())) {
-    return system_mapping_ * state +
-           noise_mapping_ * this->getSystemNoise()->mean();
+    return system_mapping_ * state + noise_mapping_ * noise;
   } else {
     return system_mapping_ * state + input_mapping_ * input +
-           noise_mapping_ * this->getSystemNoise()->mean();
+           noise_mapping_ * noise;
   }
 }
 
