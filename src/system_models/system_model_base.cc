@@ -6,7 +6,7 @@ namespace refill {
 
 SystemModelBase::SystemModelBase(const size_t& state_dim,
                                  const DistributionInterface& system_noise)
-    : SystemModelBase(state_dim, system_noise, 0) {}
+    : SystemModelBase(state_dim, system_noise, 0u) {}
 
 SystemModelBase::SystemModelBase(const size_t& state_dim,
                                  const DistributionInterface& system_noise,
@@ -31,9 +31,9 @@ Eigen::MatrixXd SystemModelBase::propagateVectorized(
 
   // Evaluate the propagate function for each combination of state / noise
   // samples.
-  for (int state_sample_id = 0; state_sample_id < state_sample_count;
+  for (size_t state_sample_id = 0u; state_sample_id < state_sample_count;
        state_sample_id++) {
-    for (int noise_sample_id = 0; noise_sample_id < noise_sample_count;
+    for (size_t noise_sample_id = 0u; noise_sample_id < noise_sample_count;
          noise_sample_id++) {
       result.block(0, state_sample_id * noise_sample_count + noise_sample_id,
                    state_size, 1) =

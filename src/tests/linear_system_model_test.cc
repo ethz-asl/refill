@@ -1,6 +1,7 @@
 #include "refill/system_models/linear_system_model.h"
 
 #include <gtest/gtest.h>
+
 #include <Eigen/Dense>
 
 namespace refill {

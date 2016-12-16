@@ -2,8 +2,8 @@
 #define REFILL_SYSTEM_MODELS_SYSTEM_MODEL_BASE_H_
 
 #include <glog/logging.h>
-#include <Eigen/Dense>
 
+#include <Eigen/Dense>
 #include <cstdlib>
 #include <memory>
 
