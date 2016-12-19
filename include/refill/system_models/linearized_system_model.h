@@ -2,7 +2,6 @@
 #define REFILL_SYSTEM_MODELS_LINEARIZED_SYSTEM_MODEL_H_
 
 #include <Eigen/Dense>
-
 #include <cstdlib>
 
 #include "refill/distributions/distribution_base.h"
@@ -14,13 +13,13 @@ namespace refill {
 
 class LinearizedSystemModel : public SystemModelBase {
  public:
+  LinearizedSystemModel() = delete;
   virtual Eigen::MatrixXd getStateJacobian(
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
   virtual Eigen::MatrixXd getNoiseJacobian(
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const = 0;
 
  protected:
-  LinearizedSystemModel() = delete;
   LinearizedSystemModel(const size_t& state_dim,
                         const DistributionInterface& system_noise);
   LinearizedSystemModel(const size_t& state_dim,

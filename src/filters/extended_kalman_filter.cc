@@ -64,12 +64,12 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   const Eigen::MatrixXd noise_jacobian =
       system_model.getNoiseJacobian(state_.mean(), input);
 
-  const Eigen::VectorXd new_state_mean =
-      system_model.propagate(state_.mean(), input);
+  const Eigen::VectorXd new_state_mean = system_model.propagate(
+      state_.mean(), input, system_model.getSystemNoise()->mean());
   const Eigen::MatrixXd new_state_cov =
       system_jacobian * state_.cov() * system_jacobian.transpose() +
       noise_jacobian * system_model.getSystemNoise()->cov() *
-      noise_jacobian.transpose();
+          noise_jacobian.transpose();
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }

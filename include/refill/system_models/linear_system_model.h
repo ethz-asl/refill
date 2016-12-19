@@ -41,7 +41,8 @@ class LinearSystemModel : public LinearizedSystemModel {
   // Propagate a state vector through the linear system model
   Eigen::VectorXd propagate(const Eigen::VectorXd& state) const;
   Eigen::VectorXd propagate(const Eigen::VectorXd& state,
-                            const Eigen::VectorXd& input) const;
+                            const Eigen::VectorXd& input,
+                            const Eigen::VectorXd& noise) const;
 
   Eigen::MatrixXd getStateJacobian(const Eigen::VectorXd& state,
                                    const Eigen::VectorXd& input) const;
