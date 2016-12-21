@@ -4,7 +4,7 @@ namespace refill {
 
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(0, 0),
-                             GaussianDistribution(),
+                             GaussianDistribution(0),
                              Eigen::MatrixXd::Identity(0, 0)) {}
 
 LinearMeasurementModel::LinearMeasurementModel(
