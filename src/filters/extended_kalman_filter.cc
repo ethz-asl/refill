@@ -105,7 +105,7 @@ void ExtendedKalmanFilter::update(
       << "Residual covariance is not invertible.";
   const Eigen::MatrixXd kalman_gain = state_.cov() *
                                       measurement_jacobian.transpose() *
-                                      residual_cov_lu.inverse();
+                                      residual_cov.inverse();
 
   const Eigen::VectorXd new_state_mean =
       state_.mean() + kalman_gain * innovation;
