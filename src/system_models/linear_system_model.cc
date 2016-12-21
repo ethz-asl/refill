@@ -3,7 +3,8 @@
 namespace refill {
 
 LinearSystemModel::LinearSystemModel()
-    : LinearSystemModel(Eigen::MatrixXd::Identity(0, 0), GaussianDistribution(),
+    : LinearSystemModel(Eigen::MatrixXd::Identity(0, 0),
+                        GaussianDistribution(0),
                         Eigen::MatrixXd::Zero(0, 0),
                         Eigen::MatrixXd::Identity(0, 0)) {}
 
