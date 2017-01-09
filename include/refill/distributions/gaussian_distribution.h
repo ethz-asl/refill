@@ -39,6 +39,21 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   Eigen::MatrixXd covariance_;
 };
 
+// Non-member overloaded operator for linear transforms of Gaussian random
+// vectors.
+inline GaussianDistribution operator*(const Eigen::MatrixXd& mat,
+                                      const GaussianDistribution gaussian) {
+  CHECK_EQ(mat.cols(), gaussian.dimension());
+  return GaussianDistribution(mat * gaussian.mean(),
+                              mat * gaussian.cov() * mat.transpose());
+}
+
+inline GaussianDistribution operator*(const double& scalar,
+                                      const GaussianDistribution& gaussian) {
+  return GaussianDistribution(scalar * gaussian.mean(),
+                              scalar * gaussian.cov() * scalar);
+}
+
 }  // namespace refill
 
 #endif  // REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_

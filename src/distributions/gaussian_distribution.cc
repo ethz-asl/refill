@@ -58,13 +58,4 @@ GaussianDistribution GaussianDistribution::operator+(
   return result;
 }
 
-// Non-member overloaded operator for linear transforms of Gaussian random
-// vectors.
-inline GaussianDistribution operator*(const Eigen::MatrixXd& mat,
-                                      const GaussianDistribution gaussian) {
-  CHECK_EQ(mat.cols(), gaussian.dimension());
-  return GaussianDistribution(mat * gaussian.mean(),
-                              mat * gaussian.cov() * mat.transpose());
-}
-
 }  // namespace refill
