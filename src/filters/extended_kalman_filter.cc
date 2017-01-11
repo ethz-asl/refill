@@ -1,7 +1,6 @@
 #include "refill/filters/extended_kalman_filter.h"
 
-#include <Eigen/Dense>
-#include <Eigen/LU>
+#include <iostream>
 
 namespace refill {
 
@@ -64,12 +63,18 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   const Eigen::MatrixXd noise_jacobian =
       system_model.getNoiseJacobian(state_.mean(), input);
 
+  // Defining temporary matrices for transpose, since Eigen v3.2.10 exhibits a
+  // bug where matrix multiplications with a transpose halt the program
+  // execution here. Reason is unknown.
+  const Eigen::MatrixXd system_jacobian_transpose = system_jacobian.transpose();
+  const Eigen::MatrixXd noise_jacobian_transpose = noise_jacobian.transpose();
+
   const Eigen::VectorXd new_state_mean = system_model.propagate(
       state_.mean(), input, system_model.getSystemNoise()->mean());
   const Eigen::MatrixXd new_state_cov =
-      system_jacobian * state_.cov() * system_jacobian.transpose() +
+      system_jacobian * state_.cov() * system_jacobian_transpose +
       noise_jacobian * system_model.getSystemNoise()->cov() *
-          noise_jacobian.transpose();
+      noise_jacobian_transpose;
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }
@@ -90,12 +95,19 @@ void ExtendedKalmanFilter::update(
   const Eigen::MatrixXd noise_jacobian =
       measurement_model.getNoiseJacobian(state_.mean());
 
+  // Defining temporary matrices for transpose, since Eigen v3.2.10 exhibits a
+  // bug where matrix multiplications with a transpose halt the program
+  // execution here. Reason is unknown.
+  const Eigen::MatrixXd measurement_jacobian_transpose =
+      measurement_jacobian.transpose();
+  const Eigen::MatrixXd noise_jacobian_transpose = noise_jacobian.transpose();
+
   const Eigen::VectorXd innovation =
       measurement - measurement_model.observe(state_.mean());
   const Eigen::MatrixXd residual_cov =
-      measurement_jacobian * state_.cov() * measurement_jacobian.transpose() +
+      measurement_jacobian * state_.cov() * measurement_jacobian_transpose +
       noise_jacobian * measurement_model.getMeasurementNoise()->cov() *
-          noise_jacobian.transpose();
+      noise_jacobian_transpose;
 
   // Use of LU decomposition with complete pivoting for computing the inverse
   // of the residual covariance within Kalman gain computation enables us to
@@ -104,13 +116,18 @@ void ExtendedKalmanFilter::update(
   CHECK(residual_cov_lu.isInvertible())
       << "Residual covariance is not invertible.";
   const Eigen::MatrixXd kalman_gain = state_.cov() *
-                                      measurement_jacobian.transpose() *
+                                      measurement_jacobian_transpose *
                                       residual_cov.inverse();
+
+  // Defining temporary matrix for transpose, since Eigen v3.2.10 exhibits a
+  // bug where matrix multiplications with a transpose halt the program
+  // execution here. Reason is unknown.
+  const Eigen::MatrixXd kalman_gain_transpose = kalman_gain.transpose();
 
   const Eigen::VectorXd new_state_mean =
       state_.mean() + kalman_gain * innovation;
   const Eigen::MatrixXd new_state_cov =
-      state_.cov() - kalman_gain * residual_cov * kalman_gain.transpose();
+      state_.cov() - kalman_gain * residual_cov * kalman_gain_transpose;
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }

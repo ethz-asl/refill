@@ -2,6 +2,7 @@
 #define REFILL_FILTERS_EXTENDED_KALMAN_FILTER_H_
 
 #include <Eigen/Dense>
+#include <Eigen/LU>
 #include <glog/logging.h>
 
 #include <memory>
