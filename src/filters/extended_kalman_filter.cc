@@ -1,7 +1,5 @@
 #include "refill/filters/extended_kalman_filter.h"
 
-#include <iostream>
-
 namespace refill {
 
 ExtendedKalmanFilter::ExtendedKalmanFilter()
@@ -64,7 +62,7 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
       system_model.getNoiseJacobian(state_.mean(), input);
 
   // Defining temporary matrices for transpose, since Eigen v3.2.10 exhibits a
-  // bug where matrix multiplications with a transpose halt the program
+  // bug where matrix multiplications with a transpose halts the program
   // execution here. Reason is unknown.
   const Eigen::MatrixXd system_jacobian_transpose = system_jacobian.transpose();
   const Eigen::MatrixXd noise_jacobian_transpose = noise_jacobian.transpose();
@@ -96,7 +94,7 @@ void ExtendedKalmanFilter::update(
       measurement_model.getNoiseJacobian(state_.mean());
 
   // Defining temporary matrices for transpose, since Eigen v3.2.10 exhibits a
-  // bug where matrix multiplications with a transpose halt the program
+  // bug where matrix multiplications with a transpose halts the program
   // execution here. Reason is unknown.
   const Eigen::MatrixXd measurement_jacobian_transpose =
       measurement_jacobian.transpose();
@@ -120,7 +118,7 @@ void ExtendedKalmanFilter::update(
                                       residual_cov.inverse();
 
   // Defining temporary matrix for transpose, since Eigen v3.2.10 exhibits a
-  // bug where matrix multiplications with a transpose halt the program
+  // bug where matrix multiplications with a transpose halts the program
   // execution here. Reason is unknown.
   const Eigen::MatrixXd kalman_gain_transpose = kalman_gain.transpose();
 
