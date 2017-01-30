@@ -1,8 +1,9 @@
 #ifndef REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 #define REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 
-#include <Eigen/Dense>
 #include <glog/logging.h>
+
+#include <Eigen/Dense>
 
 #include <cstdlib>
 
@@ -15,7 +16,7 @@ namespace refill {
 /** @brief Class that implements a multivariate Gaussian distribution. */
 class GaussianDistribution : public DistributionBase<GaussianDistribution> {
  public:
-  /** @brief Default constructor. */
+  /** @brief Default constructor creates standard normal gaussian. */
   GaussianDistribution();
   /** @brief Copy constrcutor. */
   GaussianDistribution(const GaussianDistribution& dist) = default;

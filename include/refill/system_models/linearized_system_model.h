@@ -38,7 +38,7 @@ namespace refill {
  */
 class LinearizedSystemModel : public SystemModelBase {
  public:
-  /**
+    /**
    * @brief Function to get @f$ A_k @f$, which is the system Jacobian w.r.t.
    *        the system state.
    *

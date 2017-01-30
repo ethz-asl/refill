@@ -1,9 +1,9 @@
 #ifndef REFILL_SYSTEM_MODELS_SYSTEM_MODEL_BASE_H_
 #define REFILL_SYSTEM_MODELS_SYSTEM_MODEL_BASE_H_
 
-#include <Eigen/Dense>
 #include <glog/logging.h>
 
+#include <Eigen/Dense>
 #include <cstdlib>
 #include <memory>
 
@@ -28,7 +28,19 @@ class SystemModelBase {
    * @return the new state vector.
    */
   virtual Eigen::VectorXd propagate(const Eigen::VectorXd& state,
-                                    const Eigen::VectorXd& input) const = 0;
+                                    const Eigen::VectorXd& input,
+                                    const Eigen::VectorXd& noise) const = 0;
+
+  // A vectorized version of the propagation.
+  // sampled_state is a N_s x M_s Matrix
+  // input is the intput to the system function.
+  // sampled_noise is a N_n x M_n Matrix
+  // Returns an N_s x (M_s * M_n) Matrix
+  // N_s / N_n denotes state and noise dimensions respectively.
+  // M_s / M_n user defined number of state/noise samples.
+  virtual Eigen::MatrixXd propagateVectorized(
+      const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
+      const Eigen::MatrixXd& sampled_noise) const;
 
   /** @brief Returns the systems state dimension. */
   size_t getStateDim() const;

@@ -14,7 +14,7 @@ namespace refill {
  */
 SystemModelBase::SystemModelBase(const size_t& state_dim,
                                  const DistributionInterface& system_noise)
-    : SystemModelBase(state_dim, system_noise, 0) {}
+    : SystemModelBase(state_dim, system_noise, 0u) {}
 
 
 /**
@@ -31,6 +31,29 @@ SystemModelBase::SystemModelBase(const size_t& state_dim,
     : state_dim_(state_dim),
       input_dim_(input_dim),
       system_noise_(system_noise.clone()) {}
+
+Eigen::MatrixXd SystemModelBase::propagateVectorized(
+    const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
+    const Eigen::MatrixXd& sampled_noise) const {
+  const size_t state_size = getStateDim();
+  const size_t noise_size = getSystemNoiseDim();
+  const size_t state_sample_count = sampled_state.cols();
+  const size_t noise_sample_count = sampled_noise.cols();
+
+  Eigen::MatrixXd result(state_size, state_sample_count * noise_sample_count);
+
+  // Evaluate the propagate function for each combination of state / noise
+  // samples.
+  for (size_t i = 0u; i < state_sample_count; i++) {
+    for (size_t j = 0u; j < noise_sample_count; j++) {
+      result.block(0, i * noise_sample_count + j, state_size, 1) =
+          propagate(sampled_state.block(0, i, 1, state_size), input,
+                    sampled_noise.block(0, j, 1, noise_size));
+    }
+  }
+
+  return result;
+}
 
 /**
  * Use this function if your system does not have an input.

@@ -12,7 +12,7 @@ namespace refill {
  */
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(0, 0),
-                             GaussianDistribution(),
+                             GaussianDistribution(0),
                              Eigen::MatrixXd::Identity(0, 0)) {}
 
 /**
@@ -25,10 +25,9 @@ LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise)
     : LinearMeasurementModel(
-        measurement_mapping,
-        measurement_noise,
-        Eigen::MatrixXd::Identity(measurement_mapping.rows(),
-                                  measurement_noise.mean().size())) {}
+          measurement_mapping, measurement_noise,
+          Eigen::MatrixXd::Identity(measurement_mapping.rows(),
+                                    measurement_noise.mean().size())) {}
 
 /**
  * This constructor sets all linear measurement model parameters.
@@ -46,8 +45,7 @@ LinearMeasurementModel::LinearMeasurementModel(
     : LinearizedMeasurementModel(measurement_mapping.cols(),
                                  measurement_mapping.rows(),
                                  measurement_noise) {
-  this->setMeasurementParameters(measurement_mapping,
-                                 measurement_noise,
+  this->setMeasurementParameters(measurement_mapping, measurement_noise,
                                  noise_mapping);
 }
 
@@ -61,8 +59,7 @@ void LinearMeasurementModel::setMeasurementParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise) {
   this->setMeasurementParameters(
-      measurement_mapping,
-      measurement_noise,
+      measurement_mapping, measurement_noise,
       Eigen::MatrixXd::Identity(measurement_mapping.rows(),
                                 measurement_noise.mean().size()));
 }
@@ -104,8 +101,8 @@ Eigen::VectorXd LinearMeasurementModel::observe(
       << " Measurement model has not been initialized.";
   CHECK_EQ(state.size(), this->getStateDim());
 
-  return measurement_mapping_ * state
-      + noise_mapping_ * this->getMeasurementNoise()->mean();
+  return measurement_mapping_ * state +
+         noise_mapping_ * this->getMeasurementNoise()->mean();
 }
 
 /**

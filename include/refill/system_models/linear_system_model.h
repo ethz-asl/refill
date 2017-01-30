@@ -1,8 +1,9 @@
 #ifndef REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 #define REFILL_SYSTEM_MODELS_LINEAR_SYSTEM_MODEL_H_
 
-#include <Eigen/Dense>
 #include <glog/logging.h>
+
+#include <Eigen/Dense>
 
 #include "refill/distributions/gaussian_distribution.h"
 #include "refill/system_models/linearized_system_model.h"
@@ -66,7 +67,8 @@ class LinearSystemModel : public LinearizedSystemModel {
   Eigen::VectorXd propagate(const Eigen::VectorXd& state) const;
   /** @brief Propagates the state and input vector through the system model. */
   Eigen::VectorXd propagate(const Eigen::VectorXd& state,
-                            const Eigen::VectorXd& input) const;
+                            const Eigen::VectorXd& input,
+                            const Eigen::VectorXd& noise) const;
 
   /** @brief Function to get @f$ A_k @f$, which is the system Jacobian w.r.t.
    *         the system state. */

@@ -5,17 +5,10 @@ using std::size_t;
 namespace refill {
 
 /**
- * Creates an empty GaussianDistribution.
- *
- * Use this if you don't know the dimension beforehand or don't know the
- * parameters.
- *
- * To be able to use the distribution, first set the parameters using the
- * setDistParam() function.
+ * Creates a standard normal distribution.
  */
 GaussianDistribution::GaussianDistribution()
-    : GaussianDistribution(0) {}
-
+    : GaussianDistribution(1) {}
 
 /** @param dimension Dimension of the constructed normal distribution. */
 GaussianDistribution::GaussianDistribution(const int& dimension)
@@ -71,7 +64,7 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
   CHECK_EQ(cov.rows(), cov.cols());
 
   Eigen::LLT<Eigen::MatrixXd> chol_of_cov(cov);
-  CHECK_NE(chol_of_cov.info(), Eigen::NumericalIssue)<< "Matrix not s.p.d.";
+  CHECK_NE(chol_of_cov.info(), Eigen::NumericalIssue) << "Matrix not s.p.d.";
 
   covariance_ = cov;
 }
@@ -98,8 +91,7 @@ Eigen::MatrixXd GaussianDistribution::cov() const {
  * @return new distribution which is the sum of `*this` and @e right_side.
  */
 GaussianDistribution GaussianDistribution::operator+(
-    const GaussianDistribution &right_side) {
-
+    const GaussianDistribution& right_side) {
   CHECK(right_side.dimension() == this->dimension())
       << "Distribution dimensions do not match.";
 
@@ -123,6 +115,21 @@ inline GaussianDistribution operator*(const Eigen::MatrixXd &mat,
   CHECK_EQ(mat.cols(), gaussian.dimension());
   return GaussianDistribution(mat * gaussian.mean(),
                               mat * gaussian.cov() * mat.transpose());
+}
+
+/**
+ * @relates GaussianDistribution
+ *
+ * @brief Non-member overoad operator for scalar multiplication of Gaussian random vectors.
+ *
+ * @param scalar Scalar scaling factor.
+ * @param gaussian Gaussian random vector.
+ * @return transformed Gaussian random vector.
+ */
+inline GaussianDistribution operator*(const double& scalar,
+                                      const GaussianDistribution& gaussian) {
+  return GaussianDistribution(scalar * gaussian.mean(),
+                              scalar * gaussian.cov() * scalar);
 }
 
 }  // namespace refill
