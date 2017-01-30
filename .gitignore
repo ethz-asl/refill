@@ -48,3 +48,10 @@ CMakeLists.txt.user
 
 # Build folder
 build/
+
+# Catkin ignore file
+*CATKIN_IGNORE
+
+# Generated documentation directories
+doc/
+!doc/config.DoxyFile

@@ -2,11 +2,25 @@
 
 namespace refill {
 
+/**
+ * This constructor sets up an empty linear measurement model.
+ *
+ * It can be useful for class member construction.
+ *
+ * To be able to use the model after using this constructor, first set the
+ * parameters using the setMeasurementParameters() function.
+ */
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(0, 0),
                              GaussianDistribution(0),
                              Eigen::MatrixXd::Identity(0, 0)) {}
 
+/**
+ * This constructor sets the noise mapping to an identity matrix.
+ *
+ * @param measurement_mapping The matrix @f$ H_k @f$.
+ * @param measurement_noise The measurement noise @f$ w_k @f$.
+ */
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise)
@@ -15,6 +29,15 @@ LinearMeasurementModel::LinearMeasurementModel(
           Eigen::MatrixXd::Identity(measurement_mapping.rows(),
                                     measurement_noise.mean().size())) {}
 
+/**
+ * This constructor sets all linear measurement model parameters.
+ *
+ * It also checks that the dimensions of @e noise_mapping are right.
+ *
+ * @param measurement_mapping The matrix @f$ H_k @f$.
+ * @param measurement_noise The measurement noise @f$ w_k @f$
+ * @param noise_mapping The matrix @f$ M_k @f$.
+ */
 LinearMeasurementModel::LinearMeasurementModel(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise,
@@ -26,6 +49,12 @@ LinearMeasurementModel::LinearMeasurementModel(
                                  noise_mapping);
 }
 
+/**
+ * Sets the noise mapping to an identity matrix.
+ *
+ * @param measurement_mapping The matrix @f$ H_k @f$.
+ * @param measurement_noise The measurement noise @f$ w_k @f$.
+ */
 void LinearMeasurementModel::setMeasurementParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise) {
@@ -35,6 +64,15 @@ void LinearMeasurementModel::setMeasurementParameters(
                                 measurement_noise.mean().size()));
 }
 
+/**
+ * Sets all parameters of the linear measurement model.
+ *
+ * Also checks that the dimensions of @e noise_mapping are right.
+ *
+ * @param measurement_mapping The matrix @f$ H_k @f$.
+ * @param measurement_noise The measurement noise @f$ w_k @f$.
+ * @param noise_mapping The matrix @f$ M_k @f$.
+ */
 void LinearMeasurementModel::setMeasurementParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise,
@@ -50,6 +88,13 @@ void LinearMeasurementModel::setMeasurementParameters(
                                           measurement_noise);
 }
 
+/**
+ * Also checks that the state vector has compatible dimensions with the
+ * measurement model.
+ *
+ * @param state The current system state.
+ * @return the expected measurement.
+ */
 Eigen::VectorXd LinearMeasurementModel::observe(
     const Eigen::VectorXd& state) const {
   CHECK_NE(this->getStateDim(), 0)
@@ -60,6 +105,12 @@ Eigen::VectorXd LinearMeasurementModel::observe(
          noise_mapping_ * this->getMeasurementNoise()->mean();
 }
 
+/**
+ * Since this is only a linear model, it only returns @f$ H_k @f$.
+ *
+ * @param state The current system state.
+ * @return the measurement model Jacobian w.r.t. the system state.
+ */
 Eigen::MatrixXd LinearMeasurementModel::getMeasurementJacobian(
     const Eigen::VectorXd& state) const {
   CHECK_NE(this->getStateDim(), 0)
@@ -67,6 +118,12 @@ Eigen::MatrixXd LinearMeasurementModel::getMeasurementJacobian(
   return measurement_mapping_;
 }
 
+/**
+ * Since this is only a linear model, it only returns @f$ M_k @f$.
+ *
+ * @param state The current system state.
+ * @return the measurement model Jacobian w.r.t. the measurement noise.
+ */
 Eigen::MatrixXd LinearMeasurementModel::getNoiseJacobian(
     const Eigen::VectorXd& state) const {
   CHECK_NE(this->getStateDim(), 0)
