@@ -6,6 +6,9 @@ add_definitions(-std=c++1y)
 find_package(catkin_simple REQUIRED)
 catkin_simple(ALL_DEPS_REQUIRED)
 
+find_package(Eigen3 REQUIRED)
+include_directories(${Eigen_INCLUDE_DIRS})
+
 get_filename_component(REFILL_MAIN_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
 
 include_directories(SYSTEM
