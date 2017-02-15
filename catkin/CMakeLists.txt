@@ -6,6 +6,9 @@ add_definitions(-std=c++1y)
 find_package(catkin_simple REQUIRED)
 catkin_simple(ALL_DEPS_REQUIRED)
 
+find_package(Eigen3 REQUIRED)
+include_directories(${Eigen_INCLUDE_DIRS})
+
 get_filename_component(REFILL_MAIN_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
 
 include_directories(SYSTEM
@@ -14,10 +17,15 @@ include_directories(SYSTEM
 
 # LIBRARY
 file(GLOB_RECURSE SRC_LIST "../src/*.cc")
-file(GLOB_RECURSE REMOVE_SOURCES "../src/*_test.cc")
-list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
+file(GLOB_RECURSE TEST_SOURCES "../src/*_test.cc")
+list(REMOVE_ITEM SRC_LIST ${TEST_SOURCES})
 
 cs_add_library(refill ${SRC_LIST})
+
+# Tests
+cs_add_executable(refill_test ${TEST_SOURCES})
+target_link_libraries(refill_test refill ${GTEST_BOTH_LIBRARIES} -lpthread -lm)
+add_test(AllTests refill_test)
 
 cs_install()
 cs_export(
