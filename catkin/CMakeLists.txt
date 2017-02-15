@@ -23,9 +23,8 @@ list(REMOVE_ITEM SRC_LIST ${TEST_SOURCES})
 cs_add_library(refill ${SRC_LIST})
 
 # Tests
-cs_add_executable(refill_test ${TEST_SOURCES})
-target_link_libraries(refill_test refill ${GTEST_BOTH_LIBRARIES} -lpthread -lm)
-add_test(AllTests refill_test)
+catkin_add_gtest(refill_test ${TEST_SOURCES})
+target_link_libraries(refill_test refill ${GTEST_BOTH_LIBRARIES} ${catkin_LIBRARIES} -lpthread -lm)
 
 cs_install()
 cs_export(
