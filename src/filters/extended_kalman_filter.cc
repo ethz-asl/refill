@@ -55,8 +55,8 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(
 
   // The purpose of these checks is to verify that the dimensions of the models
   // agree with the dimension of the system state.
-  CHECK_EQ(system_model->getStateDim(), kStateDimension);
-  CHECK_EQ(measurement_model->getStateDim(), kStateDimension);
+  CHECK_EQ(system_model_->getStateDim(), kStateDimension);
+  CHECK_EQ(measurement_model_->getStateDim(), kStateDimension);
 }
 
 /** @param state The new filter state. */
