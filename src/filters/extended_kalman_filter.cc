@@ -122,10 +122,12 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
 
   const Eigen::VectorXd new_state_mean = system_model.propagate(
       state_.mean(), input, system_model.getSystemNoise()->mean());
-  const Eigen::MatrixXd new_state_cov =
+  Eigen::MatrixXd new_state_cov =
       system_jacobian * state_.cov() * system_jacobian_transpose +
       noise_jacobian * system_model.getSystemNoise()->cov() *
       noise_jacobian_transpose;
+
+  new_state_cov = (new_state_cov + new_state_cov.transpose()) / 2.0;
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }
@@ -171,12 +173,15 @@ void ExtendedKalmanFilter::update(
       measurement_jacobian.transpose();
   const Eigen::MatrixXd noise_jacobian_transpose = noise_jacobian.transpose();
 
+  const Eigen::MatrixXd measurement_noise_cov = noise_jacobian
+      * measurement_model.getMeasurementNoise()->cov()
+      * noise_jacobian_transpose;
+
   const Eigen::VectorXd innovation =
       measurement - measurement_model.observe(state_.mean());
   const Eigen::MatrixXd residual_cov =
       measurement_jacobian * state_.cov() * measurement_jacobian_transpose +
-      noise_jacobian * measurement_model.getMeasurementNoise()->cov() *
-      noise_jacobian_transpose;
+      measurement_noise_cov;
 
   // Use of LU decomposition with complete pivoting for computing the inverse
   // of the residual covariance within Kalman gain computation enables us to
@@ -195,8 +200,15 @@ void ExtendedKalmanFilter::update(
 
   const Eigen::VectorXd new_state_mean =
       state_.mean() + kalman_gain * innovation;
-  const Eigen::MatrixXd new_state_cov =
-      state_.cov() - kalman_gain * residual_cov * kalman_gain_transpose;
+
+  const Eigen::MatrixXd cov_scaling = Eigen::MatrixXd::Identity(
+      state_.mean().rows(), state_.mean().rows())
+      - kalman_gain * measurement_jacobian;
+  Eigen::MatrixXd new_state_cov = cov_scaling * state_.cov()
+      * cov_scaling.transpose()
+      + kalman_gain * measurement_noise_cov * kalman_gain.transpose();
+
+  new_state_cov = (new_state_cov + new_state_cov.transpose()) / 2.0;
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }
