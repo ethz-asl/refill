@@ -122,12 +122,12 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
 
   const Eigen::VectorXd new_state_mean = system_model.propagate(
       state_.mean(), input, system_model.getSystemNoise()->mean());
-  Eigen::MatrixXd new_state_cov =
-      system_jacobian * state_.cov() * system_jacobian_transpose +
-      noise_jacobian * system_model.getSystemNoise()->cov() *
-      noise_jacobian_transpose;
 
-  new_state_cov = (new_state_cov + new_state_cov.transpose()) / 2.0;
+  // Use .selfadjointView<>() to guarantee symmetric matrix
+  const Eigen::MatrixXd new_state_cov =
+      (system_jacobian * state_.cov() * system_jacobian_transpose +
+      noise_jacobian * system_model.getSystemNoise()->cov() *
+      noise_jacobian_transpose).selfadjointView<Eigen::Upper>();
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }
@@ -204,11 +204,13 @@ void ExtendedKalmanFilter::update(
   const Eigen::MatrixXd cov_scaling = Eigen::MatrixXd::Identity(
       state_.mean().rows(), state_.mean().rows())
       - kalman_gain * measurement_jacobian;
-  Eigen::MatrixXd new_state_cov = cov_scaling * state_.cov()
-      * cov_scaling.transpose()
-      + kalman_gain * measurement_noise_cov * kalman_gain.transpose();
 
-  new_state_cov = (new_state_cov + new_state_cov.transpose()) / 2.0;
+  // Use .selfadjointView<>() to guarantee symmetric matrix
+  // Use Joseph form for better numerical stability
+  const Eigen::MatrixXd new_state_cov =
+      (cov_scaling * state_.cov() * cov_scaling.transpose()
+      + kalman_gain * measurement_noise_cov * kalman_gain.transpose())
+      .selfadjointView<Eigen::Upper>();
 
   state_.setDistParam(new_state_mean, new_state_cov);
 }
