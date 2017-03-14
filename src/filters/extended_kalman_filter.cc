@@ -177,8 +177,9 @@ void ExtendedKalmanFilter::update(
       * measurement_model.getMeasurementNoise()->cov()
       * noise_jacobian_transpose;
 
-  const Eigen::VectorXd innovation =
-      measurement - measurement_model.observe(state_.mean());
+  const Eigen::VectorXd innovation = measurement
+      - measurement_model.observe(
+          state_.mean(), measurement_model.getMeasurementNoise()->mean());
   const Eigen::MatrixXd residual_cov =
       measurement_jacobian * state_.cov() * measurement_jacobian_transpose +
       measurement_noise_cov;

@@ -52,7 +52,8 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
                                 const Eigen::MatrixXd& noise_mapping);
 
   /** @brief Use the measurement model to receive the expected measurement. */
-  Eigen::VectorXd observe(const Eigen::VectorXd& state) const;
+  Eigen::VectorXd observe(const Eigen::VectorXd& state,
+                          const Eigen::VectorXd& noise) const;
 
   /** @brief Function to get @f$ H_k @f$, which is the measurement model
    *         Jacobian w.r.t. the system state. */

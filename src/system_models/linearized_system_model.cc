@@ -4,17 +4,26 @@ using std::size_t;
 
 namespace refill {
 
+
+/**
+ * Uses a second order central finite difference approximation for the
+ * Jacobian computation, if not overloaded.
+ *
+ * @param state The current system state.
+ * @param input The current system input.
+ * @return the system model Jacobian w.r.t. the system state @f$x_k@f$.
+ */
 Eigen::MatrixXd LinearizedSystemModel::getStateJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
-  CHECK_EQ(this->getStateDim(), state.rows());
-  CHECK_EQ(this->getInputDim(), input.rows());
+  CHECK_EQ(state.rows(), this->getStateDim());
+  CHECK_EQ(input.rows(), this->getInputDim());
 
   Eigen::MatrixXd jacobian(this->getStateDim(), this->getStateDim());
-  double eps = std::sqrt(std::numeric_limits<double>::epsilon());
+  constexpr double eps = std::sqrt(std::numeric_limits<double>::epsilon());
 
   Eigen::VectorXd x = state;
-  Eigen::VectorXd evaluation_1(state.rows());
-  Eigen::VectorXd evaluation_2(state.rows());
+  Eigen::VectorXd evaluation_1(this->getStateDim());
+  Eigen::VectorXd evaluation_2(this->getStateDim());
   for (int i = 0; i < this->getStateDim(); ++i) {
     double h = eps * std::abs(x[i]);
     if (h == 0.0) {
@@ -30,19 +39,26 @@ Eigen::MatrixXd LinearizedSystemModel::getStateJacobian(
   return jacobian;
 }
 
+/**
+ * Uses a second order central finite difference approximation for the
+ * Jacobian computation, if not overloaded.
+ *
+ * @param state The current system state.
+ * @param input The current system input.
+ * @return the system model Jacobian w.r.t. the system noise @f$v_k@f$.
+ */
 Eigen::MatrixXd LinearizedSystemModel::getNoiseJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
-  CHECK_EQ(this->getStateDim(), state.rows());
-  CHECK_EQ(this->getInputDim(), input.rows());
+  CHECK_EQ(state.rows(), this->getStateDim());
+  CHECK_EQ(input.rows(), this->getInputDim());
 
-  Eigen::MatrixXd jacobian(this->getSystemNoiseDim(),
-                           this->getSystemNoiseDim());
-  double eps = std::sqrt(std::numeric_limits<double>::epsilon());
+  Eigen::MatrixXd jacobian(this->getStateDim(), this->getSystemNoiseDim());
+  constexpr double eps = std::sqrt(std::numeric_limits<double>::epsilon());
 
-  constexpr Eigen::VectorXd noise_mean = this->getSystemNoise()->mean();
+  const Eigen::VectorXd noise_mean = this->getSystemNoise()->mean();
   Eigen::VectorXd x = noise_mean;
-  Eigen::VectorXd evaluation_1(this->getSystemNoiseDim());
-  Eigen::VectorXd evaluation_2(this->getSystemNoiseDim());
+  Eigen::VectorXd evaluation_1(this->getStateDim());
+  Eigen::VectorXd evaluation_2(this->getStateDim());
   for (int i = 0; i < this->getSystemNoiseDim(); ++i) {
     double h = eps * std::abs(x[i]);
     if (h == 0.0) {

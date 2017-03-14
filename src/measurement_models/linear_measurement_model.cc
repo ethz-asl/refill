@@ -96,13 +96,13 @@ void LinearMeasurementModel::setMeasurementParameters(
  * @return the expected measurement.
  */
 Eigen::VectorXd LinearMeasurementModel::observe(
-    const Eigen::VectorXd& state) const {
+    const Eigen::VectorXd& state, const Eigen::VectorXd& noise) const {
   CHECK_NE(this->getStateDim(), 0)
       << " Measurement model has not been initialized.";
   CHECK_EQ(state.size(), this->getStateDim());
 
   return measurement_mapping_ * state +
-         noise_mapping_ * this->getMeasurementNoise()->mean();
+         noise_mapping_ * noise;
 }
 
 /**
