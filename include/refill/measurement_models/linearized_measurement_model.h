@@ -46,13 +46,13 @@ class LinearizedMeasurementModel : public MeasurementModelBase {
    *        Jacobian w.r.t. the system state.
    */
   virtual Eigen::MatrixXd getMeasurementJacobian(
-      const Eigen::VectorXd& state) const = 0;
+      const Eigen::VectorXd& state) const;
   /**
    * @brief Function to get @f$ M_k @f$, which is the measurement model
    *        Jacobian w.r.t. the measurement noise.
    */
   virtual Eigen::MatrixXd getNoiseJacobian(
-      const Eigen::VectorXd& state) const = 0;
+      const Eigen::VectorXd& state) const;
 
  protected:
   /** @brief Default constructor should not be used. */
