@@ -46,6 +46,7 @@ class MeasurementModelBase {
   MeasurementModelBase(const size_t& state_dim,
                        const size_t& measurement_dim,
                        const DistributionInterface& measurement_noise);
+  virtual ~MeasurementModelBase() = default;
 
   /** @brief Function to set the measurement model base parameters. */
   void setMeasurementModelBaseParameters(
