@@ -88,6 +88,14 @@ TEST(SystemModelBaseTest, Fullrun) {
   ASSERT_EQ(system_model_2.getSystemNoiseDim(), kNoiseDim);
   ASSERT_EQ(system_model_2.getSystemNoise()->mean(), mean);
   ASSERT_EQ(system_model_2.getSystemNoise()->cov(), covariance);
+
+  vectorized_propagation = system_model_2.propagateVectorized(state_samples,
+                                                              input,
+                                                              noise_samples);
+
+  ASSERT_EQ(kStateDim, vectorized_propagation.rows());
+  ASSERT_EQ(4, vectorized_propagation.cols());
+  ASSERT_EQ(Eigen::MatrixXd::Ones(kStateDim, 4) * 3.0, vectorized_propagation);
 }
 
 }  // namespace refill
