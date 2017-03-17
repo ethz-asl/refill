@@ -36,8 +36,11 @@ Eigen::MatrixXd SystemModelBase::propagateVectorized(
     const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
     const Eigen::MatrixXd& sampled_noise) const {
   CHECK_EQ(getStateDim(), sampled_state.rows());
-  CHECK_EQ(getInputDim(), input.rows());
   CHECK_EQ(getSystemNoiseDim(), sampled_noise.rows());
+
+  if (getInputDim() != 0) {
+    CHECK_EQ(getInputDim(), input.rows());
+  }
 
   const size_t state_size = getStateDim();
   const size_t noise_size = getSystemNoiseDim();
