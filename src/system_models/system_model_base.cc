@@ -35,6 +35,10 @@ SystemModelBase::SystemModelBase(const size_t& state_dim,
 Eigen::MatrixXd SystemModelBase::propagateVectorized(
     const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
     const Eigen::MatrixXd& sampled_noise) const {
+  CHECK_EQ(getStateDim(), sampled_state.rows());
+  CHECK_EQ(getInputDim(), input.rows());
+  CHECK_EQ(getSystemNoiseDim(), sampled_noise.rows());
+
   const size_t state_size = getStateDim();
   const size_t noise_size = getSystemNoiseDim();
   const size_t state_sample_count = sampled_state.cols();
@@ -44,11 +48,11 @@ Eigen::MatrixXd SystemModelBase::propagateVectorized(
 
   // Evaluate the propagate function for each combination of state / noise
   // samples.
-  for (size_t i = 0u; i < state_sample_count; i++) {
-    for (size_t j = 0u; j < noise_sample_count; j++) {
-      result.block(0, i * noise_sample_count + j, state_size, 1) =
-          propagate(sampled_state.block(0, i, 1, state_size), input,
-                    sampled_noise.block(0, j, 1, noise_size));
+  for (size_t i = 0u; i < state_sample_count; ++i) {
+    for (size_t j = 0u; j < noise_sample_count; ++j) {
+      result.col(i * noise_sample_count + j) = propagate(sampled_state.col(i),
+                                                         input,
+                                                         sampled_noise.col(j));
     }
   }
 
