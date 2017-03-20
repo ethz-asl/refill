@@ -24,9 +24,11 @@ class MeasurementModelBase {
    * @brief Use the measurement model to receive the expected measurement.
    *
    * @param state The state vector used for the observation.
+   * @param noise A measurement noise sample used for observation.
    * @return the expected measurement given the current state.
    */
-  virtual Eigen::VectorXd observe(const Eigen::VectorXd& state) const = 0;
+  virtual Eigen::VectorXd observe(const Eigen::VectorXd& state,
+                                  const Eigen::VectorXd& noise) const = 0;
 
   /** @brief Returns the measurement models state dimension. */
   size_t getStateDim() const;

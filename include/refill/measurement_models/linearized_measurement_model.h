@@ -30,11 +30,13 @@ namespace refill {
  * @f$ M_k = \frac{\partial h}{\partial w}(x_k, \mu_k) @f$
  *
  * Where @f$ x_k @f$ denotes the system state, @f$ y_k @f$ the
- * measuremnt, @f$ w_k @f$ the measurement noise and @f$ \mu_k @f$ the
+ * measurement, @f$ w_k @f$ the measurement noise and @f$ \mu_k @f$ the
  * measurement noise mean at timestep @f$ k @f$.
  *
  * To implement a measurement model that works with the ExtendedKalmanFilter,
- * inherit from this class and implement your own observe(),
+ * inherit from this class and implement your own observe() function.
+ *
+ * If the Jacobians can be computed analytically, it is recommended to do so and overload the
  * getMeasurementJacobian() and getNoiseJacobian() functions.
  */
 class LinearizedMeasurementModel : public MeasurementModelBase {
@@ -42,21 +44,15 @@ class LinearizedMeasurementModel : public MeasurementModelBase {
   /**
    * @brief Function to get @f$ H_k @f$, which is the measurement model
    *        Jacobian w.r.t. the system state.
-   *
-   * @param state The current system state.
-   * @return the measurement model Jacobian w.r.t. the system state.
    */
   virtual Eigen::MatrixXd getMeasurementJacobian(
-      const Eigen::VectorXd& state) const = 0;
+      const Eigen::VectorXd& state) const;
   /**
    * @brief Function to get @f$ M_k @f$, which is the measurement model
    *        Jacobian w.r.t. the measurement noise.
-   *
-   * @param state The current system state.
-   * @return the measurement model Jacobian w.r.t. the measurement noise.
    */
   virtual Eigen::MatrixXd getNoiseJacobian(
-      const Eigen::VectorXd& state) const = 0;
+      const Eigen::VectorXd& state) const;
 
  protected:
   /** @brief Default constructor should not be used. */

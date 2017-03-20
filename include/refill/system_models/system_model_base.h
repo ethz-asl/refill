@@ -25,6 +25,7 @@ class SystemModelBase {
    *
    * @param state The state vector to be propagated.
    * @param input The input vector to the system.
+   * @param noise A system noise sample used for propagation.
    * @return the new state vector.
    */
   virtual Eigen::VectorXd propagate(const Eigen::VectorXd& state,
