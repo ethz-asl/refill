@@ -46,6 +46,8 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   /** @brief Implements the addition of two gaussian distributions. */
   GaussianDistribution operator+(const GaussianDistribution& right_side);
 
+  GaussianDistribution& operator+=(const GaussianDistribution& right_side);
+
  private:
   Eigen::VectorXd mean_;
   Eigen::MatrixXd covariance_;

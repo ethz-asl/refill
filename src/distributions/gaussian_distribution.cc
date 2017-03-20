@@ -100,6 +100,12 @@ GaussianDistribution GaussianDistribution::operator+(
   return result;
 }
 
+GaussianDistribution& GaussianDistribution::operator+=(
+    const GaussianDistribution& right_side) {
+  *this = *this + right_side;
+  return *this;
+}
+
 /**
  * @relates GaussianDistribution
  *
