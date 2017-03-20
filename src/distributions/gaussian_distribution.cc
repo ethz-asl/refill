@@ -85,57 +85,60 @@ Eigen::MatrixXd GaussianDistribution::cov() const {
 }
 
 /**
- * Also checks for right dimensionality of distribution.
+ * Checks for right dimensionality.
  *
- * @param right_side Distribution which will be added to `*this`.
- * @return new distribution which is the sum of `*this` and @e right_side.
+ * @param right_side Distribution which will be added to `this*`.
+ * @return `*this`.
  */
-GaussianDistribution GaussianDistribution::operator+(
-    const GaussianDistribution& right_side) {
-  CHECK(right_side.dimension() == this->dimension())
-      << "Distribution dimensions do not match.";
-
-  GaussianDistribution result(mean_ + right_side.mean(),
-                              covariance_ + right_side.cov());
-  return result;
-}
-
 GaussianDistribution& GaussianDistribution::operator+=(
     const GaussianDistribution& right_side) {
-  *this = *this + right_side;
+  CHECK_EQ(this->dimension(), right_side.dimension())
+      << "Distribution dimensions do not match.";
+
+  this->mean_ += right_side.mean_;
+  this->covariance_ += right_side.covariance_;
+
   return *this;
 }
 
 /**
- * @relates GaussianDistribution
+ * Checks for right dimensionality.
  *
- * @brief Non-member overloaded operator for linear transformations of Gaussian
- *        random vectors.
- *
- * @param mat Linear transformation matrix.
- * @param gaussian Gaussian random vector.
- * @return transformed Gaussian random vector.
+ * @param right_side Distribution which will be subtracted from `this`.
+ * @return `*this`.
  */
-inline GaussianDistribution operator*(const Eigen::MatrixXd &mat,
-                                      const GaussianDistribution gaussian) {
-  CHECK_EQ(mat.cols(), gaussian.dimension());
-  return GaussianDistribution(mat * gaussian.mean(),
-                              mat * gaussian.cov() * mat.transpose());
+GaussianDistribution& GaussianDistribution::operator-=(
+    const GaussianDistribution& right_side) {
+  CHECK_EQ(this->dimension(), right_side.dimension())
+      << "Distribution dimensions do not match.";
+
+  this->mean_ -= right_side.mean_;
+  this->covariance_ += right_side.covariance_;
+
+  return *this;
 }
 
 /**
- * @relates GaussianDistribution
- *
- * @brief Non-member overoad operator for scalar multiplication of Gaussian random vectors.
- *
- * @param scalar Scalar scaling factor.
- * @param gaussian Gaussian random vector.
- * @return transformed Gaussian random vector.
+ * @param right_side Distribution which will be added to `this`.
+ * @return new distribution which is the sum of `this` and @e right_side.
  */
-inline GaussianDistribution operator*(const double& scalar,
-                                      const GaussianDistribution& gaussian) {
-  return GaussianDistribution(scalar * gaussian.mean(),
-                              scalar * gaussian.cov() * scalar);
+GaussianDistribution GaussianDistribution::operator+(
+    const GaussianDistribution& right_side) {
+  GaussianDistribution result = *this;
+  result += right_side;
+  return result;
+}
+
+/**
+ * @param right_side Distribution which will be subtracted from `this`.
+ * @return new distribution which is the difference between `this` and
+ *         @e right_side.
+ */
+GaussianDistribution GaussianDistribution::operator-(
+    const GaussianDistribution& right_side) {
+  GaussianDistribution result = *this;
+  result -= right_side;
+  return result;
 }
 
 }  // namespace refill
