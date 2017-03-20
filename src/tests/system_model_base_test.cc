@@ -35,67 +35,78 @@ class SystemModelClass : public SystemModelBase {
   }
 };
 
-TEST(SystemModelBaseTest, Fullrun) {
-  constexpr size_t kStateDim = 2;
-  constexpr size_t kInputDim = 2;
-  constexpr size_t kNoiseDim = 2;
-
-  Eigen::VectorXd mean = Eigen::VectorXd::Zero(kNoiseDim);
-  Eigen::MatrixXd covariance = Eigen::MatrixXd::Identity(kNoiseDim, kNoiseDim);
-  GaussianDistribution system_noise(mean, covariance);
+TEST(SystemModelBaseTest, NoInputTest) {
+  GaussianDistribution system_noise(Eigen::Vector3d::Zero(),
+                                    Eigen::Matrix3d::Identity());
 
   // Test constructor with two parameters
-  SystemModelClass system_model_1(kStateDim, system_noise);
+  SystemModelClass system_model(3, system_noise);
 
-  ASSERT_EQ(system_model_1.getStateDim(), kStateDim);
-  ASSERT_EQ(system_model_1.getInputDim(), 0);
-  ASSERT_EQ(system_model_1.getSystemNoiseDim(), kNoiseDim);
-  ASSERT_EQ(system_model_1.getSystemNoise()->mean(), mean);
-  ASSERT_EQ(system_model_1.getSystemNoise()->cov(), covariance);
+  ASSERT_EQ(3, system_model.getStateDim());
+  ASSERT_EQ(0, system_model.getInputDim());
+  ASSERT_EQ(3, system_model.getSystemNoiseDim());
+  ASSERT_EQ(Eigen::Vector3d::Zero(), system_model.getSystemNoise()->mean());
+  ASSERT_EQ(Eigen::Matrix3d::Identity(), system_model.getSystemNoise()->cov());
 
-  system_model_1.setModelParameters(kStateDim, system_noise);
+  system_noise.setDistParam(Eigen::Vector2d::Ones(),
+                            Eigen::Matrix2d::Identity() * 2.0);
 
-  ASSERT_EQ(system_model_1.getStateDim(), kStateDim);
-  ASSERT_EQ(system_model_1.getInputDim(), 0);
-  ASSERT_EQ(system_model_1.getSystemNoiseDim(), kNoiseDim);
-  ASSERT_EQ(system_model_1.getSystemNoise()->mean(), mean);
-  ASSERT_EQ(system_model_1.getSystemNoise()->cov(), covariance);
+  system_model.setModelParameters(2, system_noise);
 
-  Eigen::MatrixXd state_samples = Eigen::MatrixXd::Ones(kStateDim, 2);
-  Eigen::MatrixXd noise_samples = Eigen::MatrixXd::Ones(kNoiseDim, 2);
-  Eigen::VectorXd input = Eigen::VectorXd::Ones(kInputDim);
+  ASSERT_EQ(2, system_model.getStateDim());
+  ASSERT_EQ(0, system_model.getInputDim());
+  ASSERT_EQ(2, system_model.getSystemNoiseDim());
+  ASSERT_EQ(Eigen::Vector2d::Ones(), system_model.getSystemNoise()->mean());
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 2.0,
+            system_model.getSystemNoise()->cov());
 
-  Eigen::MatrixXd vectorized_propagation = system_model_1.propagateVectorized(
+  Eigen::Matrix2d state_samples = Eigen::Matrix2d::Ones();
+  Eigen::Matrix2d noise_samples = Eigen::Matrix2d::Ones();
+  Eigen::Vector2d input = Eigen::Vector2d::Ones();
+
+  Eigen::MatrixXd vectorized_propagation = system_model.propagateVectorized(
       state_samples, input, noise_samples);
 
-  ASSERT_EQ(kStateDim, vectorized_propagation.rows());
+  ASSERT_EQ(2, vectorized_propagation.rows());
   ASSERT_EQ(4, vectorized_propagation.cols());
-  ASSERT_EQ(Eigen::MatrixXd::Ones(kStateDim, 4) * 3.0, vectorized_propagation);
+  ASSERT_EQ(Eigen::MatrixXd::Ones(2, 4) * 3.0, vectorized_propagation);
+}
 
-  // Test constructor with three parameters
-  SystemModelClass system_model_2(kStateDim, system_noise, kInputDim);
+TEST(SystemModelBaseTest, WithInputTest) {
+  GaussianDistribution system_noise(Eigen::Vector3d::Zero(),
+                                    Eigen::Matrix3d::Identity());
 
-  ASSERT_EQ(system_model_2.getStateDim(), kStateDim);
-  ASSERT_EQ(system_model_2.getInputDim(), kInputDim);
-  ASSERT_EQ(system_model_2.getSystemNoiseDim(), kNoiseDim);
-  ASSERT_EQ(system_model_2.getSystemNoise()->mean(), mean);
-  ASSERT_EQ(system_model_2.getSystemNoise()->cov(), covariance);
+  // Test constructor with two parameters
+  SystemModelClass system_model(3, system_noise, 3);
 
-  system_model_2.setModelParameters(kStateDim, system_noise, kInputDim);
+  ASSERT_EQ(3, system_model.getStateDim());
+  ASSERT_EQ(3, system_model.getInputDim());
+  ASSERT_EQ(3, system_model.getSystemNoiseDim());
+  ASSERT_EQ(Eigen::Vector3d::Zero(), system_model.getSystemNoise()->mean());
+  ASSERT_EQ(Eigen::Matrix3d::Identity(), system_model.getSystemNoise()->cov());
 
-  ASSERT_EQ(system_model_2.getStateDim(), kStateDim);
-  ASSERT_EQ(system_model_2.getInputDim(), kInputDim);
-  ASSERT_EQ(system_model_2.getSystemNoiseDim(), kNoiseDim);
-  ASSERT_EQ(system_model_2.getSystemNoise()->mean(), mean);
-  ASSERT_EQ(system_model_2.getSystemNoise()->cov(), covariance);
+  system_noise.setDistParam(Eigen::Vector2d::Ones(),
+                            Eigen::Matrix2d::Identity() * 2.0);
 
-  vectorized_propagation = system_model_2.propagateVectorized(state_samples,
-                                                              input,
-                                                              noise_samples);
+  system_model.setModelParameters(2, system_noise, 2);
 
-  ASSERT_EQ(kStateDim, vectorized_propagation.rows());
+  ASSERT_EQ(2, system_model.getStateDim());
+  ASSERT_EQ(2, system_model.getInputDim());
+  ASSERT_EQ(2, system_model.getSystemNoiseDim());
+  ASSERT_EQ(Eigen::Vector2d::Ones(), system_model.getSystemNoise()->mean());
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 2.0,
+            system_model.getSystemNoise()->cov());
+
+  Eigen::Matrix2d state_samples = Eigen::Matrix2d::Ones();
+  Eigen::Matrix2d noise_samples = Eigen::Matrix2d::Ones();
+  Eigen::Vector2d input = Eigen::Vector2d::Ones();
+
+  Eigen::MatrixXd vectorized_propagation = system_model.propagateVectorized(
+      state_samples, input, noise_samples);
+
+  ASSERT_EQ(2, vectorized_propagation.rows());
   ASSERT_EQ(4, vectorized_propagation.cols());
-  ASSERT_EQ(Eigen::MatrixXd::Ones(kStateDim, 4) * 3.0, vectorized_propagation);
+  ASSERT_EQ(Eigen::MatrixXd::Ones(2, 4) * 3.0, vectorized_propagation);
 }
 
 }  // namespace refill
