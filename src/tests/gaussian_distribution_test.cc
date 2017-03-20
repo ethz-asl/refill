@@ -5,39 +5,112 @@
 
 namespace refill {
 
-TEST(GaussianDistributionTest, Basics) {
-  GaussianDistribution a;
-  GaussianDistribution b;
-  GaussianDistribution c;
+TEST(GaussianDistributionTest, ConstructorTests) {
+  GaussianDistribution dist_1;
 
-  c = a + b;
+  ASSERT_EQ(1, dist_1.dimension())<< "Dimension not correct.";
+  ASSERT_EQ(Eigen::VectorXd::Zero(1), dist_1.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::MatrixXd::Identity(1, 1), dist_1.cov())
+      << "Covariance not correct";
 
-  ASSERT_EQ(a.mean(), c.mean())<< "Mean not correct";
-  ASSERT_EQ(a.cov() * 2.0, c.cov())<< "Variances do not match";
+  GaussianDistribution dist_2(2);
 
-  a.setDistParam(Eigen::VectorXd::Ones(2), Eigen::MatrixXd::Identity(2, 2));
+  ASSERT_EQ(2, dist_2.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Zero(), dist_2.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity(), dist_2.cov())
+      << "Covariance not correct";
 
-  GaussianDistribution d(a);
-  ASSERT_EQ(Eigen::VectorXd::Ones(2), d.mean());
-  ASSERT_EQ(Eigen::MatrixXd::Identity(2, 2), d.cov());
+  GaussianDistribution dist_3(Eigen::Vector2d::Zero(),
+                              Eigen::Matrix2d::Identity());
 
-  d.setMean(Eigen::VectorXd::Zero(2));
-  ASSERT_EQ(Eigen::VectorXd::Zero(2), d.mean());
+  ASSERT_EQ(2, dist_3.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Zero(), dist_3.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity(), dist_3.cov())
+      << "Covariance not correct";
 
-  d.setCov(Eigen::MatrixXd::Identity(2, 2) * 2.0);
-  ASSERT_EQ(Eigen::MatrixXd::Identity(2, 2) * 2.0, d.cov());
+  GaussianDistribution dist_4(dist_3);
 
-  GaussianDistribution e = Eigen::MatrixXd::Constant(2, 2, 2.0) * a;
+  ASSERT_EQ(2, dist_4.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Zero(), dist_4.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity(), dist_4.cov())
+      << "Covariance not correct";
+}
 
-  ASSERT_EQ(Eigen::VectorXd::Ones(2) * 2.0, e.mean());
-  ASSERT_EQ(Eigen::MatrixXd::Constant(2, 2, 4.0), e.cov());
+TEST(GaussianDistributionTest, SetterTests) {
+  GaussianDistribution dist(2);
 
-  GaussianDistribution f = 2.0 * a;
+  dist.setDistParam(Eigen::Vector2d::Ones(), Eigen::Matrix2d::Identity() * 2.0);
 
-  ASSERT_EQ(Eigen::VectorXd::Ones(2) * 2.0, f.mean());
-  ASSERT_EQ(Eigen::MatrixXd::Constant(2, 2, 4.0), f.cov());
+  ASSERT_EQ(2, dist.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Ones(), dist.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 2.0, dist.cov())
+      << "Covariance not correct";
 
-  // TODO(jwidauer): Add more test cases
+  dist.setMean(Eigen::Vector2d::Constant(2.0));
+
+  ASSERT_EQ(2, dist.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Constant(2.0), dist.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 2.0, dist.cov())
+      << "Covariance not correct";
+
+  dist.setCov(Eigen::Matrix2d::Identity() * 3.0);
+
+  ASSERT_EQ(2, dist.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Constant(2.0), dist.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 3.0, dist.cov())
+      << "Covariance not correct";
+}
+
+TEST(GaussianDistributionTest, OperatorTests) {
+  GaussianDistribution dist_1(Eigen::Vector2d::Zero(),
+                              Eigen::Matrix2d::Identity());
+  GaussianDistribution dist_2(Eigen::Vector2d::Ones(),
+                              Eigen::Matrix2d::Identity() * 2.0);
+
+  dist_1 += dist_2;
+
+  ASSERT_EQ(2, dist_1.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Ones(), dist_1.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 3.0, dist_1.cov())
+      << "Covariance not correct";
+
+  dist_1 -= dist_2;
+
+  ASSERT_EQ(2, dist_1.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Zero(), dist_1.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 5.0, dist_1.cov())
+      << "Covariance not correct";
+
+  GaussianDistribution dist_3 = dist_1 + dist_2;
+
+  ASSERT_EQ(2, dist_3.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Ones(), dist_3.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 7.0, dist_3.cov())
+      << "Covariance not correct";
+
+  GaussianDistribution dist_4 = dist_1 - dist_2;
+
+  ASSERT_EQ(2, dist_4.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Constant(-1.0), dist_4.mean())
+      << "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 7.0, dist_4.cov())
+      << "Covariance not correct";
+
+  dist_4.setDistParam(Eigen::Vector2d::Ones(), Eigen::Matrix2d::Identity());
+
+  GaussianDistribution dist_5 = Eigen::Matrix2d::Ones() * dist_4;
+
+  ASSERT_EQ(2, dist_5.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Constant(2.0), dist_5.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Constant(2.0), dist_5.cov())
+      << "Covariance not correct";
+
+  GaussianDistribution dist_6 = 2.0 * dist_4;
+
+  ASSERT_EQ(2, dist_6.dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Constant(2.0), dist_6.mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity() * 4.0, dist_6.cov())
+      <<"Covariance not correct";
 }
 
 }  // namespace refill
