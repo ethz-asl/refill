@@ -26,7 +26,7 @@ TEST(LinearMeasurementModelTest, Fullrun) {
   Eigen::VectorXd state = Eigen::VectorXd::Ones(kStateDim);
 
   // Check if observation works
-  ASSERT_EQ(measurement_model.observe(state),
+  ASSERT_EQ(measurement_model.observe(state, measurement_noise.mean()),
             Eigen::VectorXd::Ones(kMeasurementDim) * 2.0);
 
   // Check if dimension getters work
