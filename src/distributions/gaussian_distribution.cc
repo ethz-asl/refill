@@ -87,7 +87,7 @@ Eigen::MatrixXd GaussianDistribution::cov() const {
 /**
  * Checks for right dimensionality.
  *
- * @param right_side Distribution which will be added to `this*`.
+ * @param right_side Distribution which will be added to `this`.
  * @return `*this`.
  */
 GaussianDistribution& GaussianDistribution::operator+=(
