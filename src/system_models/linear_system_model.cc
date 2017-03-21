@@ -211,4 +211,28 @@ Eigen::MatrixXd LinearSystemModel::getNoiseJacobian(
   return noise_mapping_;
 }
 
+/**
+ * @return the current system mapping.
+ */
+Eigen::MatrixXd LinearSystemModel::getSystemMapping() const {
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
+  return system_mapping_;
+}
+
+/**
+ * @return the current input mapping.
+ */
+Eigen::MatrixXd LinearSystemModel::getInputMapping() const {
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
+  return input_mapping_;
+}
+
+/**
+ * @return the current noise mapping.
+ */
+Eigen::MatrixXd LinearSystemModel::getNoiseMapping() const {
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
+  return noise_mapping_;
+}
+
 }  // namespace refill

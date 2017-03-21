@@ -79,6 +79,13 @@ class LinearSystemModel : public LinearizedSystemModel {
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
                                    const Eigen::VectorXd& input) const;
 
+  /** @brief Function to get the current system mapping. */
+  Eigen::MatrixXd getSystemMapping() const;
+  /** @brief Function to get the current input mapping. */
+  Eigen::MatrixXd getInputMapping() const;
+  /** @brief Function to get the current noise mapping. */
+  Eigen::MatrixXd getNoiseMapping() const;
+
  private:
   Eigen::MatrixXd system_mapping_;
   Eigen::MatrixXd input_mapping_;
