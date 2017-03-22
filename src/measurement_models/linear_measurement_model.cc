@@ -131,4 +131,22 @@ Eigen::MatrixXd LinearMeasurementModel::getNoiseJacobian(
   return noise_mapping_;
 }
 
+/**
+ * @return the current measurement mapping.
+ */
+Eigen::MatrixXd LinearMeasurementModel::getMeasurementMapping() const {
+  CHECK_NE(this->getStateDim(), 0)
+      << "Measurement model has not been initialized.";
+  return measurement_mapping_;
+}
+
+/**
+ * @return the current noise mapping.
+ */
+Eigen::MatrixXd LinearMeasurementModel::getNoiseMapping() const {
+  CHECK_NE(this->getStateDim(), 0)
+      << "Measurement model has not been initialized.";
+  return noise_mapping_;
+}
+
 }  // namespace refill

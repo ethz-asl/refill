@@ -62,6 +62,11 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
    *         Jacobian w.r.t. the measurement noise. */
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state) const;
 
+  /** @brief Function to get the current measurement mapping. */
+  Eigen::MatrixXd getMeasurementMapping() const;
+  /** @brief Function to get the current noise mapping. */
+  Eigen::MatrixXd getNoiseMapping() const;
+
  private:
   Eigen::MatrixXd measurement_mapping_;
   Eigen::MatrixXd noise_mapping_;
