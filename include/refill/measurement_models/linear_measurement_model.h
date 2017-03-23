@@ -31,6 +31,8 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
 
   /** @brief Constructs an empty linear measurement model. */
   LinearMeasurementModel();
+  /** @brief Copy constructor */
+  LinearMeasurementModel(const LinearMeasurementModel& measurement_model);
   /** @brief Constructor for a measurement model with a simple
    *         noise mapping. */
   LinearMeasurementModel(const Eigen::MatrixXd& measurement_mapping,

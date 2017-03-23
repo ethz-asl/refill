@@ -16,6 +16,15 @@ LinearMeasurementModel::LinearMeasurementModel()
                              Eigen::MatrixXd::Identity(0, 0)) {}
 
 /**
+ * @param measurement_model Measurement model which will be copied.
+ */
+LinearMeasurementModel::LinearMeasurementModel(
+    const LinearMeasurementModel& measurement_model)
+    : LinearMeasurementModel(measurement_model.measurement_mapping_,
+                             *(measurement_model.getMeasurementNoise()),
+                             measurement_model.noise_mapping_) {}
+
+/**
  * This constructor sets the noise mapping to an identity matrix.
  *
  * @param measurement_mapping The matrix @f$ H_k @f$.

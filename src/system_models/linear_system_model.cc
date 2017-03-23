@@ -12,9 +12,18 @@ namespace refill {
  */
 LinearSystemModel::LinearSystemModel()
     : LinearSystemModel(Eigen::MatrixXd::Identity(0, 0),
-                        GaussianDistribution(0),
-                        Eigen::MatrixXd::Zero(0, 0),
-                        Eigen::MatrixXd::Identity(0, 0)) {}
+                        GaussianDistribution(0), Eigen::MatrixXd::Zero(0, 0),
+                        Eigen::MatrixXd::Identity(0, 0)) {
+}
+
+/**
+ * @param system_model System model which will be copied.
+ */
+LinearSystemModel::LinearSystemModel(const LinearSystemModel& system_model)
+    : LinearSystemModel(system_model.system_mapping_,
+                        *(system_model.getSystemNoise()),
+                        system_model.input_mapping_,
+                        system_model.noise_mapping_) {}
 
 /**
  * This constructor assumes that there is no system input and sets the

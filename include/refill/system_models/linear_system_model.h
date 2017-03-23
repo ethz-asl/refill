@@ -31,6 +31,8 @@ class LinearSystemModel : public LinearizedSystemModel {
 
   /** @brief Constructs an empty linear system model. */
   LinearSystemModel();
+  /** @brief Copy constructor. */
+  LinearSystemModel(const LinearSystemModel& system_model);
   /** @brief Constructor for a system model without an input and a
    *         simple noise mapping. */
   LinearSystemModel(const Eigen::MatrixXd& system_mapping,
