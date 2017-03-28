@@ -41,8 +41,8 @@ TEST(MeasurementModelBaseTest, FullTest) {
   ASSERT_EQ(Eigen::Matrix2d::Identity(),
             measurement_model.getMeasurementNoise()->cov());
 
-  measurement_noise.setDistParam(Eigen::Vector3d::Ones(),
-                                 Eigen::Matrix3d::Identity() * 2.0);
+  measurement_noise.setDistributionParameters(
+      Eigen::Vector3d::Ones(), Eigen::Matrix3d::Identity() * 2.0);
 
   measurement_model.setModelParameters(3, 3, measurement_noise);
 

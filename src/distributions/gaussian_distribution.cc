@@ -21,7 +21,7 @@ GaussianDistribution::GaussianDistribution(const int& dimension)
  */
 GaussianDistribution::GaussianDistribution(const Eigen::VectorXd& dist_mean,
                                            const Eigen::MatrixXd& dist_cov) {
-  setDistParam(dist_mean, dist_cov);
+  setDistributionParameters(dist_mean, dist_cov);
 }
 
 /**
@@ -31,8 +31,8 @@ GaussianDistribution::GaussianDistribution(const Eigen::VectorXd& dist_mean,
  * @param dist_mean The new mean of the distribution.
  * @param dist_cov  The new covariance of the distribution.
  */
-void GaussianDistribution::setDistParam(const Eigen::VectorXd& dist_mean,
-                                        const Eigen::MatrixXd& dist_cov) {
+void GaussianDistribution::setDistributionParameters(
+    const Eigen::VectorXd& dist_mean, const Eigen::MatrixXd& dist_cov) {
   CHECK_EQ(dist_mean.size(), dist_cov.rows());
   CHECK_EQ(dist_cov.rows(), dist_cov.cols());
 

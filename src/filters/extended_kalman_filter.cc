@@ -129,7 +129,7 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
       noise_jacobian * system_model.getSystemNoise()->cov() *
       noise_jacobian_transpose).selfadjointView<Eigen::Upper>();
 
-  state_.setDistParam(new_state_mean, new_state_cov);
+  state_.setDistributionParameters(new_state_mean, new_state_cov);
 }
 
 /**
@@ -213,7 +213,7 @@ void ExtendedKalmanFilter::update(
       + kalman_gain * measurement_noise_cov * kalman_gain.transpose())
       .selfadjointView<Eigen::Upper>();
 
-  state_.setDistParam(new_state_mean, new_state_cov);
+  state_.setDistributionParameters(new_state_mean, new_state_cov);
 }
 
 }  // namespace refill

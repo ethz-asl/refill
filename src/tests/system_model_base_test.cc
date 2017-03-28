@@ -48,8 +48,8 @@ TEST(SystemModelBaseTest, NoInputTest) {
   ASSERT_EQ(Eigen::Vector3d::Zero(), system_model.getSystemNoise()->mean());
   ASSERT_EQ(Eigen::Matrix3d::Identity(), system_model.getSystemNoise()->cov());
 
-  system_noise.setDistParam(Eigen::Vector2d::Ones(),
-                            Eigen::Matrix2d::Identity() * 2.0);
+  system_noise.setDistributionParameters(Eigen::Vector2d::Ones(),
+                                         Eigen::Matrix2d::Identity() * 2.0);
 
   system_model.setModelParameters(2, system_noise);
 
@@ -85,8 +85,8 @@ TEST(SystemModelBaseTest, WithInputTest) {
   ASSERT_EQ(Eigen::Vector3d::Zero(), system_model.getSystemNoise()->mean());
   ASSERT_EQ(Eigen::Matrix3d::Identity(), system_model.getSystemNoise()->cov());
 
-  system_noise.setDistParam(Eigen::Vector2d::Ones(),
-                            Eigen::Matrix2d::Identity() * 2.0);
+  system_noise.setDistributionParameters(Eigen::Vector2d::Ones(),
+                                         Eigen::Matrix2d::Identity() * 2.0);
 
   system_model.setModelParameters(2, system_noise, 2);
 

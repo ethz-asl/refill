@@ -62,8 +62,8 @@ TEST(LinearSystemModelTest, SetterTest) {
   EXPECT_EQ(Eigen::MatrixXd::Zero(0, 0), system_model.getInputMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model.getNoiseMapping());
 
-  system_noise.setDistParam(Eigen::Vector3d::Zero(),
-                            Eigen::Matrix3d::Identity());
+  system_noise.setDistributionParameters(Eigen::Vector3d::Zero(),
+                                         Eigen::Matrix3d::Identity());
 
   system_model.setSystemParameters(Eigen::Matrix3d::Identity(), system_noise,
                                    Eigen::Matrix3d::Identity());
@@ -75,8 +75,8 @@ TEST(LinearSystemModelTest, SetterTest) {
   EXPECT_EQ(Eigen::Matrix3d::Identity(), system_model.getInputMapping());
   EXPECT_EQ(Eigen::Matrix3d::Identity(), system_model.getNoiseMapping());
 
-  system_noise.setDistParam(Eigen::Vector4d::Zero(),
-                            Eigen::Matrix4d::Identity());
+  system_noise.setDistributionParameters(Eigen::Vector4d::Zero(),
+                                         Eigen::Matrix4d::Identity());
 
   system_model.setSystemParameters(Eigen::Matrix4d::Identity(), system_noise,
                                    Eigen::Matrix4d::Identity(),
