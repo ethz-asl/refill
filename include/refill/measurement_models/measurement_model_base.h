@@ -13,21 +13,42 @@ using std::size_t;
 
 namespace refill {
 
+/**
+ * @brief Interface for measurement models.
+ *
+ * All measurement models must have this class as an ancestor.
+ */
 class MeasurementModelBase {
  public:
-  virtual Eigen::VectorXd observe(const Eigen::VectorXd& state) const = 0;
+  /**
+   * @brief Use the measurement model to receive the expected measurement.
+   *
+   * @param state The state vector used for the observation.
+   * @param noise A measurement noise sample used for observation.
+   * @return the expected measurement given the current state.
+   */
+  virtual Eigen::VectorXd observe(const Eigen::VectorXd& state,
+                                  const Eigen::VectorXd& noise) const = 0;
 
+  /** @brief Returns the measurement models state dimension. */
   size_t getStateDim() const;
+  /** @brief Returns the measurement models measurement dimension. */
   size_t getMeasurementDim() const;
-  size_t getMeasurementNoiseDim() const;
-  DistributionInterface* getMeasurementNoise() const;
+  /** @brief Returns the measurement models noise dimension. */
+  size_t getNoiseDim() const;
+  /** @brief Returns the measurement models noise. */
+  DistributionInterface* getNoise() const;
 
  protected:
+  /** @brief Default constructor should not be used. */
   MeasurementModelBase() = delete;
+  /** @brief Constructor for the measurement model base class. */
   MeasurementModelBase(const size_t& state_dim,
                        const size_t& measurement_dim,
                        const DistributionInterface& measurement_noise);
+  virtual ~MeasurementModelBase() = default;
 
+  /** @brief Function to set the measurement model base parameters. */
   void setMeasurementModelBaseParameters(
       const size_t& state_dim, const size_t& measurement_dim,
       const DistributionInterface& measurement_noise);
