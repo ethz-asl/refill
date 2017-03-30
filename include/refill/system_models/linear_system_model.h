@@ -51,16 +51,16 @@ class LinearSystemModel : public LinearizedSystemModel {
 
   /** @brief Sets the system model parameters for a system without an input and
    *         a simple noise mapping. */
-  void setSystemParameters(const Eigen::MatrixXd& system_mapping,
+  void setModelParameters(const Eigen::MatrixXd& system_mapping,
                            const DistributionInterface& system_noise);
   /** @brief Sets the system model parameters for a system with an input and
    *         a simple noise mapping. */
-  void setSystemParameters(const Eigen::MatrixXd& system_mapping,
+  void setModelParameters(const Eigen::MatrixXd& system_mapping,
                            const DistributionInterface& system_noise,
                            const Eigen::MatrixXd& input_mapping);
   /** @brief Sets the system model parameters for a system with an input and
    *         a specific noise mapping. */
-  void setSystemParameters(const Eigen::MatrixXd& system_mapping,
+  void setModelParameters(const Eigen::MatrixXd& system_mapping,
                            const DistributionInterface& system_noise,
                            const Eigen::MatrixXd& input_mapping,
                            const Eigen::MatrixXd& noise_mapping);

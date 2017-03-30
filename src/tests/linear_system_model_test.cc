@@ -53,7 +53,7 @@ TEST(LinearSystemModelTest, SetterTest) {
 
   LinearSystemModel system_model;
 
-  system_model.setSystemParameters(Eigen::Matrix2d::Identity(), system_noise);
+  system_model.setModelParameters(Eigen::Matrix2d::Identity(), system_noise);
 
   EXPECT_EQ(2, system_model.getStateDim());
   EXPECT_EQ(0, system_model.getInputDim());
@@ -65,7 +65,7 @@ TEST(LinearSystemModelTest, SetterTest) {
   system_noise.setDistributionParameters(Eigen::Vector3d::Zero(),
                                          Eigen::Matrix3d::Identity());
 
-  system_model.setSystemParameters(Eigen::Matrix3d::Identity(), system_noise,
+  system_model.setModelParameters(Eigen::Matrix3d::Identity(), system_noise,
                                    Eigen::Matrix3d::Identity());
 
   EXPECT_EQ(3, system_model.getStateDim());
@@ -78,7 +78,7 @@ TEST(LinearSystemModelTest, SetterTest) {
   system_noise.setDistributionParameters(Eigen::Vector4d::Zero(),
                                          Eigen::Matrix4d::Identity());
 
-  system_model.setSystemParameters(Eigen::Matrix4d::Identity(), system_noise,
+  system_model.setModelParameters(Eigen::Matrix4d::Identity(), system_noise,
                                    Eigen::Matrix4d::Identity(),
                                    Eigen::Matrix4d::Ones());
 

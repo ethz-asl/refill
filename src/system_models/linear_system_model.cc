@@ -8,7 +8,7 @@ namespace refill {
  * It can be useful for class member construction.
  *
  * To be able to use the model after using this constructor, first set the
- * parameters using the setSystemParameters() function.
+ * parameters using the setModelParameters() function.
  */
 LinearSystemModel::LinearSystemModel()
     : LinearSystemModel(Eigen::MatrixXd::Identity(0, 0),
@@ -78,7 +78,7 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
                                      const Eigen::MatrixXd& noise_mapping)
     : LinearizedSystemModel(system_mapping.rows(), system_noise,
                             input_mapping.cols()) {
-  this->setSystemParameters(system_mapping, system_noise, input_mapping,
+  this->setModelParameters(system_mapping, system_noise, input_mapping,
                             noise_mapping);
 }
 
@@ -91,10 +91,10 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
  * @param system_mapping The system matrix @f$ A_k @f$.
  * @param system_noise The system noise @f$ v_k @f$
  */
-void LinearSystemModel::setSystemParameters(
+void LinearSystemModel::setModelParameters(
     const Eigen::MatrixXd& system_mapping,
     const DistributionInterface& system_noise) {
-  this->setSystemParameters(
+  this->setModelParameters(
       system_mapping, system_noise, Eigen::MatrixXd::Zero(0, 0),
       Eigen::MatrixXd::Identity(system_mapping.rows(),
                                 system_noise.mean().size()));
@@ -110,11 +110,11 @@ void LinearSystemModel::setSystemParameters(
  * @param system_noise The system noise @f$ v_k @f$.
  * @param input_mapping The input mapping @f$ B_k @f$.
  */
-void LinearSystemModel::setSystemParameters(
+void LinearSystemModel::setModelParameters(
     const Eigen::MatrixXd& system_mapping,
     const DistributionInterface& system_noise,
     const Eigen::MatrixXd& input_mapping) {
-  this->setSystemParameters(
+  this->setModelParameters(
       system_mapping, system_noise, input_mapping,
       Eigen::MatrixXd::Identity(system_mapping.rows(),
                                 system_noise.mean().size()));
@@ -132,7 +132,7 @@ void LinearSystemModel::setSystemParameters(
  * @param input_mapping
  * @param noise_mapping
  */
-void LinearSystemModel::setSystemParameters(
+void LinearSystemModel::setModelParameters(
     const Eigen::MatrixXd& system_mapping,
     const DistributionInterface& system_noise,
     const Eigen::MatrixXd& input_mapping,
