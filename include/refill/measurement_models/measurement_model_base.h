@@ -35,9 +35,9 @@ class MeasurementModelBase {
   /** @brief Returns the measurement models measurement dimension. */
   size_t getMeasurementDim() const;
   /** @brief Returns the measurement models noise dimension. */
-  size_t getMeasurementNoiseDim() const;
+  size_t getNoiseDim() const;
   /** @brief Returns the measurement models noise. */
-  DistributionInterface* getMeasurementNoise() const;
+  DistributionInterface* getNoise() const;
 
  protected:
   /** @brief Default constructor should not be used. */

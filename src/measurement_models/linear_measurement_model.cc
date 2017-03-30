@@ -21,7 +21,7 @@ LinearMeasurementModel::LinearMeasurementModel()
 LinearMeasurementModel::LinearMeasurementModel(
     const LinearMeasurementModel& measurement_model)
     : LinearMeasurementModel(measurement_model.measurement_mapping_,
-                             *(measurement_model.getMeasurementNoise()),
+                             *(measurement_model.getNoise()),
                              measurement_model.noise_mapping_) {}
 
 /**

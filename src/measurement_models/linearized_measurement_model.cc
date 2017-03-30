@@ -28,10 +28,10 @@ Eigen::MatrixXd LinearizedMeasurementModel::getMeasurementJacobian(
     }
     diff_coeff[i] += step_size;
     evaluation_1 = this->observe(diff_coeff,
-                                 this->getMeasurementNoise()->mean());
+                                 this->getNoise()->mean());
     diff_coeff[i] -= 2 * step_size;
     evaluation_2 = this->observe(diff_coeff,
-                                 this->getMeasurementNoise()->mean());
+                                 this->getNoise()->mean());
     diff_coeff[i] = state[i];
     jacobian.col(i) = (evaluation_1 - evaluation_2) / (2 * step_size);
   }
@@ -50,14 +50,14 @@ Eigen::MatrixXd LinearizedMeasurementModel::getNoiseJacobian(
   CHECK_EQ(state.rows(), this->getStateDim());
 
   Eigen::MatrixXd jacobian(this->getMeasurementDim(),
-                           this->getMeasurementNoiseDim());
+                           this->getNoiseDim());
   constexpr double eps = std::sqrt(std::numeric_limits<double>::epsilon());
 
-  const Eigen::VectorXd noise_mean = this->getMeasurementNoise()->mean();
+  const Eigen::VectorXd noise_mean = this->getNoise()->mean();
   Eigen::VectorXd diff_coeff = noise_mean;
   Eigen::VectorXd evaluation_1(this->getMeasurementDim());
   Eigen::VectorXd evaluation_2(this->getMeasurementDim());
-  for (int i = 0; i < this->getMeasurementNoiseDim(); ++i) {
+  for (int i = 0; i < this->getNoiseDim(); ++i) {
     double step_size = eps * std::abs(diff_coeff[i]);
     if (step_size == 0.0) {
       step_size = eps;

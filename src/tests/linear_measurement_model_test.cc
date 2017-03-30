@@ -10,7 +10,7 @@ TEST(LinearMeasurementModelTest, ConstructorTest) {
 
   EXPECT_EQ(0, measurement_model_1.getStateDim());
   EXPECT_EQ(0, measurement_model_1.getMeasurementDim());
-  EXPECT_EQ(0, measurement_model_1.getMeasurementNoiseDim());
+  EXPECT_EQ(0, measurement_model_1.getNoiseDim());
 
   GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
                                          Eigen::Matrix2d::Identity());
@@ -20,7 +20,7 @@ TEST(LinearMeasurementModelTest, ConstructorTest) {
 
   EXPECT_EQ(2, measurement_model_2.getStateDim());
   EXPECT_EQ(2, measurement_model_2.getMeasurementDim());
-  EXPECT_EQ(2, measurement_model_2.getMeasurementNoiseDim());
+  EXPECT_EQ(2, measurement_model_2.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(),
             measurement_model_2.getMeasurementMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), measurement_model_2.getNoiseMapping());
@@ -31,7 +31,7 @@ TEST(LinearMeasurementModelTest, ConstructorTest) {
 
   EXPECT_EQ(2, measurement_model_3.getStateDim());
   EXPECT_EQ(2, measurement_model_3.getMeasurementDim());
-  EXPECT_EQ(2, measurement_model_3.getMeasurementNoiseDim());
+  EXPECT_EQ(2, measurement_model_3.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(),
             measurement_model_3.getMeasurementMapping());
   EXPECT_EQ(Eigen::Matrix2d::Ones(), measurement_model_3.getNoiseMapping());
@@ -48,7 +48,7 @@ TEST(LinearMeasurementModelTest, SetterTest) {
 
   EXPECT_EQ(2, measurement_model.getStateDim());
   EXPECT_EQ(2, measurement_model.getMeasurementDim());
-  EXPECT_EQ(2, measurement_model.getMeasurementNoiseDim());
+  EXPECT_EQ(2, measurement_model.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(),
             measurement_model.getMeasurementMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), measurement_model.getNoiseMapping());
@@ -62,7 +62,7 @@ TEST(LinearMeasurementModelTest, SetterTest) {
 
   EXPECT_EQ(3, measurement_model.getStateDim());
   EXPECT_EQ(3, measurement_model.getMeasurementDim());
-  EXPECT_EQ(3, measurement_model.getMeasurementNoiseDim());
+  EXPECT_EQ(3, measurement_model.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix3d::Identity(),
             measurement_model.getMeasurementMapping());
   EXPECT_EQ(Eigen::Matrix3d::Ones(), measurement_model.getNoiseMapping());

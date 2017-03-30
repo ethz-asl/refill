@@ -38,7 +38,7 @@ TEST(LinearizedMeasurementModelTest, FullTest) {
       Eigen::Vector2d::Zero());
 
   ASSERT_EQ(measurement_model.getMeasurementDim(), noise_jacobian.rows());
-  ASSERT_EQ(measurement_model.getMeasurementNoiseDim(), noise_jacobian.cols());
+  ASSERT_EQ(measurement_model.getNoiseDim(), noise_jacobian.cols());
   ASSERT_EQ(Eigen::Matrix2d::Identity(), noise_jacobian);
 }
 

@@ -45,13 +45,13 @@ size_t MeasurementModelBase::getMeasurementDim() const {
 }
 
 /** @return the noise dimension. */
-size_t MeasurementModelBase::getMeasurementNoiseDim() const {
+size_t MeasurementModelBase::getNoiseDim() const {
   CHECK(measurement_noise_) << "Measurement noise has not been set.";
   return measurement_noise_->mean().size();
 }
 
 /** @return a pointer to the measurement model noise distribution. */
-DistributionInterface* MeasurementModelBase::getMeasurementNoise() const {
+DistributionInterface* MeasurementModelBase::getNoise() const {
   CHECK(measurement_noise_) << "Measurement noise has not been set.";
   return measurement_noise_.get();
 }
