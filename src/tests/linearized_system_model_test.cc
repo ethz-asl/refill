@@ -41,7 +41,7 @@ TEST(LinearizedSystemModelTest, NoInputTest) {
       Eigen::Vector2d::Zero(), Eigen::VectorXd::Zero(0));
 
   ASSERT_EQ(system_model.getStateDim(), noise_jacobian.rows());
-  ASSERT_EQ(system_model.getSystemNoiseDim(), noise_jacobian.cols());
+  ASSERT_EQ(system_model.getNoiseDim(), noise_jacobian.cols());
   ASSERT_EQ(Eigen::Matrix2d::Identity(), noise_jacobian);
 }
 
@@ -62,7 +62,7 @@ TEST(LinearizedSystemModelTest, WithInputTest) {
       Eigen::Vector2d::Zero(), Eigen::Vector2d::Zero());
 
   ASSERT_EQ(system_model.getStateDim(), noise_jacobian.rows());
-  ASSERT_EQ(system_model.getSystemNoiseDim(), noise_jacobian.cols());
+  ASSERT_EQ(system_model.getNoiseDim(), noise_jacobian.cols());
   ASSERT_EQ(Eigen::Matrix2d::Identity(), noise_jacobian);
 }
 

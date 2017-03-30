@@ -11,7 +11,7 @@ TEST(LinearSystemModelTest, ConstructorTest) {
 
   EXPECT_EQ(0, system_model_1.getStateDim());
   EXPECT_EQ(0, system_model_1.getInputDim());
-  EXPECT_EQ(0, system_model_1.getSystemNoiseDim());
+  EXPECT_EQ(0, system_model_1.getNoiseDim());
 
   GaussianDistribution system_noise(Eigen::Vector2d::Zero(),
                                     Eigen::Matrix2d::Identity());
@@ -20,7 +20,7 @@ TEST(LinearSystemModelTest, ConstructorTest) {
 
   EXPECT_EQ(2, system_model_2.getStateDim());
   EXPECT_EQ(0, system_model_2.getInputDim());
-  EXPECT_EQ(2, system_model_2.getSystemNoiseDim());
+  EXPECT_EQ(2, system_model_2.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_2.getSystemMapping());
   EXPECT_EQ(Eigen::MatrixXd::Zero(0, 0), system_model_2.getInputMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_2.getNoiseMapping());
@@ -30,7 +30,7 @@ TEST(LinearSystemModelTest, ConstructorTest) {
 
   EXPECT_EQ(2, system_model_3.getStateDim());
   EXPECT_EQ(2, system_model_3.getInputDim());
-  EXPECT_EQ(2, system_model_3.getSystemNoiseDim());
+  EXPECT_EQ(2, system_model_3.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_3.getSystemMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_3.getInputMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_3.getNoiseMapping());
@@ -41,7 +41,7 @@ TEST(LinearSystemModelTest, ConstructorTest) {
 
   EXPECT_EQ(2, system_model_4.getStateDim());
   EXPECT_EQ(2, system_model_4.getInputDim());
-  EXPECT_EQ(2, system_model_4.getSystemNoiseDim());
+  EXPECT_EQ(2, system_model_4.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_4.getSystemMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_4.getInputMapping());
   EXPECT_EQ(Eigen::Matrix2d::Ones(), system_model_4.getNoiseMapping());
@@ -57,7 +57,7 @@ TEST(LinearSystemModelTest, SetterTest) {
 
   EXPECT_EQ(2, system_model.getStateDim());
   EXPECT_EQ(0, system_model.getInputDim());
-  EXPECT_EQ(2, system_model.getSystemNoiseDim());
+  EXPECT_EQ(2, system_model.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model.getSystemMapping());
   EXPECT_EQ(Eigen::MatrixXd::Zero(0, 0), system_model.getInputMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model.getNoiseMapping());
@@ -70,7 +70,7 @@ TEST(LinearSystemModelTest, SetterTest) {
 
   EXPECT_EQ(3, system_model.getStateDim());
   EXPECT_EQ(3, system_model.getInputDim());
-  EXPECT_EQ(3, system_model.getSystemNoiseDim());
+  EXPECT_EQ(3, system_model.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix3d::Identity(), system_model.getSystemMapping());
   EXPECT_EQ(Eigen::Matrix3d::Identity(), system_model.getInputMapping());
   EXPECT_EQ(Eigen::Matrix3d::Identity(), system_model.getNoiseMapping());
@@ -84,7 +84,7 @@ TEST(LinearSystemModelTest, SetterTest) {
 
   EXPECT_EQ(4, system_model.getStateDim());
   EXPECT_EQ(4, system_model.getInputDim());
-  EXPECT_EQ(4, system_model.getSystemNoiseDim());
+  EXPECT_EQ(4, system_model.getNoiseDim());
   EXPECT_EQ(Eigen::Matrix4d::Identity(), system_model.getSystemMapping());
   EXPECT_EQ(Eigen::Matrix4d::Identity(), system_model.getInputMapping());
   EXPECT_EQ(Eigen::Matrix4d::Ones(), system_model.getNoiseMapping());

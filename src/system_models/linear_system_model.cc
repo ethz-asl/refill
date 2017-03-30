@@ -21,7 +21,7 @@ LinearSystemModel::LinearSystemModel()
  */
 LinearSystemModel::LinearSystemModel(const LinearSystemModel& system_model)
     : LinearSystemModel(system_model.system_mapping_,
-                        *(system_model.getSystemNoise()),
+                        *(system_model.getNoise()),
                         system_model.input_mapping_,
                         system_model.noise_mapping_) {}
 
@@ -164,7 +164,7 @@ void LinearSystemModel::setSystemParameters(
 Eigen::VectorXd LinearSystemModel::propagate(
     const Eigen::VectorXd& state) const {
   return this->propagate(state, Eigen::VectorXd::Zero(this->getInputDim()),
-                         this->getSystemNoise()->mean());
+                         this->getNoise()->mean());
 }
 
 /**

@@ -37,7 +37,7 @@ Eigen::MatrixXd SystemModelBase::propagateVectorized(
     const Eigen::MatrixXd& sampled_noise) const {
   const size_t kStateDim = getStateDim();
   const size_t kInputDim = getInputDim();
-  const size_t kNoiseDim = getSystemNoiseDim();
+  const size_t kNoiseDim = getNoiseDim();
   const size_t kStateSampleCount = sampled_state.cols();
   const size_t kNoiseSampleCount = sampled_noise.cols();
 
@@ -102,13 +102,13 @@ size_t SystemModelBase::getInputDim() const {
 }
 
 /** @return the noise dimension. */
-size_t SystemModelBase::getSystemNoiseDim() const {
+size_t SystemModelBase::getNoiseDim() const {
   CHECK(system_noise_) << "System noise has not been set.";
   return system_noise_->mean().size();
 }
 
 /** @return a pointer to the system noise distribution. */
-DistributionInterface* SystemModelBase::getSystemNoise() const {
+DistributionInterface* SystemModelBase::getNoise() const {
   CHECK(system_noise_) << "System noise has not been set.";
   return system_noise_.get();
 }

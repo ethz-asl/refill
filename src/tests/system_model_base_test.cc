@@ -44,9 +44,9 @@ TEST(SystemModelBaseTest, NoInputTest) {
 
   ASSERT_EQ(3, system_model.getStateDim());
   ASSERT_EQ(0, system_model.getInputDim());
-  ASSERT_EQ(3, system_model.getSystemNoiseDim());
-  ASSERT_EQ(Eigen::Vector3d::Zero(), system_model.getSystemNoise()->mean());
-  ASSERT_EQ(Eigen::Matrix3d::Identity(), system_model.getSystemNoise()->cov());
+  ASSERT_EQ(3, system_model.getNoiseDim());
+  ASSERT_EQ(Eigen::Vector3d::Zero(), system_model.getNoise()->mean());
+  ASSERT_EQ(Eigen::Matrix3d::Identity(), system_model.getNoise()->cov());
 
   system_noise.setDistributionParameters(Eigen::Vector2d::Ones(),
                                          Eigen::Matrix2d::Identity() * 2.0);
@@ -55,10 +55,10 @@ TEST(SystemModelBaseTest, NoInputTest) {
 
   ASSERT_EQ(2, system_model.getStateDim());
   ASSERT_EQ(0, system_model.getInputDim());
-  ASSERT_EQ(2, system_model.getSystemNoiseDim());
-  ASSERT_EQ(Eigen::Vector2d::Ones(), system_model.getSystemNoise()->mean());
+  ASSERT_EQ(2, system_model.getNoiseDim());
+  ASSERT_EQ(Eigen::Vector2d::Ones(), system_model.getNoise()->mean());
   ASSERT_EQ(Eigen::Matrix2d::Identity() * 2.0,
-            system_model.getSystemNoise()->cov());
+            system_model.getNoise()->cov());
 
   Eigen::Matrix2d state_samples = Eigen::Matrix2d::Ones();
   Eigen::Matrix2d noise_samples = Eigen::Matrix2d::Ones();
@@ -81,9 +81,9 @@ TEST(SystemModelBaseTest, WithInputTest) {
 
   ASSERT_EQ(3, system_model.getStateDim());
   ASSERT_EQ(3, system_model.getInputDim());
-  ASSERT_EQ(3, system_model.getSystemNoiseDim());
-  ASSERT_EQ(Eigen::Vector3d::Zero(), system_model.getSystemNoise()->mean());
-  ASSERT_EQ(Eigen::Matrix3d::Identity(), system_model.getSystemNoise()->cov());
+  ASSERT_EQ(3, system_model.getNoiseDim());
+  ASSERT_EQ(Eigen::Vector3d::Zero(), system_model.getNoise()->mean());
+  ASSERT_EQ(Eigen::Matrix3d::Identity(), system_model.getNoise()->cov());
 
   system_noise.setDistributionParameters(Eigen::Vector2d::Ones(),
                                          Eigen::Matrix2d::Identity() * 2.0);
@@ -92,10 +92,10 @@ TEST(SystemModelBaseTest, WithInputTest) {
 
   ASSERT_EQ(2, system_model.getStateDim());
   ASSERT_EQ(2, system_model.getInputDim());
-  ASSERT_EQ(2, system_model.getSystemNoiseDim());
-  ASSERT_EQ(Eigen::Vector2d::Ones(), system_model.getSystemNoise()->mean());
+  ASSERT_EQ(2, system_model.getNoiseDim());
+  ASSERT_EQ(Eigen::Vector2d::Ones(), system_model.getNoise()->mean());
   ASSERT_EQ(Eigen::Matrix2d::Identity() * 2.0,
-            system_model.getSystemNoise()->cov());
+            system_model.getNoise()->cov());
 
   Eigen::Matrix2d state_samples = Eigen::Matrix2d::Ones();
   Eigen::Matrix2d noise_samples = Eigen::Matrix2d::Ones();

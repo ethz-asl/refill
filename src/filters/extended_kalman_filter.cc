@@ -121,12 +121,12 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   const Eigen::MatrixXd noise_jacobian_transpose = noise_jacobian.transpose();
 
   const Eigen::VectorXd new_state_mean = system_model.propagate(
-      state_.mean(), input, system_model.getSystemNoise()->mean());
+      state_.mean(), input, system_model.getNoise()->mean());
 
   // Use .selfadjointView<>() to guarantee symmetric matrix
   const Eigen::MatrixXd new_state_cov =
       (system_jacobian * state_.cov() * system_jacobian_transpose +
-      noise_jacobian * system_model.getSystemNoise()->cov() *
+      noise_jacobian * system_model.getNoise()->cov() *
       noise_jacobian_transpose).selfadjointView<Eigen::Upper>();
 
   state_.setDistributionParameters(new_state_mean, new_state_cov);

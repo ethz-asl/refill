@@ -48,9 +48,9 @@ class SystemModelBase {
   /** @brief Returns the systems input dimension. */
   size_t getInputDim() const;
   /** @brief Returns the systems noise dimension. */
-  size_t getSystemNoiseDim() const;
+  size_t getNoiseDim() const;
   /** @brief Returns a pointer to the system noise. */
-  DistributionInterface* getSystemNoise() const;
+  DistributionInterface* getNoise() const;
 
  protected:
   /** Default constructor should not be used. */
