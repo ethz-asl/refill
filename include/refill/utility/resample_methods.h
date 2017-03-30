@@ -7,23 +7,19 @@
 #include <random>
 #include <vector>
 
-template<typename StateType>
-using ParticleType = std::pair<StateType, double>;
-
 namespace refill {
 
-template<typename StateType>
-void importanceSampling(std::vector<ParticleType<StateType>>* particles) {
-  std::size_t n_particles = particles->size();
+void importanceSampling(Eigen::MatrixXd* particles, Eigen::VectorXd* weights) {
+  const std::size_t n_particles = particles->cols();
 
   CHECK_NE(n_particles, 0)<< "Particle vector is empty.";
 
   // Compute the cumulative sum of weights
-  std::vector<double> cum_sum(n_particles);
+  Eigen::VectorXd cum_sum(n_particles);
 
-  cum_sum[0] = particles->at(0).second;
+  cum_sum[0] = weights[0];
   for (int i = 1; i < n_particles; ++i) {
-    cum_sum[i] = cum_sum[i - 1] + particles->at(i).second;
+    cum_sum[i] = cum_sum[i - 1] + weights[i];
   }
 
   // Set up rng and uniform distribution
@@ -32,21 +28,19 @@ void importanceSampling(std::vector<ParticleType<StateType>>* particles) {
   std::uniform_real_distribution uniform_dist(0.0, 1.0);
 
   // Create new vector of resampled particles
-  std::vector<ParticleType<StateType>> tmp_particles(n_particles);
-  double uniform_weight = 1 / n_particles;
-  for (ParticleType<StateType>& tmp_particle : tmp_particles) {
+  Eigen::MatrixXd particles_copy(*particles);
+  for (int i = 0; i < n_particles; ++i) {
     double particle_random_num = uniform_dist(random_engine);
 
-    for (int i = 0; i < n_particles; ++i) {
-      if (particle_random_num < cum_sum[i]) {
-        tmp_particle.first = particles->at(i).first;
-        tmp_particle.second = uniform_weight;
+    for (int j = 0; j < n_particles; ++j) {
+      if (particle_random_num < cum_sum[j]) {
+        particles->col(i) = particles_copy.col(j);
         break;
       }
     }
   }
 
-  *particles = tmp_particles;
+  weights->setConstant(1 / n_particles);
 }
 
 }  // namespace refill

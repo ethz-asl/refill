@@ -15,33 +15,33 @@
 #include "refill/system_models/system_model_base.h"
 
 using std::size_t;
+using Eigen::MatrixXd;
+using Eigen::VectorXd;
 
 namespace refill {
 
 class ParticleFilter : public FilterBase {
  public:
-  using ParticleType = std::pair<Eigen::VectorXd, double>;
-
   ParticleFilter();
   ParticleFilter(
       const size_t& n_particles,
       const DistributionInterface& initial_state_dist,
-      const std::function<void(std::vector<ParticleType>*)>& resample_method);
+      const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
   ParticleFilter(
       const size_t& n_particles,
       const DistributionInterface& initial_state_dist,
-      const std::function<void(std::vector<ParticleType>*)>& resample_method,
+      const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<MeasurementModelBase> measurement_model);
 
   void setFilterParameters(
       const size_t& n_particles,
       const DistributionInterface& initial_state_dist,
-      const std::function<void(std::vector<ParticleType>*)>& resample_method);
+      const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
   void setFilterParameters(
       const size_t& n_particles,
       const DistributionInterface& initial_state_dist,
-      const std::function<void(std::vector<ParticleType>*)>& resample_method,
+      const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<MeasurementModelBase> measurement_model);
 
@@ -59,10 +59,12 @@ class ParticleFilter : public FilterBase {
   void initializeParticles(const DistributionInterface& initial_state);
   void resample();
 
-  std::vector<ParticleType> particles_;
+  size_t num_particles_;
+  Eigen::MatrixXd particles_;
+  Eigen::VectorXd weights_;
   std::unique_ptr<SystemModelBase> system_model_;
   std::unique_ptr<MeasurementModelBase> measurement_model_;
-  std::function<void(std::vector<ParticleType>*)> resample_method_;
+  std::function<void(Eigen::MatrixXd*, Eigen::VectorXd*)> resample_method_;
 };
 
 }  // namespace refill
