@@ -43,7 +43,7 @@ TEST(LinearMeasurementModelTest, SetterTest) {
 
   LinearMeasurementModel measurement_model;
 
-  measurement_model.setMeasurementParameters(Eigen::Matrix2d::Identity(),
+  measurement_model.setModelParameters(Eigen::Matrix2d::Identity(),
                                              measurement_noise);
 
   EXPECT_EQ(2, measurement_model.getStateDim());
@@ -56,7 +56,7 @@ TEST(LinearMeasurementModelTest, SetterTest) {
   measurement_noise.setDistributionParameters(Eigen::Vector3d::Zero(),
                                               Eigen::Matrix3d::Identity());
 
-  measurement_model.setMeasurementParameters(Eigen::Matrix3d::Identity(),
+  measurement_model.setModelParameters(Eigen::Matrix3d::Identity(),
                                              measurement_noise,
                                              Eigen::Matrix3d::Ones());
 

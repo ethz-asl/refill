@@ -8,7 +8,7 @@ namespace refill {
  * It can be useful for class member construction.
  *
  * To be able to use the model after using this constructor, first set the
- * parameters using the setMeasurementParameters() function.
+ * parameters using the setModelParameters() function.
  */
 LinearMeasurementModel::LinearMeasurementModel()
     : LinearMeasurementModel(Eigen::MatrixXd::Identity(0, 0),
@@ -54,7 +54,7 @@ LinearMeasurementModel::LinearMeasurementModel(
     : LinearizedMeasurementModel(measurement_mapping.cols(),
                                  measurement_mapping.rows(),
                                  measurement_noise) {
-  this->setMeasurementParameters(measurement_mapping, measurement_noise,
+  this->setModelParameters(measurement_mapping, measurement_noise,
                                  noise_mapping);
 }
 
@@ -64,10 +64,10 @@ LinearMeasurementModel::LinearMeasurementModel(
  * @param measurement_mapping The matrix @f$ H_k @f$.
  * @param measurement_noise The measurement noise @f$ w_k @f$.
  */
-void LinearMeasurementModel::setMeasurementParameters(
+void LinearMeasurementModel::setModelParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise) {
-  this->setMeasurementParameters(
+  this->setModelParameters(
       measurement_mapping, measurement_noise,
       Eigen::MatrixXd::Identity(measurement_mapping.rows(),
                                 measurement_noise.mean().size()));
@@ -82,7 +82,7 @@ void LinearMeasurementModel::setMeasurementParameters(
  * @param measurement_noise The measurement noise @f$ w_k @f$.
  * @param noise_mapping The matrix @f$ M_k @f$.
  */
-void LinearMeasurementModel::setMeasurementParameters(
+void LinearMeasurementModel::setModelParameters(
     const Eigen::MatrixXd& measurement_mapping,
     const DistributionInterface& measurement_noise,
     const Eigen::MatrixXd& noise_mapping) {
