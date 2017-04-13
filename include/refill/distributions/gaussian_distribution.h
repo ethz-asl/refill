@@ -9,13 +9,15 @@
 #include <random>
 
 #include "refill/distributions/distribution_base.h"
+#include "refill/distributions/likelihood.h"
 
 using std::size_t;
 
 namespace refill {
 
 /** @brief Class that implements a multivariate Gaussian distribution. */
-class GaussianDistribution : public DistributionBase<GaussianDistribution> {
+class GaussianDistribution : public DistributionBase<GaussianDistribution>,
+    Likelihood {
  public:
   /** @brief Default constructor creates standard normal gaussian. */
   GaussianDistribution();
@@ -58,6 +60,8 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
 
   /** @brief Implements the subtraction of two gaussian distributions. */
   GaussianDistribution operator-(const GaussianDistribution& right_side);
+
+  double getLikelihood(const Eigen::VectorXd& x) const;
 
  private:
   Eigen::VectorXd mean_;
