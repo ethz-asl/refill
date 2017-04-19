@@ -8,15 +8,15 @@
 
 namespace refill {
 
-class SystemModelClass : public SystemModelBase {
+class SystemModelMockClass : public SystemModelBase {
  public:
-  SystemModelClass(const size_t& state_dim,
-                   const GaussianDistribution& system_noise)
+  SystemModelMockClass(const size_t& state_dim,
+                       const GaussianDistribution& system_noise)
       : SystemModelBase(state_dim, system_noise) {
   }
-  SystemModelClass(const size_t& state_dim,
-                   const GaussianDistribution& system_noise,
-                   const size_t& input_dim)
+  SystemModelMockClass(const size_t& state_dim,
+                       const GaussianDistribution& system_noise,
+                       const size_t& input_dim)
       : SystemModelBase(state_dim, system_noise, input_dim) {
   }
   Eigen::VectorXd propagate(const Eigen::VectorXd& state,
@@ -40,7 +40,7 @@ TEST(SystemModelBaseTest, NoInputTest) {
                                     Eigen::Matrix3d::Identity());
 
   // Test constructor with two parameters
-  SystemModelClass system_model(3, system_noise);
+  SystemModelMockClass system_model(3, system_noise);
 
   ASSERT_EQ(3, system_model.getStateDim());
   ASSERT_EQ(0, system_model.getInputDim());
@@ -77,7 +77,7 @@ TEST(SystemModelBaseTest, WithInputTest) {
                                     Eigen::Matrix3d::Identity());
 
   // Test constructor with two parameters
-  SystemModelClass system_model(3, system_noise, 3);
+  SystemModelMockClass system_model(3, system_noise, 3);
 
   ASSERT_EQ(3, system_model.getStateDim());
   ASSERT_EQ(3, system_model.getInputDim());
