@@ -5,38 +5,98 @@
 
 namespace refill {
 
-TEST(LinearMeasurementModelTest, Fullrun) {
-  constexpr int kStateDim = 2;
-  constexpr int kMeasurementDim = 1;
+TEST(LinearMeasurementModelTest, ConstructorTest) {
+  LinearMeasurementModel measurement_model_1;
 
-  // Set up measurement matrix
-  Eigen::MatrixXd measurement_mat = Eigen::MatrixXd::Identity(kMeasurementDim,
-                                                              kStateDim);
+  EXPECT_EQ(0, measurement_model_1.getStateDim());
+  EXPECT_EQ(0, measurement_model_1.getMeasurementDim());
+  EXPECT_EQ(0, measurement_model_1.getMeasurementNoiseDim());
 
-  // Set up measurement noise
-  GaussianDistribution measurement_noise;
-  measurement_noise.setDistParam(
-      Eigen::VectorXd::Ones(kMeasurementDim),
-      Eigen::MatrixXd::Identity(kMeasurementDim, kMeasurementDim));
+  GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
+                                         Eigen::Matrix2d::Identity());
 
-  // Set up linear measurement model
-  LinearMeasurementModel measurement_model(measurement_mat, measurement_noise);
+  LinearMeasurementModel measurement_model_2(Eigen::Matrix2d::Identity(),
+                                             measurement_noise);
 
-  // Set up state vector for observation
-  Eigen::VectorXd state = Eigen::VectorXd::Ones(kStateDim);
+  EXPECT_EQ(2, measurement_model_2.getStateDim());
+  EXPECT_EQ(2, measurement_model_2.getMeasurementDim());
+  EXPECT_EQ(2, measurement_model_2.getMeasurementNoiseDim());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(),
+            measurement_model_2.getMeasurementMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), measurement_model_2.getNoiseMapping());
 
-  // Check if observation works
-  ASSERT_EQ(measurement_model.observe(state, measurement_noise.mean()),
-            Eigen::VectorXd::Ones(kMeasurementDim) * 2.0);
+  LinearMeasurementModel measurement_model_3(Eigen::Matrix2d::Identity(),
+                                             measurement_noise,
+                                             Eigen::Matrix2d::Ones());
 
-  // Check if dimension getters work
-  ASSERT_EQ(measurement_model.getStateDim(), kStateDim);
-  ASSERT_EQ(measurement_model.getMeasurementDim(), kMeasurementDim);
+  EXPECT_EQ(2, measurement_model_3.getStateDim());
+  EXPECT_EQ(2, measurement_model_3.getMeasurementDim());
+  EXPECT_EQ(2, measurement_model_3.getMeasurementNoiseDim());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(),
+            measurement_model_3.getMeasurementMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Ones(), measurement_model_3.getNoiseMapping());
+}
 
-  // Check if Jacobian getter works
-  ASSERT_EQ(measurement_model.getMeasurementJacobian(state), measurement_mat);
+TEST(LinearMeasurementModelTest, SetterTest) {
+  GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
+                                         Eigen::Matrix2d::Identity());
 
-  // TODO(jwidauer): Add more test cases
+  LinearMeasurementModel measurement_model;
+
+  measurement_model.setMeasurementParameters(Eigen::Matrix2d::Identity(),
+                                             measurement_noise);
+
+  EXPECT_EQ(2, measurement_model.getStateDim());
+  EXPECT_EQ(2, measurement_model.getMeasurementDim());
+  EXPECT_EQ(2, measurement_model.getMeasurementNoiseDim());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(),
+            measurement_model.getMeasurementMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), measurement_model.getNoiseMapping());
+
+  measurement_noise.setDistParam(Eigen::Vector3d::Zero(),
+                                 Eigen::Matrix3d::Identity());
+
+  measurement_model.setMeasurementParameters(Eigen::Matrix3d::Identity(),
+                                             measurement_noise,
+                                             Eigen::Matrix3d::Ones());
+
+  EXPECT_EQ(3, measurement_model.getStateDim());
+  EXPECT_EQ(3, measurement_model.getMeasurementDim());
+  EXPECT_EQ(3, measurement_model.getMeasurementNoiseDim());
+  EXPECT_EQ(Eigen::Matrix3d::Identity(),
+            measurement_model.getMeasurementMapping());
+  EXPECT_EQ(Eigen::Matrix3d::Ones(), measurement_model.getNoiseMapping());
+}
+
+TEST(LinearMeasurementModelTest, GetterTest) {
+  GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
+                                         Eigen::Matrix2d::Identity());
+
+  LinearMeasurementModel measurement_model(Eigen::Matrix2d::Identity(),
+                                           measurement_noise,
+                                           Eigen::Matrix2d::Ones());
+
+  EXPECT_EQ(Eigen::Matrix2d::Identity(),
+            measurement_model.getMeasurementMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Ones(), measurement_model.getNoiseMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(),
+            measurement_model.getMeasurementJacobian(Eigen::Vector2d::Zero()));
+  EXPECT_EQ(Eigen::Matrix2d::Ones(),
+            measurement_model.getNoiseJacobian(Eigen::Vector2d::Zero()));
+}
+
+TEST(LinearMeasurementModel, ObservationTest) {
+  GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
+                                         Eigen::Matrix2d::Identity());
+
+  LinearMeasurementModel measurement_model(Eigen::Matrix2d::Identity(),
+                                           measurement_noise,
+                                           Eigen::Matrix2d::Ones());
+
+  EXPECT_EQ(
+      Eigen::Vector2d::Constant(3.0),
+      measurement_model.observe(Eigen::Vector2d::Ones(),
+                                Eigen::Vector2d::Ones()));
 }
 
 }  // namespace refill

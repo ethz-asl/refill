@@ -6,41 +6,140 @@
 
 namespace refill {
 
-TEST(LinearSystemModelTest, Fullrun) {
-  constexpr int kStateDim = 2;
-  constexpr int kInputDim = 2;
+TEST(LinearSystemModelTest, ConstructorTest) {
+  // test default constructor
+  LinearSystemModel* system_model_p = new LinearSystemModel;
 
-  // Set up system and input matrix
-  Eigen::MatrixXd system_mat = Eigen::MatrixXd::Identity(kStateDim, kStateDim);
-  Eigen::MatrixXd input_mat = Eigen::MatrixXd::Identity(kStateDim, kInputDim);
+  EXPECT_EQ(0, system_model_p->getStateDim());
+  EXPECT_EQ(0, system_model_p->getInputDim());
+  EXPECT_EQ(0, system_model_p->getSystemNoiseDim());
 
-  // Set up system noise, with non standard params
-  GaussianDistribution system_noise;
-  system_noise.setDistParam(Eigen::VectorXd::Ones(kStateDim),
-                            Eigen::MatrixXd::Identity(kStateDim, kStateDim));
+  delete system_model_p;
 
-  // Set up system model
-  LinearSystemModel system_model(system_mat, system_noise, input_mat);
+  GaussianDistribution system_noise(Eigen::Vector2d::Zero(),
+                                    Eigen::Matrix2d::Identity());
 
-  // Set up state and input vector
-  Eigen::VectorXd state_vec = Eigen::VectorXd::Ones(kStateDim);
-  Eigen::VectorXd input_vec = Eigen::VectorXd::Ones(kInputDim);
+  // test constructor with system mapping and noise
+  system_model_p = new LinearSystemModel(Eigen::Matrix2d::Identity(),
+                                         system_noise);
 
-  // Propagate the state vector through the system
-  state_vec = system_model.propagate(state_vec, input_vec,
-                                     system_model.getSystemNoise()->mean());
+  EXPECT_EQ(2, system_model_p->getStateDim());
+  EXPECT_EQ(0, system_model_p->getInputDim());
+  EXPECT_EQ(2, system_model_p->getSystemNoiseDim());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getSystemMapping());
+  EXPECT_EQ(Eigen::MatrixXd::Zero(0, 0), system_model_p->getInputMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getNoiseMapping());
 
-  // Check that propagation was correct
-  ASSERT_EQ(state_vec, Eigen::VectorXd::Ones(kStateDim) * 3.0);
+  delete system_model_p;
 
-  // Check that dimension getters work
-  ASSERT_EQ(system_model.getStateDim(), kStateDim);
-  ASSERT_EQ(system_model.getInputDim(), kInputDim);
+  // test constructor with system mapping, noise and input mapping
+  system_model_p = new LinearSystemModel(Eigen::Matrix2d::Identity(),
+                                         system_noise,
+                                         Eigen::Matrix2d::Identity());
 
-  // Check that Jacobian getter works
-  ASSERT_EQ(system_model.getStateJacobian(state_vec, input_vec), system_mat);
+  EXPECT_EQ(2, system_model_p->getStateDim());
+  EXPECT_EQ(2, system_model_p->getInputDim());
+  EXPECT_EQ(2, system_model_p->getSystemNoiseDim());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getSystemMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getInputMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getNoiseMapping());
 
-  // TODO(jwidauer): Add more test cases
+  delete system_model_p;
+
+  // test constructor with system noise and system, input and noise mapping
+  system_model_p = new LinearSystemModel(Eigen::Matrix2d::Identity(),
+                                         system_noise,
+                                         Eigen::Matrix2d::Identity(),
+                                         Eigen::Matrix2d::Ones());
+
+  EXPECT_EQ(2, system_model_p->getStateDim());
+  EXPECT_EQ(2, system_model_p->getInputDim());
+  EXPECT_EQ(2, system_model_p->getSystemNoiseDim());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getSystemMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getInputMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Ones(), system_model_p->getNoiseMapping());
+
+  delete system_model_p;
+}
+
+TEST(LinearSystemModelTest, SetterTest) {
+  GaussianDistribution system_noise(Eigen::Vector2d::Zero(),
+                                    Eigen::Matrix2d::Identity());
+
+  LinearSystemModel system_model;
+
+  system_model.setSystemParameters(Eigen::Matrix2d::Identity(), system_noise);
+
+  EXPECT_EQ(2, system_model.getStateDim());
+  EXPECT_EQ(0, system_model.getInputDim());
+  EXPECT_EQ(2, system_model.getSystemNoiseDim());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model.getSystemMapping());
+  EXPECT_EQ(Eigen::MatrixXd::Zero(0, 0), system_model.getInputMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model.getNoiseMapping());
+
+  system_noise.setDistParam(Eigen::Vector3d::Zero(),
+                            Eigen::Matrix3d::Identity());
+
+  system_model.setSystemParameters(Eigen::Matrix3d::Identity(), system_noise,
+                                   Eigen::Matrix3d::Identity());
+
+  EXPECT_EQ(3, system_model.getStateDim());
+  EXPECT_EQ(3, system_model.getInputDim());
+  EXPECT_EQ(3, system_model.getSystemNoiseDim());
+  EXPECT_EQ(Eigen::Matrix3d::Identity(), system_model.getSystemMapping());
+  EXPECT_EQ(Eigen::Matrix3d::Identity(), system_model.getInputMapping());
+  EXPECT_EQ(Eigen::Matrix3d::Identity(), system_model.getNoiseMapping());
+
+  system_noise.setDistParam(Eigen::Vector4d::Zero(),
+                            Eigen::Matrix4d::Identity());
+
+  system_model.setSystemParameters(Eigen::Matrix4d::Identity(), system_noise,
+                                   Eigen::Matrix4d::Identity(),
+                                   Eigen::Matrix4d::Ones());
+
+  EXPECT_EQ(4, system_model.getStateDim());
+  EXPECT_EQ(4, system_model.getInputDim());
+  EXPECT_EQ(4, system_model.getSystemNoiseDim());
+  EXPECT_EQ(Eigen::Matrix4d::Identity(), system_model.getSystemMapping());
+  EXPECT_EQ(Eigen::Matrix4d::Identity(), system_model.getInputMapping());
+  EXPECT_EQ(Eigen::Matrix4d::Ones(), system_model.getNoiseMapping());
+}
+
+TEST(LinearSystemModelTest, GetterTest) {
+  GaussianDistribution system_noise(Eigen::Vector2d::Zero(),
+                                    Eigen::Matrix2d::Identity());
+
+  LinearSystemModel system_model(Eigen::Matrix2d::Identity(), system_noise,
+                                 Eigen::Matrix2d::Ones(),
+                                 Eigen::Matrix2d::Constant(2.0));
+
+  EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model.getSystemMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Ones(), system_model.getInputMapping());
+  EXPECT_EQ(Eigen::Matrix2d::Constant(2.0), system_model.getNoiseMapping());
+  EXPECT_EQ(
+      Eigen::Matrix2d::Identity(),
+      system_model.getStateJacobian(Eigen::Vector2d::Zero(),
+                                    Eigen::Vector2d::Zero()));
+  EXPECT_EQ(
+      Eigen::Matrix2d::Constant(2.0),
+      system_model.getNoiseJacobian(Eigen::Vector2d::Zero(),
+                                    Eigen::Vector2d::Zero()));
+}
+
+TEST(LinearSystemModelTest, PropagationTest) {
+  GaussianDistribution system_noise(Eigen::Vector2d::Ones(),
+                                    Eigen::Matrix2d::Identity());
+
+  LinearSystemModel system_model(Eigen::Matrix2d::Identity(), system_noise,
+                                 Eigen::Matrix2d::Identity(),
+                                 Eigen::Matrix2d::Ones());
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(3.0),
+            system_model.propagate(Eigen::Vector2d::Ones()));
+  EXPECT_EQ(
+      Eigen::Vector2d::Constant(4.0),
+      system_model.propagate(Eigen::Vector2d::Ones(), Eigen::Vector2d::Ones(),
+                             Eigen::Vector2d::Ones()));
 }
 
 }  // namespace refill

@@ -16,6 +16,15 @@ LinearMeasurementModel::LinearMeasurementModel()
                              Eigen::MatrixXd::Identity(0, 0)) {}
 
 /**
+ * @param measurement_model Measurement model which will be copied.
+ */
+LinearMeasurementModel::LinearMeasurementModel(
+    const LinearMeasurementModel& measurement_model)
+    : LinearMeasurementModel(measurement_model.measurement_mapping_,
+                             *(measurement_model.getMeasurementNoise()),
+                             measurement_model.noise_mapping_) {}
+
+/**
  * This constructor sets the noise mapping to an identity matrix.
  *
  * @param measurement_mapping The matrix @f$ H_k @f$.
@@ -128,6 +137,24 @@ Eigen::MatrixXd LinearMeasurementModel::getNoiseJacobian(
     const Eigen::VectorXd& state) const {
   CHECK_NE(this->getStateDim(), 0)
       << " Measurement model has not been initialized.";
+  return noise_mapping_;
+}
+
+/**
+ * @return the current measurement mapping.
+ */
+Eigen::MatrixXd LinearMeasurementModel::getMeasurementMapping() const {
+  CHECK_NE(this->getStateDim(), 0)
+      << "Measurement model has not been initialized.";
+  return measurement_mapping_;
+}
+
+/**
+ * @return the current noise mapping.
+ */
+Eigen::MatrixXd LinearMeasurementModel::getNoiseMapping() const {
+  CHECK_NE(this->getStateDim(), 0)
+      << "Measurement model has not been initialized.";
   return noise_mapping_;
 }
 

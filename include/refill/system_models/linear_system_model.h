@@ -31,6 +31,8 @@ class LinearSystemModel : public LinearizedSystemModel {
 
   /** @brief Constructs an empty linear system model. */
   LinearSystemModel();
+  /** @brief Copy constructor. */
+  LinearSystemModel(const LinearSystemModel& system_model);
   /** @brief Constructor for a system model without an input and a
    *         simple noise mapping. */
   LinearSystemModel(const Eigen::MatrixXd& system_mapping,
@@ -78,6 +80,13 @@ class LinearSystemModel : public LinearizedSystemModel {
    *        the system noise. */
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
                                    const Eigen::VectorXd& input) const;
+
+  /** @brief Function to get the current system mapping. */
+  Eigen::MatrixXd getSystemMapping() const;
+  /** @brief Function to get the current input mapping. */
+  Eigen::MatrixXd getInputMapping() const;
+  /** @brief Function to get the current noise mapping. */
+  Eigen::MatrixXd getNoiseMapping() const;
 
  private:
   Eigen::MatrixXd system_mapping_;

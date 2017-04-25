@@ -31,6 +31,8 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
 
   /** @brief Constructs an empty linear measurement model. */
   LinearMeasurementModel();
+  /** @brief Copy constructor */
+  LinearMeasurementModel(const LinearMeasurementModel& measurement_model);
   /** @brief Constructor for a measurement model with a simple
    *         noise mapping. */
   LinearMeasurementModel(const Eigen::MatrixXd& measurement_mapping,
@@ -61,6 +63,11 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
   /** @brief Function to get @f$ M_k @f$, which is the measurement model
    *         Jacobian w.r.t. the measurement noise. */
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state) const;
+
+  /** @brief Function to get the current measurement mapping. */
+  Eigen::MatrixXd getMeasurementMapping() const;
+  /** @brief Function to get the current noise mapping. */
+  Eigen::MatrixXd getNoiseMapping() const;
 
  private:
   Eigen::MatrixXd measurement_mapping_;

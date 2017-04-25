@@ -12,9 +12,18 @@ namespace refill {
  */
 LinearSystemModel::LinearSystemModel()
     : LinearSystemModel(Eigen::MatrixXd::Identity(0, 0),
-                        GaussianDistribution(0),
-                        Eigen::MatrixXd::Zero(0, 0),
-                        Eigen::MatrixXd::Identity(0, 0)) {}
+                        GaussianDistribution(0), Eigen::MatrixXd::Zero(0, 0),
+                        Eigen::MatrixXd::Identity(0, 0)) {
+}
+
+/**
+ * @param system_model System model which will be copied.
+ */
+LinearSystemModel::LinearSystemModel(const LinearSystemModel& system_model)
+    : LinearSystemModel(system_model.system_mapping_,
+                        *(system_model.getSystemNoise()),
+                        system_model.input_mapping_,
+                        system_model.noise_mapping_) {}
 
 /**
  * This constructor assumes that there is no system input and sets the
@@ -207,6 +216,30 @@ Eigen::MatrixXd LinearSystemModel::getStateJacobian(
  */
 Eigen::MatrixXd LinearSystemModel::getNoiseJacobian(
     const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
+  return noise_mapping_;
+}
+
+/**
+ * @return the current system mapping.
+ */
+Eigen::MatrixXd LinearSystemModel::getSystemMapping() const {
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
+  return system_mapping_;
+}
+
+/**
+ * @return the current input mapping.
+ */
+Eigen::MatrixXd LinearSystemModel::getInputMapping() const {
+  CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
+  return input_mapping_;
+}
+
+/**
+ * @return the current noise mapping.
+ */
+Eigen::MatrixXd LinearSystemModel::getNoiseMapping() const {
   CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
   return noise_mapping_;
 }
