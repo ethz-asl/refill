@@ -85,7 +85,7 @@ TEST(LinearMeasurementModelTest, GetterTest) {
             measurement_model.getNoiseJacobian(Eigen::Vector2d::Zero()));
 }
 
-TEST(LinearMeasurementModel, ObservationTest) {
+TEST(LinearMeasurementModelTest, ObservationTest) {
   GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
                                          Eigen::Matrix2d::Identity());
 

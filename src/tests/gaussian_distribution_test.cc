@@ -6,29 +6,31 @@
 namespace refill {
 
 TEST(GaussianDistributionTest, ConstructorTests) {
-  GaussianDistribution dist_1;
+  GaussianDistribution* dist = new GaussianDistribution();
 
-  ASSERT_EQ(1, dist_1.dimension())<< "Dimension not correct.";
-  ASSERT_EQ(Eigen::VectorXd::Zero(1), dist_1.mean())<< "Mean not correct";
-  ASSERT_EQ(Eigen::MatrixXd::Identity(1, 1), dist_1.cov())
+  ASSERT_EQ(1, dist->dimension())<< "Dimension not correct.";
+  ASSERT_EQ(Eigen::VectorXd::Zero(1), dist->mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::MatrixXd::Identity(1, 1), dist->cov())
       << "Covariance not correct";
 
-  GaussianDistribution dist_2(2);
+  delete dist;
+  dist = new GaussianDistribution(2);
 
-  ASSERT_EQ(2, dist_2.dimension())<< "Dimension not correct";
-  ASSERT_EQ(Eigen::Vector2d::Zero(), dist_2.mean())<< "Mean not correct";
-  ASSERT_EQ(Eigen::Matrix2d::Identity(), dist_2.cov())
+  ASSERT_EQ(2, dist->dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Zero(), dist->mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity(), dist->cov())
       << "Covariance not correct";
 
-  GaussianDistribution dist_3(Eigen::Vector2d::Zero(),
-                              Eigen::Matrix2d::Identity());
+  delete dist;
+  dist = new GaussianDistribution(Eigen::Vector2d::Zero(),
+                                  Eigen::Matrix2d::Identity());
 
-  ASSERT_EQ(2, dist_3.dimension())<< "Dimension not correct";
-  ASSERT_EQ(Eigen::Vector2d::Zero(), dist_3.mean())<< "Mean not correct";
-  ASSERT_EQ(Eigen::Matrix2d::Identity(), dist_3.cov())
+  ASSERT_EQ(2, dist->dimension())<< "Dimension not correct";
+  ASSERT_EQ(Eigen::Vector2d::Zero(), dist->mean())<< "Mean not correct";
+  ASSERT_EQ(Eigen::Matrix2d::Identity(), dist->cov())
       << "Covariance not correct";
 
-  GaussianDistribution dist_4(dist_3);
+  GaussianDistribution dist_4(*dist);
 
   ASSERT_EQ(2, dist_4.dimension())<< "Dimension not correct";
   ASSERT_EQ(Eigen::Vector2d::Zero(), dist_4.mean())<< "Mean not correct";

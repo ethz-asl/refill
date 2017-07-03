@@ -1,5 +1,7 @@
 project(Refill)
 cmake_minimum_required(VERSION 2.8)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 
 # Use C++14
 set(CMAKE_CXX_STANDARD 14)
@@ -31,8 +33,10 @@ include_directories(SYSTEM
 
 # LIBRARY
 file(GLOB_RECURSE SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
-file(GLOB_RECURSE REMOVE_SOURCES "*_test.cc")
-list(REMOVE_ITEM SRC_LIST ${REMOVE_SOURCES})
+file(GLOB_RECURSE REMOVE_TESTS "*_test.cc")
+file(GLOB_RECURSE REMOVE_EXAMPLES "*_example.cc")
+list(REMOVE_ITEM SRC_LIST ${REMOVE_TESTS})
+list(REMOVE_ITEM SRC_LIST ${REMOVE_EXAMPLES})
 add_library(${PROJECT_NAME} ${SRC_LIST})
 target_link_libraries(${PROJECT_NAME} ${GLOG_LIBRARIES})
 
@@ -41,6 +45,15 @@ FILE(GLOB_RECURSE MyTestSources src/*_test.cc)
 add_executable(filtertests ${MyTestSources})
 target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} ${PROJECT_NAME} -lpthread -lm)
 add_test(AllTests filtertests)
+
+# EXAMPLES
+FILE(GLOB_RECURSE ExampleSources src/*_example.cc)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin/examples)
+foreach (ExampleSource ${ExampleSources})
+  string(REGEX REPLACE "(.+)/|.cc$" "" ExampleName ${ExampleSource})
+  add_executable(${ExampleName} ${ExampleSource})
+  target_link_libraries(${ExampleName} ${PROJECT_NAME})
+endforeach (ExampleSource)
 
 # Qt Creator Compatibility ensuring include dir is shown
 # See http://stackoverflow.com/questions/28384935/qtcreator-cmake-project-how-to-show-all-project-files

@@ -47,7 +47,7 @@ class LinearizedSystemModel : public SystemModelBase {
   virtual Eigen::MatrixXd getStateJacobian(
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const;
   /**
-   * @brief Functoin to get @f$ L_k @f$, which is the system Jacobian w.r.t.
+   * @brief Function to get @f$ L_k @f$, which is the system Jacobian w.r.t.
    *        the system noise.
    */
   virtual Eigen::MatrixXd getNoiseJacobian(
