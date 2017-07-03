@@ -23,7 +23,7 @@ namespace refill {
  *
  * With Jacobians:
  *
- * @f$ H_K = \frac{\partial h}{\partial x}(x_k, \mu_k) @f$
+ * @f$ H_k = \frac{\partial h}{\partial x}(x_k, \mu_k) @f$
  *
  * and
  *
