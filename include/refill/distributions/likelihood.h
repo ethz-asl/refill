@@ -9,6 +9,12 @@ class Likelihood {
  public:
   virtual ~Likelihood() = default;
 
+  /**
+   * @brief Computes the likelihood of a vector.
+   *
+   * @param x Vector for which the likelihood shall be computed.
+   * @return the likelihood of the input vector.
+   */
   virtual double getLikelihood(const Eigen::VectorXd& x) const = 0;
 };
 

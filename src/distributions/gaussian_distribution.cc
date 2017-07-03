@@ -84,18 +84,17 @@ Eigen::MatrixXd GaussianDistribution::cov() const {
   return covariance_;
 }
 
-Eigen::VectorXd GaussianDistribution::drawSample() const {
+/** @return a random vector drawn from the distribution. */
+Eigen::VectorXd GaussianDistribution::drawSample() {
   CHECK_NE(mean_.rows(), 0)
       << "Distribution parameters have not been set.";
 
   // Generate normal distributed random vector
-  std::random_device true_rng;
-  std::default_random_engine generator(true_rng);
   std::normal_distribution<double> normal_dist(0.0, 1.0);
 
   Eigen::VectorXd uniform_random_vector(mean_.rows());
   for (int i=0; i < mean_.rows(); ++i) {
-    uniform_random_vector[i] = normal_dist(generator);
+    uniform_random_vector[i] = normal_dist(rng_);
   }
 
   // Calculate matrix L
@@ -160,6 +159,14 @@ GaussianDistribution GaussianDistribution::operator-(
   GaussianDistribution result = *this;
   result -= right_side;
   return result;
+}
+
+double GaussianDistribution::getLikelihood(const Eigen::VectorXd& x) const {
+  Eigen::VectorXd deviation = x - mean_;
+  double denominator = std::sqrt((2 * M_PI * covariance_).determinant());
+
+  return std::exp(-deviation.transpose() * covariance_.inverse() * deviation)
+      / denominator;
 }
 
 }  // namespace refill

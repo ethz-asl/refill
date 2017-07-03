@@ -47,7 +47,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution>,
   Eigen::MatrixXd cov() const;
 
   /** @brief Returns a sample drawn from the distribution. */
-  Eigen::VectorXd drawSample() const;
+  Eigen::VectorXd drawSample();
 
   /** @brief Implements the addition of a gaussian distribution to `this`. */
   GaussianDistribution& operator+=(const GaussianDistribution& right_side);

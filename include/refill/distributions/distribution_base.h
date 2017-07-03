@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <glog/logging.h>
+#include <random>
 #include <typeinfo>
 
 namespace refill {
@@ -33,7 +34,7 @@ class DistributionInterface {
    *
    * @return a sample drawn from the distribution.
    */
-  virtual Eigen::VectorXd drawSample() const = 0;
+  virtual Eigen::VectorXd drawSample() = 0;
 
   /**
    * @brief Clones the original distribution.
@@ -41,6 +42,11 @@ class DistributionInterface {
    * @return a pointer to the cloned distribution.
    */
   virtual DistributionInterface* clone() const = 0;
+
+  /**
+   * @brief Random number generator used to draw from distribution.
+   */
+  std::mt19937 rng_;
 };
 
 /**
