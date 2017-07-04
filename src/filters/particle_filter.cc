@@ -15,10 +15,10 @@ ParticleFilter::ParticleFilter()
 }
 
 ParticleFilter::ParticleFilter(
-    const size_t& n_particles, const DistributionInterface& initial_state_dist,
+    const size_t& n_particles, DistributionInterface* initial_state_dist,
     const std::function<void(MatrixXd*, VectorXd*)>& resample_method)
     : num_particles_(n_particles),
-      particles_(initial_state_dist.mean().rows(), n_particles),
+      particles_(initial_state_dist->mean().rows(), n_particles),
       system_model_(nullptr),
       measurement_model_(nullptr),
       resample_method_(resample_method) {
@@ -26,12 +26,12 @@ ParticleFilter::ParticleFilter(
 }
 
 ParticleFilter::ParticleFilter(
-    const size_t& n_particles, const DistributionInterface& initial_state_dist,
+    const size_t& n_particles, DistributionInterface* initial_state_dist,
     const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
     std::unique_ptr<SystemModelBase> system_model,
     std::unique_ptr<MeasurementModelBase> measurement_model)
     : num_particles_(n_particles),
-      particles_(initial_state_dist.mean().rows(), n_particles),
+      particles_(initial_state_dist->mean().rows(), n_particles),
       system_model_(std::move(system_model)),
       measurement_model_(std::move(measurement_model)),
       resample_method_(resample_method) {
@@ -39,7 +39,7 @@ ParticleFilter::ParticleFilter(
 }
 
 void ParticleFilter::setFilterParameters(
-    const size_t& n_particles, const DistributionInterface& initial_state_dist,
+    const size_t& n_particles, DistributionInterface* initial_state_dist,
     const std::function<void(MatrixXd*, VectorXd*)>& resample_method) {
   num_particles_ = n_particles;
   initializeParticles(initial_state_dist);
@@ -48,7 +48,7 @@ void ParticleFilter::setFilterParameters(
 }
 
 void ParticleFilter::setFilterParameters(
-    const size_t& n_particles, const DistributionInterface& initial_state_dist,
+    const size_t& n_particles, DistributionInterface* initial_state_dist,
     const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
     std::unique_ptr<SystemModelBase> system_model,
     std::unique_ptr<MeasurementModelBase> measurement_model) {
@@ -59,14 +59,14 @@ void ParticleFilter::setFilterParameters(
 }
 
 void ParticleFilter::initializeParticles(
-    const DistributionInterface& initial_state_dist) {
-  particles_.resize(initial_state_dist.mean().rows(), num_particles_);
+    DistributionInterface* initial_state_dist) {
+  particles_.resize(initial_state_dist->mean().rows(), num_particles_);
   weights_.resize(num_particles_);
 
   double equal_weight = 1 / particles_.cols();
+  weights_.setConstant(equal_weight);
   for (int i = 0; i < num_particles_; ++i) {
-    particles_.col(i) = initial_state_dist.drawSample();
-    weights_ = equal_weight;
+    particles_.col(i) = initial_state_dist->drawSample();
   }
 }
 

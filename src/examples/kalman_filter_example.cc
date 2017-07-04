@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   /* adapt the system model noise according to the time step */
   system_noise.setCov(system_noise_cov * dt);
   /* adapt the system model */
-  system_model.setSystemParameters(Eigen::Matrix3d::Identity(), system_noise);
+  system_model.setModelParameters(Eigen::Matrix3d::Identity(), system_noise);
 
   /* predict the kf to the current time */
   ekf.predict(system_model);
@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
   // adapt the system noise according to the time step
   system_noise.setCov(system_noise_cov * dt);
   // adapt the system model
-  system_model.setSystemParameters(Eigen::Matrix3d::Identity(), system_noise);
+  system_model.setModelParameters(Eigen::Matrix3d::Identity(), system_noise);
 
   /* predict the kf to the current time */
   ekf.predict(system_model);

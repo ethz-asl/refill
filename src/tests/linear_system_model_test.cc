@@ -12,7 +12,7 @@ TEST(LinearSystemModelTest, ConstructorTest) {
 
   EXPECT_EQ(0, system_model_p->getStateDim());
   EXPECT_EQ(0, system_model_p->getInputDim());
-  EXPECT_EQ(0, system_model_p->getSystemNoiseDim());
+  EXPECT_EQ(0, system_model_p->getNoiseDim());
 
   delete system_model_p;
 
@@ -25,7 +25,7 @@ TEST(LinearSystemModelTest, ConstructorTest) {
 
   EXPECT_EQ(2, system_model_p->getStateDim());
   EXPECT_EQ(0, system_model_p->getInputDim());
-  EXPECT_EQ(2, system_model_p->getSystemNoiseDim());
+  EXPECT_EQ(2, system_model_p->getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getSystemMapping());
   EXPECT_EQ(Eigen::MatrixXd::Zero(0, 0), system_model_p->getInputMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getNoiseMapping());
@@ -39,7 +39,7 @@ TEST(LinearSystemModelTest, ConstructorTest) {
 
   EXPECT_EQ(2, system_model_p->getStateDim());
   EXPECT_EQ(2, system_model_p->getInputDim());
-  EXPECT_EQ(2, system_model_p->getSystemNoiseDim());
+  EXPECT_EQ(2, system_model_p->getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getSystemMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getInputMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getNoiseMapping());
@@ -54,7 +54,7 @@ TEST(LinearSystemModelTest, ConstructorTest) {
 
   EXPECT_EQ(2, system_model_p->getStateDim());
   EXPECT_EQ(2, system_model_p->getInputDim());
-  EXPECT_EQ(2, system_model_p->getSystemNoiseDim());
+  EXPECT_EQ(2, system_model_p->getNoiseDim());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getSystemMapping());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), system_model_p->getInputMapping());
   EXPECT_EQ(Eigen::Matrix2d::Ones(), system_model_p->getNoiseMapping());

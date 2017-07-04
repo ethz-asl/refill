@@ -20,6 +20,8 @@ namespace refill {
  */
 class SystemModelBase {
  public:
+  virtual ~SystemModelBase() = default;
+
   /**
    * @brief Propagates a state and input vector through the system model.
    *
@@ -62,7 +64,6 @@ class SystemModelBase {
   SystemModelBase(const size_t& state_dim,
                   const DistributionInterface& system_noise,
                   const size_t& input_dim);
-  virtual ~SystemModelBase() = default;
 
   /** @brief Function to set the system model parameters without an input. */
   void setSystemModelBaseParameters(const size_t& state_dim,

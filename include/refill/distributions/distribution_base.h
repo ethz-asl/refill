@@ -62,7 +62,7 @@ class DistributionInterface {
  */
 template<typename DERIVED>
 class DistributionBase : public DistributionInterface {
-  DistributionInterface* clone() const {
+  DistributionInterface* clone() const override {
     DERIVED casted_derived_obj;
     try {
       casted_derived_obj = dynamic_cast<DERIVED const&>(*this);

@@ -42,12 +42,12 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution>,
   /** @brief Returns the distributions dimension. */
   size_t dimension() const;
   /** @brief Returns the current mean of the distribution. */
-  Eigen::VectorXd mean() const;
+  Eigen::VectorXd mean() const override;
   /** @brief Returns the current covariance of the distribution. */
-  Eigen::MatrixXd cov() const;
+  Eigen::MatrixXd cov() const override;
 
   /** @brief Returns a sample drawn from the distribution. */
-  Eigen::VectorXd drawSample();
+  Eigen::VectorXd drawSample() override;
 
   /** @brief Implements the addition of a gaussian distribution to `this`. */
   GaussianDistribution& operator+=(const GaussianDistribution& right_side);
@@ -61,7 +61,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution>,
   /** @brief Implements the subtraction of two gaussian distributions. */
   GaussianDistribution operator-(const GaussianDistribution& right_side);
 
-  double getLikelihood(const Eigen::VectorXd& x) const;
+  double getLikelihood(const Eigen::VectorXd& x) const override;
 
  private:
   Eigen::VectorXd mean_;

@@ -25,22 +25,23 @@ class ParticleFilter : public FilterBase {
   ParticleFilter();
   ParticleFilter(
       const size_t& n_particles,
-      const DistributionInterface& initial_state_dist,
+      DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
   ParticleFilter(
       const size_t& n_particles,
-      const DistributionInterface& initial_state_dist,
+      DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<MeasurementModelBase> measurement_model);
+  ~ParticleFilter() = default;
 
   void setFilterParameters(
       const size_t& n_particles,
-      const DistributionInterface& initial_state_dist,
+      DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
   void setFilterParameters(
       const size_t& n_particles,
-      const DistributionInterface& initial_state_dist,
+      DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<MeasurementModelBase> measurement_model);
@@ -56,7 +57,7 @@ class ParticleFilter : public FilterBase {
               const Eigen::VectorXd& measurement);
 
  private:
-  void initializeParticles(const DistributionInterface& initial_state);
+  void initializeParticles(DistributionInterface* initial_state);
   void resample();
 
   size_t num_particles_;
