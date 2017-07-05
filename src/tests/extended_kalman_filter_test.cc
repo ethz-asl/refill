@@ -74,37 +74,43 @@ TEST(ExtendedKalmanFilterTest, PredictionTest) {
   LinearMeasurementModel measurement_model(Eigen::Matrix2d::Identity(),
                                            measurement_noise);
 
+  // object for testing ekf with standard models
   ExtendedKalmanFilter filter_1(
       initial_state, std::make_unique < LinearSystemModel > (system_model),
       std::make_unique < LinearMeasurementModel > (measurement_model));
 
+  // test prediction with standard models
   filter_1.predict();
 
   EXPECT_EQ(Eigen::Vector2d::Zero(), filter_1.state().mean());
   EXPECT_EQ(Eigen::Matrix2d::Identity() * 2.0, filter_1.state().cov());
 
-  ExtendedKalmanFilter filter_2(
-      initial_state, std::make_unique < LinearSystemModel > (system_model),
-      std::make_unique < LinearMeasurementModel > (measurement_model));
+  filter_1.setState(initial_state);
 
-  filter_2.predict(Eigen::Vector2d::Ones());
+  // test prediction with standard models and input
+  filter_1.predict(Eigen::Vector2d::Ones());
+
+  EXPECT_EQ(Eigen::Vector2d::Ones(), filter_1.state().mean());
+  EXPECT_EQ(Eigen::Matrix2d::Identity() * 2.0, filter_1.state().cov());
+
+  // object for testing ekf with external model and no input
+  ExtendedKalmanFilter filter_2(initial_state);
+
+  // test prediction with external model and no input
+  filter_2.predict(system_model);
+
+  EXPECT_EQ(Eigen::Vector2d::Zero(), filter_2.state().mean());
+  EXPECT_EQ(Eigen::Matrix2d::Identity() * 2.0, filter_2.state().cov());
+
+  filter_2.setState(initial_state);
+
+  // test prediction with external model and input
+  filter_2.predict(system_model, Eigen::Vector2d::Ones());
 
   EXPECT_EQ(Eigen::Vector2d::Ones(), filter_2.state().mean());
   EXPECT_EQ(Eigen::Matrix2d::Identity() * 2.0, filter_2.state().cov());
-
-  ExtendedKalmanFilter filter_3(initial_state);
-
-  filter_3.predict(system_model);
-
-  EXPECT_EQ(Eigen::Vector2d::Zero(), filter_3.state().mean());
-  EXPECT_EQ(Eigen::Matrix2d::Identity() * 2.0, filter_3.state().cov());
-
-  ExtendedKalmanFilter filter_4(initial_state);
-
-  filter_4.predict(system_model, Eigen::Vector2d::Ones());
-
-  EXPECT_EQ(Eigen::Vector2d::Ones(), filter_4.state().mean());
-  EXPECT_EQ(Eigen::Matrix2d::Identity() * 2.0, filter_4.state().cov());
 }
+
+// TODO(jwidauer): Add update test
 
 }  // namespace refill
