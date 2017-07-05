@@ -30,8 +30,10 @@ TEST(ExtendedKalmanFilterTest, ConstructorTest) {
   LinearMeasurementModel measurement_model(Eigen::Matrix2d::Identity(),
                                            measurement_noise);
   ExtendedKalmanFilter filter_3(
-      initial_state, std::make_unique < LinearSystemModel > (system_model),
-      std::make_unique < LinearMeasurementModel > (measurement_model));
+      initial_state,
+      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model)),
+      std::unique_ptr<LinearMeasurementModel>(
+          new LinearMeasurementModel(measurement_model)));
 
   EXPECT_EQ(Eigen::Vector2d::Zero(), filter_3.state().mean());
   EXPECT_EQ(Eigen::Matrix2d::Identity(), filter_3.state().cov());
@@ -47,7 +49,7 @@ TEST(ExtendedKalmanFilterTest, ConstructorTest) {
   EXPECT_EQ(Eigen::Matrix2d::Identity(), filter_3.state().cov());
 }
 
-TEST(ExtendedKalmanFilter, SetterTest) {
+TEST(ExtendedKalmanFilterTest, SetterTest) {
   GaussianDistribution initial_state(Eigen::Vector2d::Zero(),
                                      Eigen::Matrix2d::Identity());
 
@@ -76,8 +78,10 @@ TEST(ExtendedKalmanFilterTest, PredictionTest) {
 
   // object for testing ekf with standard models
   ExtendedKalmanFilter filter_1(
-      initial_state, std::make_unique < LinearSystemModel > (system_model),
-      std::make_unique < LinearMeasurementModel > (measurement_model));
+      initial_state,
+      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model)),
+      std::unique_ptr<LinearMeasurementModel>(
+          new LinearMeasurementModel(measurement_model)));
 
   // test prediction with standard models
   filter_1.predict();
@@ -93,7 +97,7 @@ TEST(ExtendedKalmanFilterTest, PredictionTest) {
   EXPECT_EQ(Eigen::Vector2d::Ones(), filter_1.state().mean());
   EXPECT_EQ(Eigen::Matrix2d::Identity() * 2.0, filter_1.state().cov());
 
-  // object for testing ekf with external model and no input
+  // object for testing ekf with external model
   ExtendedKalmanFilter filter_2(initial_state);
 
   // test prediction with external model and no input
@@ -111,6 +115,40 @@ TEST(ExtendedKalmanFilterTest, PredictionTest) {
   EXPECT_EQ(Eigen::Matrix2d::Identity() * 2.0, filter_2.state().cov());
 }
 
-// TODO(jwidauer): Add update test
+TEST(ExtendedKalmanFilterTest, UpdateTest) {
+  GaussianDistribution initial_state(Eigen::Vector2d::Zero(),
+                                     Eigen::Matrix2d::Identity());
+  GaussianDistribution system_noise(Eigen::Vector2d::Zero(),
+                                    Eigen::Matrix2d::Identity());
+  GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
+                                         Eigen::Matrix2d::Identity());
+
+  LinearSystemModel system_model(Eigen::Matrix2d::Identity(), system_noise,
+                                 Eigen::Matrix2d::Identity());
+  LinearMeasurementModel measurement_model(Eigen::Matrix2d::Identity(),
+                                           measurement_noise);
+
+  // object for testing ekf with standard models
+  ExtendedKalmanFilter filter_1(
+      initial_state,
+      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model)),
+      std::unique_ptr<LinearMeasurementModel>(
+          new LinearMeasurementModel(measurement_model)));
+
+  // test update with standard models
+  filter_1.update(Eigen::Vector2d::Ones());
+
+  EXPECT_EQ(Eigen::Vector2d::Ones() / 2.0, filter_1.state().mean());
+  EXPECT_EQ(Eigen::Matrix2d::Identity() / 2.0, filter_1.state().cov());
+
+  // object for testing ekf with external model
+  ExtendedKalmanFilter filter_2(initial_state);
+
+  // test update with external model
+  filter_2.update(measurement_model, Eigen::Vector2d::Ones());
+
+  EXPECT_EQ(Eigen::Vector2d::Ones() / 2.0, filter_2.state().mean());
+  EXPECT_EQ(Eigen::Matrix2d::Identity() / 2.0, filter_2.state().cov());
+}
 
 }  // namespace refill
