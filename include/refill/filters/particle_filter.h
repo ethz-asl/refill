@@ -10,8 +10,8 @@
 #include <vector>
 
 #include "refill/distributions/distribution_base.h"
+#include "refill/distributions/likelihood.h"
 #include "refill/filters/filter_base.h"
-#include "refill/measurement_models/measurement_model_base.h"
 #include "refill/system_models/system_model_base.h"
 
 using std::size_t;
@@ -32,7 +32,7 @@ class ParticleFilter : public FilterBase {
       DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
-      std::unique_ptr<MeasurementModelBase> measurement_model);
+      std::unique_ptr<Likelihood> measurement_model);
   ~ParticleFilter() = default;
 
   void setFilterParameters(
@@ -44,7 +44,7 @@ class ParticleFilter : public FilterBase {
       DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
-      std::unique_ptr<MeasurementModelBase> measurement_model);
+      std::unique_ptr<Likelihood> measurement_model);
 
   void predict() override;
   void predict(const Eigen::VectorXd& input);
@@ -53,18 +53,17 @@ class ParticleFilter : public FilterBase {
                const Eigen::VectorXd& input);
 
   void update(const Eigen::VectorXd& measurement) override;
-  void update(const MeasurementModelBase& measurement_model,
+  void update(const Likelihood& measurement_model,
               const Eigen::VectorXd& measurement);
 
  private:
   void initializeParticles(DistributionInterface* initial_state);
-  void resample();
 
   size_t num_particles_;
   Eigen::MatrixXd particles_;
   Eigen::VectorXd weights_;
   std::unique_ptr<SystemModelBase> system_model_;
-  std::unique_ptr<MeasurementModelBase> measurement_model_;
+  std::unique_ptr<Likelihood> measurement_model_;
   std::function<void(Eigen::MatrixXd*, Eigen::VectorXd*)> resample_method_;
 };
 

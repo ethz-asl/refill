@@ -29,7 +29,7 @@ ParticleFilter::ParticleFilter(
     const size_t& n_particles, DistributionInterface* initial_state_dist,
     const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
     std::unique_ptr<SystemModelBase> system_model,
-    std::unique_ptr<MeasurementModelBase> measurement_model)
+    std::unique_ptr<Likelihood> measurement_model)
     : num_particles_(n_particles),
       particles_(initial_state_dist->mean().rows(), n_particles),
       system_model_(std::move(system_model)),
@@ -51,7 +51,7 @@ void ParticleFilter::setFilterParameters(
     const size_t& n_particles, DistributionInterface* initial_state_dist,
     const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
     std::unique_ptr<SystemModelBase> system_model,
-    std::unique_ptr<MeasurementModelBase> measurement_model) {
+    std::unique_ptr<Likelihood> measurement_model) {
   this->setFilterParameters(n_particles, initial_state_dist, resample_method);
 
   system_model_ = std::move(system_model);
@@ -96,9 +96,18 @@ void ParticleFilter::predict(const SystemModelBase& system_model,
 }
 
 void ParticleFilter::update(const Eigen::VectorXd& measurement) {
+  this->update(*measurement_model_, measurement);
 }
 
-void ParticleFilter::resample() {
+void ParticleFilter::update(const Likelihood& measurement_model,
+                            const Eigen::VectorXd& measurement) {
+  Eigen::VectorXd likelihoods = measurement_model.getLikelihoodVectorized(
+      particles_, measurement);
+
+  weights_ = weights_.cwiseProduct(likelihoods);
+
+  weights_ /= weights_.sum();
+
   resample_method_(&particles_, &weights_);
 }
 

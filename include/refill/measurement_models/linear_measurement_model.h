@@ -6,6 +6,7 @@
 #include <Eigen/Dense>
 
 #include "refill/distributions/gaussian_distribution.h"
+#include "refill/distributions/likelihood.h"
 #include "refill/measurement_models/linearized_measurement_model.h"
 
 namespace refill {
@@ -25,7 +26,7 @@ namespace refill {
  * GaussianDistribution and the ExtendedKalmanFilter if you want to implement
  * a simple kalman filter.
  */
-class LinearMeasurementModel : public LinearizedMeasurementModel {
+class LinearMeasurementModel : public LinearizedMeasurementModel, Likelihood {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -55,7 +56,7 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
 
   /** @brief Use the measurement model to receive the expected measurement. */
   Eigen::VectorXd observe(const Eigen::VectorXd& state,
-                          const Eigen::VectorXd& noise) const;
+                          const Eigen::VectorXd& noise) const override;
 
   /** @brief Function to get @f$ H_k @f$, which is the measurement model
    *         Jacobian w.r.t. the system state. */
@@ -68,6 +69,13 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
   Eigen::MatrixXd getMeasurementMapping() const;
   /** @brief Function to get the current noise mapping. */
   Eigen::MatrixXd getNoiseMapping() const;
+
+  double getLikelihood(const Eigen::VectorXd& state,
+                       const Eigen::VectorXd& measurement) const override;
+
+  Eigen::VectorXd getLikelihoodVectorized(
+      const Eigen::MatrixXd& sampled_state,
+      const Eigen::VectorXd& measurement) const override;
 
  private:
   Eigen::MatrixXd measurement_mapping_;

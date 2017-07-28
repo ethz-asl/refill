@@ -37,6 +37,18 @@ class DistributionInterface {
   virtual Eigen::VectorXd drawSample() = 0;
 
   /**
+   * @brief Evaluate the distributions probability density function.
+   *
+   * @param x Point at which the pdf should be evaluated.
+   * @return the pdfs value at the point x.
+   */
+  virtual double evaluatePdf(const Eigen::VectorXd& x) const = 0;
+
+  /** @brief A vectorized version of the pdf evaluation. */
+  virtual Eigen::VectorXd evaluatePdfVectorized(
+      const Eigen::MatrixXd& sampled_x) const;
+
+  /**
    * @brief Clones the original distribution.
    *
    * @return a pointer to the cloned distribution.
