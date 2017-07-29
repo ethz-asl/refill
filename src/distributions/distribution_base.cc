@@ -16,6 +16,8 @@ Eigen::VectorXd DistributionInterface::evaluatePdfVectorized(
   for (int i = 0; i < sampled_x.cols(); ++i) {
     pdf_values[i] = this->evaluatePdf(sampled_x.col(i));
   }
+
+  return pdf_values;
 }
 
 }  // namespace refill
