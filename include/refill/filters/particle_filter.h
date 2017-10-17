@@ -13,6 +13,7 @@
 #include "refill/distributions/likelihood.h"
 #include "refill/filters/filter_base.h"
 #include "refill/system_models/system_model_base.h"
+#include "refill/utility/resample_methods.h"
 
 using std::size_t;
 using Eigen::MatrixXd;
@@ -22,29 +23,35 @@ namespace refill {
 
 class ParticleFilter : public FilterBase {
  public:
+  // TODO(jwidauer): CHANGE THE FUNCTIONS!!
   ParticleFilter();
   ParticleFilter(
-      const size_t& n_particles,
-      DistributionInterface* initial_state_dist,
+      const size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
   ParticleFilter(
-      const size_t& n_particles,
-      DistributionInterface* initial_state_dist,
+      const size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<Likelihood> measurement_model);
-  ~ParticleFilter() = default;
+  virtual ~ParticleFilter() = default;
 
+  void setFilterParameters(const size_t& n_particles,
+                           DistributionInterface* initial_state_dist);
   void setFilterParameters(
-      const size_t& n_particles,
-      DistributionInterface* initial_state_dist,
+      const size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
   void setFilterParameters(
-      const size_t& n_particles,
-      DistributionInterface* initial_state_dist,
+      const size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<Likelihood> measurement_model);
+
+  /** @brief Sets the particles and resets the weights to uniform. */
+  void setParticles(const Eigen::MatrixXd& particles);
+
+  /** @brief Draws particles from the provided distribution
+   *         and resets the weights to uniform. */
+  void reinitializeParticles(DistributionInterface* initial_state);
 
   void predict() override;
   void predict(const Eigen::VectorXd& input);
@@ -56,10 +63,14 @@ class ParticleFilter : public FilterBase {
   void update(const Likelihood& measurement_model,
               const Eigen::VectorXd& measurement);
 
- private:
-  void initializeParticles(DistributionInterface* initial_state);
+  /** @brief Returns the expected value of the current particle distribution. */
+  VectorXd getExpectation();
 
-  size_t num_particles_;
+  /** @brief Returns the particle with maximum weight. */
+  VectorXd getMaxWeightSample();
+
+ private:
+  std::size_t num_particles_;
   Eigen::MatrixXd particles_;
   Eigen::VectorXd weights_;
   std::unique_ptr<SystemModelBase> system_model_;

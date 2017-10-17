@@ -22,7 +22,7 @@ ParticleFilter::ParticleFilter(
       system_model_(nullptr),
       measurement_model_(nullptr),
       resample_method_(resample_method) {
-  initializeParticles(initial_state_dist);
+  reinitializeParticles(initial_state_dist);
 }
 
 ParticleFilter::ParticleFilter(
@@ -35,14 +35,19 @@ ParticleFilter::ParticleFilter(
       system_model_(std::move(system_model)),
       measurement_model_(std::move(measurement_model)),
       resample_method_(resample_method) {
-  initializeParticles(initial_state_dist);
+  reinitializeParticles(initial_state_dist);
+}
+
+void ParticleFilter::setFilterParameters(
+    const size_t& n_particles, DistributionInterface* initial_state_dist) {
+  num_particles_ = n_particles;
+  this->reinitializeParticles(initial_state_dist);
 }
 
 void ParticleFilter::setFilterParameters(
     const size_t& n_particles, DistributionInterface* initial_state_dist,
     const std::function<void(MatrixXd*, VectorXd*)>& resample_method) {
-  num_particles_ = n_particles;
-  initializeParticles(initial_state_dist);
+  this->setFilterParameters(n_particles, initial_state_dist);
 
   resample_method_ = resample_method;
 }
@@ -58,23 +63,32 @@ void ParticleFilter::setFilterParameters(
   measurement_model_ = std::move(measurement_model);
 }
 
-void ParticleFilter::initializeParticles(
+void ParticleFilter::setParticles(const Eigen::MatrixXd& particles) {
+  CHECK_EQ(particles_.rows(), particles.rows());
+  CHECK_EQ(particles_.cols(), particles.cols());
+
+  particles_ = particles;
+  weights_.setConstant(1 / num_particles_);
+}
+
+void ParticleFilter::reinitializeParticles(
     DistributionInterface* initial_state_dist) {
   particles_.resize(initial_state_dist->mean().rows(), num_particles_);
   weights_.resize(num_particles_);
 
-  double equal_weight = 1 / particles_.cols();
-  weights_.setConstant(equal_weight);
+  weights_.setConstant(1 / num_particles_);
   for (int i = 0; i < num_particles_; ++i) {
     particles_.col(i) = initial_state_dist->drawSample();
   }
 }
 
 void ParticleFilter::predict() {
+  CHECK(this->system_model_) << "No default system model provided!";
   this->predict(Eigen::VectorXd::Zero(system_model_->getInputDim()));
 }
 
 void ParticleFilter::predict(const Eigen::VectorXd& input) {
+  CHECK(this->system_model_) << "No default system model provided!";
   this->predict(*system_model_, input);
 }
 
@@ -86,6 +100,7 @@ void ParticleFilter::predict(const SystemModelBase& system_model) {
 void ParticleFilter::predict(const SystemModelBase& system_model,
                              const Eigen::VectorXd& input) {
   CHECK_EQ(system_model.getInputDim(), input.rows());
+  CHECK_EQ(system_model.getStateDim(), particles_.rows());
   CHECK_NE(particles_.cols(), 0)<< "Particle vector is empty.";
 
   for (int i = 0; i < num_particles_; ++i) {
@@ -96,6 +111,7 @@ void ParticleFilter::predict(const SystemModelBase& system_model,
 }
 
 void ParticleFilter::update(const Eigen::VectorXd& measurement) {
+  CHECK(this->measurement_model_) << "No default measurement model provided!";
   this->update(*measurement_model_, measurement);
 }
 
@@ -108,7 +124,23 @@ void ParticleFilter::update(const Likelihood& measurement_model,
 
   weights_ /= weights_.sum();
 
-  resample_method_(&particles_, &weights_);
+  if (resample_method_) {
+    resample_method_(&particles_, &weights_);
+  } else {
+    noResampling(&particles_, &weights_);
+  }
+}
+
+Eigen::VectorXd ParticleFilter::getExpectation() {
+  return particles_ * weights_;
+}
+
+Eigen::VectorXd ParticleFilter::getMaxWeightSample() {
+  Eigen::VectorXd::Index index;
+
+  double max_weight = weights_.maxCoeff(&index);
+
+  return particles_.col(index);
 }
 
 }  // namespace refill
