@@ -124,10 +124,9 @@ void ParticleFilter::update(const Likelihood& measurement_model,
 
   weights_ /= weights_.sum();
 
+  // Resmaple using the provided resampling method
   if (resample_method_) {
     resample_method_(&particles_, &weights_);
-  } else {
-    noResampling(&particles_, &weights_);
   }
 }
 
