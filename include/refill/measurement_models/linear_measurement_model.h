@@ -26,7 +26,8 @@ namespace refill {
  * GaussianDistribution and the ExtendedKalmanFilter if you want to implement
  * a simple kalman filter.
  */
-class LinearMeasurementModel : public LinearizedMeasurementModel, Likelihood {
+class LinearMeasurementModel : public LinearizedMeasurementModel,
+    public Likelihood {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

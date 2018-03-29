@@ -16,6 +16,11 @@ namespace refill {
 class DistributionInterface {
  public:
   /**
+   * @brief Default virtual destructor.
+   */
+  virtual ~DistributionInterface() = default;
+
+  /**
    * @brief Returns the mean of the distribution.
    *
    * @return mean of the distribution.

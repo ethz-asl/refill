@@ -27,6 +27,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
    *         mean and covariance. */
   GaussianDistribution(const Eigen::VectorXd& dist_mean,
                        const Eigen::MatrixXd& dist_cov);
+  virtual ~GaussianDistribution() = default;
 
   /** @brief Sets the distribution parameters. */
   void setDistributionParameters(const Eigen::VectorXd& dist_mean,

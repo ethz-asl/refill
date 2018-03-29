@@ -23,8 +23,9 @@ namespace refill {
 
 class ParticleFilter : public FilterBase {
  public:
-  // TODO(jwidauer): CHANGE THE FUNCTIONS!!
   ParticleFilter();
+  ParticleFilter(const size_t& n_particles,
+                 DistributionInterface* initial_state_dist);
   ParticleFilter(
       const size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
@@ -49,25 +50,35 @@ class ParticleFilter : public FilterBase {
   /** @brief Sets the particles and resets the weights to uniform. */
   void setParticles(const Eigen::MatrixXd& particles);
 
+  /** @brief Sets the particles and corresponding weights. */
+  void setParticlesAndWeights(const MatrixXd& particles,
+                              const VectorXd& weights);
+
   /** @brief Draws particles from the provided distribution
    *         and resets the weights to uniform. */
   void reinitializeParticles(DistributionInterface* initial_state);
 
   void predict() override;
-  void predict(const Eigen::VectorXd& input);
+  void predict(const VectorXd& input);
   void predict(const SystemModelBase& system_model);
   void predict(const SystemModelBase& system_model,
-               const Eigen::VectorXd& input);
+               const VectorXd& input);
 
-  void update(const Eigen::VectorXd& measurement) override;
+  void update(const VectorXd& measurement) override;
   void update(const Likelihood& measurement_model,
-              const Eigen::VectorXd& measurement);
+              const VectorXd& measurement);
 
   /** @brief Returns the expected value of the current particle distribution. */
   VectorXd getExpectation();
 
   /** @brief Returns the particle with maximum weight. */
   VectorXd getMaxWeightSample();
+
+  /** @brief Returns all particles. */
+  MatrixXd getParticles();
+
+  /** @brief Returns all particles and corresponding weights. */
+  void getParticlesAndWeights(MatrixXd* particles, VectorXd* weights);
 
  private:
   std::size_t num_particles_;

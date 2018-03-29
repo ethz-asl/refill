@@ -55,7 +55,7 @@ struct ImportanceSamplingFunctor : public SamplingFunctorBase {
     weights->setConstant(1 / n_particles);
   }
 
-  /** @brief Random number generator used to for random sampling. */
+  /** @brief Random number generator used for random sampling. */
   std::mt19937 rng;
 };
 
