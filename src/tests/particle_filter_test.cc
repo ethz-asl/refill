@@ -11,192 +11,388 @@ namespace refill {
 class ParticleFilterTest : public ::testing::Test {
  public:
   ParticleFilterTest()
-      : initial_dist(1),
-        system_noise(1),
-        measurement_noise(1),
-        system_model(2 * Eigen::MatrixXd::Identity(1, 1),
-                     system_noise),
-        measurement_model(Eigen::MatrixXd::Identity(1, 1),
-                          measurement_noise),
-        expected_initial_particles(1, 2),
-        expected_propagated_particles(1, 2),
-        expected_updated_weights(Eigen::Vector2d::Constant(0.5)),
-        measurement(Eigen::VectorXd::Zero(1)) {
+      : initial_dist_(1),
+        system_noise_(1),
+        measurement_noise_(1),
+        system_model_(2 * Eigen::MatrixXd::Identity(1, 1),
+                      system_noise_, Eigen::MatrixXd::Identity(1, 1)),
+        measurement_model_(Eigen::MatrixXd::Identity(1, 1),
+                           measurement_noise_),
+        expected_initial_particles_(1, 2),
+        expected_propagated_particles_(1, 2),
+        expected_propagated_particles_with_input_(1, 2),
+        expected_updated_weights_(Eigen::Vector2d::Constant(0.5)),
+        input_(Eigen::VectorXd::Constant(1, 1.0)),
+        measurement_(Eigen::VectorXd::Zero(1)) {
     this->ResetRngs();
 
     for (int i = 0; i < 2; ++i) {
-      expected_initial_particles.col(i) = initial_dist.drawSample();
+      expected_initial_particles_.col(i) = initial_dist_.drawSample();
     }
 
-    Eigen::VectorXd likelihoods = measurement_model.getLikelihoodVectorized(
-        expected_initial_particles, measurement);
-    expected_updated_weights = expected_updated_weights.cwiseProduct(likelihoods);
-    expected_updated_weights /= expected_updated_weights.sum();
+    Eigen::VectorXd likelihoods = measurement_model_.getLikelihoodVectorized(
+        expected_initial_particles_, measurement_);
+    expected_updated_weights_ =
+        expected_updated_weights_.cwiseProduct(likelihoods);
+    expected_updated_weights_ /= expected_updated_weights_.sum();
 
     for (int i = 0; i < 2; ++i) {
-      expected_propagated_particles.col(i) = 2
-          * expected_initial_particles.col(i)
-          + system_model.getNoise()->drawSample();
+      expected_propagated_particles_.col(i) = 2
+          * expected_initial_particles_.col(i)
+          + system_model_.getNoise()->drawSample();
+      expected_propagated_particles_with_input_.col(i) =
+          expected_propagated_particles_.col(i) + input_;
     }
+
+    this->ResetRngs();
   }
 
   void ResetRngs() {
-    initial_dist.rng_.seed(1);
-    system_noise.rng_.seed(1);
-    measurement_noise.rng_.seed(1);
+    initial_dist_.rng_.seed(1);
+    system_noise_.rng_.seed(1);
+    measurement_noise_.rng_.seed(1);
 
-    system_model.getNoise()->rng_.seed(1);
-    measurement_model.getNoise()->rng_.seed(1);
+    system_model_.getNoise()->rng_.seed(1);
+    measurement_model_.getNoise()->rng_.seed(1);
   }
 
-  GaussianDistribution initial_dist;
-  GaussianDistribution system_noise;
-  GaussianDistribution measurement_noise;
+  GaussianDistribution initial_dist_;
+  GaussianDistribution system_noise_;
+  GaussianDistribution measurement_noise_;
 
-  LinearSystemModel system_model;
-  LinearMeasurementModel measurement_model;
+  LinearSystemModel system_model_;
+  LinearMeasurementModel measurement_model_;
 
-  Eigen::MatrixXd expected_initial_particles;
-  Eigen::MatrixXd expected_propagated_particles;
-  Eigen::Vector2d expected_updated_weights;
+  Eigen::MatrixXd expected_initial_particles_;
+  Eigen::MatrixXd expected_propagated_particles_;
+  Eigen::MatrixXd expected_propagated_particles_with_input_;
+  Eigen::Vector2d expected_updated_weights_;
 
-  Eigen::VectorXd measurement;
+  Eigen::VectorXd input_;
+  Eigen::VectorXd measurement_;
 };
 
-TEST_F(ParticleFilterTest, ConstructorTest) {
-  ParticleFilter filter_1;
+TEST_F(ParticleFilterTest, DefaultConstructorTest) {
+  ParticleFilter filter;
 
   Eigen::MatrixXd particles;
   Eigen::VectorXd weights;
 
-  filter_1.getParticlesAndWeights(&particles, &weights);
+  filter.getParticlesAndWeights(&particles, &weights);
 
   EXPECT_EQ(Eigen::MatrixXd::Zero(0, 0), particles);
   EXPECT_EQ(Eigen::VectorXd::Zero(0), weights);
-
-  ResetRngs();
-  ParticleFilter filter_2(2, &initial_dist);
-  filter_2.getParticlesAndWeights(&particles, &weights);
-
-  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
-  EXPECT_EQ(expected_initial_particles, particles);
-
-  ResetRngs();
-  ParticleFilter filter_3(2, &initial_dist, SamplingFunctorBase());
-
-  filter_3.getParticlesAndWeights(&particles, &weights);
-
-  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
-  EXPECT_EQ(expected_initial_particles, particles);
-
-  filter_3.update(measurement_model, measurement);
-  filter_3.getParticlesAndWeights(&particles, &weights);
-
-  EXPECT_EQ(expected_updated_weights, weights);
-  EXPECT_EQ(expected_initial_particles, particles);
-
-  ResetRngs();
-  ParticleFilter filter_4(
-      2,
-      &initial_dist,
-      SamplingFunctorBase(),
-      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model)),
-      std::unique_ptr<Likelihood>(
-          new LinearMeasurementModel(measurement_model)));
-
-  filter_4.getParticlesAndWeights(&particles, &weights);
-
-  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
-  EXPECT_EQ(expected_initial_particles, particles);
-
-  filter_4.predict();
-  filter_4.getParticlesAndWeights(&particles, &weights);
-
-  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
-  EXPECT_EQ(expected_propagated_particles, particles);
-
-  filter_4.setParticles(expected_initial_particles);
-  filter_4.update(measurement);
-
-  filter_4.getParticlesAndWeights(&particles, &weights);
-
-  EXPECT_EQ(expected_updated_weights, weights);
-  EXPECT_EQ(expected_initial_particles, particles);
 }
 
-TEST_F(ParticleFilterTest, SetterTest) {
-  ParticleFilter filter_1;
+TEST_F(ParticleFilterTest, TwoArgumentsConstructorTest) {
+  ParticleFilter filter(2, &initial_dist_);
 
-  ResetRngs();
-  filter_1.setFilterParameters(2, &initial_dist);
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, ThreeArgumentConstructorTest) {
+  ParticleFilter filter(2, &initial_dist_, SamplingFunctorBase());
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+
+  filter.update(measurement_model_, measurement_);
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(expected_updated_weights_, weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, FiveArgumentsConstructorTest) {
+  ParticleFilter filter(
+      2,
+      &initial_dist_,
+      SamplingFunctorBase(),
+      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model_)),
+      std::unique_ptr<Likelihood>(
+          new LinearMeasurementModel(measurement_model_)));
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+
+  filter.predict();
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_propagated_particles_, particles);
+
+  filter.setParticles(expected_initial_particles_);
+  filter.update(measurement_);
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(expected_updated_weights_, weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, TwoArgumentsParameterSetterTest) {
+  ParticleFilter filter;
+  filter.setFilterParameters(2, &initial_dist_);
 
   Eigen::VectorXd weights;
   Eigen::MatrixXd particles;
 
-  filter_1.getParticlesAndWeights(&particles, &weights);
+  filter.getParticlesAndWeights(&particles, &weights);
 
   EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
-  EXPECT_EQ(expected_initial_particles, particles);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
 
-  ParticleFilter filter_2;
+TEST_F(ParticleFilterTest, ThreeArgumentsParameterSetterTest) {
+  ParticleFilter filter;
+  filter.setFilterParameters(2, &initial_dist_, SamplingFunctorBase());
 
-  ResetRngs();
-  filter_2.setFilterParameters(2, &initial_dist, SamplingFunctorBase());
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
 
-  filter_2.update(measurement_model, measurement);
-  filter_2.getParticlesAndWeights(&particles, &weights);
+  filter.update(measurement_model_, measurement_);
+  filter.getParticlesAndWeights(&particles, &weights);
 
-  EXPECT_EQ(expected_updated_weights, weights);
-  EXPECT_EQ(expected_initial_particles, particles);
+  EXPECT_EQ(expected_updated_weights_, weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
 
-  ParticleFilter filter_3;
-
-  ResetRngs();
-  filter_3.setFilterParameters(
+TEST_F(ParticleFilterTest, FiveArgumentsParameterSetterTest) {
+  ParticleFilter filter;
+  filter.setFilterParameters(
       2,
-      &initial_dist,
+      &initial_dist_,
       SamplingFunctorBase(),
-      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model)),
+      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model_)),
       std::unique_ptr<Likelihood>(
-          new LinearMeasurementModel(measurement_model)));
+          new LinearMeasurementModel(measurement_model_)));
 
-  filter_3.getParticlesAndWeights(&particles, &weights);
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
 
-  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
-  EXPECT_EQ(expected_initial_particles, particles);
-
-  filter_3.predict();
-
-  filter_3.getParticlesAndWeights(&particles, &weights);
+  filter.getParticlesAndWeights(&particles, &weights);
 
   EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
-  EXPECT_EQ(expected_propagated_particles, particles);
+  EXPECT_EQ(expected_initial_particles_, particles);
 
-  filter_3.setParticles(expected_initial_particles);
-  filter_3.update(measurement);
+  filter.predict();
 
-  filter_3.getParticlesAndWeights(&particles, &weights);
+  filter.getParticlesAndWeights(&particles, &weights);
 
-  EXPECT_EQ(expected_updated_weights, weights);
-  EXPECT_EQ(expected_initial_particles, particles);
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_propagated_particles_, particles);
 
-  ParticleFilter filter_4(2, &initial_dist);
-  filter_4.setParticles(Eigen::MatrixXd::Zero(1, 2));
+  filter.setParticles(expected_initial_particles_);
+  filter.update(measurement_);
 
-  filter_4.getParticlesAndWeights(&particles, &weights);
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(expected_updated_weights_, weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, SetParticlesTest) {
+  ParticleFilter filter(2, &initial_dist_);
+  filter.setParticles(Eigen::MatrixXd::Zero(1, 2));
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
 
   EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
   EXPECT_EQ(Eigen::MatrixXd::Zero(1, 2), particles);
+}
 
-  filter_4.setParticlesAndWeights(Eigen::MatrixXd::Constant(1, 2, 2),
-                                  Eigen::Vector2d::Constant(0.5));
+TEST_F(ParticleFilterTest, SetParticlesAndWeightsTest) {
+  ParticleFilter filter(2, &initial_dist_);
+  filter.setParticlesAndWeights(Eigen::MatrixXd::Constant(1, 2, 2),
+                                Eigen::Vector2d::Constant(0.5));
 
-  filter_4.getParticlesAndWeights(&particles, &weights);
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
 
   EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
   EXPECT_EQ(Eigen::MatrixXd::Constant(1, 2, 2), particles);
 }
 
-//TODO(jwidauer) Add Test for "GetExpectation", "GetMaxWeightSample", "update" and "predict"
+TEST_F(ParticleFilterTest, ReinitializeParticlesTest) {
+  ParticleFilter filter(2, &initial_dist_);
+  filter.setParticlesAndWeights(Eigen::MatrixXd::Constant(1, 2, 2),
+                                Eigen::Vector2d::Constant(0.5));
+
+  ResetRngs();
+  filter.reinitializeParticles(&initial_dist_);
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, DefaultPredictorTest) {
+  ParticleFilter filter(
+      2,
+      &initial_dist_,
+      SamplingFunctorBase(),
+      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model_)),
+      std::unique_ptr<Likelihood>(
+          new LinearMeasurementModel(measurement_model_)));
+
+  filter.predict();
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_propagated_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, DefaultPredictorWithInputTest) {
+  ParticleFilter filter(
+      2,
+      &initial_dist_,
+      SamplingFunctorBase(),
+      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model_)),
+      std::unique_ptr<Likelihood>(
+          new LinearMeasurementModel(measurement_model_)));
+
+  filter.predict(input_);
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_propagated_particles_with_input_, particles);
+}
+
+TEST_F(ParticleFilterTest, SystemModelPredictionTest) {
+  ParticleFilter filter(2, &initial_dist_);
+  filter.predict(system_model_);
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_propagated_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, SystemModelWithInputPredictionTest) {
+  ParticleFilter filter(2, &initial_dist_);
+  filter.predict(system_model_, input_);
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_propagated_particles_with_input_, particles);
+}
+
+TEST_F(ParticleFilterTest, DefaultUpdateTest) {
+  ParticleFilter filter(
+      2,
+      &initial_dist_,
+      SamplingFunctorBase(),
+      std::unique_ptr<LinearSystemModel>(new LinearSystemModel(system_model_)),
+      std::unique_ptr<Likelihood>(
+          new LinearMeasurementModel(measurement_model_)));
+  filter.update(measurement_);
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(expected_updated_weights_, weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, MeasurementModelUpdateTest) {
+  ParticleFilter filter(2, &initial_dist_);
+  filter.update(measurement_model_, measurement_);
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(expected_updated_weights_, weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, GetExpectationTest) {
+  ParticleFilter filter(2, &initial_dist_);
+  filter.setParticlesAndWeights(Eigen::MatrixXd::Constant(1, 2, 1.0),
+                                Eigen::VectorXd::Constant(2, 0.5));
+
+  Eigen::VectorXd expectation = filter.getExpectation();
+
+  EXPECT_EQ(Eigen::VectorXd::Constant(1, 1.0), expectation);
+}
+
+TEST_F(ParticleFilterTest, GetMaxWeightSampleTest) {
+  ParticleFilter filter(2, &initial_dist_);
+
+  Eigen::MatrixXd particles(1, 2);
+  Eigen::VectorXd weights(2);
+
+  particles << 1.0, 2.0;
+  weights << 0.75, 0.25;
+
+  filter.setParticlesAndWeights(particles, weights);
+
+  Eigen::VectorXd max_weight_particle = filter.getMaxWeightParticle();
+
+  EXPECT_EQ(Eigen::VectorXd::Constant(1, 1.0), max_weight_particle);
+}
+
+TEST_F(ParticleFilterTest, GetParticlesTest) {
+  ParticleFilter filter(2, &initial_dist_);
+
+  Eigen::MatrixXd particles = filter.getParticles();
+
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
+
+TEST_F(ParticleFilterTest, GetParticlesAndWeightsTest) {
+  ParticleFilter filter(2, &initial_dist_);
+
+  Eigen::MatrixXd particles;
+  Eigen::VectorXd weights;
+
+  filter.getParticlesAndWeights(&particles, &weights);
+
+  EXPECT_EQ(Eigen::Vector2d::Constant(0.5), weights);
+  EXPECT_EQ(expected_initial_particles_, particles);
+}
 
 }  // namespace refill

@@ -158,7 +158,7 @@ Eigen::VectorXd ParticleFilter::getExpectation() {
   return particles_ * weights_;
 }
 
-Eigen::VectorXd ParticleFilter::getMaxWeightSample() {
+Eigen::VectorXd ParticleFilter::getMaxWeightParticle() {
   Eigen::VectorXd::Index index;
 
   double max_weight = weights_.maxCoeff(&index);

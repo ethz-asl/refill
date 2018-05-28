@@ -15,7 +15,6 @@
 #include "refill/system_models/system_model_base.h"
 #include "refill/utility/resample_methods.h"
 
-using std::size_t;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
@@ -24,25 +23,25 @@ namespace refill {
 class ParticleFilter : public FilterBase {
  public:
   ParticleFilter();
-  ParticleFilter(const size_t& n_particles,
+  ParticleFilter(const std::size_t& n_particles,
                  DistributionInterface* initial_state_dist);
   ParticleFilter(
-      const size_t& n_particles, DistributionInterface* initial_state_dist,
+      const std::size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
   ParticleFilter(
-      const size_t& n_particles, DistributionInterface* initial_state_dist,
+      const std::size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<Likelihood> measurement_model);
   virtual ~ParticleFilter() = default;
 
-  void setFilterParameters(const size_t& n_particles,
+  void setFilterParameters(const std::size_t& n_particles,
                            DistributionInterface* initial_state_dist);
   void setFilterParameters(
-      const size_t& n_particles, DistributionInterface* initial_state_dist,
+      const std::size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method);
   void setFilterParameters(
-      const size_t& n_particles, DistributionInterface* initial_state_dist,
+      const std::size_t& n_particles, DistributionInterface* initial_state_dist,
       const std::function<void(MatrixXd*, VectorXd*)>& resample_method,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<Likelihood> measurement_model);
@@ -72,7 +71,7 @@ class ParticleFilter : public FilterBase {
   VectorXd getExpectation();
 
   /** @brief Returns the particle with maximum weight. */
-  VectorXd getMaxWeightSample();
+  VectorXd getMaxWeightParticle();
 
   /** @brief Returns all particles. */
   MatrixXd getParticles();
