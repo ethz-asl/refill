@@ -14,6 +14,9 @@ CMakeLists.txt.user
 .idea/
 cmake-build-debug/
 
+# VS Code Specific
+.vscode/
+
 # vim temporary files
 *.swp
 
