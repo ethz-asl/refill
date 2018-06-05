@@ -19,19 +19,32 @@ namespace refill {
 
 class ParticleFilter : public FilterBase {
  public:
+  /** @brief Constructs the particle filter with no value. */
   ParticleFilter();
+  /**
+   * @brief Constructs a new particle filter so that a system model is expected
+   *        to be given upon prediction / update and no resampling will be 
+   *        performed. */
   ParticleFilter(const std::size_t& n_particles,
                  DistributionInterface* initial_state_dist);
+  /**
+   * @brief Constructs a new particle filter so that a system model is expected
+   *        to be given upon prediction / update and resampling is performed. */
   ParticleFilter(const std::size_t& n_particles,
                  DistributionInterface* initial_state_dist,
                  const std::function<void(Eigen::MatrixXd*, Eigen::VectorXd*)>&
                      resample_method);
+  /**
+   * @brief Constructs a new particle filter which performes resampling and
+   *        uses the standard models, if not stated otherwise. */
   ParticleFilter(const std::size_t& n_particles,
                  DistributionInterface* initial_state_dist,
                  const std::function<void(Eigen::MatrixXd*, Eigen::VectorXd*)>&
                      resample_method,
                  std::unique_ptr<SystemModelBase> system_model,
                  std::unique_ptr<Likelihood> measurement_model);
+  /**
+   * @brief Destroy the Particle Filter object using default destructor. */
   virtual ~ParticleFilter() = default;
 
   void setFilterParameters(const std::size_t& n_particles,
