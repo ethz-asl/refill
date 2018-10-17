@@ -45,13 +45,13 @@ class LinearMeasurementModel : public LinearizedMeasurementModel {
 
   /** @brief Sets the measurement model parameters for a model with a simple
    *         noise mapping. */
-  void setMeasurementParameters(const Eigen::MatrixXd& measurement_mapping,
-                                const DistributionInterface& measurement_noise);
+  void setModelParameters(const Eigen::MatrixXd& measurement_mapping,
+                          const DistributionInterface& measurement_noise);
   /** @brief Sets the measurement model parameters for a model with a specific
    *         noise mapping. */
-  void setMeasurementParameters(const Eigen::MatrixXd& measurement_mapping,
-                                const DistributionInterface& measurement_noise,
-                                const Eigen::MatrixXd& noise_mapping);
+  void setModelParameters(const Eigen::MatrixXd& measurement_mapping,
+                          const DistributionInterface& measurement_noise,
+                          const Eigen::MatrixXd& noise_mapping);
 
   /** @brief Use the measurement model to receive the expected measurement. */
   Eigen::VectorXd observe(const Eigen::VectorXd& state,

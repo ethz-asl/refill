@@ -41,7 +41,8 @@ TEST(GaussianDistributionTest, ConstructorTests) {
 TEST(GaussianDistributionTest, SetterTests) {
   GaussianDistribution dist(2);
 
-  dist.setDistParam(Eigen::Vector2d::Ones(), Eigen::Matrix2d::Identity() * 2.0);
+  dist.setDistributionParameters(Eigen::Vector2d::Ones(),
+                                 Eigen::Matrix2d::Identity() * 2.0);
 
   ASSERT_EQ(2, dist.dimension())<< "Dimension not correct";
   ASSERT_EQ(Eigen::Vector2d::Ones(), dist.mean())<< "Mean not correct";
@@ -98,7 +99,8 @@ TEST(GaussianDistributionTest, OperatorTests) {
   ASSERT_EQ(Eigen::Matrix2d::Identity() * 7.0, dist_4.cov())
       << "Covariance not correct";
 
-  dist_4.setDistParam(Eigen::Vector2d::Ones(), Eigen::Matrix2d::Identity());
+  dist_4.setDistributionParameters(Eigen::Vector2d::Ones(),
+                                   Eigen::Matrix2d::Identity());
 
   GaussianDistribution dist_5 = Eigen::Matrix2d::Ones() * dist_4;
 

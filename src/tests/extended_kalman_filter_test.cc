@@ -57,7 +57,7 @@ TEST(ExtendedKalmanFilterTest, SetterTest) {
 
   ExtendedKalmanFilter filter_1(initial_state);
 
-  initial_state.setDistParam(Eigen::Vector2d::Ones(),
+  initial_state.setDistributionParameters(Eigen::Vector2d::Ones(),
                              Eigen::Matrix2d::Identity() * 2.0);
   filter_1.setState(initial_state);
 

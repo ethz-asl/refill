@@ -28,8 +28,8 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
                        const Eigen::MatrixXd& dist_cov);
 
   /** @brief Sets the distribution parameters. */
-  void setDistParam(const Eigen::VectorXd& dist_mean,
-                    const Eigen::MatrixXd& dist_cov);
+  void setDistributionParameters(const Eigen::VectorXd& dist_mean,
+                                 const Eigen::MatrixXd& dist_cov);
 
   /** @brief Sets the mean to a new value. */
   void setMean(const Eigen::VectorXd& mean);
