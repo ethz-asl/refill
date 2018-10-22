@@ -35,24 +35,24 @@ TEST(MeasurementModelBaseTest, FullTest) {
 
   ASSERT_EQ(2, measurement_model.getStateDim());
   ASSERT_EQ(2, measurement_model.getMeasurementDim());
-  ASSERT_EQ(2, measurement_model.getMeasurementNoiseDim());
+  ASSERT_EQ(2, measurement_model.getNoiseDim());
   ASSERT_EQ(Eigen::Vector2d::Zero(),
-            measurement_model.getMeasurementNoise()->mean());
+            measurement_model.getNoise()->mean());
   ASSERT_EQ(Eigen::Matrix2d::Identity(),
-            measurement_model.getMeasurementNoise()->cov());
+            measurement_model.getNoise()->cov());
 
-  measurement_noise.setDistParam(Eigen::Vector3d::Ones(),
-                                 Eigen::Matrix3d::Identity() * 2.0);
+  measurement_noise.setDistributionParameters(
+      Eigen::Vector3d::Ones(), Eigen::Matrix3d::Identity() * 2.0);
 
   measurement_model.setModelParameters(3, 3, measurement_noise);
 
   ASSERT_EQ(3, measurement_model.getStateDim());
   ASSERT_EQ(3, measurement_model.getMeasurementDim());
-  ASSERT_EQ(3, measurement_model.getMeasurementNoiseDim());
+  ASSERT_EQ(3, measurement_model.getNoiseDim());
   ASSERT_EQ(Eigen::Vector3d::Ones(),
-            measurement_model.getMeasurementNoise()->mean());
+            measurement_model.getNoise()->mean());
   ASSERT_EQ(Eigen::Matrix3d::Identity() * 2.0,
-            measurement_model.getMeasurementNoise()->cov());
+            measurement_model.getNoise()->cov());
 }
 
 }  // namespace refill

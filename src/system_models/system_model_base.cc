@@ -32,12 +32,22 @@ SystemModelBase::SystemModelBase(const size_t& state_dim,
       input_dim_(input_dim),
       system_noise_(system_noise.clone()) {}
 
+/**
+ * @f$ N_s @f$ / @f$ N_n @f$ denotes state and noise dimensions respectively.
+ *
+ * @f$ M_s @f$ / @f$ M_n @f$ user defined number of state/noise samples.
+ *
+ * @param sampled_state is a @f$ N_s \times M_s @f$ Matrix.
+ * @param input is the input to the system function.
+ * @param sampled_noise is a @f$ N_n \times M_n @f$ Matrix.
+ * @return an @f$ N_s \times (M_s \cdot M_n) @f$ Matrix.
+ */
 Eigen::MatrixXd SystemModelBase::propagateVectorized(
     const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
     const Eigen::MatrixXd& sampled_noise) const {
   const size_t kStateDim = getStateDim();
   const size_t kInputDim = getInputDim();
-  const size_t kNoiseDim = getSystemNoiseDim();
+  const size_t kNoiseDim = getNoiseDim();
   const size_t kStateSampleCount = sampled_state.cols();
   const size_t kNoiseSampleCount = sampled_noise.cols();
 
@@ -55,8 +65,8 @@ Eigen::MatrixXd SystemModelBase::propagateVectorized(
   for (size_t i = 0u; i < kStateSampleCount; ++i) {
     for (size_t j = 0u; j < kNoiseSampleCount; ++j) {
       result.col(i * kNoiseSampleCount + j) = propagate(sampled_state.col(i),
-                                                         input,
-                                                         sampled_noise.col(j));
+                                                        input,
+                                                        sampled_noise.col(j));
     }
   }
 
@@ -102,13 +112,13 @@ size_t SystemModelBase::getInputDim() const {
 }
 
 /** @return the noise dimension. */
-size_t SystemModelBase::getSystemNoiseDim() const {
+size_t SystemModelBase::getNoiseDim() const {
   CHECK(system_noise_) << "System noise has not been set.";
   return system_noise_->mean().size();
 }
 
 /** @return a pointer to the system noise distribution. */
-DistributionInterface* SystemModelBase::getSystemNoise() const {
+DistributionInterface* SystemModelBase::getNoise() const {
   CHECK(system_noise_) << "System noise has not been set.";
   return system_noise_.get();
 }
