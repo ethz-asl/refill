@@ -8,7 +8,7 @@
 #include "refill/system_models/linear_system_model.h"
 
 /*
- * This is and example program for using Refill to estimate the 3D position
+ * This is an example program for using Refill to estimate the 3D position
  * using a constant position model and assuming measurements are 3D position
  * measurements of the real position.
  *

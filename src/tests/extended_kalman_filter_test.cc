@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
 
+#include <memory>
+
 #include "refill/filters/extended_kalman_filter.h"
 #include "refill/system_models/linear_system_model.h"
 #include "refill/measurement_models/linear_measurement_model.h"

@@ -32,6 +32,16 @@ SystemModelBase::SystemModelBase(const size_t& state_dim,
       input_dim_(input_dim),
       system_noise_(system_noise.clone()) {}
 
+/**
+ * @f$ N_s @f$ / @f$ N_n @f$ denotes state and noise dimensions respectively.
+ *
+ * @f$ M_s @f$ / @f$ M_n @f$ user defined number of state/noise samples.
+ *
+ * @param sampled_state is a @f$ N_s \times M_s @f$ Matrix.
+ * @param input is the input to the system function.
+ * @param sampled_noise is a @f$ N_n \times M_n @f$ Matrix.
+ * @return an @f$ N_s \times (M_s \cdot M_n) @f$ Matrix.
+ */
 Eigen::MatrixXd SystemModelBase::propagateVectorized(
     const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
     const Eigen::MatrixXd& sampled_noise) const {
@@ -55,8 +65,8 @@ Eigen::MatrixXd SystemModelBase::propagateVectorized(
   for (size_t i = 0u; i < kStateSampleCount; ++i) {
     for (size_t j = 0u; j < kNoiseSampleCount; ++j) {
       result.col(i * kNoiseSampleCount + j) = propagate(sampled_state.col(i),
-                                                         input,
-                                                         sampled_noise.col(j));
+                                                        input,
+                                                        sampled_noise.col(j));
     }
   }
 
