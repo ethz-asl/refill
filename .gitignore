@@ -10,6 +10,13 @@ CMakeLists.txt.user
 *.project
 .settings/
 
+# CLion Specific
+.idea/
+cmake-build-debug/
+
+# VS Code Specific
+.vscode/
+
 # vim temporary files
 *.swp
 
