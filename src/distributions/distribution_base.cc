@@ -20,5 +20,13 @@ Eigen::VectorXd DistributionInterface::evaluatePdfVectorized(
   return pdf_values;
 }
 
+void DistributionInterface::setRng(std::mt19937 rng) {
+  rng_ = rng;
+}
+
+std::mt19937 DistributionInterface::getRng() const {
+  return rng_;
+}
+
 }  // namespace refill
 
