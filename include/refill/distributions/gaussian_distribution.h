@@ -47,6 +47,11 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   /** @brief Returns a sample drawn from the distribution. */
   Eigen::VectorXd drawSample() override;
 
+  double evaluatePdf(const Eigen::VectorXd& x) const override;
+
+  Eigen::VectorXd evaluatePdfVectorized(const Eigen::MatrixXd& sampled_x) const
+      override;
+
   /** @brief Implements the addition of a gaussian distribution to `this`. */
   GaussianDistribution& operator+=(const GaussianDistribution& right_side);
 
@@ -59,10 +64,6 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   /** @brief Implements the subtraction of two gaussian distributions. */
   GaussianDistribution operator-(const GaussianDistribution& right_side);
 
-  double evaluatePdf(const Eigen::VectorXd& x) const override;
-
-  Eigen::VectorXd evaluatePdfVectorized(const Eigen::MatrixXd& sampled_x) const
-      override;
 
  private:
   Eigen::VectorXd mean_;
