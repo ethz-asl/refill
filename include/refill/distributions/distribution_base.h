@@ -65,7 +65,7 @@ class DistributionInterface {
    * 
    * @param rng Rng the internal one will be set to.
    */
-  virtual void setRng(std::mt19937 rng);
+  virtual void setRng(const std::mt19937& rng);
 
   /**
    * @brief Get the internal random number generator (rng).
