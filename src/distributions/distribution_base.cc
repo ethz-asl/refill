@@ -5,7 +5,7 @@ namespace refill {
 /**
  * Assumes the samples where the pdf should be evaluated as the columns of @e x.
  *
- * @param x Samples at which the pdf should be evaluated.
+ * @param sampled_x Samples at which the pdf should be evaluated.
  *          A @f$ N \times M @f$ matrix.
  * @return the pdfs values at the samples defined by x's column vectors.
  */
