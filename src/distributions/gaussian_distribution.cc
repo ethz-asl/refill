@@ -104,6 +104,12 @@ Eigen::VectorXd GaussianDistribution::drawSample() {
   return mean_ + L * uniform_random_vector;
 }
 
+/**
+ * Checks for compatible size of x.
+ * 
+ * @param x Sample at which the pdf should be evaluated.
+ * @return the relative likelihood of the sample.
+ */
 double GaussianDistribution::evaluatePdf(const Eigen::VectorXd& x) const {
   CHECK_EQ(this->dimension(), x.size());
 
@@ -115,6 +121,13 @@ double GaussianDistribution::evaluatePdf(const Eigen::VectorXd& x) const {
   return std::exp(-squared_mahalanobis_distance / 2) / denominator;
 }
 
+/**
+ * Checks for compatible size of x.
+ * 
+ * @param x A matrix where each column is one sample where the pdf
+ *          should beevaluated.
+ * @return a vector with the pdf evaluations for each supplied sample.
+ */
 Eigen::VectorXd GaussianDistribution::evaluatePdfVectorized(
     const Eigen::MatrixXd& x) const {
   CHECK_EQ(this->dimension(), x.rows());

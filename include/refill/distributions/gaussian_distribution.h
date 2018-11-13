@@ -47,8 +47,10 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   /** @brief Returns a sample drawn from the distribution. */
   Eigen::VectorXd drawSample() override;
 
+  /** @brief Evaluates the pdf at the given sample. */
   double evaluatePdf(const Eigen::VectorXd& x) const override;
 
+  /** @brief Evaluates the pdf at the given samples, in a vectorized fashion. */
   Eigen::VectorXd evaluatePdfVectorized(const Eigen::MatrixXd& sampled_x) const
       override;
 
