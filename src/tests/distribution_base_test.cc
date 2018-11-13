@@ -23,4 +23,16 @@ TEST(DistributionBaseTest, VectorizedPdfEvaluationTest) {
             distribution.evaluatePdfVectorized(Eigen::MatrixXd::Ones(2, 2)));
 }
 
+TEST(DistributionBaseTest, RngAccessorTest) {
+  DistributionBaseClass distribution;
+
+  std::mt19937 rng;
+
+  distribution.setRng(rng);
+
+  std::mt19937 dist_rng = distribution.getRng();
+
+  EXPECT_EQ(rng, dist_rng);
+}
+
 }  // namespace refill
