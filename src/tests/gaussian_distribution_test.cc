@@ -117,4 +117,26 @@ TEST(GaussianDistributionTest, OperatorTests) {
       <<"Covariance not correct";
 }
 
+TEST(GaussianDistributionTest, PdfEvaluationTest) {
+    GaussianDistribution distribution(2);
+
+    double evaluation = distribution.evaluatePdf(Eigen::VectorXd::Zero(2));
+
+    double expected_evaluation = 1 / (2 * M_PI);
+
+    EXPECT_EQ(expected_evaluation, evaluation);
+}
+
+TEST(GaussianDistributionTest, VectorizedEvaluationTest) {
+    GaussianDistribution distribution(2);
+
+    Eigen::Vector2d evaluation =
+        distribution.evaluatePdfVectorized(Eigen::MatrixXd::Zero(2, 2));
+
+    Eigen::Vector2d expected_evaluation =
+        Eigen::Vector2d::Constant(1 / (2 * M_PI));
+
+    EXPECT_EQ(expected_evaluation, evaluation);
+}
+
 }  // namespace refill

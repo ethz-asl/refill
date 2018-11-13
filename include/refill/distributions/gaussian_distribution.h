@@ -1,11 +1,11 @@
 #ifndef REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 #define REFILL_DISTRIBUTIONS_GAUSSIAN_DISTRIBUTION_H_
 
+#include <Eigen/Dense>
 #include <glog/logging.h>
 
-#include <Eigen/Dense>
-
 #include <cstdlib>
+#include <random>
 
 #include "refill/distributions/distribution_base.h"
 
@@ -26,6 +26,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
    *         mean and covariance. */
   GaussianDistribution(const Eigen::VectorXd& dist_mean,
                        const Eigen::MatrixXd& dist_cov);
+  virtual ~GaussianDistribution() = default;
 
   /** @brief Sets the distribution parameters. */
   void setDistributionParameters(const Eigen::VectorXd& dist_mean,
@@ -39,9 +40,18 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
   /** @brief Returns the distributions dimension. */
   size_t dimension() const;
   /** @brief Returns the current mean of the distribution. */
-  Eigen::VectorXd mean() const;
+  Eigen::VectorXd mean() const override;
   /** @brief Returns the current covariance of the distribution. */
-  Eigen::MatrixXd cov() const;
+  Eigen::MatrixXd cov() const override;
+
+  /** @brief Returns a sample drawn from the distribution. */
+  Eigen::VectorXd drawSample() override;
+
+  /** @brief Evaluates the pdf at the given sample. */
+  double evaluatePdf(const Eigen::VectorXd& x) const override;
+
+  Eigen::VectorXd evaluatePdfVectorized(const Eigen::MatrixXd& sampled_x) const
+      override;
 
   /** @brief Implements the addition of a gaussian distribution to `this`. */
   GaussianDistribution& operator+=(const GaussianDistribution& right_side);
@@ -54,6 +64,7 @@ class GaussianDistribution : public DistributionBase<GaussianDistribution> {
 
   /** @brief Implements the subtraction of two gaussian distributions. */
   GaussianDistribution operator-(const GaussianDistribution& right_side);
+
 
  private:
   Eigen::VectorXd mean_;

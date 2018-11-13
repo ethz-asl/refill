@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <glog/logging.h>
+#include <random>
 #include <typeinfo>
 
 namespace refill {
@@ -14,6 +15,11 @@ namespace refill {
  */
 class DistributionInterface {
  public:
+  /**
+   * @brief Default virtual destructor.
+   */
+  virtual ~DistributionInterface() = default;
+
   /**
    * @brief Returns the mean of the distribution.
    *
@@ -29,11 +35,50 @@ class DistributionInterface {
   virtual Eigen::MatrixXd cov() const = 0;
 
   /**
+   * @brief Draws a random sample from the distribution.
+   *
+   * @return a sample drawn from the distribution.
+   */
+  virtual Eigen::VectorXd drawSample() = 0;
+
+  /**
+   * @brief Evaluate the distributions probability density function.
+   *
+   * @param x Point at which the pdf should be evaluated.
+   * @return the pdfs value at the point x.
+   */
+  virtual double evaluatePdf(const Eigen::VectorXd& x) const = 0;
+
+  /** @brief A vectorized version of the pdf evaluation. */
+  virtual Eigen::VectorXd evaluatePdfVectorized(
+      const Eigen::MatrixXd& sampled_x) const;
+
+  /**
    * @brief Clones the original distribution.
    *
    * @return a pointer to the cloned distribution.
    */
   virtual DistributionInterface* clone() const = 0;
+
+  /**
+   * @brief Set the internal random number generator (rng).
+   * 
+   * @param rng Rng the internal one will be set to.
+   */
+  virtual void setRng(const std::mt19937& rng);
+
+  /**
+   * @brief Get the internal random number generator (rng).
+   * 
+   * @return a copy of the internal rng.
+   */
+  virtual std::mt19937 getRng() const;
+
+ protected:
+  /**
+   * @brief Random number generator used to draw from distribution.
+   */
+  std::mt19937 rng_;
 };
 
 /**
@@ -49,7 +94,7 @@ class DistributionInterface {
  */
 template<typename DERIVED>
 class DistributionBase : public DistributionInterface {
-  DistributionInterface* clone() const {
+  DistributionInterface* clone() const override {
     DERIVED casted_derived_obj;
     try {
       casted_derived_obj = dynamic_cast<DERIVED const&>(*this);
