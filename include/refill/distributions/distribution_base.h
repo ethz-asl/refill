@@ -61,6 +61,21 @@ class DistributionInterface {
   virtual DistributionInterface* clone() const = 0;
 
   /**
+   * @brief Set the internal random number generator (rng).
+   * 
+   * @param rng Rng the internal one will be set to.
+   */
+  virtual void setRng(const std::mt19937& rng);
+
+  /**
+   * @brief Get the internal random number generator (rng).
+   * 
+   * @return a copy of the internal rng.
+   */
+  virtual std::mt19937 getRng() const;
+
+ protected:
+  /**
    * @brief Random number generator used to draw from distribution.
    */
   std::mt19937 rng_;

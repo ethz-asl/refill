@@ -105,6 +105,36 @@ Eigen::VectorXd GaussianDistribution::drawSample() {
 }
 
 /**
+ * Checks for compatible size of x.
+ * 
+ * @param x Sample at which the pdf should be evaluated.
+ * @return the relative likelihood of the sample.
+ */
+double GaussianDistribution::evaluatePdf(const Eigen::VectorXd& x) const {
+  CHECK_EQ(this->dimension(), x.size());
+
+  double denominator = std::sqrt((2 * M_PI * covariance_).determinant());
+  Eigen::VectorXd deviation = x - mean_;
+  double squared_mahalanobis_distance = deviation.transpose()
+      * covariance_.inverse() * deviation;
+
+  return std::exp(-squared_mahalanobis_distance / 2) / denominator;
+}
+
+Eigen::VectorXd GaussianDistribution::evaluatePdfVectorized(
+    const Eigen::MatrixXd& x) const {
+  CHECK_EQ(this->dimension(), x.rows());
+
+  double denominator = std::sqrt((2 * M_PI * covariance_).determinant());
+
+  Eigen::MatrixXd deviations = x.colwise() - mean_;
+  Eigen::VectorXd squared_mahalanobis_distances = (deviations.transpose()
+      * covariance_.inverse() * deviations).diagonal();
+
+  return (-squared_mahalanobis_distances / 2).array().exp() / denominator;
+}
+
+/**
  * Checks for right dimensionality.
  *
  * @param right_side Distribution which will be added to `this`.

@@ -3,11 +3,11 @@
 namespace refill {
 
 /**
- * Assumes the points where the pdf should be evaluated as the columns of @e x.
+ * Assumes the samples where the pdf should be evaluated as the columns of @e x.
  *
- * @param x Points at which the pdf should be evaluated.
+ * @param sampled_x Samples at which the pdf should be evaluated.
  *          A @f$ N \times M @f$ matrix.
- * @return the pdfs values at the points defined by x's column vectors.
+ * @return the pdfs values at the samples defined by x's column vectors.
  */
 Eigen::VectorXd DistributionInterface::evaluatePdfVectorized(
     const Eigen::MatrixXd& sampled_x) const {
@@ -18,6 +18,14 @@ Eigen::VectorXd DistributionInterface::evaluatePdfVectorized(
   }
 
   return pdf_values;
+}
+
+void DistributionInterface::setRng(const std::mt19937& rng) {
+  rng_ = rng;
+}
+
+std::mt19937 DistributionInterface::getRng() const {
+  return rng_;
 }
 
 }  // namespace refill
