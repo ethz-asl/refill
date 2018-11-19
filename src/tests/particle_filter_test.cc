@@ -48,12 +48,13 @@ class ParticleFilterTest : public ::testing::Test {
   }
 
   void ResetRngs() {
-    initial_dist_.rng_.seed(1);
-    system_noise_.rng_.seed(1);
-    measurement_noise_.rng_.seed(1);
+    std::mt19937 rng(1);
+    initial_dist_.setRng(rng);
+    system_noise_.setRng(rng);
+    measurement_noise_.setRng(rng);
 
-    system_model_.getNoise()->rng_.seed(1);
-    measurement_model_.getNoise()->rng_.seed(1);
+    system_model_.getNoise()->setRng(rng);
+    measurement_model_.getNoise()->setRng(rng);
   }
 
   GaussianDistribution initial_dist_;
