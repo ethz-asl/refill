@@ -16,8 +16,8 @@ class LikelihoodClass : public Likelihood {
 TEST(LikelihoodTest, GetLikelihoodVectorizedTest) {
   LikelihoodClass likelihood;
 
-  Eigen::MatrixXd sampled_state = Eigen::MatrixXd::Zero(2, 2);
-  Eigen::VectorXd measurement = Eigen::VectorXd::Zero(2);
+  Eigen::Matrix2d sampled_state = Eigen::Matrix2d::Zero();
+  Eigen::Vector2d measurement = Eigen::Vector2d::Zero();
 
   Eigen::VectorXd likelihoods =
       likelihood.getLikelihoodVectorized(sampled_state, measurement);
