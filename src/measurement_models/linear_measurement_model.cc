@@ -165,10 +165,10 @@ double LinearMeasurementModel::getLikelihood(
   CHECK_EQ(this->getMeasurementDim(), measurement.size());
 
   // Solve M_k * w_k = y_k - H_k * x_k
-  Eigen::VectorXd x = noise_mapping_.colPivHouseholderQr().solve(
+  Eigen::VectorXd w_k = noise_mapping_.colPivHouseholderQr().solve(
       measurement - measurement_mapping_ * state);
 
-  return this->getNoise()->evaluatePdf(x);
+  return this->getNoise()->evaluatePdf(w_k);
 }
 
 Eigen::VectorXd LinearMeasurementModel::getLikelihoodVectorized(
@@ -179,10 +179,10 @@ Eigen::VectorXd LinearMeasurementModel::getLikelihoodVectorized(
 
   Eigen::MatrixXd expected_measurements = -measurement_mapping_ * sampled_state;
 
-  Eigen::MatrixXd sampled_x = noise_mapping_.colPivHouseholderQr().solve(
+  Eigen::MatrixXd sampled_w_k = noise_mapping_.colPivHouseholderQr().solve(
       expected_measurements.colwise() + measurement);
 
-  return this->getNoise()->evaluatePdfVectorized(sampled_x);
+  return this->getNoise()->evaluatePdfVectorized(sampled_w_k);
 }
 
 }  // namespace refill
