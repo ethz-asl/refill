@@ -4,7 +4,6 @@
 #include <Eigen/Dense>
 #include <glog/logging.h>
 
-#include <algorithm>
 #include <cstdlib>
 #include <random>
 
