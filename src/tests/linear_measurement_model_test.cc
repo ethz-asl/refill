@@ -120,10 +120,25 @@ TEST_F(LinearMeasurementModelTest, GetLikelihoodTest) {
   Eigen::Vector2d measurement{Eigen::Vector2d::Constant(1)};
   Eigen::Vector2d state{Eigen::Vector2d::Constant(1)};
 
-  double expected_likelihood = 1.0 / (2.0 * M_PI);
+  double expected_likelihood{1.0 / (2.0 * M_PI)};
 
   EXPECT_EQ(expected_likelihood,
             measurement_model.getLikelihood(state, measurement));
+}
+
+TEST_F(LinearMeasurementModelTest, GetLikelihoodVectorizedTest) {
+  LinearMeasurementModel measurement_model(measurement_mapping_,
+                                           measurement_noise_,
+                                           noise_mapping_);
+
+  Eigen::Vector2d measurement{Eigen::Vector2d::Constant(1)};
+  Eigen::Matrix2d sampled_state{Eigen::Matrix2d::Constant(1)};
+
+  Eigen::Vector2d expected_likelihood{
+      Eigen::Vector2d::Constant(1.0 / (2 * M_PI))};
+
+  EXPECT_EQ(expected_likelihood, measurement_model.getLikelihoodVectorized(
+                                     sampled_state, measurement));
 }
 
 }  // namespace refill
