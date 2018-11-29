@@ -51,12 +51,10 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(
     : state_(initial_state),
       system_model_(std::move(system_model)),
       measurement_model_(std::move(measurement_model)) {
-  const int kStateDimension = state_.mean().size();
-
   // The purpose of these checks is to verify that the dimensions of the models
   // agree with the dimension of the system state.
-  CHECK_EQ(system_model_->getStateDim(), kStateDimension);
-  CHECK_EQ(measurement_model_->getStateDim(), kStateDimension);
+  CHECK_EQ(system_model_->getStateDim(), state_.mean().rows());
+  CHECK_EQ(measurement_model_->getStateDim(), state_.mean().rows());
 }
 
 /** @param state The new filter state. */
@@ -68,8 +66,7 @@ void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
 void ExtendedKalmanFilter::predict() {
   CHECK(this->system_model_) << "No default system model provided.";
 
-  const int kInputSize = this->system_model_->getInputDim();
-  this->predict(Eigen::VectorXd::Zero(kInputSize));
+  this->predict(Eigen::VectorXd::Zero(this->system_model_->getInputDim()));
 }
 
 /**
@@ -92,8 +89,8 @@ void ExtendedKalmanFilter::predict(const Eigen::VectorXd& input) {
  * @param system_model The system model to use for the prediction.
  */
 void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model) {
-  const int kInputSize = system_model.getInputDim();
-  this->predict(system_model, Eigen::VectorXd::Zero(kInputSize));
+  this->predict(system_model,
+                Eigen::VectorXd::Zero(system_model.getInputDim()));
 }
 
 /**
@@ -106,8 +103,8 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model) {
  */
 void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
                                    const Eigen::VectorXd& input) {
-  CHECK_EQ(system_model.getStateDim(), state_.mean().size());
-  CHECK_EQ(system_model.getInputDim(), input.size());
+  CHECK_EQ(system_model.getStateDim(), state_.mean().rows());
+  CHECK_EQ(system_model.getInputDim(), input.rows());
 
   const Eigen::MatrixXd system_jacobian =
       system_model.getStateJacobian(state_.mean(), input);
@@ -136,7 +133,7 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
  */
 void ExtendedKalmanFilter::update(const Eigen::VectorXd& measurement) {
   CHECK(this->measurement_model_) << "No default measurement model provided.";
-  this->update(*this->measurement_model_, measurement);
+  this->update(*(this->measurement_model_), measurement);
 }
 
 /**
@@ -152,8 +149,8 @@ void ExtendedKalmanFilter::update(const Eigen::VectorXd& measurement) {
 void ExtendedKalmanFilter::update(
     const LinearizedMeasurementModel& measurement_model,
     const Eigen::VectorXd& measurement) {
-  CHECK_EQ(measurement_model.getMeasurementDim(), measurement.size());
-  CHECK_EQ(measurement_model.getStateDim(), state_.mean().size());
+  CHECK_EQ(measurement_model.getMeasurementDim(), measurement.rows());
+  CHECK_EQ(measurement_model.getStateDim(), state_.mean().rows());
 
   const Eigen::MatrixXd measurement_jacobian =
       measurement_model.getMeasurementJacobian(state_.mean());
@@ -179,11 +176,6 @@ void ExtendedKalmanFilter::update(
   const Eigen::MatrixXd kalman_gain = state_.cov() *
                                       measurement_jacobian.transpose() *
                                       residual_cov.inverse();
-
-  // Defining temporary matrix for transpose, since Eigen v3.2.10 exhibits a
-  // bug where matrix multiplications with a transpose halts the program
-  // execution here. Reason is unknown.
-  const Eigen::MatrixXd kalman_gain_transpose = kalman_gain.transpose();
 
   const Eigen::VectorXd new_state_mean =
       state_.mean() + kalman_gain * innovation;
