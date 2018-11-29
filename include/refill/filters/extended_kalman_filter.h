@@ -9,9 +9,7 @@
 
 #include "refill/distributions/gaussian_distribution.h"
 #include "refill/filters/filter_base.h"
-#include "refill/measurement_models/linear_measurement_model.h"
 #include "refill/measurement_models/linearized_measurement_model.h"
-#include "refill/system_models/linear_system_model.h"
 #include "refill/system_models/linearized_system_model.h"
 
 namespace refill {
@@ -40,6 +38,9 @@ class ExtendedKalmanFilter : public FilterBase {
       const GaussianDistribution& initial_state,
       std::unique_ptr<LinearizedSystemModel> system_model,
       std::unique_ptr<LinearizedMeasurementModel> measurement_model);
+
+  /** @brief Default destructor. */
+  virtual ~ExtendedKalmanFilter() = default;
 
   /** @brief Sets the state of the Kalman filter. */
   void setState(const GaussianDistribution& state);
