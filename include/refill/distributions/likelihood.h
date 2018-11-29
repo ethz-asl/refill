@@ -10,10 +10,15 @@ class Likelihood {
   virtual ~Likelihood() = default;
 
   /**
-   * @brief Computes the likelihood of a state vector.given a measurement
+   * @brief Computes the likelihood of a measurement given the state.
+   * 
+   * Computes the likelihood of measurement @f$ m @f$ given a certain state
+   * @f$ x @f$. Meaning it computes:
+   * 
+   * @f$ P(m | x) @f$
    *
-   * @param state Vector for which the likelihood shall be computed.
-   * @param measurement Measurement which is assumed to be given.
+   * @param state State vector which is assumed to be given.
+   * @param measurement Measurement for which the likelihood will be computed.
    * @return the likelihood of the input vector given the measurement.
    */
   virtual double getLikelihood(const Eigen::VectorXd& state,
