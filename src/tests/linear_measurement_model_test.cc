@@ -5,7 +5,20 @@
 
 namespace refill {
 
-TEST(LinearMeasurementModelTest, ConstructorTest) {
+class LinearMeasurementModelTest : public ::testing::Test {
+ public:
+  LinearMeasurementModelTest()
+      : measurement_noise_{2},
+        measurement_mapping_{Eigen::Matrix2d::Identity()},
+        noise_mapping_{Eigen::Matrix2d::Identity()} {}
+
+  GaussianDistribution measurement_noise_;
+
+  Eigen::Matrix2d measurement_mapping_;
+  Eigen::Matrix2d noise_mapping_;
+};
+
+TEST_F(LinearMeasurementModelTest, ConstructorTest) {
   LinearMeasurementModel measurement_model_1;
 
   EXPECT_EQ(0, measurement_model_1.getStateDim());
@@ -37,7 +50,7 @@ TEST(LinearMeasurementModelTest, ConstructorTest) {
   EXPECT_EQ(Eigen::Matrix2d::Ones(), measurement_model_3.getNoiseMapping());
 }
 
-TEST(LinearMeasurementModelTest, SetterTest) {
+TEST_F(LinearMeasurementModelTest, SetterTest) {
   GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
                                          Eigen::Matrix2d::Identity());
 
@@ -68,7 +81,7 @@ TEST(LinearMeasurementModelTest, SetterTest) {
   EXPECT_EQ(Eigen::Matrix3d::Ones(), measurement_model.getNoiseMapping());
 }
 
-TEST(LinearMeasurementModelTest, GetterTest) {
+TEST_F(LinearMeasurementModelTest, GetterTest) {
   GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
                                          Eigen::Matrix2d::Identity());
 
@@ -85,7 +98,7 @@ TEST(LinearMeasurementModelTest, GetterTest) {
             measurement_model.getNoiseJacobian(Eigen::Vector2d::Zero()));
 }
 
-TEST(LinearMeasurementModelTest, ObservationTest) {
+TEST_F(LinearMeasurementModelTest, ObservationTest) {
   GaussianDistribution measurement_noise(Eigen::Vector2d::Zero(),
                                          Eigen::Matrix2d::Identity());
 
@@ -97,6 +110,35 @@ TEST(LinearMeasurementModelTest, ObservationTest) {
       Eigen::Vector2d::Constant(3.0),
       measurement_model.observe(Eigen::Vector2d::Ones(),
                                 Eigen::Vector2d::Ones()));
+}
+
+TEST_F(LinearMeasurementModelTest, GetLikelihoodTest) {
+  LinearMeasurementModel measurement_model(measurement_mapping_,
+                                           measurement_noise_,
+                                           noise_mapping_);
+
+  Eigen::Vector2d measurement{Eigen::Vector2d::Constant(1)};
+  Eigen::Vector2d state{Eigen::Vector2d::Constant(1)};
+
+  double expected_likelihood{1.0 / (2.0 * M_PI)};
+
+  EXPECT_EQ(expected_likelihood,
+            measurement_model.getLikelihood(state, measurement));
+}
+
+TEST_F(LinearMeasurementModelTest, GetLikelihoodVectorizedTest) {
+  LinearMeasurementModel measurement_model(measurement_mapping_,
+                                           measurement_noise_,
+                                           noise_mapping_);
+
+  Eigen::Vector2d measurement{Eigen::Vector2d::Constant(1)};
+  Eigen::Matrix2d sampled_state{Eigen::Matrix2d::Constant(1)};
+
+  Eigen::Vector2d expected_likelihood{
+      Eigen::Vector2d::Constant(1.0 / (2 * M_PI))};
+
+  EXPECT_EQ(expected_likelihood, measurement_model.getLikelihoodVectorized(
+                                     sampled_state, measurement));
 }
 
 }  // namespace refill

@@ -81,7 +81,7 @@ Eigen::MatrixXd SystemModelBase::propagateVectorized(
  * @param system_noise The system noise.
  */
 void SystemModelBase::setSystemModelBaseParameters(
-    const size_t& state_dim, const DistributionInterface& system_noise) {
+    const std::size_t& state_dim, const DistributionInterface& system_noise) {
   this->setSystemModelBaseParameters(state_dim, system_noise, 0);
 }
 
@@ -94,8 +94,8 @@ void SystemModelBase::setSystemModelBaseParameters(
  * @param input_dim The systems input dimension.
  */
 void SystemModelBase::setSystemModelBaseParameters(
-    const size_t& state_dim, const DistributionInterface& system_noise,
-    const size_t& input_dim) {
+    const std::size_t& state_dim, const DistributionInterface& system_noise,
+    const std::size_t& input_dim) {
   state_dim_ = state_dim;
   system_noise_.reset(system_noise.clone());
   input_dim_ = input_dim;

@@ -109,6 +109,7 @@ Eigen::VectorXd LinearMeasurementModel::observe(
   CHECK_NE(this->getStateDim(), 0)
       << " Measurement model has not been initialized.";
   CHECK_EQ(state.size(), this->getStateDim());
+  CHECK_EQ(noise.size(), this->getNoiseDim());
 
   return measurement_mapping_ * state +
          noise_mapping_ * noise;
@@ -156,6 +157,32 @@ Eigen::MatrixXd LinearMeasurementModel::getNoiseMapping() const {
   CHECK_NE(this->getStateDim(), 0)
       << "Measurement model has not been initialized.";
   return noise_mapping_;
+}
+
+double LinearMeasurementModel::getLikelihood(
+    const Eigen::VectorXd& state, const Eigen::VectorXd& measurement) const {
+  CHECK_EQ(this->getStateDim(), state.size());
+  CHECK_EQ(this->getMeasurementDim(), measurement.size());
+
+  // Solve M_k * w_k = y_k - H_k * x_k
+  Eigen::VectorXd w_k = noise_mapping_.colPivHouseholderQr().solve(
+      measurement - measurement_mapping_ * state);
+
+  return this->getNoise()->evaluatePdf(w_k);
+}
+
+Eigen::VectorXd LinearMeasurementModel::getLikelihoodVectorized(
+    const Eigen::MatrixXd& sampled_state,
+    const Eigen::VectorXd& measurement) const {
+  CHECK_EQ(this->getStateDim(), sampled_state.rows());
+  CHECK_EQ(this->getMeasurementDim(), measurement.size());
+
+  Eigen::MatrixXd expected_measurements = -measurement_mapping_ * sampled_state;
+
+  Eigen::MatrixXd sampled_w_k = noise_mapping_.colPivHouseholderQr().solve(
+      expected_measurements.colwise() + measurement);
+
+  return this->getNoise()->evaluatePdfVectorized(sampled_w_k);
 }
 
 }  // namespace refill
