@@ -3,9 +3,7 @@
 
 #include <glog/logging.h>
 
-#include <utility>
 #include <random>
-#include <vector>
 
 namespace refill {
 
