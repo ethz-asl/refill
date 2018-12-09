@@ -9,7 +9,7 @@
 
 namespace refill {
 
-struct SamplingFunctorBase {
+class SamplingFunctorBase {
  public:
   virtual ~SamplingFunctorBase() = default;
 
@@ -18,7 +18,7 @@ struct SamplingFunctorBase {
   }
 };
 
-struct ImportanceSamplingFunctor : public SamplingFunctorBase {
+class ImportanceSamplingFunctor : public SamplingFunctorBase {
  public:
   virtual ~ImportanceSamplingFunctor() = default;
 
@@ -42,7 +42,7 @@ struct ImportanceSamplingFunctor : public SamplingFunctorBase {
     // Create new vector of resampled particles
     Eigen::MatrixXd particles_copy(*particles);
     for (int i = 0; i < n_particles; ++i) {
-      double particle_random_num = uniform_dist(rng);
+      double particle_random_num = uniform_dist(rng_);
 
       for (int j = 0; j < n_particles; ++j) {
         if (particle_random_num < cum_sum[j]) {
@@ -56,14 +56,14 @@ struct ImportanceSamplingFunctor : public SamplingFunctorBase {
   }
 
   /** @brief Random number generator used for random sampling. */
-  std::mt19937 rng;
+  std::mt19937 rng_;
 };
 
-struct ThresholdedImportanceSamplingFunctor : public SamplingFunctorBase {
+class ThresholdedImportanceSamplingFunctor : public SamplingFunctorBase {
  public:
   explicit ThresholdedImportanceSamplingFunctor(
       double effective_particle_number)
-      : effective_particle_num(effective_particle_number) {
+      : effective_particle_num_(effective_particle_number) {
   }
 
   virtual void operator()(Eigen::MatrixXd* particles,
@@ -75,13 +75,13 @@ struct ThresholdedImportanceSamplingFunctor : public SamplingFunctorBase {
 
     // Only resample if the effective number of particles is lower
     // than the threshold
-    if (N_eff < effective_particle_num) {
-      sampling_object(particles, weights);
+    if (N_eff < effective_particle_num_) {
+      sampling_object_(particles, weights);
     }
   }
 
-  ImportanceSamplingFunctor sampling_object;
-  double effective_particle_num;
+  ImportanceSamplingFunctor sampling_object_;
+  double effective_particle_num_;
 };
 
 }  // namespace refill
