@@ -115,6 +115,18 @@ Eigen::VectorXd LinearMeasurementModel::observe(
          noise_mapping_ * noise;
 }
 
+Eigen::VectorXd LinearMeasurementModel::measure(
+    const Eigen::VectorXd& measurement) const {
+  Eigen::MatrixXd measurement_mapping_inv =
+      this->getMeasurementMapping()
+          .block(0, 0, this->getMeasurementDim(), this->getMeasurementDim())
+          .inverse();
+  Eigen::VectorXd state(this->getStateDim());
+  state << measurement_mapping_inv * measurement,
+      Eigen::VectorXd::Zero(this->getStateDim() - this->getMeasurementDim());
+  return state;
+}
+
 /**
  * Since this is only a linear model, it only returns @f$ H_k @f$.
  *

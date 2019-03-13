@@ -59,6 +59,9 @@ class LinearMeasurementModel : public LinearizedMeasurementModel,
   Eigen::VectorXd observe(const Eigen::VectorXd& state,
                           const Eigen::VectorXd& noise) const override;
 
+  /** @brief Use the measurement model to predict state based on measurement. */
+  Eigen::VectorXd measure(const Eigen::VectorXd& measurement) const override;
+
   /** @brief Function to get @f$ H_k @f$, which is the measurement model
    *         Jacobian w.r.t. the system state. */
   Eigen::MatrixXd getMeasurementJacobian(const Eigen::VectorXd& state) const;
