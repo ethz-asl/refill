@@ -53,6 +53,8 @@ class LinearizedSystemModel : public SystemModelBase {
   virtual Eigen::MatrixXd getNoiseJacobian(
       const Eigen::VectorXd& state, const Eigen::VectorXd& input) const;
 
+  virtual void setDeltaT(const double dt) {};
+
  protected:
   /** @brief Default constructor should not be used. */
   LinearizedSystemModel() = delete;
