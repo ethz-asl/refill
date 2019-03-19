@@ -86,10 +86,7 @@ class UnscentedKalmanFilter : public FilterBase {
   GaussianDistribution state_;
   std::unique_ptr<LinearizedSystemModel> system_model_;
   std::unique_ptr<LinearizedMeasurementModel> measurement_model_;
-
-  Eigen::MatrixXd Sx_pred_;
-  std::vector<double> S_weights_;
-
+  
   const double alpha_;
 };
 

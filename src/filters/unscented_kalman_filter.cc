@@ -103,8 +103,6 @@ void UnscentedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   }
   x_pred_cov += system_model.getNoise()->cov();
 
-  Sx_pred_ = Sx_pred;
-  S_weights_ = S_weights;
   // Update state and state cov with prediction
   state_.setDistributionParameters(x_pred_mean, x_pred_cov);
 }
@@ -136,29 +134,34 @@ void UnscentedKalmanFilter::update(
   CHECK_EQ(measurement_model.getMeasurementDim(), measurement.size());
   CHECK_EQ(measurement_model.getStateDim(), state_.mean().size());
 
+  // Generate sigma points by sampling state around mean
+  Eigen::MatrixXd Sx_pred;
+  std::vector<double> S_weights;
+  generateSigmaPoints(alpha_, state_, &Sx_pred, S_weights);
+
   // Transform sigma points to measurement space
-  Eigen::MatrixXd Sy_pred(measurement.size(), Sx_pred_.cols());
-  for (int i = 0; i < Sx_pred_.cols(); i++) {
+  Eigen::MatrixXd Sy_pred(measurement.size(), Sx_pred.cols());
+  for (int i = 0; i < Sx_pred.cols(); i++) {
     Sy_pred.col(i) = measurement_model.observe(
-        Sx_pred_.col(i), measurement_model.getNoise()->mean());
+        Sx_pred.col(i), measurement_model.getNoise()->mean());
   }
 
   // Calc weighted mean to get measurement prediction
   Eigen::VectorXd y_pred_mean = Eigen::VectorXd::Zero(measurement.size());
   for (int i = 0; i < Sy_pred.cols(); i++) {
-    y_pred_mean += S_weights_[i] * Sy_pred.col(i);
+    y_pred_mean += S_weights[i] * Sy_pred.col(i);
   }
 
   // Update measurement covariance
   Eigen::MatrixXd y_pred_cov =
       Eigen::MatrixXd::Zero(Sy_pred.rows(), y_pred_mean.size());
   Eigen::MatrixXd xy_pred_cov =
-      Eigen::MatrixXd::Zero(Sx_pred_.rows(), y_pred_mean.size());
+      Eigen::MatrixXd::Zero(Sx_pred.rows(), y_pred_mean.size());
   for (int i = 0; i < Sy_pred.cols(); i++) {
-    Eigen::VectorXd dx_i = Sx_pred_.col(i) - state_.mean();
+    Eigen::VectorXd dx_i = Sx_pred.col(i) - state_.mean();
     Eigen::VectorXd dy_i = Sy_pred.col(i) - y_pred_mean;
-    y_pred_cov += S_weights_[i] * dy_i * dy_i.transpose();
-    xy_pred_cov += S_weights_[i] * dx_i * dy_i.transpose();
+    y_pred_cov += S_weights[i] * dy_i * dy_i.transpose();
+    xy_pred_cov += S_weights[i] * dx_i * dy_i.transpose();
   }
   y_pred_cov += measurement_model.getNoise()->cov();
 
