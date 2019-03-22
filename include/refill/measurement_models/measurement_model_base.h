@@ -1,8 +1,8 @@
 #ifndef REFILL_MEASUREMENT_MODELS_MEASUREMENT_MODEL_BASE_H_
 #define REFILL_MEASUREMENT_MODELS_MEASUREMENT_MODEL_BASE_H_
 
-#include <Eigen/Dense>
 #include <glog/logging.h>
+#include <Eigen/Dense>
 
 #include <cstdlib>
 #include <memory>
@@ -49,12 +49,19 @@ class MeasurementModelBase {
   /** @brief Returns the measurement models noise. */
   DistributionInterface* getNoise() const;
 
+  virtual Eigen::MatrixXd getMeasurementJacobian(
+      const Eigen::VectorXd& state) const {
+    return Eigen::Matrix3d::Zero();
+  }
+  virtual Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state) const {
+    return Eigen::Matrix3d::Zero();
+  }
+
  protected:
   /** @brief Default constructor should not be used. */
   MeasurementModelBase() = delete;
   /** @brief Constructor for the measurement model base class. */
-  MeasurementModelBase(const size_t& state_dim,
-                       const size_t& measurement_dim,
+  MeasurementModelBase(const size_t& state_dim, const size_t& measurement_dim,
                        const DistributionInterface& measurement_noise);
 
   /** @brief Function to set the measurement model base parameters. */

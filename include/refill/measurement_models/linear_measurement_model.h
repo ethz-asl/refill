@@ -27,7 +27,7 @@ namespace refill {
  * a simple kalman filter.
  */
 class LinearMeasurementModel : public LinearizedMeasurementModel,
-    public Likelihood {
+                               public Likelihood {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -64,10 +64,11 @@ class LinearMeasurementModel : public LinearizedMeasurementModel,
 
   /** @brief Function to get @f$ H_k @f$, which is the measurement model
    *         Jacobian w.r.t. the system state. */
-  Eigen::MatrixXd getMeasurementJacobian(const Eigen::VectorXd& state) const;
+  Eigen::MatrixXd getMeasurementJacobian(
+      const Eigen::VectorXd& state) const override;
   /** @brief Function to get @f$ M_k @f$, which is the measurement model
    *         Jacobian w.r.t. the measurement noise. */
-  Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state) const;
+  Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state) const override;
 
   /** @brief Function to get the current measurement mapping. */
   Eigen::MatrixXd getMeasurementMapping() const;

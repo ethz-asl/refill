@@ -1,28 +1,30 @@
 #include "refill/filters/unscented_kalman_filter.h"
+#include <iostream>
 
 namespace refill {
 
 UnscentedKalmanFilter::UnscentedKalmanFilter(const double alpha)
     : alpha_(alpha),
       state_(GaussianDistribution()),
-      system_model_(nullptr),
-      measurement_model_(nullptr) {}
+      FilterBase(nullptr, nullptr) {}
 
 UnscentedKalmanFilter::UnscentedKalmanFilter(
     const double alpha, const GaussianDistribution& initial_state)
+    : alpha_(alpha), state_(initial_state), FilterBase(nullptr, nullptr) {}
+
+UnscentedKalmanFilter::UnscentedKalmanFilter(
+    const double alpha, std::unique_ptr<SystemModelBase> system_model)
     : alpha_(alpha),
-      state_(initial_state),
-      system_model_(nullptr),
-      measurement_model_(nullptr) {}
+      state_(GaussianDistribution()),
+      FilterBase(std::move(system_model), nullptr) {}
 
 UnscentedKalmanFilter::UnscentedKalmanFilter(
     const double alpha, const GaussianDistribution& initial_state,
-    std::unique_ptr<LinearizedSystemModel> system_model,
-    std::unique_ptr<LinearizedMeasurementModel> measurement_model)
+    std::unique_ptr<SystemModelBase> system_model,
+    std::unique_ptr<MeasurementModelBase> measurement_model)
     : alpha_(alpha),
       state_(initial_state),
-      system_model_(std::move(system_model)),
-      measurement_model_(std::move(measurement_model)) {
+      FilterBase(std::move(system_model), std::move(measurement_model)) {
   const int kStateDimension = state_.mean().size();
 
   // The purpose of these checks is to verify that the dimensions of the models
@@ -31,50 +33,13 @@ UnscentedKalmanFilter::UnscentedKalmanFilter(
   CHECK_EQ(measurement_model_->getStateDim(), kStateDimension);
 }
 
-/** Checks whether the standard system model has been set. */
-void UnscentedKalmanFilter::predict() {
-  CHECK(this->system_model_) << "No default system model provided.";
-
-  const int kInputSize = this->system_model_->getInputDim();
-  this->predict(Eigen::VectorXd::Zero(kInputSize));
-}
-
-/**
- * Checks whether the standard system model has been set.
- *
- * Also checks that the input dimension match the system model input
- * dimension.
- *
- * @param input Input to the system.
- */
-void UnscentedKalmanFilter::predict(const Eigen::VectorXd& input) {
-  CHECK(this->system_model_) << "No default system model provided.";
-  this->predict(*(this->system_model_), input);
-}
-
-/**
- * Checks whether the system model state dimension matches the filter state
- * dimension.
- *
- * @param system_model The system model to use for the prediction.
- */
-void UnscentedKalmanFilter::predict(const LinearizedSystemModel& system_model) {
-  const int kInputSize = system_model.getInputDim();
-  this->predict(system_model, Eigen::VectorXd::Zero(kInputSize));
-}
-
-/**
- * Checks whether the system model state dimension matches the filter state
- * dimension, as well as whether the system model input dimension matches the
- * input dimension.
- *
- * @param system_model The system model to use for the prediction.
- * @param input The input to the system.
- */
-void UnscentedKalmanFilter::predict(const LinearizedSystemModel& system_model,
+void UnscentedKalmanFilter::predict(const double dt,
+                                    SystemModelBase& system_model,
                                     const Eigen::VectorXd& input) {
   CHECK_EQ(system_model.getStateDim(), state_.mean().size());
   CHECK_EQ(system_model.getInputDim(), input.size());
+
+  system_model.setDeltaT(dt);
 
   // Generate sigma points by sampling state around mean
   Eigen::MatrixXd Sx;
@@ -107,30 +72,9 @@ void UnscentedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   state_.setDistributionParameters(x_pred_mean, x_pred_cov);
 }
 
-/**
- * Checks that the standard measurement model has been set.
- *
- * Also checks that the measurement model dimension matches the measurement
- * dimension.
- *
- * @param measurement The measurement to update the filter with.
- */
-void UnscentedKalmanFilter::update(const Eigen::VectorXd& measurement) {
-  CHECK(this->measurement_model_) << "No default measurement model provided.";
-  this->update(*this->measurement_model_, measurement);
-}
-
-/**
- * Checks whether the measurement model dimension matches the measurement
- * dimension and whether the measurement model state dimension matches the
- * filter state dimension.
- *
- * @param measurement_model The measurement model to use for the update.
- * @param measurement The measurement to update the filter with.
- */
 void UnscentedKalmanFilter::update(
-    const LinearizedMeasurementModel& measurement_model,
-    const Eigen::VectorXd& measurement) {
+    const MeasurementModelBase& measurement_model,
+    const Eigen::VectorXd& measurement, double* likelihood) {
   CHECK_EQ(measurement_model.getMeasurementDim(), measurement.size());
   CHECK_EQ(measurement_model.getStateDim(), state_.mean().size());
 
@@ -179,11 +123,12 @@ void UnscentedKalmanFilter::update(
       state_.mean() + kalman_gain * innovation;
   const Eigen::MatrixXd updated_state_cov =
       state_.cov() - kalman_gain * y_pred_cov * kalman_gain.transpose();
-  state_.setDistributionParameters(updated_state_mean, updated_state_cov);
-}
 
-void UnscentedKalmanFilter::setState(const GaussianDistribution& state) {
-  state_ = state;
+  state_.setDistributionParameters(updated_state_mean, updated_state_cov);
+
+  refill::GaussianDistribution probabablity_density(
+      Eigen::VectorXd::Zero(measurement_model.getMeasurementDim()), y_pred_cov);
+  *likelihood = probabablity_density.evaluatePdf(innovation);
 }
 
 /**
@@ -219,4 +164,7 @@ void UnscentedKalmanFilter::generateSigmaPoints(
   }
 }
 
+void UnscentedKalmanFilter::setState(const GaussianDistribution& state) {
+  state_ = state;
+}
 }  // namespace refill

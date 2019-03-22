@@ -1,4 +1,5 @@
 #include "refill/filters/extended_kalman_filter.h"
+#include <iostream>
 
 namespace refill {
 
@@ -16,8 +17,19 @@ namespace refill {
  */
 ExtendedKalmanFilter::ExtendedKalmanFilter()
     : state_(GaussianDistribution()),
-      system_model_(nullptr),
-      measurement_model_(nullptr) {}
+      FilterBase(nullptr, nullptr) {}
+
+/**
+ * Use this constructor if you intend to use the filter with a default system
+ * model, by providing a measurement model at every prediction / update step.
+ * You do not know the inital state.
+ *
+ * @param system_model The standard system model
+ */
+ExtendedKalmanFilter::ExtendedKalmanFilter(
+    std::unique_ptr<LinearizedSystemModel> system_model)
+    : state_(GaussianDistribution()),
+      FilterBase(std::move(system_model), nullptr) {}
 
 /**
  * Use this constructor if you intend to use the filter, by providing a system
@@ -28,8 +40,7 @@ ExtendedKalmanFilter::ExtendedKalmanFilter()
 ExtendedKalmanFilter::ExtendedKalmanFilter(
     const GaussianDistribution& initial_state)
     : state_(initial_state),
-      system_model_(nullptr),
-      measurement_model_(nullptr) {}
+      FilterBase(nullptr, nullptr) {}
 
 /**
  * Use this constructor if you intend to use the filter, by using the standard
@@ -49,8 +60,7 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(
     std::unique_ptr<LinearizedSystemModel> system_model,
     std::unique_ptr<LinearizedMeasurementModel> measurement_model)
     : state_(initial_state),
-      system_model_(std::move(system_model)),
-      measurement_model_(std::move(measurement_model)) {
+      FilterBase(std::move(system_model), std::move(measurement_model)) {
   const int kStateDimension = state_.mean().size();
 
   // The purpose of these checks is to verify that the dimensions of the models
@@ -64,50 +74,22 @@ void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
   state_ = state;
 }
 
-/** Checks whether the standard system model has been set. */
-void ExtendedKalmanFilter::predict() {
-  CHECK(this->system_model_) << "No default system model provided.";
-
-  const int kInputSize = this->system_model_->getInputDim();
-  this->predict(Eigen::VectorXd::Zero(kInputSize));
-}
-
-/**
- * Checks whether the standard system model has been set.
- *
- * Also checks that the input dimension match the system model input
- * dimension.
- *
- * @param input Input to the system.
- */
-void ExtendedKalmanFilter::predict(const Eigen::VectorXd& input) {
-  CHECK(this->system_model_) << "No default system model provided.";
-  this->predict(*(this->system_model_), input);
-}
-
 /**
  * Checks whether the system model state dimension matches the filter state
- * dimension.
- *
- * @param system_model The system model to use for the prediction.
- */
-void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model) {
-  const int kInputSize = system_model.getInputDim();
-  this->predict(system_model, Eigen::VectorXd::Zero(kInputSize));
-}
-
-/**
- * Checks whether the system model state dimension matches the filter state
- * dimension, as well as whether the system model input dimension matches the
+ * dimension, as we
+ ll as whether the system model input dimension matches the
  * input dimension.
  *
  * @param system_model The system model to use for the prediction.
  * @param input The input to the system.
  */
-void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
+void ExtendedKalmanFilter::predict(const double dt,
+                                   SystemModelBase& system_model,
                                    const Eigen::VectorXd& input) {
   CHECK_EQ(system_model.getStateDim(), state_.mean().size());
   CHECK_EQ(system_model.getInputDim(), input.size());
+
+  system_model.setDeltaT(dt);
 
   const Eigen::MatrixXd system_jacobian =
       system_model.getStateJacobian(state_.mean(), input);
@@ -126,23 +108,11 @@ void ExtendedKalmanFilter::predict(const LinearizedSystemModel& system_model,
   // Use .selfadjointView<>() to guarantee symmetric matrix
   const Eigen::MatrixXd new_state_cov =
       (system_jacobian * state_.cov() * system_jacobian_transpose +
-      noise_jacobian * system_model.getNoise()->cov() *
-      noise_jacobian_transpose).selfadjointView<Eigen::Upper>();
+       noise_jacobian * system_model.getNoise()->cov() *
+           noise_jacobian_transpose)
+          .selfadjointView<Eigen::Upper>();
 
   state_.setDistributionParameters(new_state_mean, new_state_cov);
-}
-
-/**
- * Checks that the standard measurement model has been set.
- *
- * Also checks that the measurement model dimension matches the measurement
- * dimension.
- *
- * @param measurement The measurement to update the filter with.
- */
-void ExtendedKalmanFilter::update(const Eigen::VectorXd& measurement) {
-  CHECK(this->measurement_model_) << "No default measurement model provided.";
-  this->update(*this->measurement_model_, measurement);
 }
 
 /**
@@ -156,8 +126,8 @@ void ExtendedKalmanFilter::update(const Eigen::VectorXd& measurement) {
  * @param measurement The measurement to update the filter with.
  */
 void ExtendedKalmanFilter::update(
-    const LinearizedMeasurementModel& measurement_model,
-    const Eigen::VectorXd& measurement) {
+    const MeasurementModelBase& measurement_model,
+    const Eigen::VectorXd& measurement, double* likelihood) {
   CHECK_EQ(measurement_model.getMeasurementDim(), measurement.size());
   CHECK_EQ(measurement_model.getStateDim(), state_.mean().size());
 
@@ -173,12 +143,15 @@ void ExtendedKalmanFilter::update(
       measurement_jacobian.transpose();
   const Eigen::MatrixXd noise_jacobian_transpose = noise_jacobian.transpose();
 
-  const Eigen::MatrixXd measurement_noise_cov = noise_jacobian
-      * measurement_model.getNoise()->cov() * noise_jacobian_transpose;
+  const Eigen::MatrixXd measurement_noise_cov =
+      noise_jacobian * measurement_model.getNoise()->cov() *
+      noise_jacobian_transpose;
 
-  const Eigen::VectorXd innovation = measurement
-      - measurement_model.observe(state_.mean(),
-                                  measurement_model.getNoise()->mean());
+  const Eigen::VectorXd innovation =
+      measurement -
+      measurement_model.observe(state_.mean(),
+                                measurement_model.getNoise()->mean());
+
   const Eigen::MatrixXd residual_cov =
       measurement_jacobian * state_.cov() * measurement_jacobian_transpose +
       measurement_noise_cov;
@@ -189,9 +162,8 @@ void ExtendedKalmanFilter::update(
   Eigen::FullPivLU<Eigen::MatrixXd> residual_cov_lu(residual_cov);
   CHECK(residual_cov_lu.isInvertible())
       << "Residual covariance is not invertible.";
-  const Eigen::MatrixXd kalman_gain = state_.cov() *
-                                      measurement_jacobian_transpose *
-                                      residual_cov.inverse();
+  const Eigen::MatrixXd kalman_gain =
+      state_.cov() * measurement_jacobian_transpose * residual_cov.inverse();
 
   // Defining temporary matrix for transpose, since Eigen v3.2.10 exhibits a
   // bug where matrix multiplications with a transpose halts the program
@@ -201,18 +173,23 @@ void ExtendedKalmanFilter::update(
   const Eigen::VectorXd new_state_mean =
       state_.mean() + kalman_gain * innovation;
 
-  const Eigen::MatrixXd cov_scaling = Eigen::MatrixXd::Identity(
-      state_.mean().rows(), state_.mean().rows())
-      - kalman_gain * measurement_jacobian;
+  const Eigen::MatrixXd cov_scaling =
+      Eigen::MatrixXd::Identity(state_.mean().rows(), state_.mean().rows()) -
+      kalman_gain * measurement_jacobian;
 
   // Use .selfadjointView<>() to guarantee symmetric matrix
   // Use Joseph form for better numerical stability
   const Eigen::MatrixXd new_state_cov =
-      (cov_scaling * state_.cov() * cov_scaling.transpose()
-      + kalman_gain * measurement_noise_cov * kalman_gain.transpose())
-      .selfadjointView<Eigen::Upper>();
+      (cov_scaling * state_.cov() * cov_scaling.transpose() +
+       kalman_gain * measurement_noise_cov * kalman_gain.transpose())
+          .selfadjointView<Eigen::Upper>();
 
   state_.setDistributionParameters(new_state_mean, new_state_cov);
+
+  refill::GaussianDistribution probabablity_density(
+      Eigen::VectorXd::Zero(measurement_model.getMeasurementDim()),
+      residual_cov);
+  *likelihood = probabablity_density.evaluatePdf(innovation);
 }
 
 }  // namespace refill

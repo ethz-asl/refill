@@ -4,6 +4,7 @@
 
 #include "refill/distributions/gaussian_distribution.h"
 #include "refill/filters/extended_kalman_filter.h"
+#include "refill/filters/filter_base.h"
 #include "refill/measurement_models/linear_measurement_model.h"
 #include "refill/system_models/linear_system_model.h"
 
@@ -48,8 +49,8 @@ int main(int argc, char **argv) {
   refill::GaussianDistribution system_noise(Eigen::Vector3d::Zero(),
                                             system_noise_cov);
   /* initialize w(k) */
-  refill::GaussianDistribution measurement_noise(
-      Eigen::Vector3d::Zero(), measurement_noise_cov);
+  refill::GaussianDistribution measurement_noise(Eigen::Vector3d::Zero(),
+                                                 measurement_noise_cov);
 
   /* initialize the system model */
   refill::LinearSystemModel system_model(Eigen::Matrix3d::Identity(),
@@ -71,13 +72,8 @@ int main(int argc, char **argv) {
   double dt = 1.0;
   Eigen::Vector3d measurement = Eigen::Vector3d::Constant(1.5);
 
-  /* adapt the system model noise according to the time step */
-  system_noise.setCov(system_noise_cov * dt);
-  /* adapt the system model */
-  system_model.setModelParameters(Eigen::Matrix3d::Identity(), system_noise);
-
   /* predict the kf to the current time */
-  ekf.predict(system_model);
+  ekf.predict(dt, system_model);
   /* update the kf with the measurement and the measurement model */
   ekf.update(measurement_model, measurement);
 
@@ -92,13 +88,8 @@ int main(int argc, char **argv) {
   dt = 0.5;
   measurement = Eigen::Vector3d::Constant(1.5);
 
-  // adapt the system noise according to the time step
-  system_noise.setCov(system_noise_cov * dt);
-  // adapt the system model
-  system_model.setModelParameters(Eigen::Matrix3d::Identity(), system_noise);
-
   /* predict the kf to the current time */
-  ekf.predict(system_model);
+  ekf.predict(dt, system_model);
   /* update the kf with the measurement and the measurement model */
   ekf.update(measurement_model, measurement);
 

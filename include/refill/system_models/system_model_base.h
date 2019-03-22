@@ -22,6 +22,8 @@ class SystemModelBase {
  public:
   virtual ~SystemModelBase() = default;
 
+  virtual void setDeltaT(const double dt) = 0;
+
   /**
    * @brief Propagates a state and input vector through the system model.
    *
@@ -47,6 +49,15 @@ class SystemModelBase {
   size_t getNoiseDim() const;
   /** @brief Returns a pointer to the system noise. */
   DistributionInterface* getNoise() const;
+
+  virtual Eigen::MatrixXd getStateJacobian(const Eigen::VectorXd& state,
+                                           const Eigen::VectorXd& input) const {
+    return Eigen::Matrix3d::Zero();
+  }
+  virtual Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
+                                           const Eigen::VectorXd& input) const {
+    return Eigen::Matrix3d::Zero();
+  }
 
  protected:
   /** Default constructor should not be used. */

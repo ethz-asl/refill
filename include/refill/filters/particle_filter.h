@@ -11,6 +11,7 @@
 #include "refill/distributions/likelihood.h"
 #include "refill/filters/filter_base.h"
 #include "refill/system_models/system_model_base.h"
+#include "refill/measurement_models/measurement_model_base.h"
 #include "refill/utility/resample_methods.h"
 
 namespace refill {
@@ -21,7 +22,7 @@ class ParticleFilter : public FilterBase {
   ParticleFilter();
   /**
    * @brief Constructs a new particle filter so that a system model is expected
-   *        to be given upon prediction / update and no resampling will be 
+   *        to be given upon prediction / update and no resampling will be
    *        performed. */
   ParticleFilter(const std::size_t& n_particles,
                  DistributionInterface* initial_state_dist);
@@ -69,15 +70,13 @@ class ParticleFilter : public FilterBase {
    *         and resets the weights to uniform. */
   void reinitializeParticles(DistributionInterface* initial_state);
 
-  void predict() override;
-  void predict(const Eigen::VectorXd& input);
-  void predict(const SystemModelBase& system_model);
-  void predict(const SystemModelBase& system_model,
-               const Eigen::VectorXd& input);
+  using FilterBase::predict;
+  void predict(const double dt, SystemModelBase& system_model,
+               const Eigen::VectorXd& input) override;
 
-  void update(const Eigen::VectorXd& measurement) override;
-  void update(const Likelihood& measurement_model,
-              const Eigen::VectorXd& measurement);
+  using FilterBase::update;
+  void update(const MeasurementModelBase& measurement_model,
+              const Eigen::VectorXd& measurement, double* likelihood) override;
 
   /** @brief Returns the expected value of the current particle distribution. */
   Eigen::VectorXd getExpectation();
@@ -96,8 +95,7 @@ class ParticleFilter : public FilterBase {
   std::size_t num_particles_;
   Eigen::MatrixXd particles_;
   Eigen::VectorXd weights_;
-  std::unique_ptr<SystemModelBase> system_model_;
-  std::unique_ptr<Likelihood> measurement_model_;
+  std::unique_ptr<Likelihood> likelihood_;
   std::function<void(Eigen::MatrixXd*, Eigen::VectorXd*)> resample_method_;
 };
 
