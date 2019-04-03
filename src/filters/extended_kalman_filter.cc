@@ -16,8 +16,7 @@ namespace refill {
  * provided for the prediction / update step.
  */
 ExtendedKalmanFilter::ExtendedKalmanFilter()
-    : state_(GaussianDistribution()),
-      FilterBase(nullptr, nullptr) {}
+    : state_(GaussianDistribution()), FilterBase(nullptr, nullptr) {}
 
 /**
  * Use this constructor if you intend to use the filter with a default system
@@ -39,8 +38,7 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(
  */
 ExtendedKalmanFilter::ExtendedKalmanFilter(
     const GaussianDistribution& initial_state)
-    : state_(initial_state),
-      FilterBase(nullptr, nullptr) {}
+    : state_(initial_state), FilterBase(nullptr, nullptr) {}
 
 /**
  * Use this constructor if you intend to use the filter, by using the standard
@@ -186,6 +184,8 @@ void ExtendedKalmanFilter::update(
 
   state_.setDistributionParameters(new_state_mean, new_state_cov);
 
+  // Create normal distribution with resiual covariance and evaluate it for the
+  // residual (innovation) to get the model likelihood
   refill::GaussianDistribution probabablity_density(
       Eigen::VectorXd::Zero(measurement_model.getMeasurementDim()),
       residual_cov);

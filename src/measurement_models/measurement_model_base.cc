@@ -34,6 +34,10 @@ void MeasurementModelBase::setMeasurementModelBaseParameters(
   measurement_noise_.reset(measurement_noise.clone());
 }
 
+void MeasurementModelBase::setNoise(const DistributionInterface& measurement_noise) {
+  measurement_noise_.reset(measurement_noise.clone());
+}
+
 /** @return the state dimension. */
 size_t MeasurementModelBase::getStateDim() const {
   return state_dim_;

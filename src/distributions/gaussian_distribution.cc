@@ -7,8 +7,7 @@ namespace refill {
 /**
  * Creates a standard normal distribution.
  */
-GaussianDistribution::GaussianDistribution()
-    : GaussianDistribution(1) {}
+GaussianDistribution::GaussianDistribution() : GaussianDistribution(1) {}
 
 /** @param dimension Dimension of the constructed normal distribution. */
 GaussianDistribution::GaussianDistribution(const int& dimension)
@@ -70,30 +69,23 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
 }
 
 /** @return the dimension of the distribution. */
-size_t GaussianDistribution::dimension() const {
-  return mean_.rows();
-}
+size_t GaussianDistribution::dimension() const { return mean_.rows(); }
 
 /** @return the current distribution mean. */
-Eigen::VectorXd GaussianDistribution::mean() const {
-  return mean_;
-}
+Eigen::VectorXd GaussianDistribution::mean() const { return mean_; }
 
 /** @return the current distribution covariance. */
-Eigen::MatrixXd GaussianDistribution::cov() const {
-  return covariance_;
-}
+Eigen::MatrixXd GaussianDistribution::cov() const { return covariance_; }
 
 /** @return a random vector drawn from the distribution. */
 Eigen::VectorXd GaussianDistribution::drawSample() {
-  CHECK_NE(mean_.rows(), 0)
-      << "Distribution parameters have not been set.";
+  CHECK_NE(mean_.rows(), 0) << "Distribution parameters have not been set.";
 
   // Generate normal distributed random vector
   std::normal_distribution<double> normal_dist(0.0, 1.0);
 
   Eigen::VectorXd uniform_random_vector(mean_.rows());
-  for (int i=0; i < mean_.rows(); ++i) {
+  for (int i = 0; i < mean_.rows(); ++i) {
     uniform_random_vector[i] = normal_dist(rng_);
   }
 
@@ -106,17 +98,18 @@ Eigen::VectorXd GaussianDistribution::drawSample() {
 
 /**
  * Checks for compatible size of x.
- * 
+ *
  * @param x Sample at which the pdf should be evaluated.
  * @return the relative likelihood of the sample.
  */
 double GaussianDistribution::evaluatePdf(const Eigen::VectorXd& x) const {
   CHECK_EQ(this->dimension(), x.size());
 
-  double denominator = std::sqrt((2 * M_PI * covariance_).determinant());
+  double denominator = std::sqrt(
+      (std::pow(2 * M_PI, this->dimension()) * covariance_).determinant());
   Eigen::VectorXd deviation = x - mean_;
-  double squared_mahalanobis_distance = deviation.transpose()
-      * covariance_.inverse() * deviation;
+  double squared_mahalanobis_distance =
+      deviation.transpose() * covariance_.inverse() * deviation;
 
   return std::exp(-squared_mahalanobis_distance / 2) / denominator;
 }
@@ -125,11 +118,12 @@ Eigen::VectorXd GaussianDistribution::evaluatePdfVectorized(
     const Eigen::MatrixXd& x) const {
   CHECK_EQ(this->dimension(), x.rows());
 
-  double denominator = std::sqrt((2 * M_PI * covariance_).determinant());
+  double denominator = std::sqrt(
+      (std::pow(2 * M_PI, this->dimension()) * covariance_).determinant());
 
   Eigen::MatrixXd deviations = x.colwise() - mean_;
-  Eigen::VectorXd squared_mahalanobis_distances = (deviations.transpose()
-      * covariance_.inverse() * deviations).diagonal();
+  Eigen::VectorXd squared_mahalanobis_distances =
+      (deviations.transpose() * covariance_.inverse() * deviations).diagonal();
 
   return (-squared_mahalanobis_distances / 2).array().exp() / denominator;
 }

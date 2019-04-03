@@ -49,6 +49,8 @@ class MeasurementModelBase {
   /** @brief Returns the measurement models noise. */
   DistributionInterface* getNoise() const;
 
+  void setNoise(const DistributionInterface& noise);
+
   virtual Eigen::MatrixXd getMeasurementJacobian(
       const Eigen::VectorXd& state) const {
     return Eigen::Matrix3d::Zero();
