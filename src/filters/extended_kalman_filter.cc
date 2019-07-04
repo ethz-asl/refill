@@ -86,7 +86,9 @@ void ExtendedKalmanFilter::predict(const double dt,
                                    const Eigen::VectorXd& input) {
   CHECK_EQ(system_model.getStateDim(), state_.mean().size());
   CHECK_EQ(system_model.getInputDim(), input.size());
+  CHECK(dt >= 0) << "Negative dt: Cannot perform prediction!";
 
+  std::cout << "dt" << dt << std::endl;
   system_model.setDeltaT(dt);
 
   const Eigen::MatrixXd system_jacobian =
@@ -169,10 +171,10 @@ void ExtendedKalmanFilter::update(
 
   // Create normal distribution with resiual covariance and evaluate it for the
   // residual (innovation) to get the model likelihood
-  refill::GaussianDistribution probabablity_density(
+  refill::GaussianDistribution residual_pdf(
       Eigen::VectorXd::Zero(measurement_model.getMeasurementDim()),
       residual_cov);
-  *likelihood = probabablity_density.evaluatePdf(innovation);
+  *likelihood = residual_pdf.evaluatePdf(innovation);
 }
 
 }  // namespace refill

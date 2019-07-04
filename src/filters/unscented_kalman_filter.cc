@@ -38,7 +38,7 @@ void UnscentedKalmanFilter::predict(const double dt,
                                     const Eigen::VectorXd& input) {
   CHECK_EQ(system_model.getStateDim(), state_.mean().size());
   CHECK_EQ(system_model.getInputDim(), input.size());
-
+  CHECK(dt >= 0) << "Negative dt: Cannot perform prediction!";
   system_model.setDeltaT(dt);
 
   // Generate sigma points by sampling state around mean
@@ -82,7 +82,6 @@ void UnscentedKalmanFilter::update(
   Eigen::MatrixXd Sx_pred;
   std::vector<double> S_weights;
   generateSigmaPoints(alpha_, state_, &Sx_pred, S_weights);
-
   // Transform sigma points to measurement space
   Eigen::MatrixXd Sy_pred(measurement.size(), Sx_pred.cols());
   for (int i = 0; i < Sx_pred.cols(); i++) {
@@ -126,9 +125,9 @@ void UnscentedKalmanFilter::update(
 
   state_.setDistributionParameters(updated_state_mean, updated_state_cov);
 
-  refill::GaussianDistribution probabablity_density(
+  refill::GaussianDistribution residual_pdf(
       Eigen::VectorXd::Zero(measurement_model.getMeasurementDim()), y_pred_cov);
-  *likelihood = probabablity_density.evaluatePdf(innovation);
+  *likelihood = residual_pdf.evaluatePdf(innovation);
 }
 
 /**

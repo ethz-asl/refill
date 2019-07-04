@@ -107,6 +107,7 @@ void ParticleFilter::predict(const double dt, SystemModelBase& system_model,
   CHECK_EQ(system_model.getInputDim(), input.rows());
   CHECK_EQ(system_model.getStateDim(), particles_.rows());
   CHECK_NE(particles_.cols(), 0) << "Particle vector is empty.";
+  CHECK(dt >= 0) << "Negative dt: Cannot perform prediction!";
 
   for (int i = 0; i < num_particles_; ++i) {
     Eigen::VectorXd noise_sample = system_model.getNoise()->drawSample();
