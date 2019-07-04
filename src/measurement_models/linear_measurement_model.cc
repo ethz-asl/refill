@@ -111,20 +111,7 @@ Eigen::VectorXd LinearMeasurementModel::observe(
   CHECK_EQ(state.size(), this->getStateDim());
   CHECK_EQ(noise.size(), this->getNoiseDim());
 
-  return measurement_mapping_ * state +
-         noise_mapping_ * noise;
-}
-
-Eigen::VectorXd LinearMeasurementModel::measure(
-    const Eigen::VectorXd& measurement) const {
-  Eigen::MatrixXd measurement_mapping_inv =
-      this->getMeasurementMapping()
-          .block(0, 0, this->getMeasurementDim(), this->getMeasurementDim())
-          .inverse();
-  Eigen::VectorXd state(this->getStateDim());
-  state << measurement_mapping_inv * measurement,
-      Eigen::VectorXd::Zero(this->getStateDim() - this->getMeasurementDim());
-  return state;
+  return measurement_mapping_ * state + noise_mapping_ * noise;
 }
 
 /**

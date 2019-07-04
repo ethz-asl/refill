@@ -32,14 +32,6 @@ class MeasurementModelBase {
   virtual Eigen::VectorXd observe(const Eigen::VectorXd& state,
                                   const Eigen::VectorXd& noise) const = 0;
 
-  /**
-   * @brief Use the measurement model to predict state based on measurement.
-   *
-   * @param measurement vector
-   * @return the expected state
-   */
-  virtual Eigen::VectorXd measure(const Eigen::VectorXd& measurement) const = 0;
-
   /** @brief Returns the measurement models state dimension. */
   size_t getStateDim() const;
   /** @brief Returns the measurement models measurement dimension. */
