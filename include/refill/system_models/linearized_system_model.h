@@ -30,30 +30,32 @@ namespace refill {
  * @f$ L_k = \frac{\partial f}{\partial v}(x_{k-1}, u_k, \mu_k) @f$
  *
  * Where @f$ x_k @f$ denotes the system state, @f$ u_k @f$ the system input,
- * @f$ v_k @f$ the system noise and @f$ \mu_k @f$ the noise mean at timestep @f$ k @f$.
+ * @f$ v_k @f$ the system noise and @f$ \mu_k @f$ the noise mean at timestep @f$
+ * k @f$.
  *
  * To implement a system model that works with the ExtendedKalmanFilter,
  * inherit from this class and implement your own propagate() function.
  *
- * If the Jacobians can be computed analytically, it is recommended to do so and overload the
+ * If the Jacobians can be computed analytically, it is recommended to do so and
+ * overload the
  * getStateJacobian() and getNoiseJacobian() functions.
  */
 class LinearizedSystemModel : public SystemModelBase {
  public:
-    /**
-   * @brief Function to get @f$ A_k @f$, which is the system Jacobian w.r.t.
-   *        the system state.
-   */
-  virtual Eigen::MatrixXd getStateJacobian(
-      const Eigen::VectorXd& state, const Eigen::VectorXd& input) const;
+  /**
+ * @brief Function to get @f$ A_k @f$, which is the system Jacobian w.r.t.
+ *        the system state.
+ */
+  virtual Eigen::MatrixXd getStateJacobian(const Eigen::VectorXd& state,
+                                           const Eigen::VectorXd& input);
   /**
    * @brief Function to get @f$ L_k @f$, which is the system Jacobian w.r.t.
    *        the system noise.
    */
-  virtual Eigen::MatrixXd getNoiseJacobian(
-      const Eigen::VectorXd& state, const Eigen::VectorXd& input) const;
+  virtual Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
+                                           const Eigen::VectorXd& input);
 
-  virtual void setDeltaT(const double dt) {};
+  virtual void setDeltaT(const double dt) = 0;
 
  protected:
   /** @brief Default constructor should not be used. */

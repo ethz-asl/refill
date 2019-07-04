@@ -52,34 +52,36 @@ class LinearSystemModel : public LinearizedSystemModel {
   /** @brief Sets the system model parameters for a system without an input and
    *         a simple noise mapping. */
   void setModelParameters(const Eigen::MatrixXd& system_mapping,
-                           const DistributionInterface& system_noise);
+                          const DistributionInterface& system_noise);
   /** @brief Sets the system model parameters for a system with an input and
    *         a simple noise mapping. */
   void setModelParameters(const Eigen::MatrixXd& system_mapping,
-                           const DistributionInterface& system_noise,
-                           const Eigen::MatrixXd& input_mapping);
+                          const DistributionInterface& system_noise,
+                          const Eigen::MatrixXd& input_mapping);
   /** @brief Sets the system model parameters for a system with an input and
    *         a specific noise mapping. */
   void setModelParameters(const Eigen::MatrixXd& system_mapping,
-                           const DistributionInterface& system_noise,
-                           const Eigen::MatrixXd& input_mapping,
-                           const Eigen::MatrixXd& noise_mapping);
+                          const DistributionInterface& system_noise,
+                          const Eigen::MatrixXd& input_mapping,
+                          const Eigen::MatrixXd& noise_mapping);
 
   /** @brief Propagates the state vector through the system model. */
-  Eigen::VectorXd propagate(const Eigen::VectorXd& state) const;
+  Eigen::VectorXd propagate(const Eigen::VectorXd& state);
   /** @brief Propagates the state and input vector through the system model. */
   Eigen::VectorXd propagate(const Eigen::VectorXd& state,
                             const Eigen::VectorXd& input,
-                            const Eigen::VectorXd& noise) const;
+                            const Eigen::VectorXd& noise);
+
+  void setDeltaT(const double dt) {};
 
   /** @brief Function to get @f$ A_k @f$, which is the system Jacobian w.r.t.
    *         the system state. */
   Eigen::MatrixXd getStateJacobian(const Eigen::VectorXd& state,
-                                   const Eigen::VectorXd& input) const;
+                                   const Eigen::VectorXd& input);
   /** @brief Function to get @f$ L_k @f$, which is the system Jacobian w.r.t.
    *        the system noise. */
   Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
-                                   const Eigen::VectorXd& input) const;
+                                   const Eigen::VectorXd& input);
 
   /** @brief Function to get the current system mapping. */
   Eigen::MatrixXd getSystemMapping() const;

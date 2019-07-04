@@ -14,12 +14,12 @@ namespace refill {
  * @return the system model Jacobian w.r.t. the system state @f$x_k@f$.
  */
 Eigen::MatrixXd LinearizedSystemModel::getStateJacobian(
-    const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
+    const Eigen::VectorXd& state, const Eigen::VectorXd& input) {
   CHECK_EQ(state.rows(), this->getStateDim());
   CHECK_EQ(input.rows(), this->getInputDim());
 
   Eigen::MatrixXd jacobian(this->getStateDim(), this->getStateDim());
-  constexpr double eps = std::sqrt(std::numeric_limits<double>::epsilon());
+  const double eps = std::sqrt(std::numeric_limits<double>::epsilon());
 
   Eigen::VectorXd diff_coeff = state;
   Eigen::VectorXd evaluation_1(this->getStateDim());
@@ -50,12 +50,12 @@ Eigen::MatrixXd LinearizedSystemModel::getStateJacobian(
  * @return the system model Jacobian w.r.t. the system noise @f$v_k@f$.
  */
 Eigen::MatrixXd LinearizedSystemModel::getNoiseJacobian(
-    const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
+    const Eigen::VectorXd& state, const Eigen::VectorXd& input) {
   CHECK_EQ(state.rows(), this->getStateDim());
   CHECK_EQ(input.rows(), this->getInputDim());
 
   Eigen::MatrixXd jacobian(this->getStateDim(), this->getNoiseDim());
-  constexpr double eps = std::sqrt(std::numeric_limits<double>::epsilon());
+  const double eps = std::sqrt(std::numeric_limits<double>::epsilon());
 
   const Eigen::VectorXd noise_mean = this->getNoise()->mean();
   Eigen::VectorXd diff_coeff = noise_mean;

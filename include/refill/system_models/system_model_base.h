@@ -34,12 +34,12 @@ class SystemModelBase {
    */
   virtual Eigen::VectorXd propagate(const Eigen::VectorXd& state,
                                     const Eigen::VectorXd& input,
-                                    const Eigen::VectorXd& noise) const = 0;
+                                    const Eigen::VectorXd& noise) = 0;
 
   /** @brief A vectorized version of the propagation. */
   virtual Eigen::MatrixXd propagateVectorized(
       const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
-      const Eigen::MatrixXd& sampled_noise) const;
+      const Eigen::MatrixXd& sampled_noise);
 
   /** @brief Returns the systems state dimension. */
   size_t getStateDim() const;
@@ -51,11 +51,11 @@ class SystemModelBase {
   DistributionInterface* getNoise() const;
 
   virtual Eigen::MatrixXd getStateJacobian(const Eigen::VectorXd& state,
-                                           const Eigen::VectorXd& input) const {
+                                           const Eigen::VectorXd& input) {
     return Eigen::Matrix3d::Zero();
   }
   virtual Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
-                                           const Eigen::VectorXd& input) const {
+                                           const Eigen::VectorXd& input) {
     return Eigen::Matrix3d::Zero();
   }
 

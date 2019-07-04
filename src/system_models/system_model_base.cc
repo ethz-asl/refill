@@ -44,7 +44,7 @@ SystemModelBase::SystemModelBase(const size_t& state_dim,
  */
 Eigen::MatrixXd SystemModelBase::propagateVectorized(
     const Eigen::MatrixXd& sampled_state, const Eigen::VectorXd& input,
-    const Eigen::MatrixXd& sampled_noise) const {
+    const Eigen::MatrixXd& sampled_noise) {
   const size_t kStateDim = getStateDim();
   const size_t kInputDim = getInputDim();
   const size_t kNoiseDim = getNoiseDim();
