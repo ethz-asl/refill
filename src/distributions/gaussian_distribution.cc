@@ -35,7 +35,7 @@ void GaussianDistribution::setDistributionParameters(
   CHECK_EQ(dist_mean.size(), dist_cov.rows());
   CHECK_EQ(dist_cov.rows(), dist_cov.cols());
 
-  Eigen::LLT<Eigen::MatrixXd> chol_of_cov(dist_cov);
+  Eigen::LDLT<Eigen::MatrixXd> chol_of_cov(dist_cov);
   CHECK(chol_of_cov.info() != Eigen::NumericalIssue) << "Matrix not s.p.d.";
 
   mean_ = dist_mean;
@@ -62,7 +62,7 @@ void GaussianDistribution::setCov(const Eigen::MatrixXd& cov) {
   CHECK_EQ(this->dimension(), cov.rows());
   CHECK_EQ(cov.rows(), cov.cols());
 
-  Eigen::LLT<Eigen::MatrixXd> chol_of_cov(cov);
+  Eigen::LDLT<Eigen::MatrixXd> chol_of_cov(cov);
   CHECK_NE(chol_of_cov.info(), Eigen::NumericalIssue) << "Matrix not s.p.d.";
 
   covariance_ = cov;
@@ -90,7 +90,7 @@ Eigen::VectorXd GaussianDistribution::drawSample() {
   }
 
   // Calculate matrix L
-  Eigen::LLT<Eigen::MatrixXd> chol_of_cov(covariance_);
+  Eigen::LDLT<Eigen::MatrixXd> chol_of_cov(covariance_);
   Eigen::MatrixXd L = chol_of_cov.matrixL();
 
   return mean_ + L * uniform_random_vector;
