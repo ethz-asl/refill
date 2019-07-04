@@ -13,16 +13,14 @@ namespace refill {
 LinearSystemModel::LinearSystemModel()
     : LinearSystemModel(Eigen::MatrixXd::Identity(0, 0),
                         GaussianDistribution(0), Eigen::MatrixXd::Zero(0, 0),
-                        Eigen::MatrixXd::Identity(0, 0)) {
-}
+                        Eigen::MatrixXd::Identity(0, 0)) {}
 
 /**
  * @param system_model System model which will be copied.
  */
 LinearSystemModel::LinearSystemModel(const LinearSystemModel& system_model)
     : LinearSystemModel(system_model.system_mapping_,
-                        *(system_model.getNoise()),
-                        system_model.input_mapping_,
+                        *(system_model.getNoise()), system_model.input_mapping_,
                         system_model.noise_mapping_) {}
 
 /**
@@ -79,7 +77,7 @@ LinearSystemModel::LinearSystemModel(const Eigen::MatrixXd& system_mapping,
     : LinearizedSystemModel(system_mapping.rows(), system_noise,
                             input_mapping.cols()) {
   this->setModelParameters(system_mapping, system_noise, input_mapping,
-                            noise_mapping);
+                           noise_mapping);
 }
 
 /**

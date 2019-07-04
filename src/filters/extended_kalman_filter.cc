@@ -120,9 +120,9 @@ void ExtendedKalmanFilter::predict(const double dt,
  * @param measurement_model The measurement model to use for the update.
  * @param measurement The measurement to update the filter with.
  */
-void ExtendedKalmanFilter::update(
-    const MeasurementModelBase& measurement_model,
-    const Eigen::VectorXd& measurement, double* likelihood) {
+void ExtendedKalmanFilter::update(const MeasurementModelBase& measurement_model,
+                                  const Eigen::VectorXd& measurement,
+                                  double* likelihood) {
   CHECK_EQ(measurement_model.getMeasurementDim(), measurement.size());
   CHECK_EQ(measurement_model.getStateDim(), state_.mean().size());
 

@@ -55,7 +55,7 @@ LinearMeasurementModel::LinearMeasurementModel(
                                  measurement_mapping.rows(),
                                  measurement_noise) {
   this->setModelParameters(measurement_mapping, measurement_noise,
-                                 noise_mapping);
+                           noise_mapping);
 }
 
 /**
