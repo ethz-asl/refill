@@ -3,27 +3,23 @@
 
 namespace refill {
 
-UnscentedKalmanFilter::UnscentedKalmanFilter(const double alpha)
-    : alpha_(alpha),
-      state_(GaussianDistribution()),
-      FilterBase(nullptr, nullptr) {}
+UnscentedKalmanFilter::UnscentedKalmanFilter()
+    : state_(GaussianDistribution()), FilterBase(nullptr, nullptr) {}
 
 UnscentedKalmanFilter::UnscentedKalmanFilter(
-    const double alpha, const GaussianDistribution& initial_state)
-    : alpha_(alpha), state_(initial_state), FilterBase(nullptr, nullptr) {}
+    const GaussianDistribution& initial_state)
+    : state_(initial_state), FilterBase(nullptr, nullptr) {}
 
 UnscentedKalmanFilter::UnscentedKalmanFilter(
-    const double alpha, std::unique_ptr<SystemModelBase> system_model)
-    : alpha_(alpha),
-      state_(GaussianDistribution()),
+    std::unique_ptr<SystemModelBase> system_model)
+    : state_(GaussianDistribution()),
       FilterBase(std::move(system_model), nullptr) {}
 
 UnscentedKalmanFilter::UnscentedKalmanFilter(
-    const double alpha, const GaussianDistribution& initial_state,
+    const GaussianDistribution& initial_state,
     std::unique_ptr<SystemModelBase> system_model,
     std::unique_ptr<MeasurementModelBase> measurement_model)
-    : alpha_(alpha),
-      state_(initial_state),
+    : state_(initial_state),
       FilterBase(std::move(system_model), std::move(measurement_model)) {
   const int kStateDimension = state_.mean().size();
 
@@ -42,29 +38,29 @@ void UnscentedKalmanFilter::predict(const double dt,
   system_model.setDeltaT(dt);
 
   // Generate sigma points by sampling state around mean
-  Eigen::MatrixXd Sx;
-  std::vector<double> S_weights;
-  generateSigmaPoints(alpha_, state_, &Sx, S_weights);
+  Eigen::MatrixXd sigma_states;
+  std::vector<double> sigma_weights;
+  generateSigmaPoints(&sigma_states, &sigma_weights, kUkfAlpha, state_);
 
   // Propagate sigma points through potentially non-linear process model
-  Eigen::MatrixXd Sx_pred(Sx.rows(), Sx.cols());
-  for (int i = 0; i < Sx.cols(); i++) {
-    Sx_pred.col(i) = system_model.propagate(Sx.col(i), input,
-                                            system_model.getNoise()->mean());
+  Eigen::MatrixXd simga_points_pred(sigma_states.rows(), sigma_states.cols());
+  for (int i = 0; i < sigma_states.cols(); i++) {
+    simga_points_pred.col(i) = system_model.propagate(
+        sigma_states.col(i), input, system_model.getNoise()->mean());
   }
 
   // Calc weighted mean to obtain state prediction
   Eigen::VectorXd x_pred_mean = Eigen::VectorXd::Zero(state_.mean().size());
-  for (int i = 0; i < Sx_pred.cols(); i++) {
-    x_pred_mean += S_weights[i] * Sx_pred.col(i);
+  for (int i = 0; i < simga_points_pred.cols(); i++) {
+    x_pred_mean += sigma_weights[i] * simga_points_pred.col(i);
   }
 
   // Predict state covariance
   Eigen::MatrixXd x_pred_cov =
-      Eigen::MatrixXd::Zero(Sx_pred.rows(), x_pred_mean.size());
-  for (int i = 0; i < Sx_pred.cols(); i++) {
-    Eigen::VectorXd dx_i = Sx_pred.col(i) - x_pred_mean;
-    x_pred_cov += S_weights[i] * dx_i * dx_i.transpose();
+      Eigen::MatrixXd::Zero(simga_points_pred.rows(), x_pred_mean.size());
+  for (int i = 0; i < simga_points_pred.cols(); i++) {
+    Eigen::VectorXd dx_i = simga_points_pred.col(i) - x_pred_mean;
+    x_pred_cov += sigma_weights[i] * dx_i * dx_i.transpose();
   }
   x_pred_cov += system_model.getNoise()->cov();
 
@@ -79,32 +75,33 @@ void UnscentedKalmanFilter::update(
   CHECK_EQ(measurement_model.getStateDim(), state_.mean().size());
 
   // Generate sigma points by sampling state around mean
-  Eigen::MatrixXd Sx_pred;
-  std::vector<double> S_weights;
-  generateSigmaPoints(alpha_, state_, &Sx_pred, S_weights);
+  Eigen::MatrixXd sigma_states_pred;
+  std::vector<double> sigma_weights;
+  generateSigmaPoints(&sigma_states_pred, &sigma_weights, kUkfAlpha, state_);
   // Transform sigma points to measurement space
-  Eigen::MatrixXd Sy_pred(measurement.size(), Sx_pred.cols());
-  for (int i = 0; i < Sx_pred.cols(); i++) {
-    Sy_pred.col(i) = measurement_model.observe(
-        Sx_pred.col(i), measurement_model.getNoise()->mean());
+  Eigen::MatrixXd sigma_measurements_pred(measurement.size(),
+                                          sigma_states_pred.cols());
+  for (int i = 0; i < sigma_states_pred.cols(); i++) {
+    sigma_measurements_pred.col(i) = measurement_model.observe(
+        sigma_states_pred.col(i), measurement_model.getNoise()->mean());
   }
 
   // Calc weighted mean to get measurement prediction
   Eigen::VectorXd y_pred_mean = Eigen::VectorXd::Zero(measurement.size());
-  for (int i = 0; i < Sy_pred.cols(); i++) {
-    y_pred_mean += S_weights[i] * Sy_pred.col(i);
+  for (int i = 0; i < sigma_measurements_pred.cols(); i++) {
+    y_pred_mean += sigma_weights[i] * sigma_measurements_pred.col(i);
   }
 
   // Update measurement covariance
   Eigen::MatrixXd y_pred_cov =
-      Eigen::MatrixXd::Zero(Sy_pred.rows(), y_pred_mean.size());
+      Eigen::MatrixXd::Zero(sigma_measurements_pred.rows(), y_pred_mean.size());
   Eigen::MatrixXd xy_pred_cov =
-      Eigen::MatrixXd::Zero(Sx_pred.rows(), y_pred_mean.size());
-  for (int i = 0; i < Sy_pred.cols(); i++) {
-    Eigen::VectorXd dx_i = Sx_pred.col(i) - state_.mean();
-    Eigen::VectorXd dy_i = Sy_pred.col(i) - y_pred_mean;
-    y_pred_cov += S_weights[i] * dy_i * dy_i.transpose();
-    xy_pred_cov += S_weights[i] * dx_i * dy_i.transpose();
+      Eigen::MatrixXd::Zero(sigma_states_pred.rows(), y_pred_mean.size());
+  for (int i = 0; i < sigma_measurements_pred.cols(); i++) {
+    Eigen::VectorXd dx_i = sigma_states_pred.col(i) - state_.mean();
+    Eigen::VectorXd dy_i = sigma_measurements_pred.col(i) - y_pred_mean;
+    y_pred_cov += sigma_weights[i] * dy_i * dy_i.transpose();
+    xy_pred_cov += sigma_weights[i] * dx_i * dy_i.transpose();
   }
   y_pred_cov += measurement_model.getNoise()->cov();
 
@@ -131,7 +128,7 @@ void UnscentedKalmanFilter::update(
 }
 
 /**
- * Generates a set of sigmapoints by samppling state around mean
+ * Generates a set of sigmapoints by sampling state around mean
  *
  * @param alpha: The weight of the central point (original state mean).
  * @param Sx: Ouput matrix ptr that stores the generated sigma points
@@ -139,10 +136,10 @@ void UnscentedKalmanFilter::update(
  * points
  */
 void UnscentedKalmanFilter::generateSigmaPoints(
-    const double alpha, const GaussianDistribution& state, Eigen::MatrixXd* Sx,
-    std::vector<double>& S_weights) {
+    Eigen::MatrixXd* sigma_states, std::vector<double>* simga_weights,
+    const double alpha, const GaussianDistribution& state) {
   int dim = state.mean().size();
-  Sx->resize(dim, 2 * dim + 1);
+  sigma_states->resize(dim, 2 * dim + 1);
 
   // Calc matrix square root of state cov
   Eigen::MatrixXd P_sqr = state.cov().llt().matrixL();
@@ -150,16 +147,16 @@ void UnscentedKalmanFilter::generateSigmaPoints(
   double scale = sqrt(dim / (1 - alpha));
 
   // Set first sigma point to state mean
-  Sx->col(0) = state.mean();
+  sigma_states->col(0) = state.mean();
   // Generate two sigma points for each state dimension
   for (int i = 0; i < dim; i++) {
-    Sx->col(1 + i) = state.mean() + scale * P_sqr.col(i);
-    Sx->col(1 + i + dim) = state.mean() - scale * P_sqr.col(i);
+    sigma_states->col(1 + i) = state.mean() + scale * P_sqr.col(i);
+    sigma_states->col(1 + i + dim) = state.mean() - scale * P_sqr.col(i);
   }
 
-  S_weights.push_back(alpha);
-  for (int i = 1; i < Sx->cols(); i++) {
-    S_weights.push_back((1 - alpha) / (2 * dim));
+  simga_weights->push_back(alpha);
+  for (int i = 1; i < sigma_states->cols(); i++) {
+    simga_weights->push_back((1 - alpha) / (2 * dim));
   }
 }
 

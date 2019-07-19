@@ -88,7 +88,6 @@ void ExtendedKalmanFilter::predict(const double dt,
   CHECK_EQ(system_model.getInputDim(), input.size());
   CHECK(dt >= 0) << "Negative dt: Cannot perform prediction!";
 
-  std::cout << "dt" << dt << std::endl;
   system_model.setDeltaT(dt);
 
   const Eigen::MatrixXd system_jacobian =

@@ -27,24 +27,22 @@ namespace refill {
 class UnscentedKalmanFilter : public FilterBase {
  public:
   /** @brief Initializes the Unscented Kalman filter to no value. */
-  UnscentedKalmanFilter(double alpha);
+  UnscentedKalmanFilter();
 
   /**
    * @brief Initializes the Unscented Kalman filter in a way that expects
    *        system models to be given upon prediction / update. */
-  explicit UnscentedKalmanFilter(const double alpha,
-                                 const GaussianDistribution& initial_state);
+  explicit UnscentedKalmanFilter(const GaussianDistribution& initial_state);
 
   /** @brief Initialize the Unscented Kalman filter with a
   *          default system model */
-  explicit UnscentedKalmanFilter(
-      const double alpha, std::unique_ptr<SystemModelBase> system_model);
+  explicit UnscentedKalmanFilter(std::unique_ptr<SystemModelBase> system_model);
 
   /**
    * @brief Initialized the Unscented Kalman filter to use the standard models,
    *        if not stated otherwise. */
   explicit UnscentedKalmanFilter(
-      const double alpha, const GaussianDistribution& initial_state,
+      const GaussianDistribution& initial_state,
       std::unique_ptr<SystemModelBase> system_model,
       std::unique_ptr<MeasurementModelBase> measurement_model);
 
@@ -65,9 +63,10 @@ class UnscentedKalmanFilter : public FilterBase {
 
   /** @brief Generates a Matrix of sigma points that are sampled around the
    * state mean. */
-  void generateSigmaPoints(const double alpha,
-                           const GaussianDistribution& state,
-                           Eigen::MatrixXd* Sx, std::vector<double>& S_weights);
+  void generateSigmaPoints(Eigen::MatrixXd* sigma_points,
+                           std::vector<double>* simga_weights,
+                           const double alpha,
+                           const GaussianDistribution& state);
 
   /** @brief Function to get the current filter state. */
   GaussianDistribution state() const override { return state_; }
@@ -75,7 +74,7 @@ class UnscentedKalmanFilter : public FilterBase {
  private:
   GaussianDistribution state_;
 
-  const double alpha_;
+  const double kUkfAlpha = 0.01;
 };
 
 }  // namespace refill
