@@ -24,7 +24,7 @@ class FilterBase {
   FilterBase();
 
   FilterBase(std::unique_ptr<SystemModelBase> system_model,
-            std::unique_ptr<MeasurementModelBase> measurement_model);
+             std::unique_ptr<MeasurementModelBase> measurement_model);
 
   /** @brief Perform prediction step. Use default model, zero input and dt=0 */
   void predict();
@@ -55,9 +55,12 @@ class FilterBase {
   /** @brief return state mean. */
   virtual GaussianDistribution state() const = 0;
 
+  void setStateStamp(const double stamp) { state_stamp_ = stamp; }
+
  protected:
   std::unique_ptr<SystemModelBase> system_model_;
   std::unique_ptr<MeasurementModelBase> measurement_model_;
+  double state_stamp_;
 };
 
 }  // namespace refill

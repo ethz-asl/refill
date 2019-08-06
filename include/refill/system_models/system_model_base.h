@@ -22,7 +22,7 @@ class SystemModelBase {
  public:
   virtual ~SystemModelBase() = default;
 
-  virtual void setDeltaT(const double dt) = 0;
+  virtual void setTimeStamp(const double dt, const double stamp) = 0;
 
   /**
    * @brief Propagates a state and input vector through the system model.

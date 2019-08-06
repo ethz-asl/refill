@@ -71,7 +71,7 @@ class ParticleFilter : public FilterBase {
   void reinitializeParticles(DistributionInterface* initial_state);
 
   using FilterBase::predict;
-  void predict(const double dt, SystemModelBase& system_model,
+  void predict(const double stamp, SystemModelBase& system_model,
                const Eigen::VectorXd& input) override;
 
   using FilterBase::update;

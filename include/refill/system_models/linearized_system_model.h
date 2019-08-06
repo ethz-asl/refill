@@ -55,7 +55,7 @@ class LinearizedSystemModel : public SystemModelBase {
   virtual Eigen::MatrixXd getNoiseJacobian(const Eigen::VectorXd& state,
                                            const Eigen::VectorXd& input);
 
-  virtual void setDeltaT(const double dt) = 0;
+  virtual void setTimeStamp(const double dt, const double stamp) = 0;
 
  protected:
   /** @brief Default constructor should not be used. */

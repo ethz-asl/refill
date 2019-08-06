@@ -72,7 +72,7 @@ class LinearSystemModel : public LinearizedSystemModel {
                             const Eigen::VectorXd& input,
                             const Eigen::VectorXd& noise);
 
-  void setDeltaT(const double dt) {};
+  void setTimeStamp(const double dt, const double stamp) {};
 
   /** @brief Function to get @f$ A_k @f$, which is the system Jacobian w.r.t.
    *         the system state. */

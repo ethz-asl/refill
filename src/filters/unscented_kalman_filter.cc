@@ -29,13 +29,15 @@ UnscentedKalmanFilter::UnscentedKalmanFilter(
   CHECK_EQ(measurement_model_->getStateDim(), kStateDimension);
 }
 
-void UnscentedKalmanFilter::predict(const double dt,
+void UnscentedKalmanFilter::predict(const double stamp,
                                     SystemModelBase& system_model,
                                     const Eigen::VectorXd& input) {
   CHECK_EQ(system_model.getStateDim(), state_.mean().size());
   CHECK_EQ(system_model.getInputDim(), input.size());
+
+  double dt = stamp - state_stamp_;
   CHECK(dt >= 0) << "Negative dt: Cannot perform prediction!";
-  system_model.setDeltaT(dt);
+  system_model.setTimeStamp(dt, stamp);
 
   // Generate sigma points by sampling state around mean
   Eigen::MatrixXd sigma_states;
@@ -66,6 +68,7 @@ void UnscentedKalmanFilter::predict(const double dt,
 
   // Update state and state cov with prediction
   state_.setDistributionParameters(x_pred_mean, x_pred_cov);
+  state_stamp_ = stamp;
 }
 
 void UnscentedKalmanFilter::update(

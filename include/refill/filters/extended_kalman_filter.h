@@ -55,7 +55,7 @@ class ExtendedKalmanFilter : public FilterBase {
   /**
    * @brief Performs a prediction step using the provided system model and
    *        and input. */
-  void predict(const double dt, SystemModelBase& system_model,
+  void predict(const double stamp, SystemModelBase& system_model,
               const Eigen::VectorXd& input) override;
 
   using FilterBase::update;

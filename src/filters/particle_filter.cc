@@ -102,11 +102,13 @@ void ParticleFilter::reinitializeParticles(
   }
 }
 
-void ParticleFilter::predict(const double dt, SystemModelBase& system_model,
+void ParticleFilter::predict(const double stamp, SystemModelBase& system_model,
                              const Eigen::VectorXd& input) {
   CHECK_EQ(system_model.getInputDim(), input.rows());
   CHECK_EQ(system_model.getStateDim(), particles_.rows());
   CHECK_NE(particles_.cols(), 0) << "Particle vector is empty.";
+
+  double dt = stamp - state_stamp_;
   CHECK(dt >= 0) << "Negative dt: Cannot perform prediction!";
 
   for (int i = 0; i < num_particles_; ++i) {
@@ -114,6 +116,7 @@ void ParticleFilter::predict(const double dt, SystemModelBase& system_model,
     particles_.col(i) =
         system_model.propagate(particles_.col(i), input, noise_sample);
   }
+  state_stamp_ = stamp;
 }
 
 void ParticleFilter::update(const MeasurementModelBase& measurement_model,

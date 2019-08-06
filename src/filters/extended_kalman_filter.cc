@@ -81,14 +81,16 @@ void ExtendedKalmanFilter::setState(const GaussianDistribution& state) {
  * @param system_model The system model to use for the prediction.
  * @param input The input to the system.
  */
-void ExtendedKalmanFilter::predict(const double dt,
+void ExtendedKalmanFilter::predict(const double stamp,
                                    SystemModelBase& system_model,
                                    const Eigen::VectorXd& input) {
   CHECK_EQ(system_model.getStateDim(), state_.mean().size());
   CHECK_EQ(system_model.getInputDim(), input.size());
+
+  double dt = stamp - state_stamp_;
   CHECK(dt >= 0) << "Negative dt: Cannot perform prediction!";
 
-  system_model.setDeltaT(dt);
+  system_model.setTimeStamp(dt, stamp);
 
   const Eigen::MatrixXd system_jacobian =
       system_model.getStateJacobian(state_.mean(), input);
@@ -107,6 +109,7 @@ void ExtendedKalmanFilter::predict(const double dt,
           .selfadjointView<Eigen::Upper>();
 
   state_.setDistributionParameters(new_state_mean, new_state_cov);
+  state_stamp_ = stamp;
 }
 
 /**
