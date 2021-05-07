@@ -6,8 +6,6 @@
 
 #include <functional>
 #include <memory>
-#include <utility>
-#include <vector>
 
 #include "refill/distributions/distribution_base.h"
 #include "refill/distributions/likelihood.h"

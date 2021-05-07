@@ -6,12 +6,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 # Use C++14
 set(CMAKE_CXX_STANDARD 14)
 
-# SETUP EIGEN
-# Change module path in order to resolve:
+# SETUP EIGEN Change module path in order to resolve:
 # https://github.com/Homebrew/legacy-homebrew/issues/44937
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /usr/local/share/cmake/Modules)
 find_package(Eigen3 REQUIRED)
-
 
 # SETUP GTEST
 enable_testing()
@@ -20,15 +18,16 @@ find_package(GTest REQUIRED)
 # Setup glog
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(Glog)
-if (NOT GLOG_FOUND)
-   message(FATAL_ERROR "Can't find Glog")
-endif (NOT GLOG_FOUND)
+if(NOT GLOG_FOUND)
+  message(FATAL_ERROR "Can't find Glog")
+endif()
 
-include_directories(SYSTEM
-    include
-    ${GTEST_INCLUDE_DIRS}
-    ${GLOG_INCLUDE_DIRS}
-    ${EIGEN3_INCLUDE_DIR}
+include_directories(
+  SYSTEM
+  include
+  ${GTEST_INCLUDE_DIRS}
+  ${GLOG_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIR}
 )
 
 # LIBRARY
@@ -41,21 +40,27 @@ add_library(${PROJECT_NAME} ${SRC_LIST})
 target_link_libraries(${PROJECT_NAME} ${GLOG_LIBRARIES})
 
 # TESTS
-FILE(GLOB_RECURSE MyTestSources src/*_test.cc)
+file(GLOB_RECURSE MyTestSources src/*_test.cc)
 add_executable(filtertests ${MyTestSources})
-target_link_libraries(filtertests ${GTEST_BOTH_LIBRARIES} ${GLOG_LIBRARIES} ${PROJECT_NAME} -lpthread -lm)
+target_link_libraries(
+  filtertests
+  ${GTEST_BOTH_LIBRARIES}
+  ${GLOG_LIBRARIES}
+  ${PROJECT_NAME}
+  -lpthread
+  -lm)
 add_test(AllTests filtertests)
 
 # EXAMPLES
-FILE(GLOB_RECURSE ExampleSources src/*_example.cc)
+file(GLOB_RECURSE ExampleSources src/*_example.cc)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin/examples)
-foreach (ExampleSource ${ExampleSources})
+foreach(ExampleSource ${ExampleSources})
   string(REGEX REPLACE "(.+)/|.cc$" "" ExampleName ${ExampleSource})
   add_executable(${ExampleName} ${ExampleSource})
   target_link_libraries(${ExampleName} ${PROJECT_NAME})
-endforeach (ExampleSource)
+endforeach()
 
-# Qt Creator Compatibility ensuring include dir is shown
-# See http://stackoverflow.com/questions/28384935/qtcreator-cmake-project-how-to-show-all-project-files
-FILE(GLOB_RECURSE LibFiles "include/*")
+# Qt Creator Compatibility ensuring include dir is shown See
+# http://stackoverflow.com/questions/28384935/qtcreator-cmake-project-how-to-show-all-project-files
+file(GLOB_RECURSE LibFiles "include/*")
 add_custom_target(headers SOURCES ${LibFiles})
