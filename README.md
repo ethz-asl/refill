@@ -1,6 +1,7 @@
-# ReFilL
+# Free Refill
 
-A library for easy recursive baysian estimation.
+Free Refill is the free REcursive FILtering Library.  
+It provides functionality to create recursive filters simply and hassle free.
 
 ## Contributing
 
