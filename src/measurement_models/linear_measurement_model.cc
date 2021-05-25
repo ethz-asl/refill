@@ -122,7 +122,7 @@ Eigen::VectorXd LinearMeasurementModel::observe(
  * @return the measurement model Jacobian w.r.t. the system state.
  */
 Eigen::MatrixXd LinearMeasurementModel::getMeasurementJacobian(
-    const Eigen::VectorXd& state) const {
+    const Eigen::VectorXd&) const {
   CHECK_NE(this->getStateDim(), 0)
       << " Measurement model has not been initialized.";
   return measurement_mapping_;
@@ -135,7 +135,7 @@ Eigen::MatrixXd LinearMeasurementModel::getMeasurementJacobian(
  * @return the measurement model Jacobian w.r.t. the measurement noise.
  */
 Eigen::MatrixXd LinearMeasurementModel::getNoiseJacobian(
-    const Eigen::VectorXd& state) const {
+    const Eigen::VectorXd&) const {
   CHECK_NE(this->getStateDim(), 0)
       << " Measurement model has not been initialized.";
   return noise_mapping_;

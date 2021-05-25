@@ -101,7 +101,7 @@ void ParticleFilter::reinitializeParticles(
   weights_.resize(num_particles_);
 
   weights_.setConstant(1.0 / num_particles_);
-  for (int i = 0; i < num_particles_; ++i) {
+  for (std::size_t i = 0; i < num_particles_; ++i) {
     particles_.col(i) = initial_state_dist->drawSample();
   }
 }
@@ -127,7 +127,7 @@ void ParticleFilter::predict(const SystemModelBase& system_model,
   CHECK_EQ(system_model.getStateDim(), particles_.rows());
   CHECK_NE(particles_.cols(), 0)<< "Particle vector is empty.";
 
-  for (int i = 0; i < num_particles_; ++i) {
+  for (std::size_t i = 0; i < num_particles_; ++i) {
     Eigen::VectorXd noise_sample = system_model.getNoise()->drawSample();
     particles_.col(i) = system_model.propagate(particles_.col(i), input,
                                                noise_sample);
@@ -161,7 +161,7 @@ Eigen::VectorXd ParticleFilter::getExpectation() {
 Eigen::VectorXd ParticleFilter::getMaxWeightParticle() {
   Eigen::VectorXd::Index index;
 
-  double max_weight = weights_.maxCoeff(&index);
+  weights_.maxCoeff(&index);
 
   return particles_.col(index);
 }
