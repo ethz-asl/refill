@@ -1,4 +1,4 @@
-project(Refill)
+project(refill)
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
@@ -32,16 +32,19 @@ include_directories(
 
 # LIBRARY
 file(GLOB_RECURSE SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
-file(GLOB_RECURSE REMOVE_TESTS "*_test.cc")
-file(GLOB_RECURSE REMOVE_EXAMPLES "*_example.cc")
-list(REMOVE_ITEM SRC_LIST ${REMOVE_TESTS})
-list(REMOVE_ITEM SRC_LIST ${REMOVE_EXAMPLES})
+file(GLOB_RECURSE TESTS src/*_test.cc)
+file(GLOB_RECURSE EXAMPLES src/*_example.cc)
+list(REMOVE_ITEM SRC_LIST ${TESTS})
+list(REMOVE_ITEM SRC_LIST ${EXAMPLES})
+
 add_library(${PROJECT_NAME} ${SRC_LIST})
 target_link_libraries(${PROJECT_NAME} ${GLOG_LIBRARIES})
 
+# Enable warnings and set warnings as errors
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
+
 # TESTS
-file(GLOB_RECURSE MyTestSources src/*_test.cc)
-add_executable(filtertests ${MyTestSources})
+add_executable(filtertests ${TESTS})
 target_link_libraries(
   filtertests
   ${GTEST_BOTH_LIBRARIES}
@@ -52,9 +55,8 @@ target_link_libraries(
 add_test(AllTests filtertests)
 
 # EXAMPLES
-file(GLOB_RECURSE ExampleSources src/*_example.cc)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin/examples)
-foreach(ExampleSource ${ExampleSources})
+foreach(ExampleSource ${EXAMPLES})
   string(REGEX REPLACE "(.+)/|.cc$" "" ExampleName ${ExampleSource})
   add_executable(${ExampleName} ${ExampleSource})
   target_link_libraries(${ExampleName} ${PROJECT_NAME})
