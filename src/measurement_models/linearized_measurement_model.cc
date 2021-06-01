@@ -21,7 +21,7 @@ Eigen::MatrixXd LinearizedMeasurementModel::getMeasurementJacobian(
   Eigen::VectorXd diff_coeff = state;
   Eigen::VectorXd evaluation_1(this->getStateDim());
   Eigen::VectorXd evaluation_2(this->getStateDim());
-  for (int i = 0; i < this->getStateDim(); ++i) {
+  for (std::size_t i = 0; i < this->getStateDim(); ++i) {
     double step_size = eps * std::abs(diff_coeff[i]);
     if (step_size == 0.0) {
       step_size = eps;
@@ -57,7 +57,7 @@ Eigen::MatrixXd LinearizedMeasurementModel::getNoiseJacobian(
   Eigen::VectorXd diff_coeff = noise_mean;
   Eigen::VectorXd evaluation_1(this->getMeasurementDim());
   Eigen::VectorXd evaluation_2(this->getMeasurementDim());
-  for (int i = 0; i < this->getNoiseDim(); ++i) {
+  for (std::size_t i = 0; i < this->getNoiseDim(); ++i) {
     double step_size = eps * std::abs(diff_coeff[i]);
     if (step_size == 0.0) {
       step_size = eps;

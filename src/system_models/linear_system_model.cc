@@ -202,7 +202,7 @@ Eigen::VectorXd LinearSystemModel::propagate(
  * @return the system model Jacobian w.r.t. the system state @f$ x_k @f$.
  */
 Eigen::MatrixXd LinearSystemModel::getStateJacobian(
-    const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
+    const Eigen::VectorXd&, const Eigen::VectorXd&) const {
   CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
   return system_mapping_;
 }
@@ -215,7 +215,7 @@ Eigen::MatrixXd LinearSystemModel::getStateJacobian(
  * @return the system model Jacobian w.r.t. the system noise @f$ v_k @f$.
  */
 Eigen::MatrixXd LinearSystemModel::getNoiseJacobian(
-    const Eigen::VectorXd& state, const Eigen::VectorXd& input) const {
+    const Eigen::VectorXd&, const Eigen::VectorXd&) const {
   CHECK_NE(this->getStateDim(), 0) << "System model has not been initialized.";
   return noise_mapping_;
 }
