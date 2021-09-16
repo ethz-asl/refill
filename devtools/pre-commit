@@ -2,15 +2,17 @@
 # Disable pylint invalid module name complaint.
 # pylint: disable=C0103
 """ Pre Commit script for invoking linters."""
-import imp
-import commands
+from importlib.machinery import SourceFileLoader
+
+import subprocess
 
 
 def main():
     """ Main pre-commit function for calling code checking script. """
-    _, repo_root = commands.getstatusoutput('git rev-parse --show-toplevel')
-    checks = imp.load_source('run_checks',
-                             repo_root + "/devtools/run_checks.py")
+    _, repo_root = subprocess.getstatusoutput("git rev-parse --show-toplevel")
+    checks = SourceFileLoader(
+        "run_checks", repo_root + "/devtools/run_checks.py"
+    ).load_module()
     exit(checks.main())
 
 
